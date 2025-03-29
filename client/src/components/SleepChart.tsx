@@ -1,51 +1,46 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
 import {
   GaugeContainer,
   GaugeValueArc,
   GaugeReferenceArc,
-  useGaugeState,
 } from "@mui/x-charts/Gauge";
-
-function GaugePointer() {
-  const { valueAngle, outerRadius, cx, cy } = useGaugeState();
-
-  if (valueAngle === null) {
-    // No value to display
-    return null;
-  }
-
-  const target = {
-    x: cx + outerRadius * Math.sin(valueAngle),
-    y: cy - outerRadius * Math.cos(valueAngle),
-  };
-  return (
-    <g>
-      <circle cx={cx} cy={cy} r={5} fill="red" />
-      <path
-        d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
-        stroke="red"
-        strokeWidth={3}
-      />
-    </g>
-  );
-}
 
 export default function SleepChart() {
   return (
     <Card sx={{ width: "fit-content" }}>
-      <CardContent sx={{ textAlign: "center" }}>
-        <GaugeContainer
-          width={200}
-          height={200}
-          startAngle={-110}
-          endAngle={110}
-          value={30}
-        >
-          <GaugeReferenceArc />
-          <GaugeValueArc />
-          <GaugePointer />
-        </GaugeContainer>
-        <Typography>Total Sleep: 7.5 hours</Typography>
+      <CardContent sx={{ textAlign: "center", pb: 1 }}>
+        <Typography variant="h5" sx={{ mb: -1 }}>
+          Sleep
+        </Typography>
+        <Box sx={{ position: "relative" }}>
+          <GaugeContainer
+            width={200}
+            height={200}
+            startAngle={-110}
+            endAngle={110}
+            value={30}
+          >
+            <GaugeReferenceArc />
+            <GaugeValueArc />
+          </GaugeContainer>
+          <Box
+            sx={{
+              position: "absolute",
+              top: -60,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              height: "100%",
+            }}
+          >
+            <Typography sx={{ fontSize: "1.2rem" }}>5 hr 57 min</Typography>
+          </Box>
+        </Box>
+        <Typography sx={{ mt: 1 }}>58 mins awake</Typography>
       </CardContent>
     </Card>
   );
