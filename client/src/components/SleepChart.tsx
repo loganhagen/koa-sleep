@@ -1,46 +1,50 @@
-import { Card, CardContent, Typography, Box } from "@mui/material";
-import {
-  GaugeContainer,
-  GaugeValueArc,
-  GaugeReferenceArc,
-} from "@mui/x-charts/Gauge";
+import { Card, CardContent, Typography, Box, Stack, Icon } from "@mui/material";
+import ModeNightIcon from "@mui/icons-material/ModeNight";
 
 export default function SleepChart() {
   return (
-    <Card sx={{ width: "fit-content" }}>
-      <CardContent sx={{ textAlign: "center", pb: 1 }}>
-        <Typography variant="h5" sx={{ mb: -1 }}>
-          Sleep
-        </Typography>
-        <Box sx={{ position: "relative" }}>
-          <GaugeContainer
-            width={200}
-            height={200}
-            startAngle={-110}
-            endAngle={110}
-            value={30}
-          >
-            <GaugeReferenceArc />
-            <GaugeValueArc />
-          </GaugeContainer>
-          <Box
-            sx={{
-              position: "absolute",
-              top: -60,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              height: "100%",
-            }}
-          >
-            <Typography sx={{ fontSize: "1.2rem" }}>5 hr 57 min</Typography>
-          </Box>
+    <Card
+      sx={{
+        width: "fit-content",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <CardContent
+        sx={{
+          textAlign: "center",
+          pb: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Stack direction="row" sx={{ mb: 1 }}>
+          <Typography variant="h5" sx={{ mr: 1 }}>
+            Sleep
+          </Typography>
+          <ModeNightIcon />
+        </Stack>
+
+        <Box>
+          <Stack direction="row" spacing={3}>
+            <Stack direction="column">
+              <Typography>Duration</Typography>
+              <Typography>Efficiency</Typography>
+              <Typography>Wake</Typography>
+              <Typography>Light</Typography>
+              <Typography>Deep</Typography>
+            </Stack>
+            <Stack direction="column">
+              <Typography>6 hr 50 min</Typography>
+              <Typography>65</Typography>
+              <Typography>4</Typography>
+              <Typography>2</Typography>
+              <Typography>1</Typography>
+            </Stack>
+          </Stack>
         </Box>
-        <Typography sx={{ mt: 1 }}>58 mins awake</Typography>
       </CardContent>
     </Card>
   );
