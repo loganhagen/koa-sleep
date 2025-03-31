@@ -2,8 +2,13 @@ import { Card, CardContent, Typography, Box, Stack } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
 import { Sleep, SleepResponse, Summary } from "../../types/api/sleep";
-import { minutesToHours, millisecondsToHours } from "../../utils/utils";
+import {
+  minutesToHours,
+  millisecondsToHours,
+  sleepThread,
+} from "../../utils/utils";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
+import { ThreeP } from "@mui/icons-material";
 
 interface SleepData {
   duration: number;
@@ -25,6 +30,7 @@ export default function SleepChart() {
   useEffect(() => {
     const fetchSleepData = async () => {
       try {
+        await sleepThread(1000);
         const data = await fetch("http://localhost:3001/sleep-endpoint");
         const res = (await data.json()) as SleepResponse;
         const sleep = res.sleep as Sleep[];

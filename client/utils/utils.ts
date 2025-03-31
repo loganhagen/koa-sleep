@@ -5,3 +5,7 @@ export function minutesToHours(minutes: number): number {
 export function millisecondsToHours(milliseconds: number): number {
   return Number((milliseconds / 3600000).toFixed(1));
 }
+
+export function sleepThread(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
