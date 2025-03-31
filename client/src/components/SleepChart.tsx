@@ -3,6 +3,7 @@ import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
 import { Sleep, SleepResponse, Summary } from "../../types/api/sleep";
 import { minutesToHours, millisecondsToHours } from "../../utils/utils";
+import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
 
 interface SleepData {
   duration: number;
@@ -71,24 +72,62 @@ export default function SleepChart() {
           <ModeNightIcon />
         </Stack>
 
-        <Box>
-          <Stack direction="row" spacing={3}>
+        <Stack direction="column" sx={{ alignItems: "center" }}>
+          <Typography sx={{ mb: -3 }}>Efficiency</Typography>
+          <Gauge
+            width={100}
+            height={100}
+            value={sleepData.efficiency}
+            startAngle={-90}
+            endAngle={90}
+            sx={{
+              [`& .${gaugeClasses.valueText}`]: {
+                fontSize: 15,
+                transform: "translate(0px, 0px)",
+              },
+            }}
+            text={({ value }) => `${value}%`}
+          />
+        </Stack>
+
+        <Stack direction="column" sx={{ alignItems: "center" }}>
+          <Typography sx={{ mb: 1 }}>Sleep Stages</Typography>
+          <PieChart
+            series={[
+              {
+                data: [
+                  { id: 0, value: sleepData.deep, label: "Deep" },
+                  { id: 1, value: sleepData.light, label: "Light" },
+                  { id: 2, value: sleepData.wake, label: "Wake" },
+                ],
+              },
+            ]}
+            width={200}
+            height={100}
+            slotProps={{
+              legend: {
+                position: { vertical: "middle", horizontal: "right" },
+                itemMarkWidth: 10,
+                itemMarkHeight: 10,
+                markGap: 5,
+                itemGap: 5,
+                labelStyle: {
+                  fontSize: 10,
+                },
+              },
+            }}
+          />
+          <Stack direction="row" sx={{ mt: 1 }}>
             <Stack direction="column">
-              <Typography>Efficiency (%)</Typography>
-              <Typography>Duration (hrs)</Typography>
-              <Typography>Wake (hrs)</Typography>
-              <Typography>Light (hrs)</Typography>
-              <Typography>Deep (hrs)</Typography>
+              <Typography>Duration:</Typography>
             </Stack>
             <Stack direction="column">
-              <Typography>{sleepData?.efficiency}</Typography>
-              <Typography>{sleepData?.duration}</Typography>
-              <Typography>{sleepData?.wake}</Typography>
-              <Typography>{sleepData?.light}</Typography>
-              <Typography>{sleepData?.deep}</Typography>
+              <Typography sx={{ ml: 1 }} fontWeight="bold">
+                {sleepData?.duration} hrs
+              </Typography>
             </Stack>
           </Stack>
-        </Box>
+        </Stack>
       </CardContent>
     </Card>
   );
