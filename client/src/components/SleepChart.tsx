@@ -1,25 +1,13 @@
 import { Card, CardContent, Typography, Stack, Skeleton } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
-import { Sleep, SleepResponse, Summary } from "../../types/api/sleep";
-import {
-  minutesToHours,
-  millisecondsToHours,
-  sleepThread,
-} from "../../utils/utils";
+import { SleepData } from "../../types/api/sleep";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
-
-interface SleepData {
-  duration: number;
-  efficiency: number;
-  wake: number;
-  light: number;
-  deep: number;
-}
+import { fitbitApiService } from "../services/api";
 
 export default function SleepChart() {
   const [isLoading, setIsLoading] = useState(false);
-  const [sleepData, setSleepData] = useState<SleepData>({
+  const [data, setData] = useState<SleepData>({
     duration: 0,
     efficiency: 0,
     wake: 0,
@@ -28,32 +16,18 @@ export default function SleepChart() {
   });
 
   useEffect(() => {
-    const fetchSleepData = async () => {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        await sleepThread(1000);
-        const data = await fetch("http://localhost:3000/sleep-endpoint");
-        const res = (await data.json()) as SleepResponse;
-        const sleep = res.sleep as Sleep[];
-        const summary = res.summary as Summary;
-
-        // There will only be 1 object in the sleep array since it
-        // retrieves the previous night's sleep data.
-        const sleepData: SleepData = {
-          duration: millisecondsToHours(sleep[0].duration),
-          efficiency: sleep[0].efficiency,
-          wake: minutesToHours(summary.stages.wake),
-          light: minutesToHours(summary.stages.light),
-          deep: minutesToHours(summary.stages.deep),
-        };
-        setSleepData(sleepData);
+        const res = await fitbitApiService.fetchSleepData();
+        setData(res);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchSleepData();
+    fetchData();
   }, []);
 
   if (isLoading) {
@@ -138,7 +112,7 @@ export default function SleepChart() {
           <Gauge
             width={100}
             height={100}
-            value={sleepData.efficiency}
+            value={data.efficiency}
             startAngle={-90}
             endAngle={90}
             sx={{
@@ -157,9 +131,9 @@ export default function SleepChart() {
             series={[
               {
                 data: [
-                  { id: 0, value: sleepData.deep, label: "Deep" },
-                  { id: 1, value: sleepData.light, label: "Light" },
-                  { id: 2, value: sleepData.wake, label: "Wake" },
+                  { id: 0, value: data.deep, label: "Deep" },
+                  { id: 1, value: data.light, label: "Light" },
+                  { id: 2, value: data.wake, label: "Wake" },
                 ],
               },
             ]}
@@ -184,7 +158,7 @@ export default function SleepChart() {
             </Stack>
             <Stack direction="column">
               <Typography sx={{ ml: 1 }} fontWeight="bold">
-                {sleepData?.duration} hrs
+                {data?.duration} hrs
               </Typography>
             </Stack>
           </Stack>
