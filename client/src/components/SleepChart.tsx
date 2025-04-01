@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, Stack, Skeleton } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
-import { SleepData } from "../../types/api/sleep";
+import { SleepData } from "../../types/ui/sleep";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
 import { fitbitApiService } from "../services/api";
 

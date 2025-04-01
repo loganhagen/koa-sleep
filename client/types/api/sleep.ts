@@ -1,11 +1,3 @@
-export interface SleepData {
-  duration: number;
-  efficiency: number;
-  wake: number;
-  light: number;
-  deep: number;
-}
-
 export interface SleepResponse {
   sleep: Sleep[];
   summary?: Summary;
