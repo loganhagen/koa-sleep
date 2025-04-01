@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Box, Stack } from "@mui/material";
+import { Card, CardContent, Typography, Stack, Skeleton } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
 import { Sleep, SleepResponse, Summary } from "../../types/api/sleep";
@@ -8,7 +8,6 @@ import {
   sleepThread,
 } from "../../utils/utils";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
-import { ThreeP } from "@mui/icons-material";
 
 interface SleepData {
   duration: number;
@@ -19,6 +18,7 @@ interface SleepData {
 }
 
 export default function SleepChart() {
+  const [isLoading, setIsLoading] = useState(false);
   const [sleepData, setSleepData] = useState<SleepData>({
     duration: 0,
     efficiency: 0,
@@ -30,13 +30,15 @@ export default function SleepChart() {
   useEffect(() => {
     const fetchSleepData = async () => {
       try {
+        setIsLoading(true);
         await sleepThread(1000);
-        const data = await fetch("http://localhost:3001/sleep-endpoint");
+        const data = await fetch("http://localhost:3000/sleep-endpoint");
         const res = (await data.json()) as SleepResponse;
         const sleep = res.sleep as Sleep[];
         const summary = res.summary as Summary;
 
-        // There will only be 1 object in the sleep array
+        // There will only be 1 object in the sleep array since it
+        // retrieves the previous night's sleep data.
         const sleepData: SleepData = {
           duration: millisecondsToHours(sleep[0].duration),
           efficiency: sleep[0].efficiency,
@@ -45,6 +47,7 @@ export default function SleepChart() {
           deep: minutesToHours(summary.stages.deep),
         };
         setSleepData(sleepData);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -52,6 +55,58 @@ export default function SleepChart() {
 
     fetchSleepData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Card
+        sx={{
+          width: "fit-content",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <CardContent
+          sx={{
+            textAlign: "center",
+            pb: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Stack direction="row" sx={{ mb: 1 }}>
+            <Skeleton variant="text" width={80} height={40} />
+            <Skeleton
+              variant="circular"
+              width={24}
+              height={24}
+              sx={{ ml: 1 }}
+            />
+          </Stack>
+
+          <Stack direction="column" sx={{ alignItems: "center" }}>
+            <Skeleton variant="text" width={100} />
+            <Skeleton variant="circular" width={100} height={100} />
+          </Stack>
+
+          <Stack direction="column" sx={{ alignItems: "center" }}>
+            <Skeleton variant="text" width={120} sx={{ mb: 1 }} />
+            <Skeleton variant="rectangular" width={200} height={100} />
+
+            <Stack direction="row" sx={{ mt: 1 }}>
+              <Stack direction="column">
+                <Skeleton variant="text" width={80} />
+              </Stack>
+              <Stack direction="column">
+                <Skeleton variant="text" width={60} sx={{ ml: 1 }} />
+              </Stack>
+            </Stack>
+          </Stack>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card
