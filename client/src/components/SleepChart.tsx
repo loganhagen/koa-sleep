@@ -1,9 +1,8 @@
 import { Card, CardContent, Typography, Stack, Skeleton } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
-import { SleepData } from "../../types/ui/sleep";
+import { SleepData } from "../../../types/UI/sleep";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
-import { fitbitApiService } from "../services/api";
 
 export default function SleepChart() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +18,9 @@ export default function SleepChart() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const res = await fitbitApiService.fetchSleepData();
-        setData(res);
+        const res = await fetch("http://localhost:5000/sleep");
+        const sleepData = (await res.json()) as SleepData;
+        setData(sleepData);
         setIsLoading(false);
       } catch (error) {
         console.log(error);

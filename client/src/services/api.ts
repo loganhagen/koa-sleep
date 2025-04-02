@@ -1,5 +1,5 @@
 import { SleepResponse, Sleep, Summary } from "../../types/api/sleep";
-import { SleepData } from "../../types/ui/sleep";
+import { SleepData } from "../../../types/UI/sleep";
 import { millisecondsToHours, minutesToHours } from "../../utils/utils";
 
 export const fitbitApiService = {

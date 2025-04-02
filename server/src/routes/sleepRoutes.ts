@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 import { getSleepData } from "../controllers/sleepController";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", getSleepData);
 
