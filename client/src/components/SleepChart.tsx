@@ -1,12 +1,12 @@
 import { Card, CardContent, Typography, Stack, Skeleton } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
-import { SleepData } from "../../../types/UI/sleep";
+import { SleepCardState } from "../../../types/UI/sleep";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
 
 export default function SleepChart() {
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<SleepData>({
+  const [data, setData] = useState<SleepCardState>({
     duration: 0,
     efficiency: 0,
     wake: 0,
@@ -19,7 +19,7 @@ export default function SleepChart() {
       try {
         setIsLoading(true);
         const res = await fetch("http://localhost:5000/sleep");
-        const sleepData = (await res.json()) as SleepData;
+        const sleepData = (await res.json()) as SleepCardState;
         setData(sleepData);
         setIsLoading(false);
       } catch (error) {
