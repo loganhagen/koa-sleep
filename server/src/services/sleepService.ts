@@ -1,26 +1,44 @@
-import { SleepData } from "../../../types/UI/sleep";
-import { Sleep, SleepResponse } from "../../../types/API/sleep";
+import { SleepCardState } from "../../../types/ui/sleep";
+import {
+  SleepAPIResponse,
+  SleepData,
+  SleepSummary,
+} from "../../../types/api/sleep";
+import { millisecondsToHours } from "../utils/converters";
+import { sleepApiClient } from "../external/apiClient";
 
-export const fetchSleepData = async () => {
-  try {
-    const res = await fetch("http://localhost:3001/sleep-endpoint");
-    if (!res) {
-      throw new Error("Failed to fetch from endpoint.");
+export const sleepService = {
+  getSleepData: async (): Promise<SleepCardState | { error: string }> => {
+    try {
+      const apiData = await sleepApiClient.getSleepData();
+      return createSleepCardState(apiData);
+    } catch (error) {
+      console.log("Error in sleep service: ", error);
+      return { error: "Failed to process sleep data." };
     }
-    const data = (await res.json()) as SleepResponse;
-    return createSleepDataUI(data);
-  } catch (error) {
-    return error;
-  }
+  },
 };
 
-const createSleepDataUI = (sleepResponse: SleepResponse): SleepData => {
-  const data = sleepResponse.sleep[0] as Sleep;
+const createSleepCardState = (
+  sleepResponse: SleepAPIResponse
+): SleepCardState => {
+  if (
+    !sleepResponse ||
+    !sleepResponse.sleep ||
+    sleepResponse.sleep.length === 0 ||
+    !sleepResponse.summary
+  ) {
+    throw new Error("Invalid sleep response data.");
+  }
+
+  const data = sleepResponse.sleep[0] as SleepData;
+  const summary = sleepResponse.summary as SleepSummary;
+
   return {
-    duration: data.duration,
-    efficiency: 0,
-    wake: 0,
-    light: 0,
-    deep: 0,
+    duration: millisecondsToHours(data.duration),
+    efficiency: data.efficiency,
+    wake: summary.stages.wake,
+    light: summary.stages.light,
+    deep: summary.stages.deep,
   };
 };
