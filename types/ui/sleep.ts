@@ -1,4 +1,4 @@
-export interface SleepData {
+export interface SleepCardState {
   duration: number;
   efficiency: number;
   wake: number;

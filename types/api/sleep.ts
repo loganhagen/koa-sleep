@@ -1,9 +1,9 @@
-export interface SleepResponse {
-  sleep: Sleep[];
-  summary?: Summary;
+export interface SleepAPIResponse {
+  sleep: SleepData[];
+  summary?: SleepSummary;
 }
 
-export interface Sleep {
+export interface SleepData {
   dateOfSleep: string;
   duration: number;
   efficiency: number;
@@ -25,7 +25,7 @@ export interface Sleep {
 export interface SleepLevels {
   data: SleepLevelData[];
   shortData: SleepLevelData[];
-  summary: SleepSummary;
+  summary: SleepLevelSummary;
 }
 
 export interface SleepLevelData {
@@ -34,7 +34,7 @@ export interface SleepLevelData {
   seconds: number;
 }
 
-export interface SleepSummary {
+export interface SleepLevelSummary {
   deep: SleepSummaryDetail;
   light: SleepSummaryDetail;
   rem: SleepSummaryDetail;
@@ -47,7 +47,7 @@ export interface SleepSummaryDetail {
   thirtyDayAvgMinutes: number;
 }
 
-export interface Summary {
+export interface SleepSummary {
   stages: SleepStages;
   totalMinutesAsleep: number;
   totalSleepRecords: number;
