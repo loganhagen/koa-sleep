@@ -1,3 +1,4 @@
+// General fetch function for external HTTP requests.
 export async function fetchData<T>(
   url: string,
   options?: RequestInit

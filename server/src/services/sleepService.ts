@@ -8,7 +8,7 @@ import { millisecondsToHours } from "../utils/converters";
 import { sleepApiClient } from "../external/apiClient";
 
 export const sleepService = {
-  getSleepData: async (): Promise<SleepCardState | { error: string }> => {
+  getSleepCardState: async (): Promise<SleepCardState | { error: string }> => {
     try {
       const apiData = await sleepApiClient.getSleepData();
       return createSleepCardState(apiData);
@@ -17,8 +17,18 @@ export const sleepService = {
       return { error: "Failed to process sleep data." };
     }
   },
+  getSleepData: async () => {
+    try {
+      const apiData = await sleepApiClient.getSleepData();
+      return apiData;
+    } catch (error) {
+      console.log("Error in sleep service: ", error);
+      return { error: "Failed to process sleep data." };
+    }
+  },
 };
 
+// Creates the data needed by the front-end to display sleep data.
 const createSleepCardState = (
   sleepResponse: SleepAPIResponse
 ): SleepCardState => {
