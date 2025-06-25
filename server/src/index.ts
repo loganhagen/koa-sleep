@@ -1,7 +1,6 @@
 import app from "./app";
+import { EXPRESS_PORT } from "./config/config";
 
-const port = process.env.EXPRESS_PORT;
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(EXPRESS_PORT, () => {
+  console.log(`Server is running on port ${EXPRESS_PORT}`);
 });

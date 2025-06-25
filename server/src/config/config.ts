@@ -4,4 +4,6 @@ function getEnv(key: string): string {
   return value;
 }
 
-export const MOCK_SERVER = getEnv("MOCK_SERVER");
+export const JSON_SERVER_PORT = getEnv("JSON_SERVER_PORT");
+export const JSON_SERVER_ENDPOINT = getEnv("JSON_SERVER_ENDPOINT");
+export const EXPRESS_PORT = getEnv("EXPRESS_PORT");
