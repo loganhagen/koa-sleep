@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { sleepService } from "../services/sleepService";
-import { SleepData } from "../../../types/api/sleep";
 
 export const getSleepData = async (req: Request, res: Response) => {
   try {
@@ -28,7 +27,7 @@ export const getAverageEfficiency = async (req: Request, res: Response) => {
       const sleepData = data.sleep;
       const recentData = sleepData.slice(0, 7);
       let totalEfficiency = 0;
-      recentData.forEach((record) => {
+      recentData.forEach((record: any) => {
         totalEfficiency = totalEfficiency + record.efficiency;
       });
       let getAverageEfficiency = totalEfficiency / recentData.length;

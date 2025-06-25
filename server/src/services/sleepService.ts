@@ -1,6 +1,6 @@
 import { SleepCardState } from "../../../types/ui/sleep";
 import {
-  SleepAPIResponse,
+  FitbitSleepResponse,
   SleepData,
   SleepSummary,
 } from "../../../types/api/sleep";
@@ -30,7 +30,7 @@ export const sleepService = {
 
 // Creates the data needed by the front-end to display sleep data.
 const createSleepCardState = (
-  sleepResponse: SleepAPIResponse
+  sleepResponse: FitbitSleepResponse
 ): SleepCardState => {
   if (
     !sleepResponse ||
