@@ -13,18 +13,30 @@ export const sleepService = {
       const apiData = await sleepApiClient.getSleepData();
       return createSleepCardState(apiData);
     } catch (error) {
-      console.log("Error in sleep service: ", error);
       return { error: "Failed to process sleep data." };
     }
   },
-  getSleepData: async () => {
+  getData: async () => {
     try {
       const apiData = await sleepApiClient.getSleepData();
       return apiData;
     } catch (error) {
-      console.log("Error in sleep service: ", error);
       return { error: "Failed to process sleep data." };
     }
+  },
+  /**
+   * @summary Calculates and returns the average sleep efficiency for up to the last 7 sleep records.
+   */
+  getEfficiency: async () => {
+    const apiData = await sleepApiClient.getSleepData();
+    const sleepData = apiData.sleep;
+    const recentData = sleepData.slice(0, 7);
+    let totalEfficiency = 0;
+    recentData.forEach((record: any) => {
+      totalEfficiency = totalEfficiency + record.efficiency;
+    });
+    let AverageEfficiency = totalEfficiency / recentData.length;
+    return { sleepEfficiency: AverageEfficiency };
   },
 };
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getAverageEfficiency,
+  getSleepEfficiency,
   getAverageSleep,
   getSleepData,
 } from "../controllers/sleepController";
@@ -36,6 +36,6 @@ router.get("/average", getAverageSleep);
  *            schema:
  *              type: object
  */
-router.get("/efficiency", getAverageEfficiency);
+router.get("/efficiency", getSleepEfficiency);
 
 export default router;
