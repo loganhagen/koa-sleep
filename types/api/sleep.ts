@@ -1,4 +1,4 @@
-export interface SleepAPIResponse {
+export interface FitbitSleepResponse {
   sleep: SleepData[];
   summary?: SleepSummary;
 }
