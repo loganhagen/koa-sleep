@@ -1,28 +1,24 @@
 import { Router } from "express";
 import {
   getSleepEfficiency,
-  getAverageSleep,
   getSleepData,
 } from "../controllers/sleepController";
 
 const router = Router();
-router.get("/", getSleepData);
 
 /**
  * @swagger
- * /sleep/average:
+ * /sleep:
  *  get:
- *    summary: Get average sleep
- *    description: Get average sleep!
+ *    summary: Get the user's full sleep data from up to 7 previous nights.
  *    responses:
  *      200:
- *        description: A sample res
  *        content:
  *          application/json:
  *            schema:
  *              type: object
  */
-router.get("/average", getAverageSleep);
+router.get("/", getSleepData);
 
 /**
  * @swagger
