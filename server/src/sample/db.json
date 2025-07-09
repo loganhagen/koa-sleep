@@ -20,44 +20,53 @@
           "data": [
             {
               "dateTime": "2020-01-01T23:01:00.000",
-              "level": "restless",
+              "level": "wake",
               "seconds": 360
             },
             {
               "dateTime": "2020-01-01T23:07:00.000",
-              "level": "asleep",
-              "seconds": 1800
+              "level": "light",
+              "seconds": 1200
             },
             {
-              "dateTime": "2020-01-02T00:00:00.000",
-              "level": "asleep",
+              "dateTime": "2020-01-01T23:27:00.000",
+              "level": "deep",
               "seconds": 1020
+            },
+            {
+              "dateTime": "2020-01-01T23:44:00.000",
+              "level": "rem",
+              "seconds": 600
             }
           ],
           "summary": {
-            "asleep": {
-              "count": 3,
-              "minutes": 65
+            "deep": {
+              "count": 1,
+              "minutes": 17
             },
-            "awake": {
-              "count": 0,
-              "minutes": 0
+            "light": {
+              "count": 1,
+              "minutes": 20
             },
-            "restless": {
-              "count": 4,
-              "minutes": 11
+            "rem": {
+              "count": 1,
+              "minutes": 10
+            },
+            "wake": {
+              "count": 1,
+              "minutes": 6
             }
           }
         },
         "logId": 25647389515,
         "minutesAfterWakeup": 0,
-        "minutesAsleep": 65,
+        "minutesAsleep": 47,
         "minutesAwake": 11,
         "minutesToFallAsleep": 0,
         "logType": "auto_detected",
         "startTime": "2020-01-01T23:01:00.000",
         "timeInBed": 76,
-        "type": "classic"
+        "type": "stages"
       },
       {
         "dateOfSleep": "2020-01-02",
@@ -233,35 +242,44 @@
           "data": [
             {
               "dateTime": "2020-01-04T23:00:00.000",
-              "level": "restless",
+              "level": "wake",
               "seconds": 480
             },
             {
               "dateTime": "2020-01-04T23:08:00.000",
-              "level": "asleep",
-              "seconds": 14400
+              "level": "light",
+              "seconds": 10800
             },
             {
-              "dateTime": "2020-01-05T03:08:00.000",
-              "level": "restless",
-              "seconds": 600
-            },
-            {
-              "dateTime": "2020-01-05T03:18:00.000",
-              "level": "asleep",
+              "dateTime": "2020-01-05T02:08:00.000",
+              "level": "deep",
               "seconds": 9720
+            },
+            {
+              "dateTime": "2020-01-05T04:50:00.000",
+              "level": "rem",
+              "seconds": 3600
+            },
+            {
+              "dateTime": "2020-01-05T05:50:00.000",
+              "level": "wake",
+              "seconds": 600
             }
           ],
           "summary": {
-            "asleep": {
-              "count": 2,
-              "minutes": 402
+            "deep": {
+              "count": 1,
+              "minutes": 162
             },
-            "awake": {
-              "count": 0,
-              "minutes": 0
+            "light": {
+              "count": 1,
+              "minutes": 180
             },
-            "restless": {
+            "rem": {
+              "count": 1,
+              "minutes": 60
+            },
+            "wake": {
               "count": 2,
               "minutes": 18
             }
@@ -275,7 +293,7 @@
         "logType": "auto_detected",
         "startTime": "2020-01-04T23:00:00.000",
         "timeInBed": 420,
-        "type": "classic"
+        "type": "stages"
       },
       {
         "dateOfSleep": "2020-01-05",
@@ -361,30 +379,39 @@
           "data": [
             {
               "dateTime": "2020-01-06T23:00:00.000",
-              "level": "asleep",
-              "seconds": 16200
+              "level": "light",
+              "seconds": 10800
             },
             {
-              "dateTime": "2020-01-07T03:30:00.000",
-              "level": "restless",
-              "seconds": 1800
-            },
-            {
-              "dateTime": "2020-01-07T04:00:00.000",
-              "level": "asleep",
+              "dateTime": "2020-01-07T02:00:00.000",
+              "level": "deep",
               "seconds": 7500
+            },
+            {
+              "dateTime": "2020-01-07T04:05:00.000",
+              "level": "rem",
+              "seconds": 5400
+            },
+            {
+              "dateTime": "2020-01-07T05:35:00.000",
+              "level": "wake",
+              "seconds": 1800
             }
           ],
           "summary": {
-            "asleep": {
-              "count": 2,
-              "minutes": 395
+            "deep": {
+              "count": 1,
+              "minutes": 125
             },
-            "awake": {
-              "count": 0,
-              "minutes": 0
+            "light": {
+              "count": 1,
+              "minutes": 180
             },
-            "restless": {
+            "rem": {
+              "count": 1,
+              "minutes": 90
+            },
+            "wake": {
               "count": 1,
               "minutes": 30
             }
@@ -398,7 +425,7 @@
         "logType": "auto_detected",
         "startTime": "2020-01-06T23:00:00.000",
         "timeInBed": 425,
-        "type": "classic"
+        "type": "stages"
       },
       {
         "dateOfSleep": "2020-01-07",

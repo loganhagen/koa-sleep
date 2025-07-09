@@ -1,62 +1,76 @@
-export interface FitbitSleepResponse {
-  sleep: SleepData[];
-  summary?: SleepSummary;
+export interface FitbitData {
+  sleep: SleepLog[];
+  pagination: Pagination;
 }
 
-export interface SleepData {
+export interface Pagination {
+  afterDate?: string;
+  beforeDate?: string;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  sort: "asc" | "desc";
+}
+
+export type SleepLog = StagesSleepLog | ClassicSleepLog;
+
+interface BaseSleepLog {
   dateOfSleep: string;
   duration: number;
   efficiency: number;
   endTime: string;
   infoCode: number;
   isMainSleep: boolean;
-  levels: SleepLevels;
   logId: number;
   minutesAfterWakeup: number;
   minutesAsleep: number;
   minutesAwake: number;
   minutesToFallAsleep: number;
-  logType: string;
   startTime: string;
   timeInBed: number;
-  type: string;
 }
 
-export interface SleepLevels {
-  data: SleepLevelData[];
-  shortData: SleepLevelData[];
-  summary: SleepLevelSummary;
+export interface StagesSleepLog extends BaseSleepLog {
+  type: "stages";
+  levels: {
+    data: SleepLevelData[];
+    summary: StagesSleepSummary;
+  };
 }
 
+export interface ClassicSleepLog extends BaseSleepLog {
+  type: "classic";
+  levels: {
+    summary: ClassicSleepSummary;
+  };
+}
+
+/**
+ * Represents a specific period within a detailed sleep stage.
+ * Only applicable to "stages" sleep logs.
+ */
 export interface SleepLevelData {
   dateTime: string;
-  level: string;
+  level: "wake" | "light" | "deep" | "rem";
   seconds: number;
 }
 
-export interface SleepLevelSummary {
-  deep: SleepSummaryDetail;
-  light: SleepSummaryDetail;
-  rem: SleepSummaryDetail;
-  wake: SleepSummaryDetail;
+export interface StagesSleepSummary {
+  deep: StagesSleepStageSummary;
+  light: StagesSleepStageSummary;
+  rem: StagesSleepStageSummary;
+  wake: StagesSleepStageSummary;
 }
 
-export interface SleepSummaryDetail {
+export interface StagesSleepStageSummary {
   count: number;
   minutes: number;
-  thirtyDayAvgMinutes: number;
+  thirtyDayAvgMinutes?: number;
 }
 
-export interface SleepSummary {
-  stages: SleepStages;
-  totalMinutesAsleep: number;
-  totalSleepRecords: number;
-  totalTimeInBed: number;
-}
-
-export interface SleepStages {
-  deep: number;
-  light: number;
-  rem: number;
-  wake: number;
+export interface ClassicSleepSummary {
+  asleep: { count: number; minutes: number };
+  awake: { count: number; minutes: number };
+  restless: { count: number; minutes: number };
 }
