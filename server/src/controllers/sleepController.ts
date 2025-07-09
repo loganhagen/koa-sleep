@@ -23,3 +23,15 @@ export const getSleepEfficiency = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Error getting sleep efficiency." });
   }
 };
+
+export const getSleepStages = async (req: Request, res: Response) => {
+  try {
+    const data = await sleepService.getSleepStages();
+    res.status(200).json({ data: data });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({ error: error.message });
+    }
+    res.status(500).json({ error: "Error getting sleep stages." });
+  }
+};

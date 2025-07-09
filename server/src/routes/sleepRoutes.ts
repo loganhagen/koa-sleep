@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   getSleepEfficiency,
   getSleepData,
+  getSleepStages,
 } from "../controllers/sleepController";
 
 const router = Router();
@@ -33,5 +34,19 @@ router.get("/", getSleepData);
  *              type: object
  */
 router.get("/efficiency", getSleepEfficiency);
+
+/**
+ * @swagger
+ * /sleep/stages:
+ *  get:
+ *    summary: Get the time spent in different sleep stages in the previous night's sleep.
+ *    responses:
+ *      200:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ */
+router.get("/stages", getSleepStages);
 
 export default router;

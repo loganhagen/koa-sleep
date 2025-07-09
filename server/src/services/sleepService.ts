@@ -3,6 +3,7 @@
  * No HTTP-related code should be found here.
  */
 
+import { SleepLog, StagesSleepLog } from "../../../types/api/sleep";
 import { sleepApiClient } from "../external/apiClient";
 
 export const sleepService = {
@@ -28,5 +29,18 @@ export const sleepService = {
     });
     let averageEfficiency = totalEfficiency / recentData.length;
     return averageEfficiency;
+  },
+
+  getSleepStages: async () => {
+    const apiData = await sleepApiClient.getSleepData();
+    const sleepLogs: SleepLog[] = apiData.sleep;
+    const mostRecentLog = sleepLogs[sleepLogs.length - 1];
+
+    if (mostRecentLog.type == "stages") {
+      const summary = mostRecentLog.levels.summary;
+      return summary;
+    }
+
+    throw new Error("Sleep stages not available.");
   },
 };
