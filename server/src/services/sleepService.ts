@@ -4,6 +4,7 @@
  */
 
 import { SleepLog, StagesSleepLog } from "../../../types/api/sleep";
+import { SleepStages } from "../../../types/backend/sleep";
 import { sleepApiClient } from "../external/apiClient";
 
 export const sleepService = {
@@ -38,7 +39,15 @@ export const sleepService = {
 
     if (mostRecentLog.type == "stages") {
       const summary = mostRecentLog.levels.summary;
-      return summary;
+
+      const sleepStages: SleepStages = {
+        deep: summary.deep.minutes,
+        light: summary.light.minutes,
+        rem: summary.rem.minutes,
+        wake: summary.wake.minutes,
+      };
+
+      return sleepStages;
     }
 
     throw new Error("Sleep stages not available.");
