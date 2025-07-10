@@ -1,4 +1,14 @@
-import app from "./app";
+import './initEnv';
+import moduleAlias from 'module-alias';
+
+if (process.env.NODE_ENV === 'production') {
+  moduleAlias.addAliases({
+    '@utils': `${__dirname}/utils`,
+    '@custom_types': `${__dirname}/../../types`
+  });
+}
+
+import app from './app';
 import { EXPRESS_PORT } from "./config/config";
 
 app.listen(EXPRESS_PORT, () => {
