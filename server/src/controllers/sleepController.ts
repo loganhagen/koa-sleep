@@ -4,34 +4,31 @@
  */
 
 import { Request, Response } from "express";
-import { sleepService } from "../services/sleepService";
+import { sleepService } from "@services/sleepService";
 
-export const getSleepData = async (req: Request, res: Response) => {
-  try {
-    const data = await sleepService.getData();
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching sleep data." });
-  }
-};
-
-export const getSleepEfficiency = async (req: Request, res: Response) => {
-  try {
-    const data = await sleepService.getEfficiency();
-    res.status(200).json({ efficiency: data });
-  } catch (error) {
-    res.status(500).json({ error: "Error getting sleep efficiency." });
-  }
-};
-
-export const getSleepStages = async (req: Request, res: Response) => {
-  try {
-    const data = await sleepService.getSleepStages();
-    res.status(200).json({ data: data });
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(404).json({ error: error.message });
+const createRequestHandler = (serviceCall: () => Promise<any>) => {
+  return async (req: Request, res: Response) => {
+    try {
+      const data = await serviceCall();
+      res.status(200).json(data);
+    } catch (error) {
+      if (error instanceof Error && error.message) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An unexpected error occurred." });
+      }
     }
-    res.status(500).json({ error: "Error getting sleep stages." });
-  }
+  };
 };
+
+export const getSleepData = createRequestHandler(sleepService.getData);
+
+export const getSleepEfficiency = createRequestHandler(
+  sleepService.getEfficiency
+);
+
+export const getSleepStages = createRequestHandler(sleepService.getSleepStages);
+
+export const getSessionSummary = createRequestHandler(
+  sleepService.getSessionSummary
+);

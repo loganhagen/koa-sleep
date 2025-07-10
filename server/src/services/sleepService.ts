@@ -3,9 +3,10 @@
  * No HTTP-related code should be found here.
  */
 
-import { SleepLog, StagesSleepLog } from "../../../types/api/sleep";
-import { SleepStages } from "../../../types/backend/sleep";
-import { sleepApiClient } from "../external/apiClient";
+import { SleepLog } from "@custom_types/api/sleep";
+import { SessionSummary, SleepStages } from "@custom_types/backend/sleep";
+import { sleepApiClient } from "@external/apiClient";
+import { millisecondsToHours } from "@utils/converters";
 
 export const sleepService = {
   /**
@@ -33,9 +34,7 @@ export const sleepService = {
   },
 
   getSleepStages: async () => {
-    const apiData = await sleepApiClient.getSleepData();
-    const sleepLogs: SleepLog[] = apiData.sleep;
-    const mostRecentLog = sleepLogs[sleepLogs.length - 1];
+    const mostRecentLog = await getMostRecentLog();
 
     if (mostRecentLog.type == "stages") {
       const summary = mostRecentLog.levels.summary;
@@ -52,4 +51,20 @@ export const sleepService = {
 
     throw new Error("Sleep stages not available.");
   },
+
+  getSessionSummary: async (): Promise<SessionSummary> => {
+    const mostRecentLog = await getMostRecentLog();
+
+    return {
+      duration: millisecondsToHours(mostRecentLog.duration),
+      startTime: mostRecentLog.startTime,
+      endTime: mostRecentLog.endTime,
+    };
+  },
+};
+
+const getMostRecentLog = async () => {
+  const apiData = await sleepApiClient.getSleepData();
+  const sleepLogs: SleepLog[] = apiData.sleep;
+  return sleepLogs[sleepLogs.length - 1];
 };

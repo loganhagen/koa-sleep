@@ -4,3 +4,9 @@ export interface SleepStages {
   rem: number;
   wake: number;
 }
+
+export interface SessionSummary {
+  duration: number;
+  startTime: string;
+  endTime: string;
+}

@@ -3,6 +3,7 @@ import {
   getSleepEfficiency,
   getSleepData,
   getSleepStages,
+  getSessionSummary,
 } from "../controllers/sleepController";
 
 const router = Router();
@@ -48,5 +49,19 @@ router.get("/efficiency", getSleepEfficiency);
  *              type: object
  */
 router.get("/stages", getSleepStages);
+
+/**
+ * @swagger
+ * /sleep/summary:
+ *  get:
+ *    summary: Get the summary for a specified sleep log.
+ *    responses:
+ *      200:
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ */
+router.get("/summary", getSessionSummary);
 
 export default router;
