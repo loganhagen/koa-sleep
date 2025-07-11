@@ -29,10 +29,27 @@ export const getSleepEfficiency = createRequestHandler(
 
 export const getSleepStages = createRequestHandler(sleepService.getSleepStages);
 
-export const getSessionSummary = (req: Request, res: Response) => {
+export const getSessionSummary = async (req: Request, res: Response) => {
   try {
-    res.status(200).json({ data: [req.params] });
+    const targetDate = new Date(req.params.date);
+    if (isNaN(targetDate.valueOf())) {
+      throw new Error("Invalid Date");
+    }
+
+    const serviceRes = await sleepService.getSessionSummary(
+      targetDate.toDateString()
+    );
+
+    if (serviceRes == null) {
+      throw new Error("Sleep log not found for provided date.");
+    }
+
+    res.status(200).json({ serviceRes });
   } catch (error) {
-    res.status(500);
+    if (error instanceof Error && error.message) {
+      res.status(404).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "An unexpected error occurred." });
+    }
   }
 };

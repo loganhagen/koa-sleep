@@ -8,7 +8,7 @@ paths:
     get:
       summary: Get the user's full sleep data from up to 7 previous nights.
       responses:
-        '200':
+        "200":
           description: A successful response
           content:
             application/json:
@@ -18,7 +18,7 @@ paths:
     get:
       summary: Get the efficiency score of up to the last 7 sleep records.
       responses:
-        '200':
+        "200":
           description: A successful response
           content:
             application/json:
@@ -28,7 +28,7 @@ paths:
     get:
       summary: Get the time spent in different sleep stages in the previous night's sleep.
       responses:
-        '200':
+        "200":
           description: A successful response
           content:
             application/json:
@@ -43,9 +43,9 @@ paths:
           schema:
             type: string
           required: true
-          description: The date of the desired log.
+          description: The date of the desired log (YYYY-MM-DD).
       responses:
-        '200':
+        "200":
           description: A successful response
           content:
             application/json:

@@ -52,19 +52,36 @@ export const sleepService = {
     throw new Error("Sleep stages not available.");
   },
 
-  getSessionSummary: async (): Promise<SessionSummary> => {
-    const mostRecentLog = await getMostRecentLog();
+  getSessionSummary: async (target: string) => {
+    const sleepLogs = await getSleepLogs();
+    const foundLog = sleepLogs.find((log) => {
+      const logDate = new Date(log.dateOfSleep).toDateString();
+      return logDate == target;
+    });
 
-    return {
-      duration: millisecondsToHours(mostRecentLog.duration),
-      startTime: mostRecentLog.startTime,
-      endTime: mostRecentLog.endTime,
-    };
+    if (foundLog) {
+      return summarizeLog(foundLog);
+    }
+
+    return null;
   },
+};
+
+const summarizeLog = (log: SleepLog): SessionSummary => {
+  return {
+    duration: millisecondsToHours(log.duration),
+    startTime: log.startTime,
+    endTime: log.endTime,
+  };
 };
 
 const getMostRecentLog = async () => {
   const apiData = await sleepApiClient.getSleepData();
   const sleepLogs: SleepLog[] = apiData.sleep;
   return sleepLogs[sleepLogs.length - 1];
+};
+
+const getSleepLogs = async () => {
+  const apiData = await sleepApiClient.getSleepData();
+  return apiData.sleep;
 };
