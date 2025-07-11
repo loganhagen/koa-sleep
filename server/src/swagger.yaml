@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Fitness Dashboard API
+  version: 1.0.0
+  description: API for fitness data
+paths:
+  /sleep:
+    get:
+      summary: Get the user's full sleep data from up to 7 previous nights.
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+  /sleep/efficiency:
+    get:
+      summary: Get the efficiency score of up to the last 7 sleep records.
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+  /sleep/stages:
+    get:
+      summary: Get the time spent in different sleep stages in the previous night's sleep.
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object
+  /sleep/summary/{date}:
+    get:
+      summary: Get the summary for a specified sleep log.
+      parameters:
+        - in: path
+          name: date
+          schema:
+            type: string
+          required: true
+          description: The date of the desired log.
+      responses:
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                type: object

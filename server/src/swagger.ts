@@ -1,16 +1,8 @@
-import swaggerJsdoc from "swagger-jsdoc";
+import yaml from "js-yaml";
+import fs from "fs";
 
-const options: swaggerJsdoc.Options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "My API",
-      version: "1.0.0",
-      description: "A simple Express API with TypeScript",
-    },
-  },
-  apis: ["./src/routes/*.ts", "./src/docs/*.yaml"],
-};
+const swaggerDocument = yaml.load(
+  fs.readFileSync("./src/swagger.yaml", "utf8")
+) as Record<string, any>;
 
-const specs = swaggerJsdoc(options);
-export default specs;
+export default swaggerDocument;

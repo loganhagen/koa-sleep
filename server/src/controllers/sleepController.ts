@@ -29,6 +29,10 @@ export const getSleepEfficiency = createRequestHandler(
 
 export const getSleepStages = createRequestHandler(sleepService.getSleepStages);
 
-export const getSessionSummary = createRequestHandler(
-  sleepService.getSessionSummary
-);
+export const getSessionSummary = (req: Request, res: Response) => {
+  try {
+    res.status(200).json({ data: [req.params] });
+  } catch (error) {
+    res.status(500);
+  }
+};
