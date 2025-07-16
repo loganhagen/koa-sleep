@@ -8,6 +8,7 @@ import { SessionSummary, SleepStages } from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
 import { millisecondsToHours } from "@utils/converters";
 
+// The object containing methods for the controller to use.
 export const sleepService = {
   /**
    *
@@ -34,7 +35,8 @@ export const sleepService = {
   },
 
   getSleepStages: async () => {
-    const mostRecentLog = await getMostRecentLog();
+    const sleepLogs = await getSleepLogs();
+    const mostRecentLog = getMostRecentLog(sleepLogs);
 
     if (mostRecentLog.type == "stages") {
       const summary = mostRecentLog.levels.summary;
@@ -65,6 +67,21 @@ export const sleepService = {
 
     return null;
   },
+
+  // TO-DO
+  getDeviation: async () => {
+    const sleepLogs = await getSleepLogs();
+    const recentLogs = getLastWeekOfLogs(sleepLogs);
+    let times: number[] = [];
+    recentLogs.forEach((log) => {
+      times.push(convertTimeToSeconds(log.startTime));
+    });
+    return {
+      data: {
+        times: times,
+      },
+    };
+  },
 };
 
 const summarizeLog = (log: SleepLog): SessionSummary => {
@@ -75,13 +92,43 @@ const summarizeLog = (log: SleepLog): SessionSummary => {
   };
 };
 
-const getMostRecentLog = async () => {
-  const apiData = await sleepApiClient.getSleepData();
-  const sleepLogs: SleepLog[] = apiData.sleep;
-  return sleepLogs[sleepLogs.length - 1];
+const getMostRecentLog = (logs: SleepLog[]) => {
+  return logs[logs.length - 1];
 };
 
 const getSleepLogs = async () => {
   const apiData = await sleepApiClient.getSleepData();
   return apiData.sleep;
+};
+
+// TO-DO
+const calcDeviation = (logs: SleepLog[]) => {
+  let deviation: number = 0;
+
+  logs.forEach((log) => {
+    deviation = deviation + convertTimeToSeconds(log.startTime);
+  });
+
+  return deviation;
+};
+
+const convertTimeToSeconds = (startTime: string) => {
+  let date = new Date(startTime);
+  let hours = date.getHours();
+  let mins = date.getMinutes();
+  let secs = date.getSeconds();
+
+  return hours * 3600 + mins * 60 + secs;
+};
+
+const getLastWeekOfLogs = (logs: SleepLog[]) => {
+  return logs.slice(0, 7);
+};
+
+// The logs are sorted by most recent.
+const sortLogsByDate = (logs: SleepLog[]) => {
+  const sortedLogs = logs.sort(
+    (a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+  );
+  return sortedLogs;
 };

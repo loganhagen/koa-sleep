@@ -6,6 +6,7 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
 
+// Generic request handler function factory.
 const createRequestHandler = (serviceCall: () => Promise<any>) => {
   return async (req: Request, res: Response) => {
     try {
@@ -21,35 +22,33 @@ const createRequestHandler = (serviceCall: () => Promise<any>) => {
   };
 };
 
-export const getSleepData = createRequestHandler(sleepService.getData);
+export const sleepController = {
+  getSleepData: createRequestHandler(sleepService.getData),
+  getSleepEfficiency: createRequestHandler(sleepService.getEfficiency),
+  getSleepStages: createRequestHandler(sleepService.getSleepStages),
+  getSessionSummary: async (req: Request, res: Response) => {
+    try {
+      const targetDate = new Date(req.params.date);
+      if (isNaN(targetDate.valueOf())) {
+        throw new Error("Invalid Date");
+      }
 
-export const getSleepEfficiency = createRequestHandler(
-  sleepService.getEfficiency
-);
+      const serviceRes = await sleepService.getSessionSummary(
+        targetDate.toDateString()
+      );
 
-export const getSleepStages = createRequestHandler(sleepService.getSleepStages);
+      if (serviceRes == null) {
+        throw new Error("Sleep log not found for provided date.");
+      }
 
-export const getSessionSummary = async (req: Request, res: Response) => {
-  try {
-    const targetDate = new Date(req.params.date);
-    if (isNaN(targetDate.valueOf())) {
-      throw new Error("Invalid Date");
+      res.status(200).json({ serviceRes });
+    } catch (error) {
+      if (error instanceof Error && error.message) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "An unexpected error occurred." });
+      }
     }
-
-    const serviceRes = await sleepService.getSessionSummary(
-      targetDate.toDateString()
-    );
-
-    if (serviceRes == null) {
-      throw new Error("Sleep log not found for provided date.");
-    }
-
-    res.status(200).json({ serviceRes });
-  } catch (error) {
-    if (error instanceof Error && error.message) {
-      res.status(404).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: "An unexpected error occurred." });
-    }
-  }
+  },
+  getDeviation: createRequestHandler(sleepService.getDeviation),
 };

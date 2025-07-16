@@ -51,3 +51,13 @@ paths:
             application/json:
               schema:
                 type: object
+  /sleep/deviation:
+    get:
+      summary: Test.
+      responses:
+        "200":
+          description: Test.
+          content:
+            application/json:
+              schema:
+                type: object
