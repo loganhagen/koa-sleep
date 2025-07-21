@@ -50,5 +50,5 @@ export const sleepController = {
       }
     }
   },
-  getDeviation: createRequestHandler(sleepService.getDeviation),
+  getSleepStats: createRequestHandler(sleepService.getSleepStats),
 };

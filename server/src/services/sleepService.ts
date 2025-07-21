@@ -4,9 +4,19 @@
  */
 
 import { SleepLog } from "@custom_types/api/sleep";
-import { SessionSummary, SleepStages } from "@custom_types/backend/sleep";
+import {
+  SleepSummary,
+  SleepStages,
+  SleepStats,
+  WeeklySleepStats,
+} from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
 import { millisecondsToHours } from "@utils/converters";
+import {
+  coefficientOfVariation,
+  mean,
+  standardDeviation,
+} from "simple-statistics";
 
 // The object containing methods for the controller to use.
 export const sleepService = {
@@ -36,7 +46,7 @@ export const sleepService = {
 
   getSleepStages: async () => {
     const sleepLogs = await getSleepLogs();
-    const mostRecentLog = getMostRecentLog(sleepLogs);
+    const mostRecentLog = sleepLogs[sleepLogs.length - 1];
 
     if (mostRecentLog.type == "stages") {
       const summary = mostRecentLog.levels.summary;
@@ -68,32 +78,64 @@ export const sleepService = {
     return null;
   },
 
-  // TO-DO
-  getDeviation: async () => {
+  /**
+   *
+   * @returns An object containing the mean, standard deviation, deviation in minutes, and coefficient of variation for
+   * the last week of bedtime and waketime values.
+   */
+  getSleepStats: async (): Promise<WeeklySleepStats> => {
     const sleepLogs = await getSleepLogs();
-    const recentLogs = getLastWeekOfLogs(sleepLogs);
-    let times: number[] = [];
+    const recentLogs = sortLogsByDate(sleepLogs).slice(0, 7);
+    const summarizedLogs: SleepSummary[] = [];
     recentLogs.forEach((log) => {
-      times.push(convertTimeToSeconds(log.startTime));
+      summarizedLogs.push(summarizeLog(log));
     });
+
+    let wakeTimeStats = getWakeTimeStats(summarizedLogs);
+    let bedTimeStats = undefined;
+
     return {
-      data: {
-        times: times,
-      },
+      bedTimeStats: bedTimeStats,
+      wakeTimeStats: wakeTimeStats,
     };
   },
 };
 
-const summarizeLog = (log: SleepLog): SessionSummary => {
+const getWakeTimeStats = (summarizedLogs: SleepSummary[]): SleepStats => {
+  let wakeTimes = summarizedLogs.map((log) => log.endTimeQuantity);
+  let meanWakeTime = mean(wakeTimes);
+  let wakeTimeDev = standardDeviation(wakeTimes);
+  let deviationToMins = 60 * wakeTimeDev;
+  let wakeTimeCoeff = coefficientOfVariation(wakeTimes);
+
   return {
-    duration: millisecondsToHours(log.duration),
-    startTime: log.startTime,
-    endTime: log.endTime,
+    mean: meanWakeTime,
+    standardDeviation: wakeTimeDev,
+    deviationInMins: deviationToMins,
+    coefficientOfVariation: wakeTimeCoeff,
   };
 };
 
-const getMostRecentLog = (logs: SleepLog[]) => {
-  return logs[logs.length - 1];
+/**
+ *
+ * @param log
+ * @returns Returns the most pertinent top-level data from a sleep log.
+ */
+const summarizeLog = (log: SleepLog): SleepSummary => {
+  let startTime = new Date(log.startTime + "Z");
+  let endTime = new Date(log.endTime + "Z");
+
+  let [startTimeQuantity, endTimeQuantity] = [
+    startTime.getUTCHours() + startTime.getUTCMinutes() / 60,
+    endTime.getUTCHours() + endTime.getUTCMinutes() / 60,
+  ];
+  return {
+    duration: millisecondsToHours(log.duration),
+    startTime: startTime,
+    startTimeQuantity: startTimeQuantity,
+    endTime: endTime,
+    endTimeQuantity: endTimeQuantity,
+  };
 };
 
 const getSleepLogs = async () => {
@@ -101,31 +143,11 @@ const getSleepLogs = async () => {
   return apiData.sleep;
 };
 
-// TO-DO
-const calcDeviation = (logs: SleepLog[]) => {
-  let deviation: number = 0;
-
-  logs.forEach((log) => {
-    deviation = deviation + convertTimeToSeconds(log.startTime);
-  });
-
-  return deviation;
-};
-
-const convertTimeToSeconds = (startTime: string) => {
-  let date = new Date(startTime);
-  let hours = date.getHours();
-  let mins = date.getMinutes();
-  let secs = date.getSeconds();
-
-  return hours * 3600 + mins * 60 + secs;
-};
-
-const getLastWeekOfLogs = (logs: SleepLog[]) => {
-  return logs.slice(0, 7);
-};
-
-// The logs are sorted by most recent.
+/**
+ * Sort logs by most recent.
+ * @param logs
+ * @returns
+ */
 const sortLogsByDate = (logs: SleepLog[]) => {
   const sortedLogs = logs.sort(
     (a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime()

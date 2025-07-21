@@ -51,12 +51,12 @@ paths:
             application/json:
               schema:
                 type: object
-  /sleep/deviation:
+  /sleep/stats:
     get:
-      summary: Test.
+      summary: Get a few descriptive statistics for the last week of sleep.
       responses:
         "200":
-          description: Test.
+          description: A successful response.
           content:
             application/json:
               schema:

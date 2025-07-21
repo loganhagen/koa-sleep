@@ -5,8 +5,22 @@ export interface SleepStages {
   wake: number;
 }
 
-export interface SessionSummary {
+export interface SleepSummary {
   duration: number;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  startTimeQuantity: number;
+  endTime: Date;
+  endTimeQuantity: number;
+}
+
+export interface SleepStats {
+  mean: number;
+  standardDeviation: number;
+  deviationInMins: number;
+  coefficientOfVariation: number;
+}
+
+export interface WeeklySleepStats {
+  bedTimeStats: SleepStats | undefined;
+  wakeTimeStats: SleepStats;
 }

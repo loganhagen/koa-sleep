@@ -7,6 +7,6 @@ router.get("/", sleepController.getSleepData);
 router.get("/efficiency", sleepController.getSleepEfficiency);
 router.get("/stages", sleepController.getSleepStages);
 router.get("/summary/:date", sleepController.getSessionSummary);
-router.get("/deviation", sleepController.getDeviation);
+router.get("/stats", sleepController.getSleepStats);
 
 export default router;
