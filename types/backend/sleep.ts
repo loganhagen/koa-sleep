@@ -21,6 +21,6 @@ export interface SleepStats {
 }
 
 export interface WeeklySleepStats {
-  bedTimeStats: SleepStats | undefined;
+  bedTimeStats: SleepStats;
   wakeTimeStats: SleepStats;
 }

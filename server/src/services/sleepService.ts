@@ -3,22 +3,19 @@
  * No HTTP-related code should be found here.
  */
 
-import { SleepLog } from "@custom_types/api/sleep";
 import {
   SleepSummary,
   SleepStages,
-  SleepStats,
   WeeklySleepStats,
 } from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
-import { millisecondsToHours } from "@utils/converters";
 import {
-  coefficientOfVariation,
-  mean,
-  standardDeviation,
-} from "simple-statistics";
+  getSleepLogs,
+  summarizeLog,
+  calculateSleepStats,
+  sortLogsByDate,
+} from "@utils/sleep";
 
-// The object containing methods for the controller to use.
 export const sleepService = {
   /**
    *
@@ -80,8 +77,7 @@ export const sleepService = {
 
   /**
    *
-   * @returns An object containing the mean, standard deviation, deviation in minutes, and coefficient of variation for
-   * the last week of bedtime and waketime values.
+   * @returns A WeeklySleepStats object containing a few descriptive stats.
    */
   getSleepStats: async (): Promise<WeeklySleepStats> => {
     const sleepLogs = await getSleepLogs();
@@ -91,66 +87,17 @@ export const sleepService = {
       summarizedLogs.push(summarizeLog(log));
     });
 
-    let wakeTimeStats = getWakeTimeStats(summarizedLogs);
-    let bedTimeStats = undefined;
-
+    const wakeTimeStats = calculateSleepStats(
+      summarizedLogs,
+      "endTimeQuantity"
+    );
+    const bedTimeStats = calculateSleepStats(
+      summarizedLogs,
+      "startTimeQuantity"
+    );
     return {
-      bedTimeStats: bedTimeStats,
-      wakeTimeStats: wakeTimeStats,
+      wakeTimeStats,
+      bedTimeStats,
     };
   },
-};
-
-const getWakeTimeStats = (summarizedLogs: SleepSummary[]): SleepStats => {
-  let wakeTimes = summarizedLogs.map((log) => log.endTimeQuantity);
-  let meanWakeTime = mean(wakeTimes);
-  let wakeTimeDev = standardDeviation(wakeTimes);
-  let deviationToMins = 60 * wakeTimeDev;
-  let wakeTimeCoeff = coefficientOfVariation(wakeTimes);
-
-  return {
-    mean: meanWakeTime,
-    standardDeviation: wakeTimeDev,
-    deviationInMins: deviationToMins,
-    coefficientOfVariation: wakeTimeCoeff,
-  };
-};
-
-/**
- *
- * @param log
- * @returns Returns the most pertinent top-level data from a sleep log.
- */
-const summarizeLog = (log: SleepLog): SleepSummary => {
-  let startTime = new Date(log.startTime + "Z");
-  let endTime = new Date(log.endTime + "Z");
-
-  let [startTimeQuantity, endTimeQuantity] = [
-    startTime.getUTCHours() + startTime.getUTCMinutes() / 60,
-    endTime.getUTCHours() + endTime.getUTCMinutes() / 60,
-  ];
-  return {
-    duration: millisecondsToHours(log.duration),
-    startTime: startTime,
-    startTimeQuantity: startTimeQuantity,
-    endTime: endTime,
-    endTimeQuantity: endTimeQuantity,
-  };
-};
-
-const getSleepLogs = async () => {
-  const apiData = await sleepApiClient.getSleepData();
-  return apiData.sleep;
-};
-
-/**
- * Sort logs by most recent.
- * @param logs
- * @returns
- */
-const sortLogsByDate = (logs: SleepLog[]) => {
-  const sortedLogs = logs.sort(
-    (a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
-  );
-  return sortedLogs;
 };
