@@ -9,8 +9,8 @@ import {
   WeeklySleepStats,
 } from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
+import { SleepKey } from "@utils/constants";
 import {
-  getSleepLogs,
   summarizeLog,
   calculateSleepStats,
   sortLogsByDate,
@@ -42,7 +42,8 @@ export const sleepService = {
   },
 
   getSleepStages: async () => {
-    const sleepLogs = await getSleepLogs();
+    const apiData = await sleepApiClient.getSleepData();
+    const sleepLogs = apiData.sleep;
     const mostRecentLog = sleepLogs[sleepLogs.length - 1];
 
     if (mostRecentLog.type == "stages") {
@@ -62,7 +63,8 @@ export const sleepService = {
   },
 
   getSessionSummary: async (target: string) => {
-    const sleepLogs = await getSleepLogs();
+    const apiData = await sleepApiClient.getSleepData();
+    const sleepLogs = apiData.sleep;
     const foundLog = sleepLogs.find((log) => {
       const logDate = new Date(log.dateOfSleep).toDateString();
       return logDate == target;
@@ -80,21 +82,16 @@ export const sleepService = {
    * @returns A WeeklySleepStats object containing a few descriptive stats.
    */
   getSleepStats: async (): Promise<WeeklySleepStats> => {
-    const sleepLogs = await getSleepLogs();
+    const apiData = await sleepApiClient.getSleepData();
+    const sleepLogs = apiData.sleep;
     const recentLogs = sortLogsByDate(sleepLogs).slice(0, 7);
     const summarizedLogs: SleepSummary[] = [];
     recentLogs.forEach((log) => {
       summarizedLogs.push(summarizeLog(log));
     });
 
-    const wakeTimeStats = calculateSleepStats(
-      summarizedLogs,
-      "endTimeQuantity"
-    );
-    const bedTimeStats = calculateSleepStats(
-      summarizedLogs,
-      "startTimeQuantity"
-    );
+    const wakeTimeStats = calculateSleepStats(summarizedLogs, SleepKey.End);
+    const bedTimeStats = calculateSleepStats(summarizedLogs, SleepKey.Start);
     return {
       wakeTimeStats,
       bedTimeStats,

@@ -1,6 +1,5 @@
 import { SleepLog } from "@custom_types/api/sleep";
 import { SleepSummary, SleepStats } from "@custom_types/backend/sleep";
-import { sleepApiClient } from "@external/apiClient";
 import {
   mean,
   standardDeviation,
@@ -57,11 +56,6 @@ export const summarizeLog = (log: SleepLog): SleepSummary => {
     endTime: endTime,
     endTimeQuantity: endTimeQuantity,
   };
-};
-
-export const getSleepLogs = async () => {
-  const apiData = await sleepApiClient.getSleepData();
-  return apiData.sleep;
 };
 
 /**
