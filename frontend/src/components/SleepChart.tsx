@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, Stack, Skeleton } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { useEffect, useState } from "react";
-import { SleepCardState } from "../../../types/UI/sleep";
+import { SleepCardState } from "../../../types/ui/sleep";
 import { Gauge, gaugeClasses, PieChart } from "@mui/x-charts";
 
 export default function SleepChart() {

@@ -1,6 +1,7 @@
 import { Box, Grid, CssBaseline } from "@mui/material";
 import Navbar from "./components/Navbar";
 import SleepChart from "./components/SleepChart";
+import { SleepConsistencyCard } from "./components/SleepConsistencyCard";
 
 function App() {
   return (
@@ -33,7 +34,8 @@ function App() {
 
         <Box sx={{ p: 0, m: 1 }}>
           <Grid container spacing={3}>
-            <SleepChart />
+            <p>hello</p>
+            <SleepConsistencyCard />
           </Grid>
         </Box>
       </Box>
