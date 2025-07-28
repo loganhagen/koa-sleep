@@ -1,4 +1,4 @@
-import AtAGlance from "../components/AtAGlance";
+import AtAGlance from "./components/AtAGlance";
 import { Box } from "@mui/material";
 
 const Home = () => {
