@@ -1,60 +1,31 @@
 "use client";
 
 import { Paper, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GlanceItem from "./GlanceItem";
-
-const glanceData = [
-  {
-    id: "sleep",
-    title: "Last Night's Sleep",
-    displayContent: (
-      <Typography variant="h5" fontWeight="bold">
-        7h 30m
-      </Typography>
-    ),
-    sx: {
-      borderRadius: "50%",
-      background: "linear-gradient(145deg, #6D7BFF, #4353FF)",
-      color: "primary.contrastText",
-      boxShadow: "0px 4px 15px rgba(67, 83, 255, 0.25)",
-    },
-  },
-  {
-    id: "bedtime",
-    title: "Bedtime",
-    displayContent: (
-      <>
-        <Typography variant="h5" fontWeight="bold">
-          11:30
-        </Typography>
-        <Typography variant="body1">PM</Typography>
-      </>
-    ),
-    sx: {
-      borderRadius: 4,
-      bgcolor: "grey.100",
-      color: "grey.800",
-    },
-  },
-  {
-    id: "score",
-    title: "Sleep Score",
-    displayContent: (
-      <Typography variant="h4" fontWeight="bold">
-        75
-      </Typography>
-    ),
-    sx: {
-      borderRadius: "50%",
-      background: "linear-gradient(145deg, #2CDFFF, #00A2E8)",
-      color: "secondary.contrastText",
-      boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
-    },
-  },
-];
+import { LastNightSleep } from "../../../../types/backend/sleep";
 
 const AtAGlance = () => {
+  const [sleepScore, setSleepScore] = useState("...");
+  const [bedtime, setBedtime] = useState("...");
+  const [totalSleep, setTotalSleep] = useState("...");
+
+  const getLastNightSleepData = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/sleep/lastnight");
+      const data = (await res.json()) as LastNightSleep;
+      setSleepScore(data.sleepScore);
+      setBedtime(data.bedtime);
+      setTotalSleep(data.totalSleep);
+    } catch (error) {
+      console.log("unable to get last night's sleep data");
+    }
+  };
+
+  useEffect(() => {
+    getLastNightSleepData();
+  }, []);
+
   return (
     <Paper
       elevation={0}
@@ -74,7 +45,7 @@ const AtAGlance = () => {
       }}
     >
       <Typography variant="h6" component="h2" sx={{ mb: 4 }}>
-        At a Glance
+        Last Night
       </Typography>
 
       <Stack
@@ -83,14 +54,49 @@ const AtAGlance = () => {
         alignItems="flex-start"
         spacing={5}
       >
-        {glanceData.map((item) => (
-          <GlanceItem
-            key={item.id}
-            title={item.title}
-            displayContent={item.displayContent}
-            sx={item.sx}
-          />
-        ))}
+        <GlanceItem
+          title={"Total Sleep"}
+          displayContent={
+            <Typography variant="h5" fontWeight="bold">
+              {totalSleep}
+            </Typography>
+          }
+          sx={{
+            borderRadius: "50%",
+            background: "linear-gradient(145deg, #6D7BFF, #4353FF)",
+            color: "primary.contrastText",
+            boxShadow: "0px 4px 15px rgba(67, 83, 255, 0.25)",
+          }}
+        />
+        <GlanceItem
+          title={"Bedtime"}
+          displayContent={
+            <>
+              <Typography variant="h5" fontWeight="bold">
+                {bedtime}
+              </Typography>
+            </>
+          }
+          sx={{
+            borderRadius: 4,
+            bgcolor: "grey.100",
+            color: "grey.800",
+          }}
+        />
+        <GlanceItem
+          title={"Sleep Score"}
+          displayContent={
+            <Typography variant="h4" fontWeight="bold">
+              {sleepScore}
+            </Typography>
+          }
+          sx={{
+            borderRadius: "50%",
+            background: "linear-gradient(145deg, #2CDFFF, #00A2E8)",
+            color: "secondary.contrastText",
+            boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
+          }}
+        />
       </Stack>
     </Paper>
   );

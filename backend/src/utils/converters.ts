@@ -10,3 +10,10 @@ export function timeToMs(time: string) {
   const [hms, ms] = time.split(".").map(Number);
   const [hrs, min, secs] = time.split(":").map(Number);
 }
+
+export const convertMinutesToHHMM = (minutes: number) => {
+  const hoursPart = Math.floor(minutes / 60);
+  const minutesPart = minutes % 60;
+
+  return `${hoursPart}h ${minutesPart}m`;
+};

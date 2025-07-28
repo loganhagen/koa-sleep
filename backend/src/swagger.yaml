@@ -61,3 +61,13 @@ paths:
             application/json:
               schema:
                 type: object
+  /sleep/lastnight:
+    get:
+      summary: Get last night's sleep.
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object

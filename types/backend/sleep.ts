@@ -24,3 +24,9 @@ export interface WeeklySleepStats {
   bedTimeStats: SleepStats;
   wakeTimeStats: SleepStats;
 }
+
+export interface LastNightSleep {
+  totalSleep: string;
+  bedtime: string;
+  sleepScore: string;
+}

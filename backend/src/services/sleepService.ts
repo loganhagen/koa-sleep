@@ -7,9 +7,11 @@ import {
   SleepSummary,
   SleepStages,
   WeeklySleepStats,
+  LastNightSleep,
 } from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
 import { SleepKey } from "@utils/constants";
+import { convertMinutesToHHMM } from "@utils/converters";
 import {
   summarizeLog,
   calculateSleepStats,
@@ -75,6 +77,21 @@ export const sleepService = {
     }
 
     return null;
+  },
+
+  getLastNightSleep: async () => {
+    const apiData = await sleepApiClient.getSleepData();
+    const sortedLogs = sortLogsByDate(apiData.sleep);
+    const lastLog = sortedLogs[0];
+    const totalSleep = convertMinutesToHHMM(lastLog.minutesAsleep);
+    const bedtime = new Date(lastLog.startTime).toLocaleTimeString();
+    const sleepScore = lastLog.efficiency.toString();
+    const data: LastNightSleep = {
+      totalSleep: totalSleep,
+      bedtime: bedtime,
+      sleepScore: sleepScore,
+    };
+    return data;
   },
 
   /**

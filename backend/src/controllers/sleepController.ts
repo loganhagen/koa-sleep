@@ -51,4 +51,5 @@ export const sleepController = {
     }
   },
   getSleepStats: createRequestHandler(sleepService.getSleepStats),
+  getLastNightSleep: createRequestHandler(sleepService.getLastNightSleep),
 };
