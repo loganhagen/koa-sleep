@@ -10,6 +10,7 @@ import {
   LastNightSleep,
 } from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
+import { cacheService } from "@utils/cacheService";
 import { SleepKey } from "@utils/constants";
 import { convertMinutesToHHMM } from "@utils/converters";
 import {
@@ -80,15 +81,19 @@ export const sleepService = {
   },
 
   getLastNightSleep: async () => {
-    const apiData = await sleepApiClient.getSleepData();
-    const sortedLogs = sortLogsByDate(apiData.sleep);
-    const lastLog = sortedLogs[0];
-    const totalSleep = convertMinutesToHHMM(lastLog.minutesAsleep);
-    const bedtime = new Date(lastLog.startTime).toLocaleTimeString();
-    const sleepScore = lastLog.efficiency.toString();
+    let sleepScore = cacheService.get("lhagen", "sleep-score");
+
+    if (sleepScore === undefined) {
+      const apiData = await sleepApiClient.getSleepData();
+      const sortedLogs = sortLogsByDate(apiData.sleep);
+      const lastLog = sortedLogs[0];
+      sleepScore = lastLog.efficiency.toString();
+      cacheService.set("lhagen", "sleep-score", sleepScore);
+    }
+
     const data: LastNightSleep = {
-      totalSleep: totalSleep,
-      bedtime: bedtime,
+      totalSleep: "1",
+      bedtime: "1",
       sleepScore: sleepScore,
     };
     return data;

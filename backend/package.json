@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "flat-cache": "^6.1.12",
     "js-yaml": "^4.1.0",
     "module-alias": "^2.2.3",
     "morgan": "^1.10.1",
