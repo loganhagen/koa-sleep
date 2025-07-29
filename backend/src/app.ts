@@ -5,11 +5,20 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger";
 import sleepRoutes from "./routes/sleepRoutes";
 import morgan from "morgan";
+import logger from "@utils/logger";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(morgan("dev"));
+app.use(
+  morgan("combined", {
+    stream: {
+      write: (message) => {
+        logger.info(message.trim());
+      },
+    },
+  })
+);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/sleep", sleepRoutes);
 
