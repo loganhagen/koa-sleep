@@ -2,6 +2,15 @@
 
 import AtAGlance from "./components/AtAGlance";
 import { Box } from "@mui/material";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const Home = () => {
   return (
@@ -15,7 +24,9 @@ const Home = () => {
         backgroundColor: "background.default",
       }}
     >
-      <AtAGlance />
+      <QueryClientProvider client={queryClient}>
+        <AtAGlance />
+      </QueryClientProvider>
     </Box>
   );
 };
