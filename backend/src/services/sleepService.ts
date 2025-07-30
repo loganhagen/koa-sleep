@@ -25,7 +25,7 @@ export const sleepService = {
    * @summary Gets the full sleep data API response.
    */
   getData: async () => {
-    const apiData = await sleepApiClient.getSleepData();
+    const apiData = await sleepApiClient.getMockSleepData();
     return apiData;
   },
 
@@ -33,7 +33,7 @@ export const sleepService = {
    * @summary Calculates and returns the average sleep efficiency for up to the last 7 sleep records.
    */
   getEfficiency: async () => {
-    const apiData = await sleepApiClient.getSleepData();
+    const apiData = await sleepApiClient.getMockSleepData();
     const sleepData = apiData.sleep;
     let totalEfficiency = 0;
     const recentData = sleepData.slice(0, 7);
@@ -45,7 +45,7 @@ export const sleepService = {
   },
 
   getSleepStages: async () => {
-    const apiData = await sleepApiClient.getSleepData();
+    const apiData = await sleepApiClient.getMockSleepData();
     const sleepLogs = apiData.sleep;
     const mostRecentLog = sleepLogs[sleepLogs.length - 1];
 
@@ -66,7 +66,7 @@ export const sleepService = {
   },
 
   getSessionSummary: async (target: string) => {
-    const apiData = await sleepApiClient.getSleepData();
+    const apiData = await sleepApiClient.getMockSleepData();
     const sleepLogs = apiData.sleep;
     const foundLog = sleepLogs.find((log) => {
       const logDate = new Date(log.dateOfSleep).toDateString();
@@ -80,22 +80,41 @@ export const sleepService = {
     return null;
   },
 
-  getLastNightSleep: async () => {
-    let sleepScore = cacheService.get("lhagen", "sleep-score");
+  getLastNightSleep: async (): Promise<LastNightSleep> => {
+    try {
+      const cacheString = cacheService.get("lhagen", "recent-data");
+      if (cacheString) {
+        return JSON.parse(cacheString) as LastNightSleep;
+      }
+    } catch (error) {
+      console.log("Unable to retrieve or parse cache data.");
+    }
 
-    if (sleepScore === undefined) {
-      const apiData = await sleepApiClient.getSleepData();
-      const sortedLogs = sortLogsByDate(apiData.sleep);
-      const lastLog = sortedLogs[0];
-      sleepScore = lastLog.efficiency.toString();
-      cacheService.set("lhagen", "sleep-score", sleepScore);
+    const apiData = await sleepApiClient.getMockSleepData();
+
+    if (!apiData?.sleep?.length) {
+      throw new Error("No sleep data returned from API.");
+    }
+
+    const sortedLogs = sortLogsByDate(apiData.sleep);
+    const lastLog = sortedLogs[0];
+
+    if (!lastLog) {
+      throw new Error("Failed to get most recent sleep log.");
     }
 
     const data: LastNightSleep = {
-      totalSleep: "1",
-      bedtime: "1",
-      sleepScore: sleepScore,
+      totalSleep: convertMinutesToHHMM(lastLog.minutesAsleep),
+      bedtime: new Date(lastLog.startTime).toLocaleTimeString(),
+      sleepScore: lastLog.efficiency.toString(),
     };
+
+    try {
+      cacheService.set("lhagen", "recent-data", JSON.stringify(data));
+    } catch (error) {
+      console.log("Failed to save data to cache");
+    }
+
     return data;
   },
 
@@ -104,7 +123,7 @@ export const sleepService = {
    * @returns A WeeklySleepStats object containing a few descriptive stats.
    */
   getSleepStats: async (): Promise<WeeklySleepStats> => {
-    const apiData = await sleepApiClient.getSleepData();
+    const apiData = await sleepApiClient.getMockSleepData();
     const sleepLogs = apiData.sleep;
     const recentLogs = sortLogsByDate(sleepLogs).slice(0, 7);
     const summarizedLogs: SleepSummary[] = [];

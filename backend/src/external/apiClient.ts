@@ -13,7 +13,9 @@ export const sleepApiClient = {
   /** Uses the general HTTP fetch function to fetch the Sleep data from the mock API server.
    *
    */
-  getSleepData: async (): Promise<FitbitData> => {
+
+  // TO DO: change back to getSleepData and use env variables to pass the correct URL
+  getMockSleepData: async (): Promise<FitbitData> => {
     return await fetchData<FitbitData>(MOCK_SERVER_URI);
   },
 };
