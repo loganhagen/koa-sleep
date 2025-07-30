@@ -1,6 +1,6 @@
 import { Paper, Stack, Divider, Typography } from "@mui/material";
 import Greeting from "./Greeting";
-import LastSleep from "./LastSleep";
+import MostRecentSleep from "./MostRecentSleep";
 
 const Header = () => {
   return (
@@ -21,7 +21,7 @@ const Header = () => {
             <Typography variant="h6" component="h2">
               Most Recent Sleep
             </Typography>
-            <LastSleep />
+            <MostRecentSleep />
           </Stack>
         </Stack>
       </Stack>
