@@ -1,8 +1,21 @@
 import React from "react";
 import { Typography, Box, Stack } from "@mui/material";
-import LastSleepItem from "../header/LastSleepItem";
 
 const SleepConsistency: React.FC = () => {
+  const displayItemStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 120,
+    width: 120,
+    textAlign: "center",
+    transition: "transform 0.3s ease-in-out",
+    ":hover": {
+      transform: "scale(1.05)",
+    },
+  };
+
   return (
     <Box
       sx={{
@@ -16,20 +29,22 @@ const SleepConsistency: React.FC = () => {
       }}
     >
       <Stack direction="row" alignItems="center" spacing={4}>
-        <LastSleepItem
-          title="Sleep Consistency"
-          displayContent={
+        <Stack alignItems="center" spacing={1}>
+          <Box
+            sx={{
+              ...displayItemStyle,
+              borderRadius: "50%",
+              background: "linear-gradient(145deg, #288520ff, #288520ff)",
+              color: "secondary.contrastText",
+              boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
+            }}
+          >
             <Typography variant="h4" fontWeight="bold">
               A
             </Typography>
-          }
-          sx={{
-            borderRadius: "50%",
-            background: "linear-gradient(145deg, #288520ff, #288520ff)",
-            color: "secondary.contrastText",
-            boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
-          }}
-        />
+          </Box>
+          <Typography variant="subtitle1">Sleep Consistency</Typography>
+        </Stack>
         <Typography
           variant="body1"
           color="text.secondary"
