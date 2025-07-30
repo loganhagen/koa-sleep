@@ -14,9 +14,7 @@ const Home = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
-        p: 2,
-        backgroundColor: "background.default",
+        flexGrow: 1,
       }}
     >
       <QueryClientProvider client={queryClient}>
