@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import { Divider, Typography, Box, Stack, IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import SleepConsistency from "./SleepConsistency";
-import AverageBedtime from "./AverageBedtime";
-import AverageWakeTime from "./AverageWakeTime";
+import SleepScheduleChart from "./SleepScheduleChart";
 
 const WeeklyInsights: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -81,8 +80,7 @@ const WeeklyInsights: React.FC = () => {
         sx={{ mt: 2 }}
       >
         <SleepConsistency />
-        <AverageBedtime />
-        <AverageWakeTime />
+        <SleepScheduleChart />
       </Stack>
     </Box>
   );

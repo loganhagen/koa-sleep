@@ -9,6 +9,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { Home, BarChart, Settings } from "@mui/icons-material";
+import InsightsIcon from "@mui/icons-material/Insights";
 
 const Sidebar: React.FC = () => {
   return (
@@ -31,9 +32,9 @@ const Sidebar: React.FC = () => {
         <ListItem disablePadding>
           <ListItemButton component="a" href="/">
             <ListItemIcon>
-              <BarChart />
+              <InsightsIcon />
             </ListItemIcon>
-            <ListItemText primary="History" />
+            <ListItemText primary="Insights" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
