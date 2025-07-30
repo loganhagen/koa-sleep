@@ -7,7 +7,7 @@ import SleepConsistency from "./SleepConsistency";
 import AverageBedtime from "./AverageBedtime";
 import AverageWakeTime from "./AverageWakeTime";
 
-const AdvancedAnalytics: React.FC = () => {
+const WeeklyInsights: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const getWeekRange = (date: Date) => {
@@ -88,4 +88,4 @@ const AdvancedAnalytics: React.FC = () => {
   );
 };
 
-export default AdvancedAnalytics;
+export default WeeklyInsights;

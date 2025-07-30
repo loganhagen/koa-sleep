@@ -1,23 +1,23 @@
 "use client";
 
 import { Stack, Typography } from "@mui/material";
-import GlanceItem from "./GlanceItem";
+import LastSleepItem from "./LastSleepItem";
 import { LastNightSleep } from "../../../../../types/backend/sleep";
 import { useQuery } from "@tanstack/react-query";
 
-const AtAGlance = () => {
-  const query = useQuery<LastNightSleep>({
-    queryKey: ["lastNightSleep"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:5000/sleep/lastnight");
+const LastSleep = () => {
+  // const query = useQuery<LastNightSleep>({
+  //   queryKey: ["lastNightSleep"],
+  //   queryFn: async () => {
+  //     const res = await fetch("http://localhost:5000/sleep/lastnight");
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch sleep data.");
-      }
-      return await res.json();
-    },
-    retry: 1,
-  });
+  //     if (!res.ok) {
+  //       throw new Error("Failed to fetch sleep data.");
+  //     }
+  //     return await res.json();
+  //   },
+  //   retry: 1,
+  // });
 
   return (
     <>
@@ -28,11 +28,11 @@ const AtAGlance = () => {
         alignItems="flex-start"
         spacing={5}
       >
-        <GlanceItem
+        <LastSleepItem
           title={"Total Sleep"}
           displayContent={
             <Typography variant="h5" fontWeight="bold">
-              {query.error ? "N/A" : query.data?.totalSleep}
+              8h 30m
             </Typography>
           }
           sx={{
@@ -41,14 +41,12 @@ const AtAGlance = () => {
             color: "grey.800",
           }}
         />
-        <GlanceItem
+        <LastSleepItem
           title={"Bedtime"}
           displayContent={
-            <>
-              <Typography variant="h5" fontWeight="bold">
-                {query.error ? "N/A" : query.data?.bedtime}
-              </Typography>
-            </>
+            <Typography variant="h5" fontWeight="bold">
+              9:30 PM{" "}
+            </Typography>
           }
           sx={{
             borderRadius: 4,
@@ -56,11 +54,11 @@ const AtAGlance = () => {
             color: "grey.800",
           }}
         />
-        <GlanceItem
+        <LastSleepItem
           title={"Efficiency"}
           displayContent={
             <Typography variant="h4" fontWeight="bold">
-              {query.error ? "N/A" : query.data?.sleepScore}
+              77
             </Typography>
           }
           sx={{
@@ -75,4 +73,4 @@ const AtAGlance = () => {
   );
 };
 
-export default AtAGlance;
+export default LastSleep;

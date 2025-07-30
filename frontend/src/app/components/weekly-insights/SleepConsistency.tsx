@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Box } from "@mui/material";
-import AnalyticsItem from "./WeeklyInsightsItem";
+import WeeklyInsightsItem from "./WeeklyInsightsItem";
 
 const SleepConsistency: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const SleepConsistency: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      <AnalyticsItem
+      <WeeklyInsightsItem
         title="Sleep Consistency"
         displayContent={
           <Typography variant="h4" fontWeight="bold">

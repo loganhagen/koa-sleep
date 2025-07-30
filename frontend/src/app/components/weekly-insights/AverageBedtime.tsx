@@ -30,7 +30,7 @@ const AverageBedtime: React.FC = () => {
         borderRadius: 4,
         bgcolor: "grey.100",
         color: "grey.800",
-        width: "100%",
+        width: { xs: "100%", sm: 400 },
         height: "auto",
         padding: 2,
       }}

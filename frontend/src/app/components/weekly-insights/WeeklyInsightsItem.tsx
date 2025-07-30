@@ -1,16 +1,16 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
-import GlanceItem from "../at-a-glance/GlanceItem";
+import LastSleepItem from "../header/LastSleepItem";
 import { BoxProps } from "@mui/material/Box";
 
-interface AnalyticsItemProps {
+interface InsightsItemProps {
   title: string;
   displayContent: React.ReactNode;
   glanceItemSx?: BoxProps["sx"];
   description: string;
 }
 
-const AnalyticsItem: React.FC<AnalyticsItemProps> = ({
+const InsightsItem: React.FC<InsightsItemProps> = ({
   title,
   displayContent,
   glanceItemSx,
@@ -18,7 +18,7 @@ const AnalyticsItem: React.FC<AnalyticsItemProps> = ({
 }) => {
   return (
     <Stack direction="row" alignItems="center" spacing={4}>
-      <GlanceItem
+      <LastSleepItem
         title={title}
         displayContent={displayContent}
         sx={glanceItemSx}
@@ -30,4 +30,4 @@ const AnalyticsItem: React.FC<AnalyticsItemProps> = ({
   );
 };
 
-export default AnalyticsItem;
+export default InsightsItem;

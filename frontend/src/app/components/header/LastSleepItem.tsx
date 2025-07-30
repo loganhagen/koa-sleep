@@ -3,13 +3,17 @@
 import { Stack, Box, Typography, BoxProps } from "@mui/material";
 import React from "react";
 
-interface GlanceItemProps {
+interface LastSleepItemProps {
   title: string;
   displayContent: React.ReactNode;
   sx?: BoxProps["sx"];
 }
 
-const GlanceItem = ({ title, displayContent, sx = {} }: GlanceItemProps) => {
+const LastSleepItem = ({
+  title,
+  displayContent,
+  sx = {},
+}: LastSleepItemProps) => {
   const displayItemStyle: BoxProps["sx"] = {
     display: "flex",
     flexDirection: "column",
@@ -26,11 +30,11 @@ const GlanceItem = ({ title, displayContent, sx = {} }: GlanceItemProps) => {
   };
 
   return (
-    <Stack alignItems="center" spacing={2}>
+    <Stack alignItems="center" spacing={1}>
       <Box sx={displayItemStyle}>{displayContent}</Box>
       <Typography variant="subtitle1">{title}</Typography>
     </Stack>
   );
 };
 
-export default GlanceItem;
+export default LastSleepItem;
