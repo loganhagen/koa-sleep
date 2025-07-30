@@ -1,8 +1,8 @@
 "use client";
 
-import AtAGlance from "./components/AtAGlance";
-import Greeting from "./components/Greeting";
-import AdvancedAnalytics from "./components/AdvancedAnalytics";
+import AtAGlance from "./components/at-a-glance/AtAGlance";
+import Greeting from "./components/at-a-glance/Greeting";
+import AdvancedAnalytics from "./components/weekly-insights/WeeklyInsights";
 import { Box, Stack, Paper, Typography, Divider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -29,14 +29,6 @@ const Home = () => {
               p: 4,
               borderRadius: 10,
               backgroundColor: "background.paper",
-              transition: (theme) =>
-                theme.transitions.create(["box-shadow", "transform"], {
-                  duration: theme.transitions.duration.short,
-                }),
-              ":hover": {
-                transform: "translateY(-4px)",
-                boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.07)",
-              },
             }}
           >
             <Stack spacing={5}>

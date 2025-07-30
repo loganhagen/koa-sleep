@@ -47,14 +47,6 @@ const AdvancedAnalytics: React.FC = () => {
         p: 4,
         borderRadius: 10,
         backgroundColor: "background.paper",
-        transition: (theme) =>
-          theme.transitions.create(["box-shadow", "transform"], {
-            duration: theme.transitions.duration.short,
-          }),
-        ":hover": {
-          transform: "translateY(-4px)",
-          boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.07)",
-        },
       }}
     >
       <Stack
