@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Divider, Typography, Box, Stack, IconButton } from "@mui/material";
+import { Divider, Typography, Stack, IconButton, Paper } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import SleepConsistency from "./SleepConsistency";
 import SleepScheduleChart from "./SleepScheduleChart";
@@ -41,11 +41,14 @@ const WeeklyInsights: React.FC = () => {
   };
 
   return (
-    <Box
+    <Paper
+      elevation={0}
+      variant="outlined"
       sx={{
         p: 4,
         borderRadius: 10,
         backgroundColor: "background.paper",
+        textAlign: "center",
       }}
     >
       <Stack
@@ -82,7 +85,7 @@ const WeeklyInsights: React.FC = () => {
         <SleepConsistency />
         <SleepScheduleChart />
       </Stack>
-    </Box>
+    </Paper>
   );
 };
 
