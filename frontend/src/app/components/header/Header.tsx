@@ -19,7 +19,7 @@ const Header = () => {
           <Divider orientation="vertical" flexItem />
           <Stack spacing={2} alignItems="center">
             <Typography variant="h6" component="h2">
-              Most Recent Sleep
+              Your Last Sleep
             </Typography>
             <MostRecentSleep />
           </Stack>

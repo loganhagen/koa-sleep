@@ -22,7 +22,7 @@ const ActionPlanCard = () => {
         p: 4,
         borderRadius: 10,
         backgroundColor: "background.paper",
-        textAlign: "center",
+        textAlign: "left",
       }}
     >
       <Stack
@@ -32,13 +32,17 @@ const ActionPlanCard = () => {
         justifyContent="center"
       >
         <RocketLaunchIcon sx={{ fontSize: 60, color: "info.main" }} />
-        <Typography variant="h6" component="h3" sx={{ fontWeight: "bold" }}>
+        <Typography
+          variant="h6"
+          component="h3"
+          sx={{ fontWeight: "bold", textAlign: "center" }}
+        >
           Action Plan
         </Typography>
         <Typography
           variant="body1"
           color="text.secondary"
-          sx={{ textAlign: "left" }}
+          sx={{ textAlign: "left", width: "100%" }}
         >
           It looks like you slept okay last night, Logan. To help you get even
           better rest tonight, here are a few things you can try.
@@ -48,27 +52,59 @@ const ActionPlanCard = () => {
             <ListItemIcon>
               <LocalCafeIcon color="warning" />
             </ListItemIcon>
-            <ListItemText primary="Avoid caffeine after 3 PM." />
+            <ListItemText>
+              Avoid caffeine after 3 PM today.<sup>1</sup>
+            </ListItemText>
           </ListItem>
           <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
             <ListItemIcon>
               <WbSunnyIcon color="warning" />
             </ListItemIcon>
-            <ListItemText primary="Try to get at least 30 minutes of sunlight in the morning." />
+            <ListItemText>
+              Get at least 30 minutes of sunlight before 9 AM this morning.
+              <sup>2</sup>
+            </ListItemText>
           </ListItem>
           <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
             <ListItemIcon>
               <HotelIcon color="info" />
             </ListItemIcon>
-            <ListItemText primary="Consider a relaxing activity before bed, like reading or meditation." />
+            <ListItemText>
+              Consider a relaxing activity before bed, like reading or
+              meditation before 9:30PM tonight.<sup>3</sup>
+            </ListItemText>
           </ListItem>
           <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
             <ListItemIcon>
               <AccessAlarmIcon color="info" />
             </ListItemIcon>
-            <ListItemText primary="Aim for a consistent bedtime and wake-up time, even on weekends." />
+            <ListItemText>
+              Avoid screen usage after 9 PM tonight.
+              <sup>4</sup>
+            </ListItemText>
           </ListItem>
         </List>
+        <Stack direction="column" spacing={1} sx={{ width: "100%", pt: 2 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+            References
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            <sup>1</sup> Real, N., et al. (2015). The role of sleep hygiene in
+            promoting public health. *Sleep Medicine Reviews*.
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            <sup>2</sup> National Institute of Neurological Disorders and
+            Stroke. (2023). *Brain Basics: Understanding Sleep*.
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            <sup>3</sup> Real, N., et al. (2015). The role of sleep hygiene in
+            promoting public health. *Sleep Medicine Reviews*.
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            <sup>4</sup> National Institute of Neurological Disorders and
+            Stroke. (2023). *Brain Basics: Understanding Sleep*.
+          </Typography>
+        </Stack>
       </Stack>
     </Paper>
   );
