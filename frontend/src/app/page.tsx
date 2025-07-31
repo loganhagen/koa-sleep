@@ -1,9 +1,9 @@
 "use client";
 
-import WeeklyInsights from "./components/weekly-insights/WeeklyInsights";
 import { Box, Stack } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from "./components/header/Header";
+import ActionPlan from "./components/action-plan/ActionPlanCard";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +20,7 @@ const Home = () => {
       <QueryClientProvider client={queryClient}>
         <Stack direction={"column"} spacing={3}>
           <Header />
+          <ActionPlan />
         </Stack>
       </QueryClientProvider>
     </Box>
