@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/">
+          <ListItemButton component="a" href="/insights">
             <ListItemIcon>
               <InsightsIcon />
             </ListItemIcon>

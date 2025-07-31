@@ -20,7 +20,6 @@ const Home = () => {
       <QueryClientProvider client={queryClient}>
         <Stack direction={"column"} spacing={3}>
           <Header />
-          <WeeklyInsights />
         </Stack>
       </QueryClientProvider>
     </Box>
