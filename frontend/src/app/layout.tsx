@@ -6,8 +6,6 @@ import { CssBaseline, ThemeProvider, Box, Toolbar } from "@mui/material";
 import theme from "../../theme";
 import Sidebar from "./components/sidebar/Sidebar";
 
-const drawerWidth = 240;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +25,16 @@ export default function RootLayout({
               }}
             >
               <Toolbar />
-              {children}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexGrow: 1,
+                }}
+              >
+                {children}
+              </Box>
             </Box>
           </Box>
         </ThemeProvider>

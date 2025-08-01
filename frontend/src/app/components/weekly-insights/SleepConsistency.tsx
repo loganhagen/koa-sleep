@@ -43,7 +43,7 @@ const SleepConsistency: React.FC = () => {
               A
             </Typography>
           </Box>
-          <Typography variant="subtitle1">Sleep Consistency</Typography>
+          <Typography variant="subtitle1">Sleep Consistency Score</Typography>
         </Stack>
         <Typography
           variant="body1"

@@ -7,39 +7,6 @@ import SleepConsistency from "./SleepConsistency";
 import SleepScheduleChart from "./SleepScheduleChart";
 
 const WeeklyInsights: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-  const getWeekRange = (date: Date) => {
-    const start = new Date(date);
-    const day = start.getDay();
-    const diff = start.getDate() - day + (day === 0 ? -6 : 1);
-    start.setDate(diff);
-
-    const end = new Date(start);
-    end.setDate(start.getDate() + 6);
-    return { start, end };
-  };
-
-  const [weekRange, setWeekRange] = useState(getWeekRange(currentDate));
-
-  const handlePreviousWeek = () => {
-    const newDate = new Date(weekRange.start);
-    newDate.setDate(newDate.getDate() - 7);
-    setCurrentDate(newDate);
-    setWeekRange(getWeekRange(newDate));
-  };
-
-  const handleNextWeek = () => {
-    const newDate = new Date(weekRange.start);
-    newDate.setDate(newDate.getDate() + 7);
-    setCurrentDate(newDate);
-    setWeekRange(getWeekRange(newDate));
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  };
-
   return (
     <Paper
       elevation={0}
@@ -51,13 +18,16 @@ const WeeklyInsights: React.FC = () => {
         textAlign: "center",
       }}
     >
+      <Typography variant="h4" sx={{ pb: 5 }}>
+        Sleep Consistency
+      </Typography>
       <Stack
         direction="row"
         alignItems="center"
         justifyContent="center"
         spacing={2}
       >
-        <IconButton onClick={handlePreviousWeek} aria-label="previous week">
+        <IconButton aria-label="previous week">
           <ArrowBackIos />
         </IconButton>
         <Typography
@@ -69,9 +39,9 @@ const WeeklyInsights: React.FC = () => {
             textAlign: "center",
           }}
         >
-          {`${formatDate(weekRange.start)} - ${formatDate(weekRange.end)}`}
+          Jul 28 - Aug 3
         </Typography>
-        <IconButton onClick={handleNextWeek} aria-label="next week">
+        <IconButton aria-label="next week">
           <ArrowForwardIos />
         </IconButton>
       </Stack>

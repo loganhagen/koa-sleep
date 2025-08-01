@@ -1,18 +1,13 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import WeeklyInsights from "../components/weekly-insights/WeeklyInsights";
+import DynamicInsights from "../components/dynamic-insights/DynamicInsights";
 
 const Insights = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexGrow: 1,
-      }}
-    >
+    <Stack direction="row" spacing={1}>
       <WeeklyInsights />
-    </Box>
+      <DynamicInsights />
+    </Stack>
   );
 };
 

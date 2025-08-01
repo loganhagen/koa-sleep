@@ -8,7 +8,7 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { Home, BarChart, Settings } from "@mui/icons-material";
+import { Home, Settings } from "@mui/icons-material";
 import InsightsIcon from "@mui/icons-material/Insights";
 
 const Sidebar: React.FC = () => {
@@ -22,7 +22,7 @@ const Sidebar: React.FC = () => {
       <Toolbar />
       <List>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/">
+          <ListItemButton component="a" href="/home">
             <ListItemIcon>
               <Home />
             </ListItemIcon>
@@ -38,7 +38,7 @@ const Sidebar: React.FC = () => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/">
+          <ListItemButton component="a" href="/settings">
             <ListItemIcon>
               <Settings />
             </ListItemIcon>
