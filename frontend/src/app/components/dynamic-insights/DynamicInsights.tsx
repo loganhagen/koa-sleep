@@ -9,6 +9,7 @@ import {
   Typography,
   Paper,
   Box,
+  useTheme,
 } from "@mui/material";
 import { ScatterChart, BarChart } from "@mui/x-charts";
 import {
@@ -17,6 +18,7 @@ import {
 } from "@mui/icons-material";
 
 const DynamicInsights: React.FC = () => {
+  const theme = useTheme();
   return (
     <Paper
       elevation={0}
@@ -43,7 +45,7 @@ const DynamicInsights: React.FC = () => {
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <LightbulbOutlinedIcon sx={{ mr: 1.5, color: "primary.main" }} />
-            <Typography variant="body1">
+            <Typography variant="body1" color="text.primary">
               A high step count on days you exercise is correlated with a 15%
               increase in deep sleep.
             </Typography>
@@ -104,7 +106,7 @@ const DynamicInsights: React.FC = () => {
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <LightbulbOutlinedIcon sx={{ mr: 1.5, color: "primary.main" }} />
-            <Typography variant="body1">
+            <Typography variant="body1" color="text.primary">
               A consistent wake-up time is linked to a 10% improvement in sleep
               efficiency.
             </Typography>
@@ -116,12 +118,12 @@ const DynamicInsights: React.FC = () => {
               {
                 data: [85],
                 label: "Inconsistent Wake-up",
-                color: "#f2b4b4",
+                color: theme.palette.error.light,
               },
               {
                 data: [95],
                 label: "Consistent Wake-up",
-                color: "#a2c4c9",
+                color: theme.palette.info.light,
               },
             ]}
             height={300}
@@ -140,7 +142,7 @@ const DynamicInsights: React.FC = () => {
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <LightbulbOutlinedIcon sx={{ mr: 1.5, color: "primary.main" }} />
-            <Typography variant="body1">
+            <Typography variant="body1" color="text.primary">
               Consuming caffeine within 6 hours of bedtime is associated with a
               20-minute reduction in total sleep time.
             </Typography>
@@ -150,7 +152,7 @@ const DynamicInsights: React.FC = () => {
           <Paper
             elevation={0}
             variant="outlined"
-            sx={{ p: 2, backgroundColor: "grey.200" }}
+            sx={{ p: 2, backgroundColor: "action.hover" }}
           >
             Data Visualization Placeholder
           </Paper>

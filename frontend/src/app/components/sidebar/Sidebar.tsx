@@ -23,7 +23,10 @@ const SidebarComponent: React.FC = () => {
         top: 0,
         position: "sticky",
       }}
-      backgroundColor="#1F2937"
+      backgroundColor={muiTheme.palette.background.paper}
+      rootStyles={{
+        color: muiTheme.palette.text.secondary,
+      }}
     >
       <Box
         sx={{
@@ -44,7 +47,7 @@ const SidebarComponent: React.FC = () => {
             fontSize: "28px",
             fontWeight: "700",
             fontFamily: "Roboto, sans-serif",
-            color: "#E5E7EB",
+            color: muiTheme.palette.text.primary,
           }}
         >
           FitSync

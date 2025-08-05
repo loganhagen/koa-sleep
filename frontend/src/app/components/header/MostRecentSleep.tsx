@@ -1,65 +1,79 @@
 "use client";
 
-import { Stack, Typography, Box, BoxProps } from "@mui/material";
+import { Stack, Typography, Box, BoxProps, useTheme } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import React from "react";
 
-const sleepData = [
-  {
-    title: "Schedule",
-    content: (
-      <Stack>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h5" fontWeight="bold">
-            9:30 PM
-          </Typography>
-          <BedtimeIcon fontSize="small" color="primary" />
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h5" fontWeight="bold">
-            5:30 AM
-          </Typography>
-          <SunnyIcon fontSize="small" sx={{ color: "#ffca28" }} />
-        </Stack>
-      </Stack>
-    ),
-    sx: {
-      borderRadius: 4,
-      bgcolor: "grey.100",
-      color: "grey.800",
-    },
-  },
-  {
-    title: "Total Sleep",
-    content: (
-      <Typography variant="h5" fontWeight="bold">
-        8h 30m
-      </Typography>
-    ),
-    sx: {
-      borderRadius: 4,
-      bgcolor: "grey.100",
-      color: "grey.800",
-    },
-  },
-  {
-    title: "Efficiency",
-    content: (
-      <Typography variant="h4" fontWeight="bold">
-        77
-      </Typography>
-    ),
-    sx: {
-      borderRadius: "50%",
-      background: "linear-gradient(145deg, #2CDFFF, #00A2E8)",
-      color: "secondary.contrastText",
-      boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
-    },
-  },
-];
-
 const MostRecentSleep = () => {
+  const theme = useTheme();
+
+  const sleepData = [
+    {
+      title: "Schedule",
+      content: (
+        <Stack>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              9:30 PM
+            </Typography>
+            <BedtimeIcon fontSize="small" color="primary" />
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              5:30 AM
+            </Typography>
+            <SunnyIcon fontSize="small" sx={{ color: "#ffca28" }} />
+          </Stack>
+        </Stack>
+      ),
+      sx: {
+        borderRadius: 4,
+        bgcolor: "background.paper",
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+      },
+    },
+    {
+      title: "Total Sleep",
+      content: (
+        <Typography variant="h5" fontWeight="bold">
+          8h 30m
+        </Typography>
+      ),
+      sx: {
+        borderRadius: 4,
+        bgcolor: "background.paper",
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+      },
+    },
+    {
+      title: "Efficiency",
+      content: (
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          sx={{ position: "relative", top: "2px" }}
+        >
+          77
+        </Typography>
+      ),
+      sx: {
+        borderRadius: "50%",
+        background: "linear-gradient(145deg, #2CDFFF, #00A2E8)",
+        color: "secondary.contrastText",
+        boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
+      },
+    },
+  ];
+
   const baseItemStyle: BoxProps["sx"] = {
     display: "flex",
     flexDirection: "column",

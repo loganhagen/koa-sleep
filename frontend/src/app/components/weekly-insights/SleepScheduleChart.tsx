@@ -29,8 +29,10 @@ const SleepScheduleChart: React.FC = () => {
           sx={{
             ...displayItemStyle,
             borderRadius: 4,
-            bgcolor: "grey.100",
-            color: "grey.800",
+            bgcolor: (theme) =>
+              theme.palette.mode === "dark"
+                ? "rgba(255, 255, 255, 0.08)"
+                : "grey.100",
           }}
         >
           <Box sx={{ width: "100%", height: "100%", padding: 2 }}>

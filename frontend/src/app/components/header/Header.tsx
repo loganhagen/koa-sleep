@@ -14,7 +14,12 @@ const Header = () => {
       }}
     >
       <Stack spacing={5}>
-        <Stack direction="row" spacing={5} alignItems="center">
+        <Stack
+          direction="row"
+          spacing={0}
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Greeting />
           <Divider orientation="vertical" flexItem />
           <Stack spacing={2} alignItems="center">

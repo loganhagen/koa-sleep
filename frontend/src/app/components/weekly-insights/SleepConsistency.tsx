@@ -23,7 +23,10 @@ const SleepConsistency: React.FC = () => {
         p: 2,
         mb: 2,
         borderRadius: 4,
-        backgroundColor: "grey.50",
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark"
+            ? "rgba(255, 255, 255, 0.05)"
+            : "grey.50",
         display: "flex",
         justifyContent: "center",
       }}
@@ -39,7 +42,11 @@ const SleepConsistency: React.FC = () => {
               boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
             }}
           >
-            <Typography variant="h4" fontWeight="bold">
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              sx={{ position: "relative", top: "2px" }}
+            >
               A
             </Typography>
           </Box>
