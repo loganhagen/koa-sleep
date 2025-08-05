@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 const Splash = () => {
   return <Typography>Hello Bit Sleep</Typography>;

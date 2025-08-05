@@ -38,7 +38,7 @@ const SleepScheduleChart: React.FC = () => {
           <Box sx={{ width: "100%", height: "100%", padding: 2 }}>
             <LineChart
               xAxis={[{ scaleType: "point", data: weekDays }]}
-              yAxis={[{ valueFormatter: (value: any) => formatHour(value) }]}
+              yAxis={[{ valueFormatter: (value: number) => formatHour(value) }]}
               series={[
                 {
                   data: bedtimeData,
@@ -58,7 +58,7 @@ const SleepScheduleChart: React.FC = () => {
       </Stack>
       <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 400 }}>
         A consistent sleep schedule, including both bedtime and wake time, helps
-        regulate your body's internal clock and improves sleep quality.
+        regulate your body`&apos;`s internal clock and improves sleep quality.
       </Typography>
     </Stack>
   );

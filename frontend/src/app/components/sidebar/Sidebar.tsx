@@ -1,18 +1,44 @@
 "use client";
 
 import React from "react";
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
 import { Home, Settings } from "@mui/icons-material";
 import InsightsIcon from "@mui/icons-material/Insights";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Box, Typography, useTheme } from "@mui/material";
-import { getProSidebarStyles } from "../../../../theme";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
   const muiTheme = useTheme();
-  const menuItemStyles = getProSidebarStyles(muiTheme);
+
+  const menuItemStyles: MenuItemStyles = {
+    button: ({ active }) => {
+      return {
+        color: active
+          ? muiTheme.palette.primary.main
+          : muiTheme.palette.text.secondary,
+        backgroundColor: active ? "rgba(107, 138, 253, 0.1)" : "transparent",
+        fontSize: "18px",
+        fontWeight: active ? 600 : 500,
+        "&:hover": {
+          backgroundColor:
+            muiTheme.palette.mode === "dark"
+              ? "rgba(255, 255, 255, 0.08)"
+              : "rgba(0, 0, 0, 0.04)",
+        },
+        borderLeft: active
+          ? `4px solid ${muiTheme.palette.primary.main}`
+          : "none",
+        padding: "12px 20px",
+        justifyContent: "flex-start",
+      };
+    },
+    icon: {
+      color: muiTheme.palette.primary.main,
+      marginRight: "12px",
+    },
+  };
 
   return (
     <Sidebar

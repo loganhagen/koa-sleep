@@ -1,7 +1,6 @@
 "use client";
 
-import { createTheme, Theme } from "@mui/material/styles";
-import { MenuItemStyles } from "react-pro-sidebar";
+import { createTheme } from "@mui/material/styles";
 
 const lightTheme = createTheme({
   palette: {
@@ -86,30 +85,5 @@ const darkTheme = createTheme({
     },
   },
 });
-
-export const getProSidebarStyles = (theme: Theme): MenuItemStyles => {
-  return {
-    button: ({ active, disabled }) => {
-      return {
-        color: active
-          ? theme.palette.primary.main
-          : theme.palette.text.secondary,
-        backgroundColor: active ? "rgba(107, 138, 253, 0.1)" : "transparent",
-        fontSize: "18px",
-        fontWeight: active ? 600 : 500,
-        "&:hover": {
-          backgroundColor: "rgba(255, 255, 255, 0.08)",
-        },
-        borderLeft: active ? `4px solid ${theme.palette.primary.main}` : "none",
-        padding: "12px 20px",
-        justifyContent: "flex-start",
-      };
-    },
-    icon: {
-      color: theme.palette.primary.main,
-      marginRight: "12px",
-    },
-  };
-};
 
 export { lightTheme, darkTheme };

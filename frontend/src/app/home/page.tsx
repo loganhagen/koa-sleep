@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import Header from "../components/header/Header";
 import ActionPlan from "../components/action-plan/ActionPlanCard";
 import DailyCheckIn from "../components/daily-check-in/DailyCheckIn";

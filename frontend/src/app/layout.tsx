@@ -13,15 +13,10 @@ import {
 } from "@mui/material";
 import { lightTheme, darkTheme } from "../../theme";
 import Sidebar from "./components/sidebar/Sidebar";
-import { useState, useMemo, createContext, useContext } from "react";
+import { useState, useMemo } from "react";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-
-const ColorModeContext = createContext({ toggleColorMode: () => {} });
-
-export function useColorMode() {
-  return useContext(ColorModeContext);
-}
+import { ColorModeContext } from "./ThemeContext";
 
 export default function RootLayout({
   children,

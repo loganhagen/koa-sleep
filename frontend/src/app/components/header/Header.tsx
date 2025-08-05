@@ -1,4 +1,4 @@
-import { Paper, Stack, Divider, Typography, Box } from "@mui/material";
+import { Paper, Stack, Divider, Typography } from "@mui/material";
 import Greeting from "./Greeting";
 import MostRecentSleep from "./MostRecentSleep";
 

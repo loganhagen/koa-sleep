@@ -57,8 +57,8 @@ const SleepConsistency: React.FC = () => {
           color="text.secondary"
           sx={{ maxWidth: 400 }}
         >
-          A high sleep consistency score means you're maintaining a regular
-          sleep schedule, which is great for your circadian rhythm.
+          A high sleep consistency score means you`&apos;`re maintaining a
+          regular sleep schedule, which is great for your circadian rhythm.
         </Typography>
       </Stack>
     </Box>

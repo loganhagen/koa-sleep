@@ -1,13 +1,11 @@
 "use client";
 
-import { Stack, Typography, Box, BoxProps, useTheme } from "@mui/material";
+import { Stack, Typography, Box, BoxProps } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import React from "react";
 
 const MostRecentSleep = () => {
-  const theme = useTheme();
-
   const sleepData = [
     {
       title: "Schedule",

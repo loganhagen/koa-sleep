@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import WeeklyInsights from "../components/weekly-insights/WeeklyInsights";
 import DynamicInsights from "../components/dynamic-insights/DynamicInsights";
 
