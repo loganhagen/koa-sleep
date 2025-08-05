@@ -4,7 +4,7 @@ import DynamicInsights from "../components/dynamic-insights/DynamicInsights";
 
 const Insights = () => {
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="column" spacing={1}>
       <WeeklyInsights />
       <DynamicInsights />
     </Stack>

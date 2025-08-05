@@ -5,45 +5,39 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     background: {
-      default: "#F8F9FA",
+      default: "#F7F8FA",
       paper: "#FFFFFF",
     },
     primary: {
-      main: "#4353FF",
-      contrastText: "#ffffff",
+      main: "#6B8AFD",
     },
-    secondary: {
-      main: "#00A2E8",
-      contrastText: "#ffffff",
-    },
-
     text: {
-      primary: "#343A40",
-      secondary: "#6C757D",
+      primary: "#2E3A48",
+      secondary: "#8A94A6",
     },
   },
   typography: {
-    h4: {
-      fontWeight: 700,
-    },
+    fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
     h5: {
       fontWeight: 600,
     },
-    h6: {
-      fontWeight: "bold",
-    },
-    subtitle1: {
-      fontWeight: 500,
-    },
   },
   components: {
-    MuiPaper: {
+    MuiCard: {
       styleOverrides: {
-        root: ({ ownerState, theme }) => ({
-          ...(ownerState.variant === "outlined" && {
-            border: `1px solid ${theme.palette.grey[300]}`,
-          }),
-        }),
+        root: {
+          borderRadius: 16,
+          boxShadow: "0px 8px 24px rgba(149, 157, 165, 0.1)",
+          padding: "1rem",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          textTransform: "none",
+        },
       },
     },
   },
