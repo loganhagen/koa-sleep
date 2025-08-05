@@ -1,111 +1,65 @@
 "use client";
 
 import React from "react";
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Home, Settings } from "@mui/icons-material";
 import InsightsIcon from "@mui/icons-material/Insights";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Box, useTheme } from "@mui/material";
+import { getProSidebarStyles } from "../../../../theme";
 
-const Sidebar: React.FC = () => {
+const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
+  const muiTheme = useTheme();
+  const menuItemStyles = getProSidebarStyles(muiTheme);
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: 240,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
-          width: 240,
-          boxSizing: "border-box",
-          backgroundColor: "white",
-          color: "black",
-        },
+    <Sidebar
+      width="250px"
+      style={{
+        borderRight: "none",
+        height: "100vh",
+        top: 0,
+        position: "sticky",
       }}
+      backgroundColor="#1F2937"
     >
-      <Toolbar>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Image src="/globe.svg" alt="FitSync Logo" width={40} height={40} />
-          <Typography variant="h6" sx={{ ml: 2 }}>
-            FitSync
-          </Typography>
-        </Box>
-      </Toolbar>
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton
-            component="a"
-            href="/home"
-            selected={pathname === "/home"}
-            sx={{
-              "&.Mui-selected": {
-                backgroundColor: "rgba(0, 0, 0, 0.08)",
-              },
-              "&:hover": {
-                backgroundColor: "rgba(0, 0, 0, 0.04)",
-              },
-            }}
-          >
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            component="a"
-            href="/insights"
-            selected={pathname === "/insights"}
-            sx={{
-              "&.Mui-selected": {
-                backgroundColor: "rgba(0, 0, 0, 0.08)",
-              },
-              "&:hover": {
-                backgroundColor: "rgba(0, 0, 0, 0.04)",
-              },
-            }}
-          >
-            <ListItemIcon>
-              <InsightsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Insights" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            component="a"
-            href="/settings"
-            selected={pathname === "/settings"}
-            sx={{
-              "&.Mui-selected": {
-                backgroundColor: "rgba(0, 0, 0, 0.08)",
-              },
-              "&:hover": {
-                backgroundColor: "rgba(0, 0, 0, 0.04)",
-              },
-            }}
-          >
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Drawer>
+      <Box
+        sx={{
+          p: 3,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Image src="/globe.svg" alt="FitSync Logo" width={40} height={40} />
+      </Box>
+      <Menu menuItemStyles={menuItemStyles}>
+        <MenuItem
+          icon={<Home />}
+          active={pathname === "/home"}
+          component={<a href="/home" />}
+        >
+          Home
+        </MenuItem>
+        <MenuItem
+          icon={<InsightsIcon />}
+          active={pathname === "/insights"}
+          component={<a href="/insights" />}
+        >
+          Insights
+        </MenuItem>
+        <MenuItem
+          icon={<Settings />}
+          active={pathname === "/settings"}
+          component={<a href="/settings" />}
+        >
+          Settings
+        </MenuItem>
+      </Menu>
+    </Sidebar>
   );
 };
 
-export default Sidebar;
+export default SidebarComponent;
