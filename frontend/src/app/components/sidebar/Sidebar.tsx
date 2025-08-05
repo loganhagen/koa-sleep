@@ -6,7 +6,7 @@ import { Home, Settings } from "@mui/icons-material";
 import InsightsIcon from "@mui/icons-material/Insights";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Box, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { getProSidebarStyles } from "../../../../theme";
 
 const SidebarComponent: React.FC = () => {
@@ -33,7 +33,22 @@ const SidebarComponent: React.FC = () => {
           justifyContent: "center",
         }}
       >
-        <Image src="/globe.svg" alt="FitSync Logo" width={40} height={40} />
+        <Image
+          src="/logo-3-no-bg.png"
+          alt="FitSync Logo"
+          width={60}
+          height={60}
+        />
+        <Typography
+          sx={{
+            fontSize: "28px",
+            fontWeight: "700",
+            fontFamily: "Roboto, sans-serif",
+            color: "#E5E7EB",
+          }}
+        >
+          FitSync
+        </Typography>
       </Box>
       <Menu menuItemStyles={menuItemStyles}>
         <MenuItem

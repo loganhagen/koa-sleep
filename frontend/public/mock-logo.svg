@@ -1,0 +1,46 @@
+<svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!--!
+    FitSync Logo
+    A logo representing health (the heart) and synchronization (the circular arrows).
+    - The heart is central to represent health and wellness.
+    - The two arrows circling the heart suggest a continuous, synced cycle.
+  -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8A94A6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B8AFD;stop-opacity:1" />
+    </linearGradient>
+    <!-- Arrowhead marker definition -->
+    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="2" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,4 L4,2 z" fill="url(#logoGradient)" />
+    </marker>
+  </defs>
+  
+  <!-- Top circular arrow -->
+  <path 
+    d="M 20 50 A 30 30 0 1 1 80 50" 
+    fill="none" 
+    stroke="url(#logoGradient)" 
+    stroke-width="6" 
+    stroke-linecap="round"
+    marker-end="url(#arrowhead)"
+  />
+
+  <!-- Bottom circular arrow -->
+    <path 
+    d="M 80 50 A 30 30 0 1 1 20 50" 
+    fill="none" 
+    stroke="url(#logoGradient)" 
+    stroke-width="6" 
+    stroke-linecap="round"
+    marker-start="url(#arrowhead)"
+  />
+
+  <!-- Central heart shape -->
+  <path 
+    d="M50,35 C40,20 20,25 20,50 C20,70 50,85 50,85 C50,85 80,70 80,50 C80,25 60,20 50,35 Z" 
+    fill="#6B8AFD" 
+    stroke="#1F2937"
+    stroke-width="4"
+  />
+</svg>

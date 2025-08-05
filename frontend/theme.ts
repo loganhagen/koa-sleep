@@ -50,7 +50,7 @@ export const getProSidebarStyles = (theme: Theme): MenuItemStyles => {
       return {
         color: active ? theme.palette.primary.main : "#E5E7EB",
         backgroundColor: active ? "rgba(107, 138, 253, 0.1)" : "transparent",
-        fontSize: "16px",
+        fontSize: "18px",
         fontWeight: active ? 600 : 500,
         "&:hover": {
           backgroundColor: "rgba(255, 255, 255, 0.08)",
