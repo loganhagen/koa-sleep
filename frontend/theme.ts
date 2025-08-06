@@ -2,6 +2,48 @@
 
 import { createTheme } from "@mui/material/styles";
 
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+    background: {
+      default: "#F9FAFB",
+      paper: "#FFFFFF",
+    },
+    primary: {
+      main: "#4F46E5",
+    },
+    text: {
+      primary: "#111827",
+      secondary: "#6B7280",
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h5: {
+      fontWeight: 600,
+    },
+  },
+  components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 16,
+          boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.1)",
+          padding: "1rem",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          textTransform: "none",
+        },
+      },
+    },
+  },
+});
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -44,4 +86,4 @@ const darkTheme = createTheme({
   },
 });
 
-export { darkTheme };
+export { darkTheme, lightTheme };
