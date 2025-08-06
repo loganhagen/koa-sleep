@@ -4,6 +4,7 @@ import React from "react";
 import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
 import { Home, Settings } from "@mui/icons-material";
 import InsightsIcon from "@mui/icons-material/Insights";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Box, Typography, useTheme } from "@mui/material";
@@ -93,6 +94,13 @@ const SidebarComponent: React.FC = () => {
           component={<a href="/insights" />}
         >
           Insights
+        </MenuItem>
+        <MenuItem
+          icon={<CalendarMonthIcon />}
+          active={pathname === "/history"}
+          component={<a href="/history" />}
+        >
+          History
         </MenuItem>
         <MenuItem
           icon={<Settings />}
