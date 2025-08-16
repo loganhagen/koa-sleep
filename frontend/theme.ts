@@ -3,27 +3,27 @@ import { createTheme } from "@mui/material/styles";
 const typography = {
   fontFamily: "Inter, sans-serif",
   h1: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "'Source Serif Pro', serif",
     fontWeight: 700,
   },
   h2: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "'Source Serif Pro', serif",
     fontWeight: 700,
   },
   h3: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "'Source Serif Pro', serif",
     fontWeight: 700,
   },
   h4: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "'Source Serif Pro', serif",
     fontWeight: 700,
   },
   h5: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: 500,
   },
   h6: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "Inter, sans-serif",
     fontWeight: 500,
   },
 };
@@ -32,7 +32,7 @@ export const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1976d2",
+      main: "#00897b",
     },
     background: {
       default: "#f5f5f5",
@@ -46,7 +46,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#90caf9",
+      main: "#4db6ac",
     },
     background: {
       default: "#121212",
