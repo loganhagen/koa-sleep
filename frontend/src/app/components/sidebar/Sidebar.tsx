@@ -3,7 +3,6 @@
 import React from "react";
 import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
 import { Home, Settings } from "@mui/icons-material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Box, Typography, useTheme } from "@mui/material";

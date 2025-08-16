@@ -58,7 +58,7 @@ const SleepScheduleChart: React.FC = () => {
       </Stack>
       <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 400 }}>
         A consistent sleep schedule, including both bedtime and wake time, helps
-        regulate your body`&apos;`s internal clock and improves sleep quality.
+        regulate your body&apos;s internal clock and improves sleep quality.
       </Typography>
     </Stack>
   );
