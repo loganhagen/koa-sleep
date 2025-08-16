@@ -3,11 +3,12 @@
 import React from "react";
 import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
 import { Home, Settings } from "@mui/icons-material";
-import InsightsIcon from "@mui/icons-material/Insights";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Box, Typography, useTheme } from "@mui/material";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -89,18 +90,18 @@ const SidebarComponent: React.FC = () => {
           Home
         </MenuItem>
         <MenuItem
-          icon={<InsightsIcon />}
+          icon={<AutoGraphIcon />}
+          active={pathname === "/sleep-journey"}
+          component={<a href="/sleep-journey" />}
+        >
+          Sleep Journey
+        </MenuItem>
+        <MenuItem
+          icon={<BarChartIcon />}
           active={pathname === "/insights"}
           component={<a href="/insights" />}
         >
           Insights
-        </MenuItem>
-        <MenuItem
-          icon={<CalendarMonthIcon />}
-          active={pathname === "/history"}
-          component={<a href="/history" />}
-        >
-          History
         </MenuItem>
         <MenuItem
           icon={<Settings />}
