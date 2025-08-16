@@ -1,9 +1,13 @@
+"use client";
+
 import { Stack } from "@mui/material";
-import JourneyHeader from "./JourneyHeader";
-import RecommendedJourneyCard from "./RecommendedJourneyCard";
-import ExploreJourneys from "./ExploreJourneys";
+import JourneyHeader from "./onboarding/JourneyHeader";
+import RecommendedJourneyCard from "./onboarding/RecommendedJourneyCard";
+import ExploreJourneys from "./onboarding/ExploreJourneys";
+import { useState } from "react";
 
 const SleepJourneyPage = () => {
+  const [journeyStarted, setJourneyStarted] = useState(false);
   const availableJourneys = [
     {
       title: "Consistent Bedtimes ⏰",
@@ -30,16 +34,20 @@ const SleepJourneyPage = () => {
     },
   };
 
-  return (
-    <Stack spacing={6} sx={{ p: 3, alignItems: "center" }}>
-      <JourneyHeader />
-      <RecommendedJourneyCard sx={cardHoverStyles} />
-      <ExploreJourneys
-        journeys={availableJourneys}
-        cardHoverStyles={cardHoverStyles}
-      />
-    </Stack>
-  );
+  if (journeyStarted) {
+    return <p>Let's go on a journey</p>;
+  } else {
+    return (
+      <Stack spacing={6} sx={{ p: 3, alignItems: "center" }}>
+        <JourneyHeader />
+        <RecommendedJourneyCard sx={cardHoverStyles} />
+        <ExploreJourneys
+          journeys={availableJourneys}
+          cardHoverStyles={cardHoverStyles}
+        />
+      </Stack>
+    );
+  }
 };
 
 export default SleepJourneyPage;
