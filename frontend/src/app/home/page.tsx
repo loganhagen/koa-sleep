@@ -1,9 +1,9 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import Header from "../components/header/Header";
-import ActionPlan from "../components/action-plan/ActionPlanCard";
-import DailyCheckIn from "../components/daily-check-in/DailyCheckIn";
+import Header from "./_components/header/Header";
+import ActionPlan from "./_components/ActionPlanCard";
+import DailyCheckIn from "./_components/DailyCheckIn";
 
 const Home = () => {
   return (

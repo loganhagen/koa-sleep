@@ -1,7 +1,7 @@
 "use client";
 
-import ActiveJourneyPage from "./_active/ActiveJourneyPage";
-import OnboardingJourneyPage from "./_onboarding/OnboardingJourneyPage";
+import ActiveJourneyPage from "./_components/active/ActiveJourneyPage";
+import OnboardingJourneyPage from "./_components/onboarding/OnboardingJourneyPage";
 
 const SleepJourneyPage = () => {
   return <ActiveJourneyPage />;

@@ -4,7 +4,7 @@ import React from "react";
 import { Divider, Typography, Stack, IconButton, Paper } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import SleepConsistency from "./SleepConsistency";
-import SleepScheduleChart from "./SleepScheduleChart";
+import SleepScheduleChart from "../../sleep-journey/_components/active/progress/SleepScheduleChart";
 
 const WeeklyInsights: React.FC = () => {
   return (

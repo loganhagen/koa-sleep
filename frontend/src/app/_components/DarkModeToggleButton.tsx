@@ -1,7 +1,7 @@
 "use client";
 
 import { IconButton, useTheme as useMuiTheme } from "@mui/material";
-import { useTheme } from "../../providers/themeProvider";
+import { useTheme } from "../providers/themeProvider";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 

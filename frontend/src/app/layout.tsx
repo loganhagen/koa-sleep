@@ -6,9 +6,9 @@ import "@fontsource/source-serif-pro/400.css";
 import "@fontsource/source-serif-pro/700.css";
 import { cookies } from "next/headers";
 import { Box, Toolbar } from "@mui/material";
-import Sidebar from "./components/sidebar/Sidebar";
+import Sidebar from "./_components/Sidebar";
 import ThemeProvider from "./providers/themeProvider";
-import ThemeToggleButton from "./components/buttons/themeToggleButton";
+import ThemeToggleButton from "./_components/DarkModeToggleButton";
 
 type ThemeMode = "light" | "dark";
 

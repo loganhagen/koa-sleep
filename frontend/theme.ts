@@ -28,6 +28,19 @@ const typography = {
   },
 };
 
+const themeComponents = {
+  MuiPaper: {
+    defaultProps: {
+      variant: "outlined" as const,
+    },
+    styleOverrides: {
+      root: {
+        borderRadius: 16,
+      },
+    },
+  },
+};
+
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
@@ -38,8 +51,12 @@ export const lightTheme = createTheme({
       default: "#f5f5f5",
       paper: "#ffffff",
     },
+    warning: {
+      main: "#ffa726",
+    },
   },
   typography: typography,
+  components: themeComponents,
 });
 
 export const darkTheme = createTheme({
@@ -52,6 +69,10 @@ export const darkTheme = createTheme({
       default: "#121212",
       paper: "#1e1e1e",
     },
+    warning: {
+      main: "#ef6c00",
+    },
   },
   typography: typography,
+  components: themeComponents,
 });

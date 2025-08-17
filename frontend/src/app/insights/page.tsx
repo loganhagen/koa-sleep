@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
-import WeeklyInsights from "../components/weekly-insights/WeeklyInsights";
-import DynamicInsights from "../components/dynamic-insights/DynamicInsights";
+import WeeklyInsights from "./_components/WeeklyInsights";
+import DynamicInsights from "./_components/DynamicInsights";
 
 const Insights = () => {
   return (
