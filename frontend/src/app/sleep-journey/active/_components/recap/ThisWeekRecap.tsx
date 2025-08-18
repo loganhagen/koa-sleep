@@ -3,7 +3,6 @@
 import React from "react";
 import { Paper, Typography, Stack, Divider } from "@mui/material";
 import KeyMomentsChart from "./KeyMomentsChart";
-import InsightItem from "../key-insights/InsightItem";
 import KeyInsights from "../key-insights/KeyInsights";
 
 const JourneyRecap = () => {
@@ -18,7 +17,7 @@ const JourneyRecap = () => {
     >
       <Stack spacing={3} divider={<Divider />}>
         <Typography variant="h4" component="h2" sx={{ textAlign: "center" }}>
-          This Week's Recap
+          This Week&apos;s Recap
         </Typography>
         <KeyMomentsChart />
         <KeyInsights />

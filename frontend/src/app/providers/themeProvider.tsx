@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useState, useMemo, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  ReactNode,
+  useCallback,
+} from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { darkTheme, lightTheme } from "../../../theme";
@@ -24,11 +31,12 @@ export default function ThemeProvider({
   initialMode: ThemeMode;
 }) {
   const [mode, setMode] = useState<ThemeMode>(initialMode);
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newMode = mode === "light" ? "dark" : "light";
     setMode(newMode);
     document.cookie = `theme-mode=${newMode}; path=/; max-age=31536000`;
-  };
+  }, [mode]);
+  
   const theme = useMemo(
     () => (mode === "light" ? lightTheme : darkTheme),
     [mode]

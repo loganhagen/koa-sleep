@@ -19,7 +19,7 @@ const Greeting = () => {
           gutterBottom
           sx={{ color: "text.primary" }}
         >
-          Logan!
+          Denzel!
         </Typography>
         <WavingHandIcon color="primary" />
       </Stack>

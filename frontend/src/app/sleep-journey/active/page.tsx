@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
-import JourneyStatusHeader from "./header/JourneyStatusHeader";
-import WeeklyProgressSection from "./progress/WeeklyProgressSection";
-import JourneyRecap from "./recap/ThisWeekRecap";
+import JourneyStatusHeader from "./_components/header/JourneyStatusHeader";
+import WeeklyProgressSection from "./_components/progress/WeeklyProgressSection";
+import JourneyRecap from "./_components/recap/ThisWeekRecap";
 
 const ActiveJourneyPage = () => {
   const currentJourney = {

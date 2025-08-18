@@ -13,7 +13,7 @@ const MetricItem = ({ title, value }: { title: string; value: string }) => (
 
 const KeyMetrics = () => {
   const metrics = {
-    goal: "10:00 PM",
+    goal: "10:30 PM",
     avgBedtime: "10:15 PM",
     avgWakeUpTime: "6:45 AM",
   };
