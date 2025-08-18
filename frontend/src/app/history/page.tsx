@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   DataGrid,
   GridRowsProp,
@@ -10,6 +11,12 @@ import { Box, Typography, Chip, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 const History = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const activities = {
     "Late Coffee": { label: "Late Coffee", color: "warning" as const },
     "Stressful Day": { label: "Stressful Day", color: "error" as const },
@@ -227,6 +234,7 @@ const History = () => {
       field: "dailyActivities",
       headerName: "Daily Activities",
       flex: 1,
+      minWidth: 400,
       headerAlign: "center",
       renderCell: (params: GridRenderCellParams) => {
         const allActivities = params.value as {
@@ -268,35 +276,34 @@ const History = () => {
   ];
 
   return (
-    <Box sx={{ width: "100%", p: 4 }}>
+    <Stack>
       <Typography
-        variant="h4"
-        textAlign={"center"}
+        variant="h3"
+        component="h1"
         gutterBottom
-        component="div"
-        sx={{ mb: 4 }}
+        sx={{ textAlign: "center" }}
       >
         Sleep History
       </Typography>
-
-      <Box
-        sx={{
-          maxWidth: "1180px",
-          mx: "auto",
-          "& .MuiDataGrid-columnHeaderTitle": {
-            fontSize: "1rem",
-            fontWeight: "bold",
-          },
-        }}
-      >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={80}
-          sx={{ height: 650 }}
-        />
+      <Box sx={{ width: "100%", p: 4 }}>
+        <Box
+          sx={{
+            height: 650,
+            width: "100%",
+            maxWidth: "1180px",
+            mx: "auto",
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontSize: "1rem",
+              fontWeight: "bold",
+            },
+          }}
+        >
+          {isMounted && (
+            <DataGrid rows={rows} columns={columns} rowHeight={80} />
+          )}
+        </Box>
       </Box>
-    </Box>
+    </Stack>
   );
 };
 
