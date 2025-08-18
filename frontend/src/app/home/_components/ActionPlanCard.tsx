@@ -31,14 +31,13 @@ const ActionPlanCard = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <RocketLaunchIcon sx={{ fontSize: 60, color: "info.main" }} />
-        <Typography
-          variant="h6"
-          component="h3"
-          sx={{ fontWeight: "bold", textAlign: "center" }}
-        >
-          Action Plan
-        </Typography>
+        <Stack direction={"row"} spacing={1} justifyContent={"center"}>
+          <Typography variant="h4" component="h2" sx={{ textAlign: "center" }}>
+            Action Plan
+          </Typography>
+          <RocketLaunchIcon sx={{ fontSize: 40, color: "info.main" }} />
+        </Stack>
+
         <Typography
           variant="body1"
           color="text.secondary"

@@ -7,7 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Box, Typography, useTheme } from "@mui/material";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
-import BarChartIcon from "@mui/icons-material/BarChart";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -96,11 +96,11 @@ const SidebarComponent: React.FC = () => {
           Sleep Journey
         </MenuItem>
         <MenuItem
-          icon={<BarChartIcon />}
-          active={pathname === "/insights"}
-          component={<a href="/insights" />}
+          icon={<CalendarMonthIcon />}
+          active={pathname === "/history"}
+          component={<a href="/history" />}
         >
-          Insights
+          History
         </MenuItem>
         <MenuItem
           icon={<Settings />}
