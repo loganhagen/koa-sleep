@@ -7,7 +7,6 @@ import "@fontsource/source-serif-pro/700.css";
 import { cookies } from "next/headers";
 import ThemeProvider from "./providers/themeProvider";
 import Layout from "./_components/SplashLayout";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 type ThemeMode = "light" | "dark";
 
@@ -25,10 +24,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider initialMode={initialMode}>
-          <Layout>
-            <SpeedInsights />
-            {children}
-          </Layout>
+          <Layout>{children}</Layout>
         </ThemeProvider>
       </body>
     </html>
