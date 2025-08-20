@@ -25,8 +25,10 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider initialMode={initialMode}>
-          <Layout>{children}</Layout>
-          <SpeedInsights />
+          <Layout>
+            <SpeedInsights />
+            {children}
+          </Layout>
         </ThemeProvider>
       </body>
     </html>
