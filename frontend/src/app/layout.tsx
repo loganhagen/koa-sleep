@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import ThemeProvider from "./providers/themeProvider";
 import Layout from "./_components/SplashLayout";
 import DemoProvider from "./providers/demoProvider";
+import { QueryProvider } from "./providers/queryProvider";
 
 type ThemeMode = "light" | "dark";
 
@@ -26,7 +27,9 @@ export default async function RootLayout({
       <body>
         <ThemeProvider initialMode={initialMode}>
           <DemoProvider>
-            <Layout>{children}</Layout>
+            <QueryProvider>
+              <Layout>{children}</Layout>
+            </QueryProvider>
           </DemoProvider>
         </ThemeProvider>
       </body>

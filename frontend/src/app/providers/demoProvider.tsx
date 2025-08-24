@@ -15,7 +15,7 @@ const DemoContext = createContext<DemoContextType>({
 export const useDemo = () => useContext(DemoContext);
 
 export default function DemoProvider({ children }: { children: ReactNode }) {
-  const [isDemoMode, setIsDemoMode] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(true);
 
   const enableDemoMode = () => {
     setIsDemoMode(true);

@@ -1,21 +1,26 @@
 import { Typography, Stack } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
+import { useDemo } from "../../../providers/demoProvider";
+import { DemoUser } from "@custom_types/backend/users";
+import { useQuery } from "@tanstack/react-query";
 import { fetchAPI } from "@/services/apiClient";
-import { useEffect, useState } from "react";
 
 const Greeting = () => {
-  const [username, setUsername] = useState("user");
-  useEffect(() => {
-    fetchUsername();
-  }, []);
+  const demoCtx = useDemo();
 
   const fetchUsername = async () => {
-    try {
-      const res = await fetchAPI("/sleep/efficiency");
-    } catch (error) {
-      console.log(error);
+    if (demoCtx.isDemoMode) {
+      const response = await fetchAPI<DemoUser>("/users/demo");
+      return response.data.firstName;
+    } else {
+      return "user";
     }
   };
+
+  const { data: username } = useQuery({
+    queryKey: ["username"],
+    queryFn: fetchUsername,
+  });
 
   return (
     <Stack direction={"column"} alignItems="center" sx={{ pl: 4 }}>
