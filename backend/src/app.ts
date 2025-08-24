@@ -6,6 +6,7 @@ import swaggerDocument from "./swagger";
 import sleepRoutes from "./routes/sleepRoutes";
 import morgan from "morgan";
 import logger from "@utils/logger";
+import userRoutes from "routes/userRoutes";
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(
 );
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/sleep", sleepRoutes);
+app.use("/users", userRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server is running");

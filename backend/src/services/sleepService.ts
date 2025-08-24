@@ -10,7 +10,6 @@ import {
   LastNightSleep,
 } from "@custom_types/backend/sleep";
 import { sleepApiClient } from "@external/apiClient";
-import { cacheService } from "@utils/cacheService";
 import { SleepKey } from "@utils/constants";
 import { convertMinutesToHHMM } from "@utils/converters";
 import {
@@ -18,7 +17,6 @@ import {
   calculateSleepStats,
   sortLogsByDate,
 } from "@utils/sleep";
-import db from "../config/db";
 
 export const sleepService = {
   /**
@@ -79,59 +77,6 @@ export const sleepService = {
     }
 
     return null;
-  },
-
-  getLastNightSleep: async (): Promise<LastNightSleep> => {
-    try {
-      const cacheString = cacheService.get("lhagen", "recent-data");
-      if (cacheString) {
-        return JSON.parse(cacheString) as LastNightSleep;
-      }
-    } catch (error) {
-      console.log("Unable to retrieve or parse cache data.");
-    }
-
-    const apiData = await sleepApiClient.getMockSleepData();
-
-    if (!apiData?.sleep?.length) {
-      throw new Error("No sleep data returned from API.");
-    }
-
-    const sortedLogs = sortLogsByDate(apiData.sleep);
-    const lastLog = sortedLogs[0];
-
-    if (!lastLog) {
-      throw new Error("Failed to get most recent sleep log.");
-    }
-
-    const data: LastNightSleep = {
-      totalSleep: convertMinutesToHHMM(lastLog.minutesAsleep),
-      bedtime: new Date(lastLog.startTime).toLocaleTimeString(),
-      sleepScore: lastLog.efficiency.toString(),
-    };
-
-    try {
-      cacheService.set("lhagen", "recent-data", JSON.stringify(data));
-    } catch (error) {
-      console.log("Failed to save data to cache");
-    }
-
-    return data;
-  },
-
-  getCurrentUser: async () => {
-    try {
-      const res = await db.query("SELECT * FROM test_database WHERE id = $1", [
-        1,
-      ]);
-
-      if (res.rows.length === 0) {
-        throw new Error("User not found.");
-      }
-      return res.rows[0];
-    } catch (error) {
-      console.log("failed to fetch user");
-    }
   },
 
   /**

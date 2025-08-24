@@ -71,3 +71,13 @@ paths:
             application/json:
               schema:
                 type: object
+  /users/all:
+    get:
+      summary: Get all users in the database.
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object

@@ -1,7 +1,6 @@
 import "./initEnv";
 import moduleAlias from "module-alias";
 import app from "./app";
-import { EXPRESS_PORT } from "./config/config";
 
 if (process.env.NODE_ENV === "production") {
   moduleAlias.addAliases({
@@ -10,6 +9,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(EXPRESS_PORT, () => {
-  console.log(`Server is running on port ${EXPRESS_PORT}`);
+app.listen(process.env.EXPRESS_PORT, () => {
+  console.log(`Server is running on port ${process.env.EXPRESS_PORT}`);
 });
