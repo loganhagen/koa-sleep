@@ -7,6 +7,7 @@ import "@fontsource/source-serif-pro/700.css";
 import { cookies } from "next/headers";
 import ThemeProvider from "./providers/themeProvider";
 import Layout from "./_components/SplashLayout";
+import DemoProvider from "./providers/demoProvider";
 
 type ThemeMode = "light" | "dark";
 
@@ -24,7 +25,9 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider initialMode={initialMode}>
-          <Layout>{children}</Layout>
+          <DemoProvider>
+            <Layout>{children}</Layout>
+          </DemoProvider>
         </ThemeProvider>
       </body>
     </html>

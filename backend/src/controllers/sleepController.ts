@@ -24,7 +24,7 @@ const createRequestHandler = (serviceCall: () => Promise<any>) => {
 
 export const sleepController = {
   getSleepData: createRequestHandler(sleepService.getData),
-  getSleepEfficiency: createRequestHandler(sleepService.getEfficiency),
+  getSleepEfficiency: createRequestHandler(sleepService.getCurrentUser),
   getSleepStages: createRequestHandler(sleepService.getSleepStages),
   getSessionSummary: async (req: Request, res: Response) => {
     try {

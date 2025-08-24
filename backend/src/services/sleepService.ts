@@ -18,6 +18,7 @@ import {
   calculateSleepStats,
   sortLogsByDate,
 } from "@utils/sleep";
+import db from "../config/db";
 
 export const sleepService = {
   /**
@@ -116,6 +117,21 @@ export const sleepService = {
     }
 
     return data;
+  },
+
+  getCurrentUser: async () => {
+    try {
+      const res = await db.query("SELECT * FROM test_database WHERE id = $1", [
+        1,
+      ]);
+
+      if (res.rows.length === 0) {
+        throw new Error("User not found.");
+      }
+      return res.rows[0];
+    } catch (error) {
+      console.log("failed to fetch user");
+    }
   },
 
   /**

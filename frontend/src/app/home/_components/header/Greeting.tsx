@@ -1,7 +1,22 @@
 import { Typography, Stack } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
+import { fetchAPI } from "@/services/apiClient";
+import { useEffect, useState } from "react";
 
 const Greeting = () => {
+  const [username, setUsername] = useState("user");
+  useEffect(() => {
+    fetchUsername();
+  }, []);
+
+  const fetchUsername = async () => {
+    try {
+      const res = await fetchAPI("/sleep/efficiency");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Stack direction={"column"} alignItems="center" sx={{ pl: 4 }}>
       <Typography
@@ -19,7 +34,7 @@ const Greeting = () => {
           gutterBottom
           sx={{ color: "text.primary" }}
         >
-          Denzel!
+          {username}
         </Typography>
         <WavingHandIcon color="primary" />
       </Stack>
