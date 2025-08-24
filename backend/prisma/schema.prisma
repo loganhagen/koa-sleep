@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  firstName String
+  lastName  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  SleepLog  SleepLog[]
+}
+
+// https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-list/
+model SleepLog {
+  id                  String   @id @default(cuid())
+  fitbitLogId         BigInt   @unique // The logId from the Fitbit API
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+  dateOfSleep         DateTime
+  duration            Int // In milliseconds
+  efficiency          Int
+  startTime           DateTime
+  endTime             DateTime
+  timeInBed           Int // In minutes
+  minutesAsleep       Int
+  minutesAwake        Int
+  minutesToFallAsleep Int
+  minutesAfterWakeup  Int
+  isMainSleep         Boolean
+  type                String // "stages" or "classic"
+  logType             String // "auto_detected" or "manual"
+
+  // An integer representing data quality.
+  // 0 = Sufficient data.
+  // 1 = Insufficient heart rate data.
+  // 2 = Sleep period was too short.
+  // 3 = Server-side issue.
+  infoCode Int
+
+  @@index([userId, dateOfSleep])
+}
+
+enum ConnectionProvider {
+  GOOGLE
+  FITBIT
+}

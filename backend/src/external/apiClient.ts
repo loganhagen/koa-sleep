@@ -3,7 +3,6 @@
  * call the HTTP client layer to communicate with external API servers.
  */
 
-import { FitbitData } from "@custom_types/api/sleep";
 import { fetchData } from "@utils/httpClient";
 
 const MOCK_SERVER_URI = `http://localhost:${process.env.JSON_SERVER_PORT}/${process.env.JSON_SERVER_ENDPOINT}`;
@@ -14,7 +13,7 @@ export const sleepApiClient = {
    */
 
   // TO DO: change back to getSleepData and use env variables to pass the correct URL
-  getMockSleepData: async (): Promise<FitbitData> => {
-    return await fetchData<FitbitData>(MOCK_SERVER_URI);
+  getMockSleepData: async () => {
+    return await fetchData(MOCK_SERVER_URI);
   },
 };

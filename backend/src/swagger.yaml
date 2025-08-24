@@ -4,56 +4,9 @@ info:
   version: 1.0.0
   description: API for fitness data
 paths:
-  /sleep:
+  /sleep/logs:
     get:
-      summary: Get the user's full sleep data from up to 7 previous nights.
-      responses:
-        "200":
-          description: A successful response
-          content:
-            application/json:
-              schema:
-                type: object
-  /sleep/efficiency:
-    get:
-      summary: Get the efficiency score of up to the last 7 sleep records.
-      responses:
-        "200":
-          description: A successful response
-          content:
-            application/json:
-              schema:
-                type: object
-  /sleep/stages:
-    get:
-      summary: Get the time spent in different sleep stages in the previous night's sleep.
-      responses:
-        "200":
-          description: A successful response
-          content:
-            application/json:
-              schema:
-                type: object
-  /sleep/summary/{date}:
-    get:
-      summary: Get the summary for a specified sleep log.
-      parameters:
-        - in: path
-          name: date
-          schema:
-            type: string
-          required: true
-          description: The date of the desired log (YYYY-MM-DD).
-      responses:
-        "200":
-          description: A successful response
-          content:
-            application/json:
-              schema:
-                type: object
-  /sleep/stats:
-    get:
-      summary: Get a few descriptive statistics for the last week of sleep.
+      summary: Get all sleep logs.
       responses:
         "200":
           description: A successful response.
@@ -61,9 +14,16 @@ paths:
             application/json:
               schema:
                 type: object
-  /sleep/lastnight:
+  /sleep/recent:
     get:
-      summary: Get last night's sleep.
+      summary: Get the most recent sleep log for the specified user.
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          description: ID of the user to retrieve the recent sleep log for.
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response.

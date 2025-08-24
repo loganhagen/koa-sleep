@@ -8,7 +8,9 @@ export const userService = {
     return allUsers;
   },
   getDemoUser: async () => {
-    const demoUser = await prisma.user.findUnique({ where: { id: "001" } });
+    const demoUser = await prisma.user.findFirst({
+      where: { id: "cltvo112j00008x9s1g8p4d7c" },
+    });
     return demoUser;
   },
 };

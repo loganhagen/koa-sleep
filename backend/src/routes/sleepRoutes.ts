@@ -3,10 +3,7 @@ import { sleepController } from "../controllers/sleepController";
 
 const router = Router();
 
-router.get("/", sleepController.getSleepData);
-router.get("/efficiency", sleepController.getSleepEfficiency);
-router.get("/stages", sleepController.getSleepStages);
-router.get("/summary/:date", sleepController.getSessionSummary);
-router.get("/stats", sleepController.getSleepStats);
+router.get("/logs", sleepController.getSleepLogs);
+router.get("/recent", sleepController.getMostRecentSleepLog);
 
 export default router;
