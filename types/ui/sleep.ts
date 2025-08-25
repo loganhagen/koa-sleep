@@ -5,3 +5,10 @@ export interface SleepCardState {
   light: number;
   deep: number;
 }
+
+export interface MostRecentSleep {
+  bedtime: string;
+  wakeUp: string;
+  totalSleep: string;
+  efficiency: string;
+}
