@@ -7,6 +7,7 @@ export interface SleepCardState {
 }
 
 export interface MostRecentSleep {
+  date: string;
   bedtime: string;
   wakeUp: string;
   totalSleep: string;

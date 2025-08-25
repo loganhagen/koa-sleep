@@ -1,3 +1,5 @@
+import { SleepLog } from "../db/sleep";
+
 export interface SleepStages {
   deep: number;
   light: number;
@@ -29,4 +31,8 @@ export interface LastNightSleep {
   totalSleep: string;
   bedtime: string;
   sleepScore: string;
+}
+
+export interface SleepLogResponse {
+  data: SleepLog;
 }

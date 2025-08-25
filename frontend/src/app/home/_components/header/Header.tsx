@@ -3,28 +3,10 @@
 import { Paper, Stack, Divider, Skeleton, Box } from "@mui/material";
 import Greeting from "./Greeting";
 import YourLastSleep from "./YourLastSleep";
-import { useDemo } from "@/app/providers/demoProvider";
-import { fetchAPI } from "@/services/apiClient";
-import { DemoUser } from "@custom_types/backend/users";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Header = () => {
-  const demoCtx = useDemo();
-
-  const fetchUsername = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    if (demoCtx.isDemoMode) {
-      const response = await fetchAPI<DemoUser>("/users/demo");
-      return response.data.firstName;
-    } else {
-      return "User";
-    }
-  };
-
-  const { data: username, isLoading } = useQuery({
-    queryKey: ["username"],
-    queryFn: fetchUsername,
-  });
+  const [isLoading, setIsLoading] = useState(false);
 
   if (isLoading) {
     return (
@@ -90,7 +72,7 @@ const Header = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Greeting username={username} />
+        <Greeting />
         <Divider orientation="vertical" flexItem />
         <YourLastSleep />
       </Stack>

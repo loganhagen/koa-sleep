@@ -2,12 +2,11 @@
 
 import { Stack, Typography } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
+import { useUser } from "@/app/providers/userProvider";
 
-interface GreetingProps {
-  username: string | undefined;
-}
+const Greeting = () => {
+  const userCtx = useUser();
 
-const Greeting: React.FC<GreetingProps> = ({ username }) => {
   return (
     <Stack direction={"column"} alignItems="center" sx={{ pl: 4 }}>
       <Typography
@@ -25,7 +24,7 @@ const Greeting: React.FC<GreetingProps> = ({ username }) => {
           gutterBottom
           sx={{ color: "text.primary" }}
         >
-          {username ?? "..."}
+          {userCtx.user?.data.firstName ?? "...."}
         </Typography>
         <WavingHandIcon
           color="primary"

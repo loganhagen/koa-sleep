@@ -4,56 +4,41 @@ import React, { useEffect, useState } from "react";
 import { Stack, Typography, Box, BoxProps } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
-import { useDemo } from "@/app/providers/demoProvider";
-import { fetchAPI } from "@/services/apiClient";
-import { DemoUser } from "@custom_types/backend/users";
+import { useUser } from "@/app/providers/userProvider";
+import { fetchRecentSleepLog } from "@/services/apiClient";
+import { parseSleepLog } from "@/utils/sleep";
+import { MostRecentSleep } from "@custom_types/ui/sleep";
+
+const baseItemStyle: BoxProps["sx"] = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  height: 120,
+  width: 120,
+  textAlign: "center",
+  transition: "transform 0.3s ease-in-out",
+  ":hover": {
+    transform: "scale(1.05)",
+  },
+};
 
 const YourLastSleep = () => {
-  const [efficiency, setEfficiency] = useState("50");
-  const demoCtx = useDemo();
-
-  const baseItemStyle: BoxProps["sx"] = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 120,
-    width: 120,
-    textAlign: "center",
-    transition: "transform 0.3s ease-in-out",
-    ":hover": {
-      transform: "scale(1.05)",
-    },
-  };
-
-  const getUserId = async () => {
-    if (demoCtx.isDemoMode) {
-      const response = await fetchAPI<DemoUser>("/users/demo");
-      return response.data.id;
-    } else {
-      return "user";
-    }
-  };
-
-  const fetchSleepLog = async () => {
-    const userId = await getUserId();
-    if (!userId) return;
-
-    const url = new URL("http://localhost:5000/sleep/recent");
-    url.searchParams.append("userId", userId);
-
-    try {
-      const res = await fetch(url.toString());
-      const json = await res.json();
-      setEfficiency(json["data"]["efficiency"]);
-    } catch (error) {
-      console.error("Failed to fetch sleep log:", error);
-    }
-  };
+  const userCtx = useUser();
+  const [mostRecentSleep, setMostRecentSleep] = useState<MostRecentSleep>();
 
   useEffect(() => {
-    fetchSleepLog();
-  }, []);
+    const fetchMostRecentSleepData = async () => {
+      if (userCtx.user) {
+        const res = await fetchRecentSleepLog(userCtx.user.data.id);
+        if (res) {
+          const parsedLog = parseSleepLog(res);
+          setMostRecentSleep(parsedLog);
+        }
+      }
+    };
+    fetchMostRecentSleepData();
+  }, [userCtx.user]);
 
   return (
     <Stack spacing={2} alignItems="center">
@@ -65,7 +50,7 @@ const YourLastSleep = () => {
       </Stack>
 
       <Stack spacing={2} alignItems="center">
-        <Typography>January 1, 2006</Typography>
+        <Typography>{mostRecentSleep?.date}</Typography>
         <Stack
           direction="row"
           justifyContent="space-around"
@@ -82,25 +67,35 @@ const YourLastSleep = () => {
               }}
             >
               <Stack>
-                <Stack direction="row" alignItems="center" spacing={1}>
-                  <Typography
-                    variant="h5"
-                    fontWeight="bold"
-                    sx={{ whiteSpace: "nowrap" }}
-                  >
-                    9:30 PM
-                  </Typography>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  spacing={1}
+                >
                   <BedtimeIcon fontSize="small" color="primary" />
-                </Stack>
-                <Stack direction="row" alignItems="center" spacing={1}>
                   <Typography
                     variant="h5"
                     fontWeight="bold"
                     sx={{ whiteSpace: "nowrap" }}
                   >
-                    5:30 AM
+                    {mostRecentSleep?.bedtime}
                   </Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  spacing={1}
+                >
                   <SunnyIcon fontSize="small" sx={{ color: "#ffca28" }} />
+                  <Typography
+                    variant="h5"
+                    fontWeight="bold"
+                    sx={{ whiteSpace: "nowrap" }}
+                  >
+                    {mostRecentSleep?.wakeUp}
+                  </Typography>
                 </Stack>
               </Stack>
             </Box>
@@ -116,7 +111,7 @@ const YourLastSleep = () => {
               }}
             >
               <Typography variant="h5" fontWeight="bold">
-                8h 30m
+                {mostRecentSleep?.totalSleep}
               </Typography>
             </Box>
             <Typography variant="subtitle1">Total Sleep</Typography>
@@ -136,7 +131,7 @@ const YourLastSleep = () => {
                 fontWeight="bold"
                 sx={{ position: "relative", top: "2px" }}
               >
-                {efficiency}
+                {mostRecentSleep?.efficiency}
               </Typography>
             </Box>
             <Typography variant="subtitle1">Efficiency</Typography>

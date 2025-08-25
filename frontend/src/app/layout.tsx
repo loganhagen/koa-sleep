@@ -9,6 +9,7 @@ import ThemeProvider from "./providers/themeProvider";
 import Layout from "./_components/SplashLayout";
 import DemoProvider from "./providers/demoProvider";
 import { QueryProvider } from "./providers/queryProvider";
+import UserProvider from "./providers/userProvider";
 
 type ThemeMode = "light" | "dark";
 
@@ -28,7 +29,9 @@ export default async function RootLayout({
         <ThemeProvider initialMode={initialMode}>
           <DemoProvider>
             <QueryProvider>
-              <Layout>{children}</Layout>
+              <UserProvider>
+                <Layout>{children}</Layout>
+              </UserProvider>
             </QueryProvider>
           </DemoProvider>
         </ThemeProvider>

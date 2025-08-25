@@ -1,3 +1,5 @@
+import { SleepLogResponse } from "@custom_types/backend/sleep";
+
 const API_BASE_ROUTE = "/api";
 
 export async function fetchAPI<T>(
@@ -13,3 +15,14 @@ export async function fetchAPI<T>(
 
   return res.json();
 }
+
+export const fetchRecentSleepLog = async (userId: string) => {
+  const url = `/sleep/recent?userId=${userId}`;
+  try {
+    const res = fetchAPI<SleepLogResponse>(url);
+
+    return (await res).data;
+  } catch (error) {
+    console.error("Failed to fetch sleep log:", error);
+  }
+};
