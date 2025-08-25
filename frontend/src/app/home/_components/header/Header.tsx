@@ -6,7 +6,7 @@ import YourLastSleep from "./YourLastSleep";
 import { useState } from "react";
 
 const Header = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   if (isLoading) {
     return (
