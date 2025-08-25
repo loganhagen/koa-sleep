@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "cross-env NODE_ENV=production node -r module-alias/register dist/backend/src/index.js",
+    "start": "cross-env NODE_ENV=production node -r module-alias/register dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
   },
   "keywords": [],
@@ -50,9 +50,9 @@
     "typescript": "^5.8.2"
   },
   "_moduleAliases": {
-    "@utils": "dist/backend/src/utils",
+    "@utils": "dist/utils",
     "@custom_types": "dist/types",
-    "@services": "dist/backend/src/services",
-    "@routes": "dist/backend/src/routes"
+    "@services": "dist/services",
+    "@routes": "dist/routes"
   }
 }
