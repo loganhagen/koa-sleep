@@ -1,31 +1,17 @@
-import { Typography, Stack } from "@mui/material";
+"use client";
+
+import { Stack, Typography } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
-import { useDemo } from "../../../providers/demoProvider";
-import { DemoUser } from "@custom_types/backend/users";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAPI } from "@/services/apiClient";
 
-const Greeting = () => {
-  const demoCtx = useDemo();
+interface GreetingProps {
+  username: string | undefined;
+}
 
-  const fetchUsername = async () => {
-    if (demoCtx.isDemoMode) {
-      const response = await fetchAPI<DemoUser>("/users/demo");
-      return response.data.firstName;
-    } else {
-      return "user";
-    }
-  };
-
-  const { data: username } = useQuery({
-    queryKey: ["username"],
-    queryFn: fetchUsername,
-  });
-
+const Greeting: React.FC<GreetingProps> = ({ username }) => {
   return (
     <Stack direction={"column"} alignItems="center" sx={{ pl: 4 }}>
       <Typography
-        variant="h4"
+        variant="h3"
         component="h1"
         gutterBottom
         sx={{ color: "text.primary" }}
@@ -34,14 +20,17 @@ const Greeting = () => {
       </Typography>
       <Stack direction={"row"} spacing={1} alignItems="center">
         <Typography
-          variant="h4"
+          variant="h3"
           component="h1"
           gutterBottom
           sx={{ color: "text.primary" }}
         >
-          {username}
+          {username ?? "..."}
         </Typography>
-        <WavingHandIcon color="primary" />
+        <WavingHandIcon
+          color="primary"
+          sx={{ fontSize: 35, color: "info.main" }}
+        />
       </Stack>
     </Stack>
   );
