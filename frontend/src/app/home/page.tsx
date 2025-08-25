@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <Stack direction={"column"} spacing={3}>
       <Header />
-      <DailyCheckIn />
+      {/* <DailyCheckIn /> */}
       <ActionPlan />
     </Stack>
   );
