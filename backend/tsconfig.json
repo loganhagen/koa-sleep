@@ -30,7 +30,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@custom_types/*": ["../../types/*"],
+      "@custom_types/*": ["./types/*"],
       "@utils/*": ["./utils/*"],
       "@external/*": ["./external/*"],
       "@services/*": ["./services/*"],
