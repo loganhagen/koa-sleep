@@ -9,6 +9,7 @@ export const userService = {
   },
   getDemoUser: async () => {
     const demoUser = await prisma.user.findFirst({
+      // hardcoding the demo user id for now
       where: { id: "cltvo112j00008x9s1g8p4d7c" },
     });
     return demoUser;

@@ -6,7 +6,7 @@ import swaggerDocument from "./swagger";
 import sleepRoutes from "./routes/sleepRoutes";
 import morgan from "morgan";
 import logger from "@utils/logger";
-import userRoutes from "routes/userRoutes";
+import userRoutes from "@routes/userRoutes";
 
 const app = express();
 app.use(express.json());

@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node -r module-alias/register dist/server/src/index.js",
-    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
+    "start": "cross-env NODE_ENV=production node -r module-alias/register dist/backend/src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +42,7 @@
     "@types/pg": "^8.15.5",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/winston": "^2.4.4",
+    "cross-env": "^10.0.0",
     "nodemon": "^3.1.9",
     "prisma": "^6.14.0",
     "ts-node": "^10.9.2",
@@ -49,7 +50,9 @@
     "typescript": "^5.8.2"
   },
   "_moduleAliases": {
-    "@utils": "dist/server/src/utils",
-    "@custom_types": "dist/types"
+    "@utils": "dist/backend/src/utils",
+    "@custom_types": "dist/types",
+    "@services": "dist/backend/src/services",
+    "@routes": "dist/backend/src/routes"
   }
 }
