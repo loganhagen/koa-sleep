@@ -29,7 +29,7 @@ const ActionPlanCard = () => {
     >
       <Stack direction="column" spacing={2}>
         {/* Title */}
-        <Stack direction={"row"} alignItems={"center"}>
+        <Stack direction={"row"} alignItems={"center"} paddingBottom={3}>
           <Box sx={{ flex: 1 }} />
           <Stack direction="row" spacing={1}>
             <Typography variant="h5" sx={{ textAlign: "center" }}>

@@ -58,7 +58,7 @@ const YourLastSleep = () => {
         width: "100%",
       }}
     >
-      <Stack direction={"column"} spacing={2}>
+      <Stack direction={"column"} spacing={1}>
         <Stack direction={"row"} spacing={1} justifyContent={"center"}>
           <Typography variant="h5" sx={{ textAlign: "center" }}>
             Your Last Sleep

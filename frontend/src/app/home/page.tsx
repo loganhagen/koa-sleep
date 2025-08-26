@@ -3,8 +3,9 @@
 import { Box, Stack } from "@mui/material";
 import ActionPlan from "./_components/ActionPlanCard";
 import DailyCheckIn from "./_components/DailyCheckIn";
-import Greeting from "./_components/header/Greeting";
-import YourLastSleep from "./_components/header/YourLastSleep";
+import Greeting from "./_components/Greeting";
+import YourLastSleep from "./_components/YourLastSleep";
+import SleepStages from "./_components/SleepStages";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
         <Greeting />
         <YourLastSleep />
       </Stack>
+      <SleepStages />
       <DailyCheckIn />
       <ActionPlan />
     </Stack>

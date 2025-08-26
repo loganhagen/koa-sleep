@@ -116,8 +116,8 @@ const SidebarComponent: React.FC = () => {
 
         <Box sx={{ p: 2, borderTop: `1px solid ${muiTheme.palette.divider}` }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-            <Avatar sx={{ bgcolor: "primary.main" }}>LH</Avatar>
-            <Typography sx={{ fontWeight: 600 }}>Denzel Washington</Typography>
+            <Avatar sx={{ bgcolor: "primary.main" }}>DU</Avatar>
+            <Typography sx={{ fontWeight: 600 }}>Demo User</Typography>
           </Box>
           <Chip
             icon={<CheckCircleOutline />}
