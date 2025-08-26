@@ -2,7 +2,6 @@ import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
 import {
   Home,
   Settings,
-  Logout,
   AutoGraph,
   CalendarMonth,
   CheckCircleOutline,
@@ -10,13 +9,27 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Box, Typography, useTheme, Avatar, Stack, Chip } from "@mui/material";
-import { useState } from "react";
+import {
+  Box,
+  Typography,
+  useTheme,
+  Avatar,
+  Stack,
+  Chip,
+  IconButton,
+  useMediaQuery,
+} from "@mui/material";
+import { useState, useEffect } from "react";
 
 const SidebarComponent: React.FC = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
   const muiTheme = useTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
+  const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  useEffect(() => {
+    setIsCollapsed(isMobile);
+  }, [isMobile]);
 
   const menuItemStyles: MenuItemStyles = {
     button: ({ active }) => {
@@ -61,20 +74,24 @@ const SidebarComponent: React.FC = () => {
         color: muiTheme.palette.text.secondary,
       }}
     >
-      <Stack sx={{ height: "100%" }}>
+      <Stack sx={{ height: "100%", position: "relative" }}>
         <Box
           sx={{
-            p: 3,
+            p: isCollapsed ? 2 : 3,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            transition: "padding 0.3s ease-in-out",
           }}
         >
           <Image
             src="/logo-3-no-bg.png"
             alt="FitSync Logo"
-            width={60}
-            height={60}
+            width={isCollapsed ? 48 : 60}
+            height={isCollapsed ? 48 : 60}
+            style={{
+              transition: "width 0.3s ease-in-out, height 0.3s ease-in-out",
+            }}
           />
           <Typography
             sx={{
@@ -82,6 +99,12 @@ const SidebarComponent: React.FC = () => {
               fontWeight: "700",
               fontFamily: "Inter, sans-serif",
               color: muiTheme.palette.text.primary,
+              ml: 1,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              width: isCollapsed ? 0 : "auto",
+              opacity: isCollapsed ? 0 : 1,
+              transition: "width 0.3s ease-in-out, opacity 0.2s ease-in-out",
             }}
           >
             FitSync
@@ -116,36 +139,75 @@ const SidebarComponent: React.FC = () => {
           >
             Settings
           </MenuItem>
-          <MenuItem
-            icon={
-              <ExpandLess
-                style={{
-                  transform: `rotate(${isCollapsed ? 90 : -90}deg)`,
-                  transition: "transform 0.3s ease-in-out",
-                }}
-              />
-            }
-            onClick={() => {
-              setIsCollapsed(!isCollapsed);
-            }}
-          ></MenuItem>
         </Menu>
 
-        <Box sx={{ p: 2, borderTop: `1px solid ${muiTheme.palette.divider}` }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-            <Avatar sx={{ bgcolor: "primary.main" }}>DU</Avatar>
-            <Typography sx={{ fontWeight: 600 }}>Demo User</Typography>
-          </Box>
-          <Chip
-            icon={<CheckCircleOutline />}
-            label="Fitbit Connected"
-            color="success"
-            size="small"
-            sx={{ mb: 2, width: "100%" }}
+        <IconButton
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          sx={{
+            position: "absolute",
+            top: "50%",
+            right: -15,
+            transform: "translateY(-50%)",
+            backgroundColor: muiTheme.palette.background.paper,
+            zIndex: 1,
+            width: 50,
+            height: 50,
+            "&:hover": {
+              backgroundColor: muiTheme.palette.background.default,
+            },
+          }}
+        >
+          <ExpandLess
+            style={{
+              transform: `rotate(${isCollapsed ? 90 : -90}deg)`,
+              transition: "transform 0.3s ease-in-out",
+            }}
           />
-          <Menu menuItemStyles={menuItemStyles}>
-            <MenuItem icon={<Logout />}>Log Out</MenuItem>
-          </Menu>
+        </IconButton>
+
+        <Box
+          sx={{
+            p: 2,
+            borderTop: `1px solid ${muiTheme.palette.divider}`,
+            transition: "padding 0.3s ease-in-out",
+            overflow: "hidden",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: isCollapsed ? "center" : "flex-start",
+              mb: 2,
+            }}
+          >
+            <Avatar sx={{ bgcolor: "primary.main" }}>DU</Avatar>
+            <Box
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                width: isCollapsed ? 0 : "auto",
+                opacity: isCollapsed ? 0 : 1,
+                transition: "width 0.3s ease-in-out, opacity 0.2s ease-in-out",
+                ml: isCollapsed ? 0 : 2,
+              }}
+            >
+              <Typography sx={{ fontWeight: 600 }}>Demo User</Typography>
+            </Box>
+          </Box>
+          <Box sx={{ textAlign: "center", mb: 2 }}>
+            {isCollapsed ? (
+              <CheckCircleOutline color="success" />
+            ) : (
+              <Chip
+                icon={<CheckCircleOutline />}
+                label="Fitbit Connected"
+                color="success"
+                size="small"
+                sx={{ width: "100%" }}
+              />
+            )}
+          </Box>
         </Box>
       </Stack>
     </Sidebar>
