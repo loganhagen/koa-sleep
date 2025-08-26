@@ -65,7 +65,7 @@ const SidebarComponent: React.FC = () => {
       width="250px"
       style={{
         borderRight: "none",
-        height: "100vh",
+        height: isMobile ? "auto" : "100vh",
         top: 0,
         position: "sticky",
       }}

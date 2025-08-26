@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Box sx={{ display: "flex" }}>
       {!isSplashPage && <Sidebar />}
-      <Box component="main" sx={{ flexGrow: 1 }}>
+      <Box component="main" sx={{ flexGrow: 1, position: "relative" }}>
         {!isSplashPage && <Toolbar />}
         <Box sx={{ position: "absolute", top: 16, right: 16 }}>
           {!isSplashPage && <ThemeToggleButton />}
