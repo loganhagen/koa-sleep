@@ -3,19 +3,19 @@ import { createTheme } from "@mui/material/styles";
 const typography = {
   fontFamily: "Inter, sans-serif",
   h1: {
-    fontFamily: "'Source Serif Pro', serif",
+    fontFamily: "'Inter', serif",
     fontWeight: 700,
   },
   h2: {
-    fontFamily: "'Source Serif Pro', serif",
+    fontFamily: "'Inter', serif",
     fontWeight: 700,
   },
   h3: {
-    fontFamily: "'Source Serif Pro', serif",
+    fontFamily: "'Inter', serif",
     fontWeight: 700,
   },
   h4: {
-    fontFamily: "'Source Serif Pro', serif",
+    fontFamily: "'Inter', serif",
     fontWeight: 700,
   },
   h5: {

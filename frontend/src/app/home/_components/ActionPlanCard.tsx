@@ -32,16 +32,16 @@ const ActionPlanCard = () => {
         justifyContent="center"
       >
         <Stack direction={"row"} spacing={1} justifyContent={"center"}>
-          <Typography variant="h4" component="h2" sx={{ textAlign: "center" }}>
+          <Typography variant="h5" component="h2" sx={{ textAlign: "center" }}>
             Action Plan
           </Typography>
-          <RocketLaunchIcon sx={{ fontSize: 40, color: "info.main" }} />
+          <RocketLaunchIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>
 
         <Typography
           variant="body1"
           color="text.secondary"
-          sx={{ textAlign: "left", width: "100%" }}
+          sx={{ textAlign: "left" }}
         >
           It looks like you slept okay last night, Logan. To help you get even
           better rest tonight, here are a few things you can try.

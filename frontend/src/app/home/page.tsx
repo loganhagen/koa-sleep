@@ -1,15 +1,19 @@
 "use client";
 
 import { Stack } from "@mui/material";
-import Header from "./_components/header/Header";
 import ActionPlan from "./_components/ActionPlanCard";
 import DailyCheckIn from "./_components/DailyCheckIn";
+import Greeting from "./_components/header/Greeting";
+import YourLastSleep from "./_components/header/YourLastSleep";
 
 const Home = () => {
   return (
     <Stack direction={"column"} spacing={3}>
-      <Header />
-      {/* <DailyCheckIn /> */}
+      <Stack direction={"row"} spacing={3}>
+        <Greeting />
+        <YourLastSleep />
+      </Stack>
+      <DailyCheckIn />
       <ActionPlan />
     </Stack>
   );

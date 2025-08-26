@@ -78,10 +78,10 @@ const DailyCheckIn = () => {
     >
       <Stack spacing={3}>
         <Stack direction={"row"} spacing={1} justifyContent={"center"}>
-          <Typography variant="h4" component="h2" sx={{ textAlign: "center" }}>
+          <Typography variant="h5" component="h2" sx={{ textAlign: "center" }}>
             Daily Check-In
           </Typography>
-          <CheckIcon sx={{ fontSize: 40, color: "green" }} />
+          <CheckIcon sx={{ fontSize: 30, color: "green" }} />
         </Stack>
 
         <Stack spacing={2} divider={<Divider flexItem />}>

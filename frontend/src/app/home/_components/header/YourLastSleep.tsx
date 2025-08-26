@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack, Typography, Box, BoxProps } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Box,
+  BoxProps,
+  Divider,
+  Paper,
+} from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import { useUser } from "@/app/providers/userProvider";
@@ -41,23 +48,33 @@ const YourLastSleep = () => {
   }, [userCtx.user]);
 
   return (
-    <Stack spacing={2} alignItems="center">
-      <Stack direction={"row"} spacing={1} justifyContent={"center"}>
-        <Typography variant="h4" component="h2" sx={{ textAlign: "center" }}>
-          Your Last Sleep
-        </Typography>
-        <BedtimeIcon sx={{ fontSize: 35, color: "info.main" }} />
-      </Stack>
+    <Paper
+      elevation={0}
+      variant="outlined"
+      sx={{
+        p: 4,
+        borderRadius: 10,
+        backgroundColor: "background.paper",
+      }}
+    >
+      <Stack direction={"column"} spacing={2}>
+        <Stack direction={"row"} spacing={1} justifyContent={"center"}>
+          <Typography variant="h5" sx={{ textAlign: "center" }}>
+            Your Last Sleep
+          </Typography>
+          <BedtimeIcon sx={{ fontSize: 30, color: "info.main" }} />
+        </Stack>
+        <Typography textAlign={"center"}>January 1, 2006</Typography>
 
-      <Stack spacing={2} alignItems="center">
-        <Typography>{mostRecentSleep?.date}</Typography>
+        {/* Last Sleep Data Wedges */}
         <Stack
           direction="row"
-          justifyContent="space-around"
-          alignItems="flex-start"
           spacing={5}
+          paddingTop={3}
+          justifyContent={"center"}
         >
-          <Stack alignItems="center" spacing={1}>
+          {/*Sleep Schedule */}
+          <Stack direction={"column"} alignItems="center" spacing={1}>
             <Box
               sx={{
                 ...baseItemStyle,
@@ -66,41 +83,41 @@ const YourLastSleep = () => {
                 boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
               }}
             >
-              <Stack>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  spacing={1}
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                spacing={1}
+              >
+                <BedtimeIcon fontSize="small" color="primary" />
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{ whiteSpace: "nowrap" }}
                 >
-                  <BedtimeIcon fontSize="small" color="primary" />
-                  <Typography
-                    variant="h5"
-                    fontWeight="bold"
-                    sx={{ whiteSpace: "nowrap" }}
-                  >
-                    {mostRecentSleep?.bedtime}
-                  </Typography>
-                </Stack>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
-                  spacing={1}
+                  9:30 PM
+                </Typography>
+              </Stack>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+                spacing={1}
+              >
+                <SunnyIcon fontSize="small" sx={{ color: "#ffca28" }} />
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{ whiteSpace: "nowrap" }}
                 >
-                  <SunnyIcon fontSize="small" sx={{ color: "#ffca28" }} />
-                  <Typography
-                    variant="h5"
-                    fontWeight="bold"
-                    sx={{ whiteSpace: "nowrap" }}
-                  >
-                    {mostRecentSleep?.wakeUp}
-                  </Typography>
-                </Stack>
+                  6:30 AM
+                </Typography>
               </Stack>
             </Box>
             <Typography variant="subtitle1">Schedule</Typography>
           </Stack>
+
+          {/* Total Sleep */}
           <Stack alignItems="center" spacing={1}>
             <Box
               sx={{
@@ -110,12 +127,14 @@ const YourLastSleep = () => {
                 boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
               }}
             >
-              <Typography variant="h5" fontWeight="bold">
-                {mostRecentSleep?.totalSleep}
+              <Typography variant="h6" fontWeight="bold">
+                9 hrs
               </Typography>
             </Box>
             <Typography variant="subtitle1">Total Sleep</Typography>
           </Stack>
+
+          {/* Efficiency */}
           <Stack alignItems="center" spacing={1}>
             <Box
               sx={{
@@ -123,22 +142,22 @@ const YourLastSleep = () => {
                 borderRadius: "50%",
                 background: "linear-gradient(145deg, #2CDFFF, #00A2E8)",
                 color: "secondary.contrastText",
-                boxShadow: "0px 4px 15px rgba(0, 162, 232, 0.25)",
+                boxShadow: "0px 4px 20px rgba(0, 162, 232, 0.25)",
               }}
             >
               <Typography
-                variant="h4"
+                variant="h6"
                 fontWeight="bold"
                 sx={{ position: "relative", top: "2px" }}
               >
-                {mostRecentSleep?.efficiency}
+                Great
               </Typography>
             </Box>
             <Typography variant="subtitle1">Efficiency</Typography>
           </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </Paper>
   );
 };
 
