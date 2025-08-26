@@ -55,6 +55,7 @@ const YourLastSleep = () => {
         p: 4,
         borderRadius: 10,
         backgroundColor: "background.paper",
+        width: "100%",
       }}
     >
       <Stack direction={"column"} spacing={2}>

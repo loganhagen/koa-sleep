@@ -76,12 +76,19 @@ const DailyCheckIn = () => {
         textAlign: "left",
       }}
     >
-      <Stack spacing={3}>
-        <Stack direction={"row"} spacing={1} justifyContent={"center"}>
-          <Typography variant="h5" component="h2" sx={{ textAlign: "center" }}>
-            Daily Check-In
-          </Typography>
-          <CheckIcon sx={{ fontSize: 30, color: "green" }} />
+      <Stack direction={"column"} spacing={3}>
+        {/* Title */}
+        <Stack direction={"row"} alignItems={"center"}>
+          <Box sx={{ flex: 1 }} />
+          <Stack direction="row" spacing={1}>
+            <Typography variant="h5" sx={{ textAlign: "center" }}>
+              Daily Check-In
+            </Typography>
+            <CheckIcon sx={{ fontSize: 30, color: "green" }} />
+          </Stack>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+            <Chip label="Coming Soon!" color="info" variant="filled" />
+          </Box>
         </Stack>
 
         <Stack spacing={2} divider={<Divider flexItem />}>

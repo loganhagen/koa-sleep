@@ -6,6 +6,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Box,
+  Chip,
 } from "@mui/material";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
@@ -25,17 +27,19 @@ const ActionPlanCard = () => {
         textAlign: "left",
       }}
     >
-      <Stack
-        direction="column"
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Stack direction={"row"} spacing={1} justifyContent={"center"}>
-          <Typography variant="h5" component="h2" sx={{ textAlign: "center" }}>
-            Action Plan
-          </Typography>
-          <RocketLaunchIcon sx={{ fontSize: 30, color: "info.main" }} />
+      <Stack direction="column" spacing={2}>
+        {/* Title */}
+        <Stack direction={"row"} alignItems={"center"}>
+          <Box sx={{ flex: 1 }} />
+          <Stack direction="row" spacing={1}>
+            <Typography variant="h5" sx={{ textAlign: "center" }}>
+              Action Plan
+            </Typography>
+            <RocketLaunchIcon sx={{ fontSize: 30, color: "info.main" }} />
+          </Stack>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+            <Chip label="Coming Soon!" color="info" variant="filled" />
+          </Box>
         </Stack>
 
         <Typography
