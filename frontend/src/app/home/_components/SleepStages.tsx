@@ -1,13 +1,24 @@
+"use client";
+
 import * as React from "react";
-import { Paper, Stack, Typography } from "@mui/material";
+import {
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  Box,
+} from "@mui/material";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import { LinePlot } from "@mui/x-charts/LineChart";
 import { ChartContainer } from "@mui/x-charts/ChartContainer";
 import { ChartsXAxis } from "@mui/x-charts/ChartsXAxis";
 import { ChartsYAxis } from "@mui/x-charts/ChartsYAxis";
-import { ChartsAxisHighlight } from "@mui/x-charts/ChartsAxisHighlight";
 
 const SleepStages = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const sleepData = [
     { time: 0, stage: 0 },
     { time: 0.25, stage: 1 },
@@ -72,46 +83,61 @@ const SleepStages = () => {
           January 1, 2006
         </Typography>
 
-        <ChartContainer
-          xAxis={[
-            {
-              data: xAxisData,
-              scaleType: "linear",
-              label: "Time",
-              valueFormatter: (value) =>
-                new Date(
-                  new Date().setHours(23, 0, 0, 0) + value * 3600 * 1000
-                ).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }),
-            },
-          ]}
-          yAxis={[
-            {
-              id: "sleepStages",
-              min: 0,
-              max: 3,
-              scaleType: "linear",
-              valueFormatter: sleepStageValueFormatter,
-            },
-          ]}
-          series={[
-            {
-              type: "line",
-              curve: "stepAfter",
-              data: seriesData,
-              label: "Sleep Stage",
-              area: true,
-              showMark: false,
-            },
-          ]}
-          height={300}
-        >
-          <LinePlot />
-          <ChartsXAxis />
-          <ChartsYAxis />
-        </ChartContainer>
+        {isMobile ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: 300,
+            }}
+          >
+            <Typography variant="body1" color="text.secondary">
+              Please view on a larger screen to see the sleep stages chart.
+            </Typography>
+          </Box>
+        ) : (
+          <ChartContainer
+            xAxis={[
+              {
+                data: xAxisData,
+                scaleType: "linear",
+                label: "Time",
+                valueFormatter: (value) =>
+                  new Date(
+                    new Date().setHours(23, 0, 0, 0) + value * 3600 * 1000
+                  ).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }),
+              },
+            ]}
+            yAxis={[
+              {
+                id: "sleepStages",
+                min: 0,
+                max: 3,
+                scaleType: "linear",
+                valueFormatter: sleepStageValueFormatter,
+              },
+            ]}
+            series={[
+              {
+                type: "line",
+                curve: "stepAfter",
+                data: seriesData,
+                label: "Sleep Stage",
+                area: true,
+                showMark: false,
+              },
+            ]}
+            height={300}
+          >
+            <LinePlot />
+            <ChartsXAxis />
+            <ChartsYAxis />
+          </ChartContainer>
+        )}
       </Stack>
     </Paper>
   );

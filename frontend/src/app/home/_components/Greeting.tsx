@@ -21,15 +21,25 @@ const Greeting = () => {
         width: "100%",
       }}
     >
-      <Stack direction={"column"}>
-        <Typography variant="h4" sx={{ color: "text.primary" }}>
+      <Stack
+        direction={"column"}
+        alignItems={{ xs: "center", lg: "flex-start" }}
+      >
+        <Typography
+          variant="h4"
+          sx={{
+            color: "text.primary",
+            textAlign: { xs: "center", lg: "left" },
+          }}
+        >
           Good morning,
         </Typography>
         <Stack
           direction={"row"}
           spacing={1}
-          justifyContent={"center"}
+          justifyContent={{ xs: "center", lg: "flex-start" }}
           paddingTop={1}
+          alignItems="center"
         >
           <Typography variant="h4" sx={{ color: "text.primary" }}>
             {username}!

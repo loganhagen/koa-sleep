@@ -8,7 +8,11 @@ import {
   Paper,
   Slider,
   Stack,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
@@ -40,6 +44,22 @@ const initialActivities: Activity[] = [
 const DailyCheckIn = () => {
   const [sliderDisabled, setSliderDisabled] = useState(true);
   const [activities, setActivities] = useState<Activity[]>(initialActivities);
+  const [feeling, setFeeling] = useState<string | null>("3");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handleFeelingChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newFeeling: string | null
+  ) => {
+    if (newFeeling !== null) {
+      setFeeling(newFeeling);
+    }
+  };
+
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    setFeeling(String(newValue as number));
+  };
 
   const handleEditClick = () => {
     setSliderDisabled(false);
@@ -78,15 +98,27 @@ const DailyCheckIn = () => {
     >
       <Stack direction={"column"} spacing={3}>
         {/* Title */}
-        <Stack direction={"row"} alignItems={"center"} paddingBottom={3}>
-          <Box sx={{ flex: 1 }} />
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={"center"}
+          paddingBottom={3}
+          spacing={{ xs: 2, sm: 0 }}
+        >
+          <Box sx={{ flex: 1, display: { xs: "none", sm: "block" } }} />
           <Stack direction="row" spacing={1}>
             <Typography variant="h5" sx={{ textAlign: "center" }}>
               Daily Check-In
             </Typography>
             <CheckIcon sx={{ fontSize: 30, color: "green" }} />
           </Stack>
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Box
+            sx={{
+              flex: 1,
+              width: "100%",
+              display: "flex",
+              justifyContent: { xs: "center", sm: "flex-end" },
+            }}
+          >
             <Chip label="Coming Soon!" color="info" variant="filled" />
           </Box>
         </Stack>
@@ -100,19 +132,48 @@ const DailyCheckIn = () => {
             >
               How are you feeling today?
             </Typography>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <SentimentVeryDissatisfiedIcon />
-              <Slider
-                aria-label="Feeling"
-                defaultValue={3}
-                step={1}
-                marks
-                min={1}
-                max={5}
-                disabled={sliderDisabled}
-              />
-              <SentimentVerySatisfiedIcon />
-            </Stack>
+            {isMobile ? (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+                <ToggleButtonGroup
+                  value={feeling}
+                  exclusive
+                  onChange={handleFeelingChange}
+                  aria-label="Feeling"
+                  disabled={sliderDisabled}
+                >
+                  <ToggleButton value="1" aria-label="feeling 1">
+                    1
+                  </ToggleButton>
+                  <ToggleButton value="2" aria-label="feeling 2">
+                    2
+                  </ToggleButton>
+                  <ToggleButton value="3" aria-label="feeling 3">
+                    3
+                  </ToggleButton>
+                  <ToggleButton value="4" aria-label="feeling 4">
+                    4
+                  </ToggleButton>
+                  <ToggleButton value="5" aria-label="feeling 5">
+                    5
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
+            ) : (
+              <Stack direction="row" spacing={2} alignItems="center">
+                <SentimentVeryDissatisfiedIcon />
+                <Slider
+                  aria-label="Feeling"
+                  value={Number(feeling)}
+                  onChange={handleSliderChange}
+                  step={1}
+                  marks
+                  min={1}
+                  max={5}
+                  disabled={sliderDisabled}
+                />
+                <SentimentVerySatisfiedIcon />
+              </Stack>
+            )}
           </Box>
           <Box>
             <Typography
@@ -122,7 +183,14 @@ const DailyCheckIn = () => {
             >
               What activities did you engage in yesterday?
             </Typography>
-            <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={1}
+              useFlexGap
+              flexWrap="wrap"
+              justifyContent={{ xs: "center", sm: "flex-start" }}
+              alignItems="center"
+            >
               {activities.map((activity) => (
                 <Chip
                   key={activity.label}
@@ -142,7 +210,11 @@ const DailyCheckIn = () => {
               ))}
             </Stack>
           </Box>
-          <Stack direction={"row"} spacing={1} justifyContent={"right"}>
+          <Stack
+            direction={"row"}
+            spacing={1}
+            justifyContent={{ xs: "center", sm: "flex-end" }}
+          >
             <Button
               variant="contained"
               onClick={handleEditClick}

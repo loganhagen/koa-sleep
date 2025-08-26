@@ -69,10 +69,11 @@ const YourLastSleep = () => {
 
         {/* Last Sleep Data Wedges */}
         <Stack
-          direction="row"
-          spacing={5}
+          direction={{ xs: "column", md: "row" }}
+          spacing={{ xs: 3, md: 5 }}
           paddingTop={3}
           justifyContent={"center"}
+          alignItems={"center"}
         >
           {/*Sleep Schedule */}
           <Stack direction={"column"} alignItems="center" spacing={1}>
@@ -80,8 +81,11 @@ const YourLastSleep = () => {
               sx={{
                 ...baseItemStyle,
                 borderRadius: 4,
-                bgcolor: "background.paper",
+                bgcolor: "background.default",
                 boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+                border: "1px solid",
+                borderColor: "divider",
+                paddingX: 10,
               }}
             >
               <Stack
@@ -96,7 +100,7 @@ const YourLastSleep = () => {
                   fontWeight="bold"
                   sx={{ whiteSpace: "nowrap" }}
                 >
-                  9:30 PM
+                  11:30 PM
                 </Typography>
               </Stack>
               <Stack
@@ -111,7 +115,7 @@ const YourLastSleep = () => {
                   fontWeight="bold"
                   sx={{ whiteSpace: "nowrap" }}
                 >
-                  6:30 AM
+                  10:30 AM
                 </Typography>
               </Stack>
             </Box>
@@ -124,11 +128,13 @@ const YourLastSleep = () => {
               sx={{
                 ...baseItemStyle,
                 borderRadius: 4,
-                bgcolor: "background.paper",
+                bgcolor: "background.default",
                 boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+                border: "1px solid",
+                borderColor: "divider",
               }}
             >
-              <Typography variant="h6" fontWeight="bold">
+              <Typography variant="h5" fontWeight="bold">
                 9 hrs
               </Typography>
             </Box>
@@ -151,7 +157,7 @@ const YourLastSleep = () => {
                 fontWeight="bold"
                 sx={{ position: "relative", top: "2px" }}
               >
-                Great
+                Great!
               </Typography>
             </Box>
             <Typography variant="subtitle1">Efficiency</Typography>

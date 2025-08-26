@@ -10,7 +10,7 @@ import SleepStages from "./_components/SleepStages";
 const Home = () => {
   return (
     <Stack direction={"column"} spacing={3}>
-      <Stack direction={"row"} spacing={3}>
+      <Stack direction={{ xs: "column", lg: "row" }} spacing={3}>
         <Greeting />
         <YourLastSleep />
       </Stack>
