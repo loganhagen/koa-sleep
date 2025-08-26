@@ -6,12 +6,15 @@ import {
   AutoGraph,
   CalendarMonth,
   CheckCircleOutline,
+  ExpandLess,
 } from "@mui/icons-material";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Box, Typography, useTheme, Avatar, Stack, Chip } from "@mui/material";
+import { useState } from "react";
 
 const SidebarComponent: React.FC = () => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
   const muiTheme = useTheme();
 
@@ -45,6 +48,7 @@ const SidebarComponent: React.FC = () => {
 
   return (
     <Sidebar
+      collapsed={isCollapsed}
       width="250px"
       style={{
         borderRight: "none",
@@ -112,6 +116,19 @@ const SidebarComponent: React.FC = () => {
           >
             Settings
           </MenuItem>
+          <MenuItem
+            icon={
+              <ExpandLess
+                style={{
+                  transform: `rotate(${isCollapsed ? 90 : -90}deg)`,
+                  transition: "transform 0.3s ease-in-out",
+                }}
+              />
+            }
+            onClick={() => {
+              setIsCollapsed(!isCollapsed);
+            }}
+          ></MenuItem>
         </Menu>
 
         <Box sx={{ p: 2, borderTop: `1px solid ${muiTheme.palette.divider}` }}>
