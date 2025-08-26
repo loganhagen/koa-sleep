@@ -92,7 +92,11 @@ const SleepStages = () => {
               height: 300,
             }}
           >
-            <Typography variant="body1" color="text.secondary">
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              textAlign={"center"}
+            >
               Please view on a larger screen to see the sleep stages chart.
             </Typography>
           </Box>

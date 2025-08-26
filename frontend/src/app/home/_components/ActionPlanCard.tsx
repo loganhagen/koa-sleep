@@ -29,15 +29,27 @@ const ActionPlanCard = () => {
     >
       <Stack direction="column" spacing={2}>
         {/* Title */}
-        <Stack direction={"row"} alignItems={"center"} paddingBottom={3}>
-          <Box sx={{ flex: 1 }} />
-          <Stack direction="row" spacing={1}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems={"center"}
+          paddingBottom={3}
+          spacing={{ xs: 2, sm: 0 }}
+        >
+          <Box sx={{ flex: 1, display: { xs: "none", sm: "block" } }} />
+          <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="h5" sx={{ textAlign: "center" }}>
               Action Plan
             </Typography>
             <RocketLaunchIcon sx={{ fontSize: 30, color: "info.main" }} />
           </Stack>
-          <Box sx={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+          <Box
+            sx={{
+              flex: 1,
+              width: "100%",
+              display: "flex",
+              justifyContent: { xs: "center", sm: "flex-end" },
+            }}
+          >
             <Chip label="Coming Soon!" color="info" variant="filled" />
           </Box>
         </Stack>
@@ -51,7 +63,10 @@ const ActionPlanCard = () => {
           better rest tonight, here are a few things you can try.
         </Typography>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-          <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
+          <ListItem
+            sx={{ "&:hover": { bgcolor: "action.hover" } }}
+            alignItems="flex-start"
+          >
             <ListItemIcon>
               <LocalCafeIcon color="warning" />
             </ListItemIcon>
@@ -59,7 +74,10 @@ const ActionPlanCard = () => {
               Avoid caffeine after 3 PM today.<sup>1</sup>
             </ListItemText>
           </ListItem>
-          <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
+          <ListItem
+            sx={{ "&:hover": { bgcolor: "action.hover" } }}
+            alignItems="flex-start"
+          >
             <ListItemIcon>
               <WbSunnyIcon color="warning" />
             </ListItemIcon>
@@ -68,7 +86,10 @@ const ActionPlanCard = () => {
               <sup>2</sup>
             </ListItemText>
           </ListItem>
-          <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
+          <ListItem
+            sx={{ "&:hover": { bgcolor: "action.hover" } }}
+            alignItems="flex-start"
+          >
             <ListItemIcon>
               <HotelIcon color="info" />
             </ListItemIcon>
@@ -77,7 +98,10 @@ const ActionPlanCard = () => {
               meditation before 9:30PM tonight.<sup>3</sup>
             </ListItemText>
           </ListItem>
-          <ListItem sx={{ "&:hover": { bgcolor: "action.hover" } }}>
+          <ListItem
+            sx={{ "&:hover": { bgcolor: "action.hover" } }}
+            alignItems="flex-start"
+          >
             <ListItemIcon>
               <AccessAlarmIcon color="info" />
             </ListItemIcon>

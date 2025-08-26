@@ -135,7 +135,7 @@ const YourLastSleep = () => {
               }}
             >
               <Typography variant="h5" fontWeight="bold">
-                9 hrs
+                11 hrs
               </Typography>
             </Box>
             <Typography variant="subtitle1">Total Sleep</Typography>

@@ -176,13 +176,25 @@ const DailyCheckIn = () => {
             )}
           </Box>
           <Box>
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: "medium" }}
-              gutterBottom
-            >
-              What activities did you engage in yesterday?
-            </Typography>
+            {isMobile ? (
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: "medium" }}
+                textAlign={"center"}
+                gutterBottom
+              >
+                What activities did you engage in yesterday?
+              </Typography>
+            ) : (
+              <Typography
+                variant="subtitle1"
+                sx={{ fontWeight: "medium" }}
+                gutterBottom
+              >
+                What activities did you engage in yesterday?
+              </Typography>
+            )}
+
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={1}
