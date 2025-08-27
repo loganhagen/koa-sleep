@@ -1,61 +1,27 @@
 "use client";
 
 import * as React from "react";
-import {
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-  useMediaQuery,
-  Box,
-} from "@mui/material";
+import { Paper, Stack, Typography, Box, Divider } from "@mui/material";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
-import { LinePlot } from "@mui/x-charts/LineChart";
-import { ChartContainer } from "@mui/x-charts/ChartContainer";
-import { ChartsXAxis } from "@mui/x-charts/ChartsXAxis";
-import { ChartsYAxis } from "@mui/x-charts/ChartsYAxis";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 const SleepStages = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
-  const sleepData = [
-    { time: 0, stage: 0 },
-    { time: 0.25, stage: 1 },
-    { time: 0.75, stage: 2 },
-    { time: 1.5, stage: 1 },
-    { time: 2.0, stage: 3 },
-    { time: 2.25, stage: 1 },
-    { time: 2.75, stage: 2 },
-    { time: 3.5, stage: 1 },
-    { time: 4.0, stage: 3 },
-    { time: 4.25, stage: 1 },
-    { time: 4.5, stage: 0 },
-    { time: 4.58, stage: 1 },
-    { time: 5.5, stage: 3 },
-    { time: 6.0, stage: 1 },
-    { time: 7.0, stage: 3 },
-    { time: 7.75, stage: 1 },
-    { time: 8.0, stage: 0 },
+  const sleepStageData = [
+    { id: 0, value: 0.8, label: "Awake" },
+    { id: 1, value: 4.2, label: "Light" },
+    { id: 2, value: 1.5, label: "Deep" },
+    { id: 3, value: 1.5, label: "REM" },
   ];
 
-  const xAxisData = sleepData.map((d) => d.time);
-  const seriesData = sleepData.map((d) => d.stage);
+  const totalDuration = sleepStageData.reduce(
+    (acc, stage) => acc + stage.value,
+    0
+  );
 
-  const sleepStageValueFormatter = (value: number) => {
-    switch (value) {
-      case 0:
-        return "Awake";
-      case 1:
-        return "Light";
-      case 2:
-        return "Deep";
-      case 3:
-        return "REM";
-      default:
-        return "";
-    }
-  };
+  const pieChartData = sleepStageData.map((stage) => ({
+    ...stage,
+    percentage: totalDuration > 0 ? (stage.value / totalDuration) * 100 : 0,
+  }));
 
   return (
     <Paper
@@ -67,11 +33,12 @@ const SleepStages = () => {
         backgroundColor: "background.paper",
       }}
     >
-      <Stack direction={"column"}>
+      <Stack direction={"column"} spacing={2}>
         <Stack
-          direction={"row"}
+          direction={{ xs: "column", sm: "row" }}
           spacing={1}
           justifyContent={"center"}
+          alignItems="center"
           paddingBottom={1}
         >
           <Typography variant="h5" sx={{ textAlign: "center" }}>
@@ -79,69 +46,63 @@ const SleepStages = () => {
           </Typography>
           <ShowChartIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>
-        <Typography textAlign={"center"} paddingBottom={3}>
+        <Typography textAlign={"center"} paddingBottom={1}>
           January 1, 2006
         </Typography>
 
-        {isMobile ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: 300,
-            }}
-          >
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              textAlign={"center"}
-            >
-              Please view on a larger screen to see the sleep stages chart.
-            </Typography>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          alignItems="center"
+          spacing={2}
+        >
+          <Box sx={{ flex: 1, width: "100%" }}>
+            <PieChart
+              series={[
+                {
+                  data: pieChartData,
+                  faded: {
+                    innerRadius: 30,
+                    additionalRadius: -30,
+                    color: "gray",
+                  },
+                },
+              ]}
+              height={200}
+            />
           </Box>
-        ) : (
-          <ChartContainer
-            xAxis={[
-              {
-                data: xAxisData,
-                scaleType: "linear",
-                label: "Time",
-                valueFormatter: (value) =>
-                  new Date(
-                    new Date().setHours(23, 0, 0, 0) + value * 3600 * 1000
-                  ).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }),
-              },
-            ]}
-            yAxis={[
-              {
-                id: "sleepStages",
-                min: 0,
-                max: 3,
-                scaleType: "linear",
-                valueFormatter: sleepStageValueFormatter,
-              },
-            ]}
-            series={[
-              {
-                type: "line",
-                curve: "stepAfter",
-                data: seriesData,
-                label: "Sleep Stage",
-                area: true,
-                showMark: false,
-              },
-            ]}
-            height={300}
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{ display: { xs: "none", sm: "block" } }}
+          />
+          <Stack
+            direction={"column"}
+            sx={{ flex: 1, width: "100%" }}
+            spacing={1}
           >
-            <LinePlot />
-            <ChartsXAxis />
-            <ChartsYAxis />
-          </ChartContainer>
-        )}
+            {pieChartData.map((stage) => (
+              <Stack
+                key={stage.id}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography variant="body1">{stage.label}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {stage.value.toFixed(1)} hrs ({stage.percentage.toFixed(0)}%)
+                </Typography>
+              </Stack>
+            ))}
+          </Stack>
+        </Stack>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ mt: 2, textAlign: "center" }}
+        >
+          A healthy sleep cycle includes adequate amounts of Light, Deep, and
+          REM sleep.
+        </Typography>
       </Stack>
     </Paper>
   );

@@ -36,7 +36,11 @@ const ActionPlanCard = () => {
           spacing={{ xs: 2, sm: 0 }}
         >
           <Box sx={{ flex: 1, display: { xs: "none", sm: "block" } }} />
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            alignItems="center"
+          >
             <Typography variant="h5" sx={{ textAlign: "center" }}>
               Action Plan
             </Typography>

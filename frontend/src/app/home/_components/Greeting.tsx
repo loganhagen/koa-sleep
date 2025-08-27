@@ -35,7 +35,7 @@ const Greeting = () => {
           Good morning,
         </Typography>
         <Stack
-          direction={"row"}
+          direction={{ xs: "column", sm: "row" }}
           spacing={1}
           justifyContent={{ xs: "center", lg: "flex-start" }}
           paddingTop={1}

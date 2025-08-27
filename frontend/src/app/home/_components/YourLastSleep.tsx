@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Stack,
-  Typography,
-  Box,
-  BoxProps,
-  Divider,
-  Paper,
-} from "@mui/material";
+import { Stack, Typography, Box, BoxProps, Paper } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import { useUser } from "@/app/providers/userProvider";
@@ -59,7 +52,12 @@ const YourLastSleep = () => {
       }}
     >
       <Stack direction={"column"} spacing={1}>
-        <Stack direction={"row"} spacing={1} justifyContent={"center"}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1}
+          justifyContent={"center"}
+          alignItems="center"
+        >
           <Typography variant="h5" sx={{ textAlign: "center" }}>
             Your Last Sleep
           </Typography>

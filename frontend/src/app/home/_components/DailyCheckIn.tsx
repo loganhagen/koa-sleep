@@ -105,7 +105,11 @@ const DailyCheckIn = () => {
           spacing={{ xs: 2, sm: 0 }}
         >
           <Box sx={{ flex: 1, display: { xs: "none", sm: "block" } }} />
-          <Stack direction="row" spacing={1}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            alignItems="center"
+          >
             <Typography variant="h5" sx={{ textAlign: "center" }}>
               Daily Check-In
             </Typography>
@@ -132,48 +136,20 @@ const DailyCheckIn = () => {
             >
               How are you feeling today?
             </Typography>
-            {isMobile ? (
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <ToggleButtonGroup
-                  value={feeling}
-                  exclusive
-                  onChange={handleFeelingChange}
-                  aria-label="Feeling"
-                  disabled={sliderDisabled}
-                >
-                  <ToggleButton value="1" aria-label="feeling 1">
-                    1
-                  </ToggleButton>
-                  <ToggleButton value="2" aria-label="feeling 2">
-                    2
-                  </ToggleButton>
-                  <ToggleButton value="3" aria-label="feeling 3">
-                    3
-                  </ToggleButton>
-                  <ToggleButton value="4" aria-label="feeling 4">
-                    4
-                  </ToggleButton>
-                  <ToggleButton value="5" aria-label="feeling 5">
-                    5
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Box>
-            ) : (
-              <Stack direction="row" spacing={2} alignItems="center">
-                <SentimentVeryDissatisfiedIcon />
-                <Slider
-                  aria-label="Feeling"
-                  value={Number(feeling)}
-                  onChange={handleSliderChange}
-                  step={1}
-                  marks
-                  min={1}
-                  max={5}
-                  disabled={sliderDisabled}
-                />
-                <SentimentVerySatisfiedIcon />
-              </Stack>
-            )}
+            <Stack direction="row" spacing={2} alignItems="center">
+              <SentimentVeryDissatisfiedIcon />
+              <Slider
+                aria-label="Feeling"
+                value={Number(feeling)}
+                onChange={handleSliderChange}
+                step={1}
+                marks
+                min={1}
+                max={5}
+                disabled={sliderDisabled}
+              />
+              <SentimentVerySatisfiedIcon />
+            </Stack>
           </Box>
           <Box>
             {isMobile ? (
