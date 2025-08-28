@@ -1,14 +1,14 @@
 "use client";
 
-import { Grid, Stack } from "@mui/material";
 import Greeting from "./_components/Greeting";
 import CoreMetrics from "./_components/CoreMetrics";
 import SleepStages from "./_components/SleepStages";
 import WellnessIndicators from "./_components/WellnessIndicators";
+import { Stack } from "@mui/material";
 
 const Home = () => {
   return (
-    <Stack direction={"column"} spacing={1}>
+    <Stack direction={"column"} spacing={3}>
       <Greeting />
       <CoreMetrics />
       <WellnessIndicators />
