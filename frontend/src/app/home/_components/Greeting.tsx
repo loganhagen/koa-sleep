@@ -23,13 +23,13 @@ const Greeting = () => {
     >
       <Stack
         direction={"column"}
-        alignItems={{ xs: "center", lg: "flex-start" }}
+        alignItems="center"
       >
         <Typography
           variant="h4"
           sx={{
             color: "text.primary",
-            textAlign: { xs: "center", lg: "left" },
+            textAlign: "center",
           }}
         >
           Good morning,
@@ -37,7 +37,6 @@ const Greeting = () => {
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={1}
-          justifyContent={{ xs: "center", lg: "flex-start" }}
           paddingTop={1}
           alignItems="center"
         >

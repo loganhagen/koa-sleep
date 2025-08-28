@@ -43,9 +43,6 @@ const SleepStages = () => {
             Sleep Stages
           </Typography>
         </Stack>
-        <Typography textAlign={"center"} paddingBottom={1}>
-          January 1, 2006
-        </Typography>
 
         <Stack
           direction={{ xs: "column", sm: "row" }}

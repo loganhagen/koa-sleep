@@ -45,7 +45,6 @@ const WellnessIndicators = () => {
             Wellness Indicators
           </Typography>
         </Stack>
-        <Typography textAlign={"center"}>January 1, 2006</Typography>
 
         {/* Wellness Indicators */}
         <Stack
@@ -60,11 +59,10 @@ const WellnessIndicators = () => {
             <Box
               sx={{
                 ...baseItemStyle,
-                borderRadius: 4,
-                bgcolor: "background.default",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
-                border: "1px solid",
-                borderColor: "divider",
+                borderRadius: "50%",
+                color: "white",
+                background: "linear-gradient(145deg, #4db6ac, #00897b)",
+                boxShadow: "0px 4px 20px rgba(0, 137, 123, 0.25)",
               }}
             >
               <Typography
@@ -86,11 +84,10 @@ const WellnessIndicators = () => {
             <Box
               sx={{
                 ...baseItemStyle,
-                borderRadius: 4,
-                bgcolor: "background.default",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
-                border: "1px solid",
-                borderColor: "divider",
+                borderRadius: "50%",
+                color: "white",
+                background: "linear-gradient(145deg, #90caf9, #64b5f6)",
+                boxShadow: "0px 4px 20px rgba(100, 181, 246, 0.25)",
               }}
             >
               <Typography
@@ -112,11 +109,10 @@ const WellnessIndicators = () => {
             <Box
               sx={{
                 ...baseItemStyle,
-                borderRadius: 4,
-                bgcolor: "background.default",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
-                border: "1px solid",
-                borderColor: "divider",
+                borderRadius: "50%",
+                color: "white",
+                background: "linear-gradient(145deg, #ffb74d, #ffa726)",
+                boxShadow: "0px 4px 20px rgba(255, 167, 38, 0.25)",
               }}
             >
               <Typography variant="h6" fontWeight="bold">
@@ -134,11 +130,10 @@ const WellnessIndicators = () => {
             <Box
               sx={{
                 ...baseItemStyle,
-                borderRadius: 4,
-                bgcolor: "background.default",
-                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
-                border: "1px solid",
-                borderColor: "divider",
+                borderRadius: "50%",
+                color: "white",
+                background: "linear-gradient(145deg, #ef9a9a, #e57373)",
+                boxShadow: "0px 4px 20px rgba(229, 115, 115, 0.25)",
               }}
             >
               <Typography variant="h6" fontWeight="bold">

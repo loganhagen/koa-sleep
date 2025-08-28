@@ -8,6 +8,7 @@ import { useUser } from "@/app/providers/userProvider";
 import { fetchRecentSleepLog } from "@/services/apiClient";
 import { parseSleepLog } from "@/utils/sleep";
 import { MostRecentSleep } from "@custom_types/ui/sleep";
+import InsightsIcon from "@mui/icons-material/Insights";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 
 const baseItemStyle: BoxProps["sx"] = {
@@ -48,7 +49,6 @@ const CoreMetrics = () => {
             Core Metrics
           </Typography>
         </Stack>
-        <Typography textAlign={"center"}>January 1, 2006</Typography>
 
         {/* Core Metrics */}
         <Stack
@@ -137,21 +137,21 @@ const CoreMetrics = () => {
             <Box
               sx={{
                 ...baseItemStyle,
-                borderRadius: "50%",
-                background: "linear-gradient(145deg, #2CDFFF, #00A2E8)",
-                color: "secondary.contrastText",
-                boxShadow: "0px 4px 20px rgba(0, 162, 232, 0.25)",
+                borderRadius: 4,
+                bgcolor: "background.default",
+                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.05)",
+                border: "1px solid",
+                borderColor: "divider",
               }}
             >
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                sx={{ position: "relative", top: "2px" }}
-              >
-                88
+              <Typography variant="h6" fontWeight="bold">
+                88%
               </Typography>
             </Box>
-            <Typography variant="subtitle1">Efficiency</Typography>
+            <Stack direction={"row"} spacing={1} alignItems="center">
+              <Typography variant="subtitle1">Efficiency</Typography>
+              <InsightsIcon fontSize="small" color="primary" />
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
