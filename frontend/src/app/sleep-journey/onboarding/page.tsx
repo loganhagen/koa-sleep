@@ -29,9 +29,13 @@ const OnboardingJourneyPage = () => {
   };
 
   return (
-    <Stack spacing={6} sx={{ p: 3, alignItems: "center", width: "100%" }}>
+    <Stack
+      direction={"column"}
+      spacing={6}
+      sx={{ p: { xs: 2, sm: 3 }, alignItems: "center", width: "100%" }}
+    >
       <JourneyHeader />
-      <Stack direction={"row"} spacing={3}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
         {journeys.map((journey) => (
           <JourneyCard
             key={journey.title}

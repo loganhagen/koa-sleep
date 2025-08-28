@@ -13,7 +13,11 @@ const JourneyStatusHeader = ({
 }: JourneyStatusHeaderProps) => {
   return (
     <Stack spacing={1.5} sx={{ textAlign: "center", maxWidth: "650px" }}>
-      <Typography variant="h4" component="h2" sx={{ fontWeight: 500 }}>
+      <Typography
+        variant="h4"
+        component="h2"
+        sx={{ fontWeight: 500, fontSize: { xs: "1.75rem", sm: "2.125rem" } }}
+      >
         {journeyTitle}
       </Typography>
       <Typography variant="body1" color="text.secondary">

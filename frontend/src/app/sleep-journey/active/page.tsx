@@ -12,12 +12,12 @@ const ActiveJourneyPage = () => {
   };
 
   return (
-    <Stack spacing={6} sx={{ p: 3, alignItems: "center" }}>
+    <Stack spacing={6} sx={{ p: { xs: 2, sm: 3 }, alignItems: "center" }}>
       <Typography
         variant="h3"
         component="h1"
         gutterBottom
-        sx={{ textAlign: "center" }}
+        sx={{ textAlign: "center", fontSize: { xs: "2rem", sm: "3rem" } }}
       >
         Sleep Journey
       </Typography>

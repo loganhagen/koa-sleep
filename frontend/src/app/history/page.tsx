@@ -7,11 +7,21 @@ import {
   GridColDef,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { Box, Typography, Chip, Stack } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Chip,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 
 const History = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     setIsMounted(true);
@@ -360,32 +370,53 @@ const History = () => {
   ];
 
   return (
-    <Stack>
+    <Stack sx={{ p: { xs: 2, sm: 3 }, alignItems: "center" }}>
       <Typography
         variant="h3"
         component="h1"
         gutterBottom
-        sx={{ textAlign: "center" }}
+        sx={{ textAlign: "center", fontSize: { xs: "2rem", sm: "3rem" } }}
       >
         Sleep History
       </Typography>
-      <Box sx={{ width: "100%", p: 4 }}>
-        <Box
-          sx={{
-            height: 650,
-            width: "100%",
-            maxWidth: "1180px",
-            mx: "auto",
-            "& .MuiDataGrid-columnHeaderTitle": {
-              fontSize: "1rem",
-              fontWeight: "bold",
-            },
-          }}
-        >
-          {isMounted && (
-            <DataGrid rows={rows} columns={columns} rowHeight={80} />
-          )}
-        </Box>
+      <Box sx={{ width: "100%", p: { xs: 0, sm: 4 } }}>
+        {isMobile ? (
+          <Stack
+            spacing={2}
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              textAlign: "center",
+              height: "60vh",
+              p: 2,
+            }}
+          >
+            <ImportantDevicesIcon sx={{ fontSize: 60, color: "primary.main" }} />
+            <Typography variant="h5" component="h2" gutterBottom>
+              Please view on a larger screen
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              The sleep history table is best viewed on a desktop or tablet.
+            </Typography>
+          </Stack>
+        ) : (
+          <Box
+            sx={{
+              height: 650,
+              width: "100%",
+              maxWidth: "1180px",
+              mx: "auto",
+              "& .MuiDataGrid-columnHeaderTitle": {
+                fontSize: "1rem",
+                fontWeight: "bold",
+              },
+            }}
+          >
+            {isMounted && (
+              <DataGrid rows={rows} columns={columns} rowHeight={80} />
+            )}
+          </Box>
+        )}
       </Box>
     </Stack>
   );

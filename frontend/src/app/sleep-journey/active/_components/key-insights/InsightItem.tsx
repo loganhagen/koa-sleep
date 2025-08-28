@@ -13,9 +13,13 @@ const InsightItem = () => {
         borderStyle: "dashed",
       }}
     >
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={2}
+        alignItems="center"
+      >
         <LightbulbOutlinedIcon color="primary" />
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ textAlign: { xs: "center", sm: "left" } }}>
           Your best night was Wednesday, a day you reported{" "}
           <strong>meditating</strong>. Your worst was Saturday, after an{" "}
           <strong>Ate Late</strong> entry.

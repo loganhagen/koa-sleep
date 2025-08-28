@@ -24,7 +24,7 @@ const KeyMetrics = () => {
         Key Metrics
       </Typography>
       <Stack
-        direction="row"
+        direction={{ xs: "column", sm: "row" }}
         justifyContent="space-around"
         alignItems="center"
         divider={<Divider orientation="vertical" flexItem />}

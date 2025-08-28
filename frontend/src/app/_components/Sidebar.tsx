@@ -66,6 +66,10 @@ const SidebarComponent: React.FC = () => {
       style={{
         borderRight: "none",
         height: isMobile ? "auto" : "100vh",
+        minHeight:
+          pathname === "/history" || pathname === "/settings"
+            ? "100vh"
+            : "auto",
         top: 0,
         position: "sticky",
       }}
