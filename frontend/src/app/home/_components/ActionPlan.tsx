@@ -15,7 +15,7 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import HotelIcon from "@mui/icons-material/Hotel";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
-const ActionPlanCard = () => {
+const ActionPlan = () => {
   return (
     <Paper
       elevation={0}
@@ -141,4 +141,4 @@ const ActionPlanCard = () => {
   );
 };
 
-export default ActionPlanCard;
+export default ActionPlan;
