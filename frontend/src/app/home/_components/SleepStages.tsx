@@ -39,12 +39,10 @@ const SleepStages = () => {
           spacing={1}
           justifyContent={"center"}
           alignItems="center"
-          paddingBottom={1}
         >
           <Typography variant="h5" sx={{ textAlign: "center" }}>
             Sleep Stages
           </Typography>
-          <ShowChartIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>
         <Typography textAlign={"center"} paddingBottom={1}>
           January 1, 2006
