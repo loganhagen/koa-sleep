@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Stack, Typography, Box, BoxProps, Paper } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
@@ -23,7 +23,6 @@ const baseItemStyle: BoxProps["sx"] = {
 };
 
 const CoreMetrics = () => {
-  const [efficiency, setEfficiency] = useState("88");
   return (
     <Paper
       elevation={0}
@@ -143,7 +142,7 @@ const CoreMetrics = () => {
               }}
             >
               <Typography variant="h6" fontWeight="bold">
-                {efficiency}%
+                88%
               </Typography>
             </Box>
             <Stack direction={"row"} spacing={1} alignItems="center">

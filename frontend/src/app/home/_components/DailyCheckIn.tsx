@@ -8,8 +8,6 @@ import {
   Paper,
   Slider,
   Stack,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
   useTheme,
   useMediaQuery,
@@ -47,15 +45,6 @@ const DailyCheckIn = () => {
   const [feeling, setFeeling] = useState<string | null>("3");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const handleFeelingChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newFeeling: string | null
-  ) => {
-    if (newFeeling !== null) {
-      setFeeling(newFeeling);
-    }
-  };
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
     setFeeling(String(newValue as number));

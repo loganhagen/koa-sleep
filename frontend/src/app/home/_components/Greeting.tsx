@@ -27,22 +27,17 @@ const GreetingSkeleton = () => (
         alignItems="center"
       >
         <Skeleton variant="text" sx={{ typography: "h4" }} width="100px" />
-        <Skeleton
-          variant="circular"
-          width={30}
-          height={30}
-          sx={{ ml: 0.5 }}
-        />
+        <Skeleton variant="circular" width={30} height={30} sx={{ ml: 0.5 }} />
       </Stack>
     </Stack>
   </Paper>
 );
 
 const Greeting = () => {
-  const { data: user, isLoading, isError } = useUser();
+  const { data: user, isLoading, isPending } = useUser();
   const userName = user ? user.firstName : "user";
 
-  if (isLoading) {
+  if (isLoading || isPending) {
     return <GreetingSkeleton />;
   }
 

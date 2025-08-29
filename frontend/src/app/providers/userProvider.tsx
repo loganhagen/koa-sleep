@@ -1,11 +1,11 @@
 "use client";
 
-import { User } from "@custom_types/backend/users";
+import { UserDTO } from "@/types/api/user";
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 
 interface UserContextType {
-  user: User | null;
-  login: (userData: User) => void;
+  user: UserDTO | null;
+  login: (userData: UserDTO) => void;
   logout: () => void;
 }
 
@@ -20,9 +20,9 @@ export const useUser = () => {
 };
 
 export default function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserDTO | null>(null);
 
-  const login = (userData: User) => {
+  const login = (userData: UserDTO) => {
     setUser(userData);
   };
 
