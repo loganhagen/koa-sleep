@@ -26,11 +26,32 @@ model Connection {
 model User {
   id         String       @id
   email      String       @unique
-  firstName  String?
-  lastName   String?
+  firstName  String
+  lastName   String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime
   Connection Connection[]
+  SleepLog   SleepLog[]
+}
+
+model SleepLog {
+  id                  String   @id
+  fitbitLogId         BigInt
+  userId              String
+  dateOfSleep         DateTime @db.Date
+  startTime           DateTime
+  endTime             DateTime
+  duration            Int
+  efficiency          Int
+  minutesToFallAsleep Int
+  minutesAsleep       Int
+  minutesAwake        Int
+  timeInBed           Int
+  isMainSleep         Boolean
+  type                String
+  infoCode            Int
+  levels              Json?
+  User                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum ConnectionProvider {

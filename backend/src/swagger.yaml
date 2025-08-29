@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API for fitness data
 paths:
-  /sleep/logs:
+  /sleep/all:
     get:
       summary: Get all sleep logs.
       responses:
@@ -14,23 +14,23 @@ paths:
             application/json:
               schema:
                 type: object
-  /sleep/recent:
+  /sleep/user:
     get:
-      summary: Get the most recent sleep log for the specified user.
+      summary: Get all sleep logs for a specified user.
       parameters:
-        - name: userId
+        - name: userEmail
           in: query
           required: true
-          description: ID of the user to retrieve the recent sleep log for.
+          description: Email address of the user.
           schema:
             type: string
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
+    responses:
+      "200":
+        description: A successful response.
+        content:
+          application/json:
+            schema:
+              type: object
   /users/all:
     get:
       summary: Get all users in the database.
@@ -41,9 +41,16 @@ paths:
             application/json:
               schema:
                 type: object
-  /users/demo:
+  /users/get:
     get:
-      summary: Get the demo user.
+      summary: Get a user by email.
+      parameters:
+        - name: userEmail
+          in: query
+          required: true
+          description: Email address of the user.
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response.

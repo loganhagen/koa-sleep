@@ -1,13 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Stack, Typography, Box, BoxProps, Paper } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
-import { useUser } from "@/app/providers/userProvider";
-import { fetchRecentSleepLog } from "@/services/apiClient";
-import { parseSleepLog } from "@/utils/sleep";
-import { MostRecentSleep } from "@custom_types/ui/sleep";
+
 import InsightsIcon from "@mui/icons-material/Insights";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 
@@ -26,6 +23,7 @@ const baseItemStyle: BoxProps["sx"] = {
 };
 
 const CoreMetrics = () => {
+  const [efficiency, setEfficiency] = useState("88");
   return (
     <Paper
       elevation={0}
@@ -145,7 +143,7 @@ const CoreMetrics = () => {
               }}
             >
               <Typography variant="h6" fontWeight="bold">
-                88%
+                {efficiency}%
               </Typography>
             </Box>
             <Stack direction={"row"} spacing={1} alignItems="center">

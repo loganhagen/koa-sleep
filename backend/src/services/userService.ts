@@ -7,11 +7,12 @@ export const userService = {
     const allUsers = await prisma.user.findMany();
     return allUsers;
   },
-  getDemoUser: async () => {
-    const demoUser = await prisma.user.findFirst({
-      // hardcoding the demo user id for now
-      where: { id: "cltvo112j00008x9s1g8p4d7c" },
+  getUserByEmail: async (email: string) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
     });
-    return demoUser;
+    return user;
   },
 };

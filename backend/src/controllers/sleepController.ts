@@ -10,24 +10,11 @@ export const sleepController = {
   getSleepLogs: async (req: Request, res: Response) => {
     try {
       const sleepLogs = await sleepService.getSleepLogs();
-      res.status(200).json({ data: sleepLogs });
+      res.status(200).json({ sleepLogs: sleepLogs });
     } catch (error) {
       res.status(404).json({ error: "Sleep logs not found" });
     }
   },
-  getMostRecentSleepLog: async (req: Request, res: Response) => {
-    try {
-      const { userId } = req.query;
-      if (!userId || typeof userId !== "string") {
-        res
-          .status(400)
-          .json({ error: "A userId query parameter is required." });
-        return;
-      }
-      const sleepLog = await sleepService.getMostRecentSleepLog(userId);
-      res.status(200).json({ data: sleepLog });
-    } catch (error) {
-      res.status(404).json({ error: "Sleep log not found" });
-    }
-  },
+  getMostRecentSleepLog: async (req: Request, res: Response) => {},
+  getSleepLogByUser: async (req: Request, res: Response) => {},
 };
