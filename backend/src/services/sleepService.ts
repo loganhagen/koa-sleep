@@ -5,6 +5,7 @@
 
 import { SerializableSleepLog } from "@custom_types/api/sleep";
 import { PrismaClient } from "@prisma/client";
+import { toSleepLogDTO } from "@utils/mappers";
 
 const prisma = new PrismaClient();
 
@@ -20,5 +21,12 @@ export const sleepService = {
     return serializableSleepLogs;
   },
 
-  getSleepLogByUser: async (email: string) => {},
+  getSleepLogByUserId: async (userId: string) => {
+    const sleepLogs = await prisma.sleepLog.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    return sleepLogs.map(toSleepLogDTO);
+  },
 };

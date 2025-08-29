@@ -1,0 +1,33 @@
+import { SleepLog, User } from "@prisma/client";
+import { UserDTO } from "../types/api/user";
+import { SleepLogDTO } from "@custom_types/api/sleep";
+
+export const toUserDTO = (user: User): UserDTO => {
+  return {
+    id: user.id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+  };
+};
+
+export const toSleepLogDTO = (sleepLog: SleepLog): SleepLogDTO => {
+  return {
+    id: sleepLog.id,
+    fitbitLogId: sleepLog.fitbitLogId.toString(),
+    userId: sleepLog.userId,
+    dateOfSleep: sleepLog.dateOfSleep,
+    startTime: sleepLog.startTime,
+    endTime: sleepLog.endTime,
+    duration: sleepLog.duration,
+    efficiency: sleepLog.efficiency,
+    minutesToFallAsleep: sleepLog.minutesToFallAsleep,
+    minutesAsleep: sleepLog.minutesAsleep,
+    minutesAwake: sleepLog.minutesAwake,
+    timeInBed: sleepLog.timeInBed,
+    isMainSleep: sleepLog.isMainSleep,
+    type: sleepLog.type,
+    infoCode: sleepLog.infoCode,
+    levels: sleepLog.levels,
+  };
+};

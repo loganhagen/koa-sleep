@@ -15,6 +15,20 @@ export const sleepController = {
       res.status(404).json({ error: "Sleep logs not found" });
     }
   },
-  getMostRecentSleepLog: async (req: Request, res: Response) => {},
-  getSleepLogByUser: async (req: Request, res: Response) => {},
+  getSleepLogsByUserId: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.query;
+      if (!userId || typeof userId !== "string") {
+        res.status(400).json({ error: "userId query parameter is required." });
+      }
+
+      const sleepLogsDTO = await sleepService.getSleepLogByUserId(
+        userId as string
+      );
+      console.log(sleepLogsDTO);
+      res.status(200).json({ sleepLogs: sleepLogsDTO });
+    } catch (error) {
+      res.status(404).json({ error: "Sleep logs not found." });
+    }
+  },
 };

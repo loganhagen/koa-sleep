@@ -4,3 +4,7 @@ export interface UserDTO {
   firstName: string;
   lastName: string;
 }
+
+export interface UserAPIResponse {
+  user: UserDTO;
+}

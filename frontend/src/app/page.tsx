@@ -6,13 +6,16 @@ import Image from "next/image";
 import GoogleButton from "react-google-button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useRouter } from "next/navigation";
+import { useDemo } from "./providers/demoProvider";
 
 const Splash = () => {
   const theme = useTheme();
   const currentMode = theme.palette.mode;
   const router = useRouter();
+  const { enableDemoMode } = useDemo();
 
   const handleSeeDemo = async () => {
+    enableDemoMode();
     router.push("/home");
   };
 

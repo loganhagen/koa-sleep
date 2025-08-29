@@ -14,23 +14,23 @@ paths:
             application/json:
               schema:
                 type: object
-  /sleep/user:
+  /sleep/get:
     get:
       summary: Get all sleep logs for a specified user.
       parameters:
-        - name: userEmail
+        - name: userId
           in: query
           required: true
-          description: Email address of the user.
+          description: User ID.
           schema:
             type: string
-    responses:
-      "200":
-        description: A successful response.
-        content:
-          application/json:
-            schema:
-              type: object
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
   /users/all:
     get:
       summary: Get all users in the database.
@@ -51,6 +51,16 @@ paths:
           description: Email address of the user.
           schema:
             type: string
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+  /users/get/demo:
+    get:
+      summary: Get the demo user.
       responses:
         "200":
           description: A successful response.

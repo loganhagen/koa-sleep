@@ -1,8 +1,22 @@
 import { Request, Response } from "express";
 import { userService } from "@services/userService";
-import { User } from "@custom_types/api/user";
+import { UserDTO } from "@custom_types/api/user";
+import { toUserDTO } from "@utils/mappers";
 
 export const userController = {
+  getDemoUser: async (req: Request, res: Response) => {
+    try {
+      const demoUser = await userService.getDemoUser();
+
+      if (!demoUser) {
+        throw new Error();
+      }
+
+      res.status(200).json({ user: toUserDTO(demoUser) });
+    } catch (error) {
+      res.status(404).json({ error: "Unable to retrieve demo user." });
+    }
+  },
   getAllUsers: async (req: Request, res: Response) => {
     try {
       const allUsers = await userService.getAllUsers();
@@ -25,14 +39,13 @@ export const userController = {
         throw new Error();
       }
 
-      const userDTO: User = {
+      const userDTO: UserDTO = {
         id: userRecord.id,
         email: userRecord.email,
         firstName: userRecord.firstName,
         lastName: userRecord.lastName,
       };
 
-      console.log(userDTO);
       res.status(200).json({ user: userDTO });
     } catch (error) {
       res.status(404).json({ error: `Unable to find user.` });
