@@ -5,7 +5,7 @@ import Greeting from "./_components/Greeting";
 import CoreMetrics from "./_components/CoreMetrics";
 import SleepStages from "./_components/SleepStages";
 import WellnessIndicators from "./_components/WellnessIndicators";
-import { Box, CircularProgress, Paper, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useUser } from "../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
@@ -14,6 +14,7 @@ import { CoreMetricsSkeleton } from "./_components/_skeletons/CoreMetricsSkeleto
 import { WellnessIndicatorsSkeleton } from "./_components/_skeletons/WellnessIndicatorsSkeleton";
 import { SleepStagesSkeleton } from "./_components/_skeletons/SleepStagesSkeleton";
 import { DateSelectorSkeleton } from "./_components/_skeletons/DateSelectorSkeleton";
+import { formatDateToYYYYMMDD } from "@/utils/utils";
 
 const Home = () => {
   const [targetDate, setTargetDate] = useState<Date | null>(null);
@@ -62,6 +63,7 @@ const Home = () => {
       </Stack>
     );
   }
+
   return (
     <Stack direction={"column"} spacing={3}>
       <DateSelector
@@ -70,7 +72,7 @@ const Home = () => {
         handleResetToToday={resetTargetDate}
       />
       <Greeting />
-      <CoreMetrics targetDate={targetDate} />
+      <CoreMetrics targetDate={formatDateToYYYYMMDD(targetDate)} />
       <WellnessIndicators />
       <SleepStages />
     </Stack>

@@ -6,9 +6,10 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import InsightsIcon from "@mui/icons-material/Insights";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import { useSleepLogByDate, useSleepLogs } from "@/hooks/useSleepLogs";
+import { useSleepLogByDate } from "@/hooks/useSleepLogs";
 import { CoreMetricsSkeleton } from "./_skeletons/CoreMetricsSkeleton";
 import { useUser } from "@/app/providers/userProvider";
+import { formatTimeTo12Hour, millisecondsToHours } from "@/utils/utils";
 
 const baseItemStyle: BoxProps["sx"] = {
   display: "flex",
@@ -25,7 +26,7 @@ const baseItemStyle: BoxProps["sx"] = {
 };
 
 interface CoreMetricsProps {
-  targetDate: Date;
+  targetDate: string;
 }
 
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
@@ -48,20 +49,43 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
     );
   }
 
-  /**
-   * TO-DO:
-   * The API is queried for a sleep log using the date pointed at by the date selector.
-   * What if the most recent sleep log is much ealier than that?
-   * Add some logic such that the most recent sleep log is retrieved and the date selector is adjusted.
-   */
-
   const { data: sleepLog, isLoading: isSleepLogLoading } = useSleepLogByDate(
     user.id,
-    "2025-07-12"
+    targetDate
   );
 
   if (isSleepLogLoading) {
     return <CoreMetricsSkeleton />;
+  }
+
+  if (!sleepLog) {
+    return (
+      <Paper
+        elevation={0}
+        variant="outlined"
+        sx={{
+          p: 4,
+          borderRadius: 10,
+          backgroundColor: "background.paper",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        <Stack direction={"column"} spacing={1}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            justifyContent={"center"}
+            alignItems="center"
+          >
+            <Typography variant="h5" sx={{ textAlign: "center" }}>
+              Core Metrics
+            </Typography>
+          </Stack>
+          <Typography>No data found.</Typography>
+        </Stack>
+      </Paper>
+    );
   }
 
   return (
@@ -113,7 +137,7 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
                 fontWeight="bold"
                 sx={{ whiteSpace: "nowrap" }}
               >
-                11:30 PM
+                1
               </Typography>
             </Box>
             <Stack direction={"row"} spacing={1} alignItems="center">
@@ -161,7 +185,7 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
               }}
             >
               <Typography variant="h6" fontWeight="bold">
-                11 hrs
+                {millisecondsToHours(sleepLog.duration)} h
               </Typography>
             </Box>
             <Stack direction={"row"} spacing={1} alignItems="center">
@@ -183,7 +207,7 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
               }}
             >
               <Typography variant="h6" fontWeight="bold">
-                {sleepLog?.efficiency ?? "n/a"}
+                {sleepLog.efficiency}
               </Typography>
             </Box>
             <Stack direction={"row"} spacing={1} alignItems="center">
