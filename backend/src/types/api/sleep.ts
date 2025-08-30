@@ -1,5 +1,3 @@
-import { SleepLog } from "@prisma/client";
-
 export interface SleepLogDTO {
   id: string;
   fitbitLogId: string;

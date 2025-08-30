@@ -1,3 +1,5 @@
+import { UserDTO } from "@/types/api/user";
+
 export const formatHour = (hour: number): string => {
   const ampm = hour >= 12 ? "PM" : "AM";
   const formattedHour = hour % 12 === 0 ? 12 : hour % 12;

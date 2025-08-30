@@ -6,7 +6,6 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 import SunnyIcon from "@mui/icons-material/Sunny";
 import InsightsIcon from "@mui/icons-material/Insights";
 import ScheduleIcon from "@mui/icons-material/Schedule";
-import { useUser } from "@/hooks/useUser";
 import { useSleepLogByDate, useSleepLogs } from "@/hooks/useSleepLogs";
 import { format } from "date-fns";
 import { CoreMetricsSkeleton } from "./_skeletons/CoreMetricsSkeleton";
@@ -30,7 +29,6 @@ interface CoreMetricsProps {
 }
 
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ currentDate }) => {
-  const { data: user, isLoading: isUserLoading, isPending } = useUser();
   const { data: sleepLogs, isLoading: isSleepLogsLoading } = useSleepLogs(
     "12c63558-f813-49f3-b69b-d270be9eed31"
   );
@@ -53,7 +51,7 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ currentDate }) => {
     "formattedDate"
   );
 
-  if (isUserLoading || isSleepLogLoading) {
+  if (isSleepLogLoading) {
     return <CoreMetricsSkeleton />;
   }
 

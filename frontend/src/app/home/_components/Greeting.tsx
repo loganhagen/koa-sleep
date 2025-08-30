@@ -2,7 +2,7 @@
 
 import { Paper, Skeleton, Stack, Typography } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/app/providers/userProvider";
 
 const GreetingSkeleton = () => (
   <Paper
@@ -34,12 +34,7 @@ const GreetingSkeleton = () => (
 );
 
 const Greeting = () => {
-  const { data: user, isLoading, isPending } = useUser();
-  const username = user ? user.firstName : "user";
-
-  if (isLoading || isPending) {
-    return <GreetingSkeleton />;
-  }
+  const { user } = useUser();
 
   return (
     <Paper
@@ -72,7 +67,7 @@ const Greeting = () => {
           alignItems="center"
         >
           <Typography variant="h4" sx={{ color: "text.primary" }}>
-            {username}
+            {user?.firstName}
           </Typography>
           <WavingHandIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>

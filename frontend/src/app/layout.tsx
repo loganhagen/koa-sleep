@@ -7,8 +7,8 @@ import "@fontsource/source-serif-pro/700.css";
 import { cookies } from "next/headers";
 import ThemeProvider from "./providers/themeProvider";
 import Layout from "./_components/SplashLayout";
-import DemoProvider from "./providers/demoProvider";
 import { QueryProvider } from "./providers/queryProvider";
+import UserProvider from "./providers/userProvider";
 
 type ThemeMode = "light" | "dark";
 
@@ -26,11 +26,11 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider initialMode={initialMode}>
-          <DemoProvider>
+          <UserProvider>
             <QueryProvider>
               <Layout>{children}</Layout>
             </QueryProvider>
-          </DemoProvider>
+          </UserProvider>
         </ThemeProvider>
       </body>
     </html>

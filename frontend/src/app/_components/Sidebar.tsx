@@ -6,6 +6,7 @@ import {
   CalendarMonth,
   CheckCircleOutline,
   ExpandLess,
+  Logout,
 } from "@mui/icons-material";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -18,18 +19,28 @@ import {
   Chip,
   IconButton,
   useMediaQuery,
+  Button,
 } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useUser } from "../providers/userProvider";
+import { useRouter } from "next/navigation";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const { logout } = useUser();
+  const router = useRouter();
 
   useEffect(() => {
     setIsCollapsed(isMobile);
   }, [isMobile]);
+
+  const handleLogout = () => {
+    logout();
+    router.push("/");
+  };
 
   const menuItemStyles: MenuItemStyles = {
     button: ({ active }) => {
@@ -181,7 +192,7 @@ const SidebarComponent: React.FC = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: isCollapsed ? "center" : "flex-start",
+              justifyContent: "center",
               mb: 2,
             }}
           >
@@ -210,6 +221,27 @@ const SidebarComponent: React.FC = () => {
                 size="small"
                 sx={{ width: "100%" }}
               />
+            )}
+          </Box>
+          <Box sx={{ textAlign: "center" }}>
+            {isCollapsed ? (
+              <IconButton
+                onClick={() => console.log("Logging out...")}
+                color="inherit"
+              >
+                <Logout />
+              </IconButton>
+            ) : (
+              <Button
+                onClick={handleLogout}
+                startIcon={<Logout />}
+                size="small"
+                variant="outlined"
+                color="inherit"
+                sx={{ width: "100%" }}
+              >
+                Logout
+              </Button>
             )}
           </Box>
         </Box>

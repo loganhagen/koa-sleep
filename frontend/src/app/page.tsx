@@ -6,16 +6,20 @@ import Image from "next/image";
 import GoogleButton from "react-google-button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useRouter } from "next/navigation";
-import { useDemo } from "./providers/demoProvider";
+import { useUser } from "./providers/userProvider";
+import { fetchAPI } from "@/services/apiClient";
+import { UserAPIResponse } from "@/types/api/user";
 
 const Splash = () => {
   const theme = useTheme();
   const currentMode = theme.palette.mode;
   const router = useRouter();
-  const { enableDemoMode } = useDemo();
+  const { login } = useUser();
 
   const handleSeeDemo = async () => {
-    enableDemoMode();
+    const endpoint = `/users/demo`;
+    const demoUser = await fetchAPI<UserAPIResponse>(endpoint);
+    login(demoUser.user);
     router.push("/home");
   };
 
