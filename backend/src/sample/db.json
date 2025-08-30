@@ -1,7 +1,7 @@
 {
   "data": {
     "pagination": {
-      "afterDate": "2020-01-01",
+      "afterDate": "2025-08-01",
       "limit": 7,
       "next": "https://api.fitbit.com/1.2/user/-/sleep/list.json?offset=1&limit=1&sort=asc&afterDate=2020-05-01",
       "offset": 0,
@@ -11,9 +11,9 @@
     "sleep": [
       {
         "logId": 3456789013,
-        "dateOfSleep": "2025-07-11",
-        "startTime": "2025-07-10T23:45:00.000",
-        "endTime": "2025-07-11T07:35:00.000",
+        "dateOfSleep": "2025-08-24",
+        "startTime": "2025-08-23T23:45:00.000",
+        "endTime": "2025-08-24T07:35:00.000",
         "duration": 28200000,
         "efficiency": 93,
         "minutesToFallAsleep": 18,
@@ -22,85 +22,73 @@
         "timeInBed": 470,
         "levels": {
           "summary": {
-            "deep": {
-              "count": 4,
-              "minutes": 68,
-              "thirtyDayAvgMinutes": 66
-            },
+            "deep": { "count": 4, "minutes": 68, "thirtyDayAvgMinutes": 66 },
             "light": {
               "count": 30,
               "minutes": 261,
               "thirtyDayAvgMinutes": 242
             },
-            "rem": {
-              "count": 5,
-              "minutes": 108,
-              "thirtyDayAvgMinutes": 97
-            },
-            "wake": {
-              "count": 10,
-              "minutes": 33,
-              "thirtyDayAvgMinutes": 39
-            }
+            "rem": { "count": 5, "minutes": 108, "thirtyDayAvgMinutes": 97 },
+            "wake": { "count": 10, "minutes": 33, "thirtyDayAvgMinutes": 39 }
           },
           "data": [
             {
-              "dateTime": "2025-07-10T23:45:00.000",
+              "dateTime": "2025-08-23T23:45:00.000",
               "level": "wake",
               "seconds": 1080
             },
             {
-              "dateTime": "2025-07-11T00:03:00.000",
+              "dateTime": "2025-08-24T00:03:00.000",
               "level": "light",
               "seconds": 4920
             },
             {
-              "dateTime": "2025-07-11T01:25:00.000",
+              "dateTime": "2025-08-24T01:25:00.000",
               "level": "deep",
               "seconds": 2100
             },
             {
-              "dateTime": "2025-07-11T02:00:00.000",
+              "dateTime": "2025-08-24T02:00:00.000",
               "level": "light",
               "seconds": 3600
             },
             {
-              "dateTime": "2025-07-11T03:00:00.000",
+              "dateTime": "2025-08-24T03:00:00.000",
               "level": "rem",
               "seconds": 2400
             },
             {
-              "dateTime": "2025-07-11T03:40:00.000",
+              "dateTime": "2025-08-24T03:40:00.000",
               "level": "light",
               "seconds": 1800
             },
             {
-              "dateTime": "2025-07-11T04:10:00.000",
+              "dateTime": "2025-08-24T04:10:00.000",
               "level": "wake",
               "seconds": 420
             },
             {
-              "dateTime": "2025-07-11T04:17:00.000",
+              "dateTime": "2025-08-24T04:17:00.000",
               "level": "light",
               "seconds": 3180
             },
             {
-              "dateTime": "2025-07-11T05:10:00.000",
+              "dateTime": "2025-08-24T05:10:00.000",
               "level": "deep",
               "seconds": 1980
             },
             {
-              "dateTime": "2025-07-11T05:43:00.000",
+              "dateTime": "2025-08-24T05:43:00.000",
               "level": "rem",
               "seconds": 4080
             },
             {
-              "dateTime": "2025-07-11T06:51:00.000",
+              "dateTime": "2025-08-24T06:51:00.000",
               "level": "light",
               "seconds": 2160
             },
             {
-              "dateTime": "2025-07-11T07:27:00.000",
+              "dateTime": "2025-08-24T07:27:00.000",
               "level": "wake",
               "seconds": 480
             }
@@ -113,9 +101,9 @@
       },
       {
         "logId": 3456789014,
-        "dateOfSleep": "2025-07-12",
-        "startTime": "2025-07-12T00:25:00.000",
-        "endTime": "2025-07-12T09:05:00.000",
+        "dateOfSleep": "2025-08-25",
+        "startTime": "2025-08-25T00:25:00.000",
+        "endTime": "2025-08-25T09:05:00.000",
         "duration": 31200000,
         "efficiency": 95,
         "minutesToFallAsleep": 11,
@@ -124,80 +112,68 @@
         "timeInBed": 520,
         "levels": {
           "summary": {
-            "deep": {
-              "count": 3,
-              "minutes": 85,
-              "thirtyDayAvgMinutes": 68
-            },
+            "deep": { "count": 3, "minutes": 85, "thirtyDayAvgMinutes": 68 },
             "light": {
               "count": 25,
               "minutes": 288,
               "thirtyDayAvgMinutes": 245
             },
-            "rem": {
-              "count": 6,
-              "minutes": 121,
-              "thirtyDayAvgMinutes": 100
-            },
-            "wake": {
-              "count": 7,
-              "minutes": 26,
-              "thirtyDayAvgMinutes": 38
-            }
+            "rem": { "count": 6, "minutes": 121, "thirtyDayAvgMinutes": 100 },
+            "wake": { "count": 7, "minutes": 26, "thirtyDayAvgMinutes": 38 }
           },
           "data": [
             {
-              "dateTime": "2025-07-12T00:25:00.000",
+              "dateTime": "2025-08-25T00:25:00.000",
               "level": "wake",
               "seconds": 660
             },
             {
-              "dateTime": "2025-07-12T00:36:00.000",
+              "dateTime": "2025-08-25T00:36:00.000",
               "level": "light",
               "seconds": 3840
             },
             {
-              "dateTime": "2025-07-12T01:40:00.000",
+              "dateTime": "2025-08-25T01:40:00.000",
               "level": "deep",
               "seconds": 3000
             },
             {
-              "dateTime": "2025-07-12T02:30:00.000",
+              "dateTime": "2025-08-25T02:30:00.000",
               "level": "light",
               "seconds": 5400
             },
             {
-              "dateTime": "2025-07-12T04:00:00.000",
+              "dateTime": "2025-08-25T04:00:00.000",
               "level": "rem",
               "seconds": 3300
             },
             {
-              "dateTime": "2025-07-12T04:55:00.000",
+              "dateTime": "2025-08-25T04:55:00.000",
               "level": "wake",
               "seconds": 300
             },
             {
-              "dateTime": "2025-07-12T05:00:00.000",
+              "dateTime": "2025-08-25T05:00:00.000",
               "level": "light",
               "seconds": 2700
             },
             {
-              "dateTime": "2025-07-12T05:45:00.000",
+              "dateTime": "2025-08-25T05:45:00.000",
               "level": "deep",
               "seconds": 2100
             },
             {
-              "dateTime": "2025-07-12T06:20:00.000",
+              "dateTime": "2025-08-25T06:20:00.000",
               "level": "light",
               "seconds": 5340
             },
             {
-              "dateTime": "2025-07-12T07:49:00.000",
+              "dateTime": "2025-08-25T07:49:00.000",
               "level": "rem",
               "seconds": 3960
             },
             {
-              "dateTime": "2025-07-12T08:55:00.000",
+              "dateTime": "2025-08-25T08:55:00.000",
               "level": "wake",
               "seconds": 600
             }
@@ -210,9 +186,9 @@
       },
       {
         "logId": 3456789015,
-        "dateOfSleep": "2025-07-13",
-        "startTime": "2025-07-12T22:55:00.000",
-        "endTime": "2025-07-13T06:45:00.000",
+        "dateOfSleep": "2025-08-26",
+        "startTime": "2025-08-25T22:55:00.000",
+        "endTime": "2025-08-26T06:45:00.000",
         "duration": 28200000,
         "efficiency": 97,
         "minutesToFallAsleep": 9,
@@ -221,60 +197,48 @@
         "timeInBed": 470,
         "levels": {
           "summary": {
-            "deep": {
-              "count": 2,
-              "minutes": 88,
-              "thirtyDayAvgMinutes": 70
-            },
+            "deep": { "count": 2, "minutes": 88, "thirtyDayAvgMinutes": 70 },
             "light": {
               "count": 22,
               "minutes": 250,
               "thirtyDayAvgMinutes": 245
             },
-            "rem": {
-              "count": 4,
-              "minutes": 118,
-              "thirtyDayAvgMinutes": 102
-            },
-            "wake": {
-              "count": 5,
-              "minutes": 14,
-              "thirtyDayAvgMinutes": 36
-            }
+            "rem": { "count": 4, "minutes": 118, "thirtyDayAvgMinutes": 102 },
+            "wake": { "count": 5, "minutes": 14, "thirtyDayAvgMinutes": 36 }
           },
           "data": [
             {
-              "dateTime": "2025-07-12T22:55:00.000",
+              "dateTime": "2025-08-25T22:55:00.000",
               "level": "wake",
               "seconds": 540
             },
             {
-              "dateTime": "2025-07-12T23:04:00.000",
+              "dateTime": "2025-08-25T23:04:00.000",
               "level": "light",
               "seconds": 3360
             },
             {
-              "dateTime": "2025-07-12T23:04:00.000",
+              "dateTime": "2025-08-26T00:00:00.000",
               "level": "deep",
               "seconds": 5280
             },
             {
-              "dateTime": "2025-07-13T01:30:00.000",
+              "dateTime": "2025-08-26T01:30:00.000",
               "level": "light",
               "seconds": 6600
             },
             {
-              "dateTime": "2025-07-13T03:20:00.000",
+              "dateTime": "2025-08-26T03:20:00.000",
               "level": "rem",
               "seconds": 7080
             },
             {
-              "dateTime": "2025-07-13T05:18:00.000",
+              "dateTime": "2025-08-26T05:18:00.000",
               "level": "light",
               "seconds": 5040
             },
             {
-              "dateTime": "2025-07-13T06:42:00.000",
+              "dateTime": "2025-08-26T06:42:00.000",
               "level": "wake",
               "seconds": 300
             }
@@ -287,9 +251,9 @@
       },
       {
         "logId": 3456789016,
-        "dateOfSleep": "2025-07-14",
-        "startTime": "2025-07-13T23:10:00.000",
-        "endTime": "2025-07-14T07:00:00.000",
+        "dateOfSleep": "2025-08-27",
+        "startTime": "2025-08-26T23:10:00.000",
+        "endTime": "2025-08-27T07:00:00.000",
         "duration": 28200000,
         "efficiency": 96,
         "minutesToFallAsleep": 14,
@@ -298,75 +262,63 @@
         "timeInBed": 470,
         "levels": {
           "summary": {
-            "deep": {
-              "count": 3,
-              "minutes": 75,
-              "thirtyDayAvgMinutes": 71
-            },
+            "deep": { "count": 3, "minutes": 75, "thirtyDayAvgMinutes": 71 },
             "light": {
               "count": 29,
               "minutes": 272,
               "thirtyDayAvgMinutes": 247
             },
-            "rem": {
-              "count": 5,
-              "minutes": 104,
-              "thirtyDayAvgMinutes": 103
-            },
-            "wake": {
-              "count": 8,
-              "minutes": 19,
-              "thirtyDayAvgMinutes": 35
-            }
+            "rem": { "count": 5, "minutes": 104, "thirtyDayAvgMinutes": 103 },
+            "wake": { "count": 8, "minutes": 19, "thirtyDayAvgMinutes": 35 }
           },
           "data": [
             {
-              "dateTime": "2025-07-13T23:10:00.000",
+              "dateTime": "2025-08-26T23:10:00.000",
               "level": "wake",
               "seconds": 840
             },
             {
-              "dateTime": "2025-07-13T23:24:00.000",
+              "dateTime": "2025-08-26T23:24:00.000",
               "level": "light",
               "seconds": 3960
             },
             {
-              "dateTime": "2025-07-14T00:30:00.000",
+              "dateTime": "2025-08-27T00:30:00.000",
               "level": "deep",
               "seconds": 2400
             },
             {
-              "dateTime": "2025-07-14T01:10:00.000",
+              "dateTime": "2025-08-27T01:10:00.000",
               "level": "light",
               "seconds": 5400
             },
             {
-              "dateTime": "2025-07-14T02:40:00.000",
+              "dateTime": "2025-08-27T02:40:00.000",
               "level": "rem",
               "seconds": 3000
             },
             {
-              "dateTime": "2025-07-14T03:30:00.000",
+              "dateTime": "2025-08-27T03:30:00.000",
               "level": "light",
               "seconds": 3000
             },
             {
-              "dateTime": "2025-07-14T04:20:00.000",
+              "dateTime": "2025-08-27T04:20:00.000",
               "level": "deep",
               "seconds": 2100
             },
             {
-              "dateTime": "2025-07-14T04:55:00.000",
+              "dateTime": "2025-08-27T04:55:00.000",
               "level": "light",
               "seconds": 4020
             },
             {
-              "dateTime": "2025-07-14T06:02:00.000",
+              "dateTime": "2025-08-27T06:02:00.000",
               "level": "rem",
               "seconds": 3240
             },
             {
-              "dateTime": "2025-07-14T06:56:00.000",
+              "dateTime": "2025-08-27T06:56:00.000",
               "level": "wake",
               "seconds": 240
             }
@@ -379,9 +331,9 @@
       },
       {
         "logId": 3456789017,
-        "dateOfSleep": "2025-07-15",
-        "startTime": "2025-07-14T23:35:00.000",
-        "endTime": "2025-07-15T06:55:00.000",
+        "dateOfSleep": "2025-08-28",
+        "startTime": "2025-08-27T23:35:00.000",
+        "endTime": "2025-08-28T06:55:00.000",
         "duration": 26400000,
         "efficiency": 91,
         "minutesToFallAsleep": 21,
@@ -390,92 +342,80 @@
         "timeInBed": 440,
         "levels": {
           "summary": {
-            "deep": {
-              "count": 2,
-              "minutes": 55,
-              "thirtyDayAvgMinutes": 69
-            },
+            "deep": { "count": 2, "minutes": 55, "thirtyDayAvgMinutes": 69 },
             "light": {
               "count": 33,
               "minutes": 256,
               "thirtyDayAvgMinutes": 248
             },
-            "rem": {
-              "count": 4,
-              "minutes": 90,
-              "thirtyDayAvgMinutes": 102
-            },
-            "wake": {
-              "count": 12,
-              "minutes": 39,
-              "thirtyDayAvgMinutes": 35
-            }
+            "rem": { "count": 4, "minutes": 90, "thirtyDayAvgMinutes": 102 },
+            "wake": { "count": 12, "minutes": 39, "thirtyDayAvgMinutes": 35 }
           },
           "data": [
             {
-              "dateTime": "2025-07-14T23:35:00.000",
+              "dateTime": "2025-08-27T23:35:00.000",
               "level": "wake",
               "seconds": 1260
             },
             {
-              "dateTime": "2025-07-14T23:56:00.000",
+              "dateTime": "2025-08-27T23:56:00.000",
               "level": "light",
               "seconds": 5340
             },
             {
-              "dateTime": "2025-07-15T01:25:00.000",
+              "dateTime": "2025-08-28T01:25:00.000",
               "level": "deep",
               "seconds": 2100
             },
             {
-              "dateTime": "2025-07-15T02:00:00.000",
+              "dateTime": "2025-08-28T02:00:00.000",
               "level": "light",
               "seconds": 3600
             },
             {
-              "dateTime": "2025-07-15T03:00:00.000",
+              "dateTime": "2025-08-28T03:00:00.000",
               "level": "rem",
               "seconds": 2400
             },
             {
-              "dateTime": "2025-07-15T03:40:00.000",
+              "dateTime": "2025-08-28T03:40:00.000",
               "level": "wake",
               "seconds": 540
             },
             {
-              "dateTime": "2025-07-15T03:49:00.000",
+              "dateTime": "2025-08-28T03:49:00.000",
               "level": "light",
               "seconds": 1500
             },
             {
-              "dateTime": "2025-07-15T04:14:00.000",
+              "dateTime": "2025-08-28T04:14:00.000",
               "level": "deep",
               "seconds": 1200
             },
             {
-              "dateTime": "2025-07-15T04:34:00.000",
+              "dateTime": "2025-08-28T04:34:00.000",
               "level": "rem",
               "seconds": 3000
             },
             {
-              "dateTime": "2025-07-15T05:24:00.000",
+              "dateTime": "2025-08-28T05:24:00.000",
               "level": "light",
               "seconds": 4920
             },
             {
-              "dateTime": "2025-07-15T06:46:00.000",
+              "dateTime": "2025-08-28T06:46:00.000",
               "level": "wake",
               "seconds": 540
             }
           ],
           "shortData": [
             {
-              "dateTime": "2025-07-15T03:42:00.000",
+              "dateTime": "2025-08-28T03:42:00.000",
               "level": "wake",
               "seconds": 60
             },
             {
-              "dateTime": "2025-07-15T05:55:30.000",
+              "dateTime": "2025-08-28T05:55:30.000",
               "level": "wake",
               "seconds": 30
             }
@@ -487,9 +427,9 @@
       },
       {
         "logId": 3456789018,
-        "dateOfSleep": "2025-07-16",
-        "startTime": "2025-07-15T22:40:00.000",
-        "endTime": "2025-07-16T07:10:00.000",
+        "dateOfSleep": "2025-08-29",
+        "startTime": "2025-08-28T22:40:00.000",
+        "endTime": "2025-08-29T07:10:00.000",
         "duration": 30600000,
         "efficiency": 97,
         "minutesToFallAsleep": 10,
@@ -498,75 +438,63 @@
         "timeInBed": 510,
         "levels": {
           "summary": {
-            "deep": {
-              "count": 3,
-              "minutes": 92,
-              "thirtyDayAvgMinutes": 71
-            },
+            "deep": { "count": 3, "minutes": 92, "thirtyDayAvgMinutes": 71 },
             "light": {
               "count": 24,
               "minutes": 278,
               "thirtyDayAvgMinutes": 250
             },
-            "rem": {
-              "count": 5,
-              "minutes": 125,
-              "thirtyDayAvgMinutes": 104
-            },
-            "wake": {
-              "count": 6,
-              "minutes": 15,
-              "thirtyDayAvgMinutes": 34
-            }
+            "rem": { "count": 5, "minutes": 125, "thirtyDayAvgMinutes": 104 },
+            "wake": { "count": 6, "minutes": 15, "thirtyDayAvgMinutes": 34 }
           },
           "data": [
             {
-              "dateTime": "2025-07-15T22:40:00.000",
+              "dateTime": "2025-08-28T22:40:00.000",
               "level": "wake",
               "seconds": 600
             },
             {
-              "dateTime": "2025-07-15T22:50:00.000",
+              "dateTime": "2025-08-28T22:50:00.000",
               "level": "light",
               "seconds": 2400
             },
             {
-              "dateTime": "2025-07-15T23:30:00.000",
+              "dateTime": "2025-08-28T23:30:00.000",
               "level": "deep",
               "seconds": 3600
             },
             {
-              "dateTime": "2025-07-16T00:30:00.000",
+              "dateTime": "2025-08-29T00:30:00.000",
               "level": "light",
               "seconds": 6000
             },
             {
-              "dateTime": "2025-07-16T02:10:00.000",
+              "dateTime": "2025-08-29T02:10:00.000",
               "level": "rem",
               "seconds": 3300
             },
             {
-              "dateTime": "2025-07-16T03:05:00.000",
+              "dateTime": "2025-08-29T03:05:00.000",
               "level": "light",
               "seconds": 2700
             },
             {
-              "dateTime": "2025-07-16T03:50:00.000",
+              "dateTime": "2025-08-29T03:50:00.000",
               "level": "deep",
               "seconds": 1920
             },
             {
-              "dateTime": "2025-07-16T04:22:00.000",
+              "dateTime": "2025-08-29T04:22:00.000",
               "level": "rem",
               "seconds": 4200
             },
             {
-              "dateTime": "2025-07-16T05:32:00.000",
+              "dateTime": "2025-08-29T05:32:00.000",
               "level": "light",
               "seconds": 5580
             },
             {
-              "dateTime": "2025-07-16T07:05:00.000",
+              "dateTime": "2025-08-29T07:05:00.000",
               "level": "wake",
               "seconds": 300
             }

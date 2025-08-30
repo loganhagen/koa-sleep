@@ -2,6 +2,10 @@ export interface SleepLogsAPIResponse {
   sleepLogs: SleepLogDTO[];
 }
 
+export interface SleepLogAPIResponse {
+  sleepLog: SleepLogDTO;
+}
+
 export interface SleepLogDTO {
   id: string;
   fitbitLogId: string;

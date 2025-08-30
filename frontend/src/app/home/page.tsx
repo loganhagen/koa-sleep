@@ -31,7 +31,7 @@ const Home = () => {
         handleResetToToday={handleResetToToday}
       />
       <Greeting />
-      <CoreMetrics />
+      <CoreMetrics currentDate={currentDate} />
       <WellnessIndicators />
       <SleepStages />
     </Stack>

@@ -11,7 +11,6 @@ const prisma = new PrismaClient();
 export const sleepService = {
   getSleepLogs: async () => {
     const sleepLogs = await prisma.sleepLog.findMany();
-    console.log(sleepLogs);
     return sleepLogs.map(toSleepLogDTO);
   },
 
