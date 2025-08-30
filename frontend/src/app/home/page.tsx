@@ -2,11 +2,11 @@
 
 import DateSelector from "./_components/DateSelector";
 import Greeting from "./_components/Greeting";
-import CoreMetrics from "./_components/CoreMetrics";
+import CoreMetrics from "./_components/core-metrics/CoreMetrics";
 import SleepStages from "./_components/SleepStages";
 import WellnessIndicators from "./_components/WellnessIndicators";
 import { Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
 import { GreetingSkeleton } from "./_components/_skeletons/GreetingSkeleton";
@@ -23,13 +23,13 @@ const Home = () => {
     user?.id ?? ""
   );
 
-  const getMostRecentDate = () => {
+  const getMostRecentDate = useCallback(() => {
     if (mostRecentSleepLog) {
       return new Date(`${mostRecentSleepLog.dateOfSleep}T00:00:00`);
     } else {
       return new Date();
     }
-  };
+  }, [mostRecentSleepLog]);
 
   const handleDateChange = (days: number) => {
     setTargetDate((prevDate) => {
@@ -46,7 +46,7 @@ const Home = () => {
     } else if (!isLoading) {
       setTargetDate(new Date());
     }
-  }, [mostRecentSleepLog, isLoading]);
+  }, [mostRecentSleepLog, isLoading, getMostRecentDate]);
 
   const resetTargetDate = () => {
     setTargetDate(getMostRecentDate());

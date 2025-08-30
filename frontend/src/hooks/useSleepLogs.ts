@@ -43,10 +43,15 @@ export const useSleepLogs = (userId: string) => {
   });
 };
 
-export const useSleepLogByDate = (userId: string, date: string) => {
+export const useSleepLogByDate = (userId: string | undefined, date: string) => {
   return useQuery({
     queryKey: ["sleepLog", userId, date],
-    queryFn: () => fetchSleepLogByDate(userId, date),
+    queryFn: () => {
+      if (!userId) {
+        return Promise.resolve(null);
+      }
+      return fetchSleepLogByDate(userId, date);
+    },
     enabled: !!userId && !!date,
     retry: (failureCount, error) => {
       if (error instanceof ApiError && error.status === 404) {

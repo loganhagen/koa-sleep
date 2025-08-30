@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Paper, Stack, Skeleton, Box, Divider } from "@mui/material";
+import { Paper, Stack, Skeleton, Divider } from "@mui/material";
 
 export const SleepStagesSkeleton = () => {
   return (
