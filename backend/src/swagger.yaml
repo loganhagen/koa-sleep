@@ -91,3 +91,20 @@ paths:
             application/json:
               schema:
                 type: object
+  /users/{userId}/sleep/recent:
+    get:
+      summary: Get the most recent sleep log for the user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object

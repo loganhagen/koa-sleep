@@ -1,5 +1,3 @@
-import { Api } from "@mui/icons-material";
-
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);

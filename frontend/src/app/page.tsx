@@ -14,11 +14,12 @@ const Splash = () => {
   const theme = useTheme();
   const currentMode = theme.palette.mode;
   const router = useRouter();
-  const { login } = useUser();
+  const { login, logout } = useUser();
 
   const handleSeeDemo = async () => {
     const endpoint = `/users/demo`;
     const demoUser = await fetchAPI<UserAPIResponse>(endpoint);
+    logout();
     login(demoUser.user);
     router.push("/home");
   };

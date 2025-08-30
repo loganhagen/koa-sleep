@@ -31,4 +31,16 @@ export const sleepService = {
     });
     return sleepLog;
   },
+  getMostRecentSleepLog: async (userId: string) => {
+    const mostRecentSleepLog = await prisma.sleepLog.findFirst({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        dateOfSleep: "desc",
+      },
+    });
+    console.log(mostRecentSleepLog);
+    return mostRecentSleepLog;
+  },
 };

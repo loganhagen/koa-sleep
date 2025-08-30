@@ -7,8 +7,8 @@ import SunnyIcon from "@mui/icons-material/Sunny";
 import InsightsIcon from "@mui/icons-material/Insights";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { useSleepLogByDate, useSleepLogs } from "@/hooks/useSleepLogs";
-import { format } from "date-fns";
 import { CoreMetricsSkeleton } from "./_skeletons/CoreMetricsSkeleton";
+import { useUser } from "@/app/providers/userProvider";
 
 const baseItemStyle: BoxProps["sx"] = {
   display: "flex",
@@ -29,11 +29,24 @@ interface CoreMetricsProps {
 }
 
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ currentDate }) => {
-  const { data: sleepLogs, isLoading: isSleepLogsLoading } = useSleepLogs(
-    "12c63558-f813-49f3-b69b-d270be9eed31"
-  );
+  const { user } = useUser();
 
-  const formattedDate = format(currentDate, "yyyy-MM-dd");
+  if (!user) {
+    return (
+      <Paper
+        elevation={0}
+        variant="outlined"
+        sx={{
+          p: 4,
+          borderRadius: 10,
+          backgroundColor: "background.paper",
+          width: "100%",
+        }}
+      >
+        <Typography>Please log in.</Typography>
+      </Paper>
+    );
+  }
 
   /**
    * TO-DO:
@@ -42,13 +55,9 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ currentDate }) => {
    * Add some logic such that the most recent sleep log is retrieved and the date selector is adjusted.
    */
 
-  const {
-    data: sleepLog,
-    isLoading: isSleepLogLoading,
-    isError,
-  } = useSleepLogByDate(
-    "12c63558-f813-49f3-b69b-d270be9eed31",
-    "formattedDate"
+  const { data: sleepLog, isLoading: isSleepLogLoading } = useSleepLogByDate(
+    user.id,
+    "2025-07-12"
   );
 
   if (isSleepLogLoading) {

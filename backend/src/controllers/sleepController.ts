@@ -59,4 +59,30 @@ export const sleepController = {
       res.status(404).json({ error: "Failed to search for sleep log." });
     }
   },
+  getMostRecentSleepLog: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        res.status(400).json({ error: "Missing required argument." });
+      }
+
+      if (typeof userId !== "string") {
+        res.status(400).json({ error: "Error unpacking argument. " });
+      }
+
+      const sleepLog = await sleepService.getMostRecentSleepLog(userId);
+
+      if (!sleepLog) {
+        throw new Error("Sleep log not found.");
+      }
+
+      res.status(200).json({ sleepLog: toSleepLogDTO(sleepLog) });
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(404).json({ error: error.message });
+      }
+      res.status(404).json({ error: "Failed to search for sleep log." });
+    }
+  },
 };

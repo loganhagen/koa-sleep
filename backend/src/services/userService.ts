@@ -6,7 +6,7 @@ export const userService = {
   getDemoUser: async () => {
     const demoUser = await prisma.user.findUnique({
       where: {
-        email: "rick.deckard@fitsync.com",
+        email: "mo.sleepin@fitsync.com",
       },
     });
 

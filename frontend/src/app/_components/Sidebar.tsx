@@ -30,7 +30,7 @@ const SidebarComponent: React.FC = () => {
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const { logout } = useUser();
+  const { user, logout } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -196,7 +196,10 @@ const SidebarComponent: React.FC = () => {
               mb: 2,
             }}
           >
-            <Avatar sx={{ bgcolor: "primary.main" }}>DU</Avatar>
+            <Avatar sx={{ bgcolor: "primary.main" }}>
+              {user?.firstName[0]}
+              {user?.lastName[0]}
+            </Avatar>
             <Box
               sx={{
                 whiteSpace: "nowrap",
@@ -207,7 +210,9 @@ const SidebarComponent: React.FC = () => {
                 ml: isCollapsed ? 0 : 2,
               }}
             >
-              <Typography sx={{ fontWeight: 600 }}>Demo User</Typography>
+              <Typography sx={{ fontWeight: 600 }}>
+                {user?.firstName} {user?.lastName}
+              </Typography>
             </Box>
           </Box>
           <Box sx={{ textAlign: "center", mb: 2 }}>
