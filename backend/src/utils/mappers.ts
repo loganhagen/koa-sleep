@@ -1,6 +1,6 @@
 import { SleepLog, User } from "@prisma/client";
 import { UserDTO } from "../types/api/user";
-import { SleepLogDTO } from "@custom_types/api/sleep";
+import { SleepLevels, SleepLogDTO } from "@custom_types/api/sleep";
 
 export const toUserDTO = (user: User): UserDTO => {
   return {
@@ -28,6 +28,6 @@ export const toSleepLogDTO = (sleepLog: SleepLog): SleepLogDTO => {
     isMainSleep: sleepLog.isMainSleep,
     type: sleepLog.type,
     infoCode: sleepLog.infoCode,
-    levels: sleepLog.levels,
+    levels: sleepLog.levels as SleepLevels | null,
   };
 };

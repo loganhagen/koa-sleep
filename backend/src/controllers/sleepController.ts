@@ -25,7 +25,6 @@ export const sleepController = {
       const sleepLogsDTO = await sleepService.getSleepLogByUserId(
         userId as string
       );
-      console.log(sleepLogsDTO);
       res.status(200).json({ sleepLogs: sleepLogsDTO });
     } catch (error) {
       res.status(404).json({ error: "Sleep logs not found." });

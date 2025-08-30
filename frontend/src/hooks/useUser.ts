@@ -5,7 +5,9 @@ import { UserDTO, UserAPIResponse } from "@/types/api/user";
 
 const fetchUser = async (isDemo: boolean): Promise<UserDTO> => {
   if (isDemo) {
-    const response = await fetchAPI<UserAPIResponse>("/users/get/demo");
+    const response = await fetchAPI<UserAPIResponse>(
+      `${process.env.NEXT_PUBLIC_GET_DEMO_USER}`
+    );
     return response.user;
   }
 
@@ -16,7 +18,7 @@ export const useUser = () => {
   const { isDemoMode } = useDemo();
 
   return useQuery({
-    queryKey: ["user", { isDemo: isDemoMode }],
+    queryKey: ["user", { isDemoMode }],
     queryFn: () => fetchUser(isDemoMode),
     enabled: isDemoMode,
   });

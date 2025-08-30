@@ -35,7 +35,7 @@ const GreetingSkeleton = () => (
 
 const Greeting = () => {
   const { data: user, isLoading, isPending } = useUser();
-  const userName = user ? user.firstName : "user";
+  const username = user ? user.firstName : "user";
 
   if (isLoading || isPending) {
     return <GreetingSkeleton />;
@@ -72,7 +72,7 @@ const Greeting = () => {
           alignItems="center"
         >
           <Typography variant="h4" sx={{ color: "text.primary" }}>
-            {userName}
+            {username}
           </Typography>
           <WavingHandIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>
