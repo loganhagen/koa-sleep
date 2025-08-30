@@ -7,6 +7,19 @@ import { useUser } from "@/app/providers/userProvider";
 const Greeting = () => {
   const { user } = useUser();
 
+  const getGreetingMessage = () => {
+    const currentHour = new Date().getHours();
+    if (currentHour < 12) {
+      return "Good morning";
+    } else if (currentHour < 18) {
+      return "Good afternoon";
+    } else {
+      return "Good evening";
+    }
+  };
+
+  const message = getGreetingMessage();
+
   return (
     <Paper
       elevation={11}
@@ -29,7 +42,7 @@ const Greeting = () => {
             textAlign: "center",
           }}
         >
-          Good morning,
+          {message},
         </Typography>
         <Stack
           direction={{ xs: "column", sm: "row" }}

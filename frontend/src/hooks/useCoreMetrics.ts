@@ -3,6 +3,7 @@ import {
   formatTimeTo12Hour,
 } from "@/utils/utils";
 import { useSleepLogByDate } from "./useSleepLogs";
+import { useMemo } from "react";
 
 export const useCoreMetrics = (
   userId: string | undefined,
@@ -14,16 +15,19 @@ export const useCoreMetrics = (
     error,
   } = useSleepLogByDate(userId, targetDate);
 
-  if (!sleepLog) {
-    return { metrics: null, isLoading, error };
-  }
-  const [hours, minutes] = millisecondsToHoursAndMinutes(sleepLog.duration);
-  const metrics = {
-    bedtime: formatTimeTo12Hour(new Date(sleepLog.startTime)),
-    wakeup: formatTimeTo12Hour(new Date(sleepLog.endTime)),
-    totalSleep: `${hours}h ${minutes}m`,
-    efficiency: `${sleepLog.efficiency}%`,
-  };
+  const metrics = useMemo(() => {
+    if (!sleepLog) {
+      return null;
+    }
+
+    const [hours, minutes] = millisecondsToHoursAndMinutes(sleepLog.duration);
+    return {
+      bedtime: formatTimeTo12Hour(new Date(sleepLog.startTime)),
+      wakeup: formatTimeTo12Hour(new Date(sleepLog.endTime)),
+      totalSleep: `${hours}h ${minutes}m`,
+      efficiency: `${sleepLog.efficiency}%`,
+    };
+  }, [sleepLog]);
 
   return { metrics, isLoading, error };
 };

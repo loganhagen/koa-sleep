@@ -48,10 +48,7 @@ export const useSleepLogByDate = (userId: string | undefined, date: string) => {
   return useQuery({
     queryKey: ["sleepLog", userId, date],
     queryFn: () => {
-      if (!userId) {
-        return Promise.resolve(null);
-      }
-      return fetchSleepLogByDate(userId, date);
+      return fetchSleepLogByDate(userId!, date);
     },
     enabled: !!userId && !!date,
     retry: (failureCount, error) => {
@@ -64,10 +61,10 @@ export const useSleepLogByDate = (userId: string | undefined, date: string) => {
   });
 };
 
-export const useMostRecentSleepLog = (userId: string) => {
+export const useMostRecentSleepLog = (userId: string | undefined) => {
   return useQuery({
     queryKey: ["mostRecentSleepLog", userId],
-    queryFn: () => fetchMostRecentSleepLog(userId),
+    queryFn: () => fetchMostRecentSleepLog(userId!),
     enabled: !!userId,
     retry: (failureCount, error) => {
       if (error instanceof ApiError && error.status === 404) {
