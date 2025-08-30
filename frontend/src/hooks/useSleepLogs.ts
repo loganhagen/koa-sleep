@@ -23,6 +23,15 @@ const fetchSleepLogByDate = async (
   return res.sleepLog;
 };
 
+const fetchMostRecentSleepLog = async (
+  userId: string
+): Promise<SleepLogDTO> => {
+  await new Promise((f) => setTimeout(f, 1000));
+  const endpoint = `/users/${userId}/sleep/recent`;
+  const res = await fetchAPI<SleepLogAPIResponse>(endpoint);
+  return res.sleepLog;
+};
+
 export const useSleepLogs = (userId: string) => {
   return useQuery({
     queryKey: ["sleepLogs", userId],
@@ -39,6 +48,20 @@ export const useSleepLogByDate = (userId: string, date: string) => {
     queryKey: ["sleepLog", userId, date],
     queryFn: () => fetchSleepLogByDate(userId, date),
     enabled: !!userId && !!date,
+    retry: (failureCount, error) => {
+      if (error instanceof ApiError && error.status === 404) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+  });
+};
+
+export const useMostRecentSleepLog = (userId: string) => {
+  return useQuery({
+    queryKey: ["mostRecentSleepLog", userId],
+    queryFn: () => fetchMostRecentSleepLog(userId),
+    enabled: !!userId,
     retry: (failureCount, error) => {
       if (error instanceof ApiError && error.status === 404) {
         return false;

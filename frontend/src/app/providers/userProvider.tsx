@@ -43,7 +43,6 @@ export default function UserProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     localStorage.removeItem("currentUser");
-    setUser(null);
   };
 
   const contextValue = useMemo(

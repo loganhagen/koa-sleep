@@ -25,10 +25,10 @@ const baseItemStyle: BoxProps["sx"] = {
 };
 
 interface CoreMetricsProps {
-  currentDate: Date;
+  targetDate: Date;
 }
 
-const CoreMetrics: React.FC<CoreMetricsProps> = ({ currentDate }) => {
+const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   const { user } = useUser();
 
   if (!user) {

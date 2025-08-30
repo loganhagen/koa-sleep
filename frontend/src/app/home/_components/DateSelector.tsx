@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Stack,
   Typography,
@@ -13,13 +13,13 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import TodayIcon from "@mui/icons-material/Today";
 
 interface DateSelectorProps {
-  currentDate: Date;
+  targetDate: Date;
   handleDateChange: (days: number) => void;
   handleResetToToday: () => void;
 }
 
 const DateSelector: React.FC<DateSelectorProps> = ({
-  currentDate,
+  targetDate: currentDate,
   handleDateChange,
   handleResetToToday,
 }) => {
