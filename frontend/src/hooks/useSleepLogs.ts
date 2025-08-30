@@ -4,7 +4,7 @@ import {
   SleepLogDTO,
   SleepLogsAPIResponse,
 } from "@/types/api/sleep";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchSleepLogs = async (
   userId: string
@@ -40,6 +40,7 @@ export const useSleepLogs = (userId: string) => {
       return fetchSleepLogs(userId as string);
     },
     enabled: !!userId,
+    placeholderData: keepPreviousData,
   });
 };
 
@@ -59,6 +60,7 @@ export const useSleepLogByDate = (userId: string | undefined, date: string) => {
       }
       return failureCount < 3;
     },
+    placeholderData: keepPreviousData,
   });
 };
 
@@ -73,5 +75,6 @@ export const useMostRecentSleepLog = (userId: string) => {
       }
       return failureCount < 3;
     },
+    placeholderData: keepPreviousData,
   });
 };
