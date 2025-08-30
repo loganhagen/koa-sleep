@@ -12,22 +12,19 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import TodayIcon from "@mui/icons-material/Today";
 
-const DateSelector = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+interface DateSelectorProps {
+  currentDate: Date;
+  handleDateChange: (days: number) => void;
+  handleResetToToday: () => void;
+}
+
+const DateSelector: React.FC<DateSelectorProps> = ({
+  currentDate,
+  handleDateChange,
+  handleResetToToday,
+}) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const handleDateChange = (days: number) => {
-    setCurrentDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      newDate.setDate(newDate.getDate() + days);
-      return newDate;
-    });
-  };
-
-  const handleResetToToday = () => {
-    setCurrentDate(new Date());
-  };
 
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",

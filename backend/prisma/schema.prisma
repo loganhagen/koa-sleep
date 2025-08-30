@@ -38,7 +38,7 @@ model SleepLog {
   id                  String   @id
   fitbitLogId         BigInt
   userId              String
-  dateOfSleep         DateTime @db.Date
+  dateOfSleep         String
   startTime           DateTime
   endTime             DateTime
   duration            Int

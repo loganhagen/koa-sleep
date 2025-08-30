@@ -5,9 +5,8 @@ import { UserDTO, UserAPIResponse } from "@/types/api/user";
 
 const fetchUser = async (isDemo: boolean): Promise<UserDTO> => {
   if (isDemo) {
-    const response = await fetchAPI<UserAPIResponse>(
-      `${process.env.NEXT_PUBLIC_GET_DEMO_USER}`
-    );
+    const endpoint = `/users/demo`;
+    const response = await fetchAPI<UserAPIResponse>(endpoint);
     return response.user;
   }
 

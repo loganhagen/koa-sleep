@@ -3,7 +3,7 @@ import { SleepLogDTO, SleepLogsAPIResponse } from "@/types/api/sleep";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchSleepLogs = async (userId: string): Promise<SleepLogDTO[]> => {
-  const endpoint = `/sleep/get?userId=${userId}`;
+  const endpoint = `/users/${userId}/sleep`;
   const res = await fetchAPI<SleepLogsAPIResponse>(endpoint);
   return res.sleepLogs;
 };

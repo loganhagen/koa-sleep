@@ -3,7 +3,6 @@
  * No HTTP-related code should be found here.
  */
 
-import { SerializableSleepLog } from "@custom_types/api/sleep";
 import { PrismaClient } from "@prisma/client";
 import { toSleepLogDTO } from "@utils/mappers";
 
@@ -12,21 +11,25 @@ const prisma = new PrismaClient();
 export const sleepService = {
   getSleepLogs: async () => {
     const sleepLogs = await prisma.sleepLog.findMany();
-    const serializableSleepLogs: SerializableSleepLog[] = sleepLogs.map(
-      (log) => ({
-        ...log,
-        fitbitLogId: log.fitbitLogId.toString(),
-      })
-    );
-    return serializableSleepLogs;
+    console.log(sleepLogs);
+    return sleepLogs.map(toSleepLogDTO);
   },
 
-  getSleepLogByUserId: async (userId: string) => {
+  getSleepLogsByUserId: async (userId: string) => {
     const sleepLogs = await prisma.sleepLog.findMany({
       where: {
         userId: userId,
       },
     });
     return sleepLogs.map(toSleepLogDTO);
+  },
+  getSleepLogByDate: async (userId: string, date: string) => {
+    const sleepLog = await prisma.sleepLog.findFirst({
+      where: {
+        userId: userId,
+        dateOfSleep: date,
+      },
+    });
+    return sleepLog;
   },
 };

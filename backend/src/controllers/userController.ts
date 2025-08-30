@@ -27,14 +27,14 @@ export const userController = {
   },
   getUserByEmail: async (req: Request, res: Response) => {
     try {
-      const { userEmail } = req.query;
-      if (!userEmail || typeof userEmail !== "string") {
+      const { email } = req.params;
+      if (!email || typeof email !== "string") {
         res
           .status(400)
-          .json({ error: "userEmail query parameter is required." });
+          .json({ error: "email parameter is required." });
       }
 
-      const userRecord = await userService.getUserByEmail(userEmail as string);
+      const userRecord = await userService.getUserByEmail(email as string);
       if (!userRecord) {
         throw new Error();
       }

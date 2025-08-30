@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API for fitness data
 paths:
-  /sleep/all:
+  /sleep:
     get:
       summary: Get all sleep logs.
       responses:
@@ -14,24 +14,7 @@ paths:
             application/json:
               schema:
                 type: object
-  /sleep/get:
-    get:
-      summary: Get all sleep logs for a specified user.
-      parameters:
-        - name: userId
-          in: query
-          required: true
-          description: User ID.
-          schema:
-            type: string
-      responses:
-        "200":
-          description: A successful response.
-          content:
-            application/json:
-              schema:
-                type: object
-  /users/all:
+  /users:
     get:
       summary: Get all users in the database.
       responses:
@@ -41,12 +24,22 @@ paths:
             application/json:
               schema:
                 type: object
-  /users/get:
+  /users/demo:
+    get:
+      summary: Get the demo user.
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+  /users/{email}:
     get:
       summary: Get a user by email.
       parameters:
-        - name: userEmail
-          in: query
+        - name: email
+          in: path
           required: true
           description: Email address of the user.
           schema:
@@ -58,9 +51,39 @@ paths:
             application/json:
               schema:
                 type: object
-  /users/get/demo:
+  /users/{userId}/sleep:
     get:
-      summary: Get the demo user.
+      summary: Get all sleep logs for a specified user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+  /users/{userId}/sleep/{date}:
+    get:
+      summary: Get a sleep log for a specific user based on a date.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log.
+          schema:
+            type: string
       responses:
         "200":
           description: A successful response.
