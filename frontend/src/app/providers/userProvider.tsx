@@ -1,6 +1,6 @@
 "use client";
 
-import { UserDTO } from "@/types/api/user";
+import { User } from "@/types/api/user";
 import {
   createContext,
   ReactNode,
@@ -11,8 +11,8 @@ import {
 } from "react";
 
 type UserContextType = {
-  user: UserDTO | null;
-  login: (user: UserDTO) => void;
+  user: User | null;
+  login: (user: User) => void;
   logout: () => void;
 };
 
@@ -25,17 +25,16 @@ const UserContext = createContext<UserContextType>({
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setUser] = useState<UserDTO | null>(null);
+  const [currentUser, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // Check for existing logged in user on render.
     const storedValue = localStorage.getItem("currentUser");
     if (storedValue) {
-      setUser(JSON.parse(storedValue) as UserDTO);
+      setUser(JSON.parse(storedValue) as User);
     }
   }, []);
 
-  const login = (user: UserDTO) => {
+  const login = (user: User) => {
     const userJson = JSON.stringify(user);
     localStorage.setItem("currentUser", userJson);
     setUser(user);

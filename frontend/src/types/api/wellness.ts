@@ -1,7 +1,3 @@
-export interface SkinTempAPIResponse {
-  log: SkinTempDTO;
-}
-
 export interface SkinTempDTO {
   id: string;
   dateTime: Date;

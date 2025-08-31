@@ -1,8 +1,4 @@
-export interface UserAPIResponse {
-  user: UserDTO;
-}
-
-export interface UserDTO {
+export interface User {
   id: string;
   email: string;
   firstName: string;
