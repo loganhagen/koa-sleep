@@ -10,6 +10,7 @@ import { CoreMetricsSkeleton } from "../_skeletons/CoreMetricsSkeleton";
 import { useUser } from "@/app/providers/userProvider";
 import { useCoreMetrics } from "@/hooks/useCoreMetrics";
 import { MetricDisplay } from "./MetricsDisplay";
+import NoDataDisplay from "../NoDataDisplay";
 
 interface CoreMetricsProps {
   targetDate: Date;
@@ -42,62 +43,12 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
 
   if (error) {
     return (
-      <Paper
-        elevation={0}
-        variant="outlined"
-        sx={{
-          p: 4,
-          borderRadius: 10,
-          backgroundColor: "background.paper",
-          width: "100%",
-          textAlign: "center",
-        }}
-      >
-        <Stack direction={"column"} spacing={1}>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            justifyContent={"center"}
-            alignItems="center"
-          >
-            <Typography variant="h5" sx={{ textAlign: "center" }}>
-              Core Metrics
-            </Typography>
-          </Stack>
-          <Typography>Unable to retrieve data.</Typography>
-        </Stack>
-      </Paper>
+      <NoDataDisplay title="Core Metrics" message="Unable to retrieve data." />
     );
   }
 
   if (!metrics) {
-    return (
-      <Paper
-        elevation={0}
-        variant="outlined"
-        sx={{
-          p: 4,
-          borderRadius: 10,
-          backgroundColor: "background.paper",
-          width: "100%",
-          textAlign: "center",
-        }}
-      >
-        <Stack direction={"column"} spacing={1}>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            justifyContent={"center"}
-            alignItems="center"
-          >
-            <Typography variant="h5" sx={{ textAlign: "center" }}>
-              Core Metrics
-            </Typography>
-          </Stack>
-          <Typography>No data found.</Typography>
-        </Stack>
-      </Paper>
-    );
+    return <NoDataDisplay title="Core Metrics" message="No data found." />;
   }
 
   const metricsData = [

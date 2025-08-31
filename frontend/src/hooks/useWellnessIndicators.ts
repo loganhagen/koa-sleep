@@ -18,12 +18,7 @@ export const useWellnessIndicators = (
       return fetchWellnessIndicatorsByDate(userId!, date);
     },
     enabled: !!userId && !!date,
-    retry: (failureCount, error) => {
-      if (error instanceof ApiError && error.status === 404) {
-        return false;
-      }
-      return failureCount < 3;
-    },
+    retry: 0,
     placeholderData: keepPreviousData,
   });
 };

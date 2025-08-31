@@ -9,6 +9,8 @@ import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import { useWellnessIndicators } from "@/hooks/useWellnessIndicators";
 import { useUser } from "@/app/providers/userProvider";
 import IndicatorItem from "./IndicatorItem";
+import { WellnessIndicatorsSkeleton } from "../_skeletons/WellnessIndicatorsSkeleton";
+import NoDataDisplay from "../NoDataDisplay";
 
 interface WellnessIndicatorsProps {
   targetDate: Date;
@@ -18,21 +20,56 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
   targetDate,
 }) => {
   const { user } = useUser();
-  const { data, isLoading, isFetching } = useWellnessIndicators(
+  const { data, isLoading, error } = useWellnessIndicators(
     user?.id,
     targetDate
   );
 
+  if (!user) {
+    return (
+      <Paper
+        elevation={0}
+        variant="outlined"
+        sx={{
+          p: 4,
+          borderRadius: 10,
+          backgroundColor: "background.paper",
+          width: "100%",
+        }}
+      >
+        <Typography>Please log in.</Typography>
+      </Paper>
+    );
+  }
+
+  if (isLoading) {
+    return <WellnessIndicatorsSkeleton />;
+  }
+
+  if (error) {
+    return (
+      <NoDataDisplay
+        title="Wellness Indicators"
+        message="Unable to retrieve data."
+      />
+    );
+  }
+
+  if (!data) {
+    return (
+      <NoDataDisplay title="Wellness Indicators" message="No data found." />
+    );
+  }
+
   const skinTempValue = (() => {
-    if (data?.nightlyRelative == null || isLoading || isFetching) return "...";
+    if (data?.nightlyRelative == null) return "...";
     const temp = data.nightlyRelative;
     const sign = temp > 0 ? "+" : "";
     return `${sign}${temp.toFixed(1)}°C`;
   })();
 
   const skinTempColor = (() => {
-    if (data?.nightlyRelative == null || isLoading || isFetching)
-      return "white";
+    if (data?.nightlyRelative == null) return "white";
     if (data.nightlyRelative > 0) return "#ffb74d";
     if (data.nightlyRelative < 0) return "#90caf9";
     return "white";

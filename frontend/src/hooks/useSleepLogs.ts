@@ -40,6 +40,7 @@ export const useSleepLogs = (userId: string) => {
       return fetchSleepLogs(userId as string);
     },
     enabled: !!userId,
+    retry: 0,
     placeholderData: keepPreviousData,
   });
 };
@@ -51,12 +52,7 @@ export const useSleepLogByDate = (userId: string | undefined, date: Date) => {
       return fetchSleepLogByDate(userId!, date);
     },
     enabled: !!userId && !!date,
-    retry: (failureCount, error) => {
-      if (error instanceof ApiError && error.status === 404) {
-        return false;
-      }
-      return failureCount < 3;
-    },
+    retry: 0,
     placeholderData: keepPreviousData,
   });
 };
@@ -66,12 +62,7 @@ export const useMostRecentSleepLog = (userId: string | undefined) => {
     queryKey: ["mostRecentSleepLog", userId],
     queryFn: () => fetchMostRecentSleepLog(userId!),
     enabled: !!userId,
-    retry: (failureCount, error) => {
-      if (error instanceof ApiError && error.status === 404) {
-        return false;
-      }
-      return failureCount < 3;
-    },
+    retry: 0,
     placeholderData: keepPreviousData,
   });
 };
