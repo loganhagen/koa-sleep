@@ -4,7 +4,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchWellnessIndicatorsByDate = async (userId: string, date: Date) => {
   const endpoint = `/users/${userId}/temperature/${date.toISOString()}`;
-  const res = await fetchAPI<TemperatureLog[]>(endpoint);
+  const res = await fetchAPI<TemperatureLog>(endpoint);
   return res;
 };
 

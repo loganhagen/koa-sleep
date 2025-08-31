@@ -57,59 +57,56 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
 
   if (!data) {
     return (
-      <NoDataDisplay title="Wellness Indicators" message="No data found." />
+      <NoDataDisplay
+        title="Wellness Indicators"
+        message="No data available for the selected date."
+      />
     );
   }
 
-  const skinTempValue = (() => {
-    if (data?.nightlyRelative == null) return "...";
-    const temp = data.nightlyRelative;
-    const sign = temp > 0 ? "+" : "";
-    return `${sign}${temp.toFixed(1)}°C`;
-  })();
-
-  const skinTempColor = (() => {
-    if (data?.nightlyRelative == null) return "white";
-    if (data.nightlyRelative > 0) return "#ffb74d";
-    if (data.nightlyRelative < 0) return "#90caf9";
-    return "white";
-  })();
-
   const indicators = [
     {
-      value: skinTempValue,
-      valueColor: skinTempColor,
+      value: `${data.nightlyRelative}°F`,
       label: "Skin Temp",
       Icon: ThermostatIcon,
-      gradient: "linear-gradient(145deg, #4db6ac, #00897b)",
-      shadow: "0px 4px 20px rgba(0, 137, 123, 0.25)",
+      gradient: "linear-gradient(145deg, #66bb6a, #43a047)",
+      shadow: "0px 4px 20px rgba(67, 160, 71, 0.25)",
+      valueColor: "#ffffff",
+      iconColor: "#43a047",
       tooltip:
-        "This shows the change in your skin temperature during sleep compared to your personal baseline...",
-      iconColor: "primary.main",
+        "Fitbit estimates your skin temperature variation to help you understand changes in your body, which can be affected by factors like your menstrual cycle, circadian rhythm, or a fever.",
     },
     {
-      value: "16 bpm",
-      label: "Breathing",
+      value: `69 br/min`,
+      label: "Breathing Rate",
       Icon: AirIcon,
-      gradient: "linear-gradient(145deg, #90caf9, #64b5f6)",
-      shadow: "0px 4px 20px rgba(100, 181, 246, 0.25)",
-      iconColor: "#64b5f6",
+      gradient: "linear-gradient(145deg, #42a5f5, #2196f3)",
+      shadow: "0px 4px 20px rgba(33, 150, 243, 0.25)",
+      valueColor: "#ffffff",
+      iconColor: "#2196f3",
+      tooltip:
+        "The number of breaths you take per minute. This is a good indicator of your overall wellness.",
     },
     {
-      value: "60 ms",
+      value: `69 ms`,
       label: "HRV",
       Icon: MonitorHeartIcon,
-      gradient: "linear-gradient(145deg, #ffb74d, #ffa726)",
-      shadow: "0px 4px 20px rgba(255, 167, 38, 0.25)",
-      iconColor: "warning.main",
+      gradient: "linear-gradient(145deg, #ab47bc, #8e24aa)",
+      shadow: "0px 4px 20px rgba(142, 36, 170, 0.25)",
+      valueColor: "#ffffff",
+      iconColor: "#8e24aa",
+      tooltip:
+        "The time variation between heartbeats. A higher HRV is generally associated with better cardiovascular fitness and resilience to stress.",
     },
     {
-      value: "98%",
+      value: `69%`,
       label: "SpO2",
       Icon: BloodtypeIcon,
       gradient: "linear-gradient(145deg, #ef9a9a, #e57373)",
       shadow: "0px 4px 20px rgba(229, 115, 115, 0.25)",
       iconColor: "#e57373",
+      tooltip:
+        "The percentage of your blood that's saturated with, or contains, oxygen.",
     },
   ];
 
