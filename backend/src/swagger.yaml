@@ -422,6 +422,108 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /users/{userId}/hrv/{date}:
+    get:
+      tags:
+        - Wellness
+      summary: Get a heart rate variability (HRV) log by date
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The requested HRV log.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/HrvLog"
+        "400":
+          description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/{userId}/spo2/{date}:
+    get:
+      tags:
+        - Wellness
+      summary: Get a blood oxygen (SPO2) log by date
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The requested SPO2 log.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/Spo2Log"
+        "400":
+          description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     User:
@@ -497,6 +599,53 @@ components:
           format: float
           description: Breaths per minute.
           example: 14.5
+
+    HrvLog:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "e2f9c6c1-0b2e-6c5f-9e5c-5g9d3f1e3d5c"
+        dateTime:
+          type: string
+          format: date-time
+          example: "2025-08-30T04:30:00.000Z"
+        dailyRmssd:
+          type: number
+          format: float
+          description: Root mean square of successive differences.
+          example: 45.2
+        deepRmssd:
+          type: number
+          format: float
+          description: RMSSD during deep sleep.
+          example: 55.8
+
+    Spo2Log:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "f3a0d7d2-1c3f-7d6a-0f6d-6h0e4g2f4e6d"
+        dateTime:
+          type: string
+          format: date-time
+          example: "2025-08-30T04:45:00.000Z"
+        avg:
+          type: number
+          format: float
+          description: Average SPO2 value.
+          example: 97.5
+        min:
+          type: number
+          format: float
+          description: Minimum SPO2 value.
+          example: 95.1
+        max:
+          type: number
+          format: float
+          description: Maximum SPO2 value.
+          example: 99.2
 
     Error:
       type: object

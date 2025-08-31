@@ -20,5 +20,7 @@ router.get(
   "/:userId/breathing-rate/:date",
   wellnessController.getBreathingRateByDate
 );
+router.get("/:userId/hrv/:date", wellnessController.getHRVByDate);
+router.get("/:userId/spo2/:date", wellnessController.getSPO2ByDate);
 
 export default router;

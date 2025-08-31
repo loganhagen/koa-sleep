@@ -11,6 +11,12 @@ import { useUser } from "@/app/providers/userProvider";
 import IndicatorItem from "./IndicatorItem";
 import { WellnessIndicatorsSkeleton } from "../_skeletons/WellnessIndicatorsSkeleton";
 import NoDataDisplay from "../NoDataDisplay";
+import {
+  BreathingRateLog,
+  HrvLog,
+  Spo2Log,
+  TemperatureLog,
+} from "@/types/api/wellness";
 
 interface WellnessIndicatorsProps {
   targetDate: Date;
@@ -55,18 +61,10 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
     );
   }
 
-  if (!data) {
-    return (
-      <NoDataDisplay
-        title="Wellness Indicators"
-        message="No data available for the selected date."
-      />
-    );
-  }
-
-  const indicators = [
+  const indicatorConfig = [
     {
-      value: `${data.nightlyRelative}°F`,
+      key: "temperature",
+      getValue: (d: TemperatureLog) => `${d.nightlyRelative}°F`,
       label: "Skin Temp",
       Icon: ThermostatIcon,
       gradient: "linear-gradient(145deg, #66bb6a, #43a047)",
@@ -77,7 +75,8 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
         "Fitbit estimates your skin temperature variation to help you understand changes in your body, which can be affected by factors like your menstrual cycle, circadian rhythm, or a fever.",
     },
     {
-      value: `69 br/min`,
+      key: "breathingRate",
+      getValue: (d: BreathingRateLog) => `${d.breathingRateValue} br/min`,
       label: "Breathing Rate",
       Icon: AirIcon,
       gradient: "linear-gradient(145deg, #42a5f5, #2196f3)",
@@ -88,7 +87,8 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
         "The number of breaths you take per minute. This is a good indicator of your overall wellness.",
     },
     {
-      value: `69 ms`,
+      key: "hrv",
+      getValue: (d: HrvLog) => `${d.dailyRmssd} ms`,
       label: "HRV",
       Icon: MonitorHeartIcon,
       gradient: "linear-gradient(145deg, #ab47bc, #8e24aa)",
@@ -99,7 +99,8 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
         "The time variation between heartbeats. A higher HRV is generally associated with better cardiovascular fitness and resilience to stress.",
     },
     {
-      value: `69%`,
+      key: "spo2",
+      getValue: (d: Spo2Log) => `${d.avg}%`,
       label: "SpO2",
       Icon: BloodtypeIcon,
       gradient: "linear-gradient(145deg, #ef9a9a, #e57373)",
@@ -109,6 +110,30 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
         "The percentage of your blood that's saturated with, or contains, oxygen.",
     },
   ];
+
+  const indicators = data
+    ? indicatorConfig
+        .map((config) => {
+          const indicatorData = data[config.key as keyof typeof data];
+          if (!indicatorData) return null;
+          return {
+            ...config,
+            value: config.getValue(indicatorData as any),
+          };
+        })
+        .filter((indicator): indicator is NonNullable<typeof indicator> =>
+          Boolean(indicator)
+        )
+    : [];
+
+  if (indicators.length === 0) {
+    return (
+      <NoDataDisplay
+        title="Wellness Indicators"
+        message="No data available for the selected date."
+      />
+    );
+  }
 
   return (
     <Paper

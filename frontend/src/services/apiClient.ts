@@ -33,3 +33,7 @@ export const fetchAPI = async <T>(
     throw new ApiError(res.status, envelope.error!);
   }
 };
+
+export const isNotFoundError = (error: any): boolean => {
+  return error instanceof ApiError && error.status === 404;
+};

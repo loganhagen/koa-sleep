@@ -7,8 +7,23 @@ export interface TemperatureDTO {
   logType: TemperatureLogType;
 }
 
-export interface BreatingRateDTO {
+export interface BreathingRateDTO {
   id: string;
   dateTime: Date;
-  breathingRate: number;
+  breathingRateValue: number;
+}
+
+export interface HrvDTO {
+  id: string;
+  dateTime: Date;
+  dailyRmssd: number;
+  deepRmssd: number;
+}
+
+export interface Spo2DTO {
+  id: string;
+  dateTime: Date;
+  avg: number;
+  min: number;
+  max: number;
 }
