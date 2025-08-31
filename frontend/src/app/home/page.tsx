@@ -62,6 +62,9 @@ const Home = () => {
         targetDate={targetDate}
         handleDateChange={handleDateChange}
         handleResetToToday={resetTargetDate}
+        mostRecentLogDate={
+          mostRecentSleepLog ? new Date(mostRecentSleepLog.dateOfSleep) : null
+        }
       />
       <Greeting />
       <CoreMetrics targetDate={targetDate} />
