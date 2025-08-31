@@ -7,8 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ConnectionProvider {
+  GOOGLE
+  FITBIT
+}
+
 model Connection {
-  id                String             @id
+  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   provider          ConnectionProvider
   providerAccountId String
   accessToken       String?
@@ -17,27 +22,28 @@ model Connection {
   scope             String?
   createdAt         DateTime           @default(now())
   updatedAt         DateTime
-  userId            String
+  userId            String             @db.Uuid
   User              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model User {
-  id         String       @id
-  email      String       @unique
-  firstName  String
-  lastName   String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime
-  Connection Connection[]
-  SleepLog   SleepLog[]
+  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email           String            @unique
+  firstName       String
+  lastName        String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime
+  Connection      Connection[]
+  SleepLog        SleepLog[]
+  SkinTemperature SkinTemperature[]
 }
 
 model SleepLog {
-  id                  String   @id
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   fitbitLogId         BigInt
-  userId              String
+  userId              String   @db.Uuid
   dateOfSleep         String
   startTime           DateTime
   endTime             DateTime
@@ -56,7 +62,18 @@ model SleepLog {
   @@index([userId, dateOfSleep])
 }
 
-enum ConnectionProvider {
-  GOOGLE
-  FITBIT
+enum TemperatureLogType {
+  DEDICATED_TRACKER
+  OTHER
+}
+
+model SkinTemperature {
+  id              String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateTime        DateTime
+  nightlyRelative Float
+  logType         TemperatureLogType
+  userId          String             @db.Uuid
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateTime])
 }

@@ -14,9 +14,8 @@ import { formatDateToYYYYMMDD } from "@/utils/utils";
 const Home = () => {
   const [targetDate, setTargetDate] = useState<Date | null>(null);
   const { user } = useUser();
-  const { data: mostRecentSleepLog, isLoading } = useMostRecentSleepLog(
-    user?.id
-  );
+  const { data: mostRecentSleepLog, isLoading: isSleepLogLoading } =
+    useMostRecentSleepLog(user?.id);
 
   const getMostRecentDate = useCallback(() => {
     if (mostRecentSleepLog) {
@@ -27,10 +26,10 @@ const Home = () => {
   }, [mostRecentSleepLog]);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isSleepLogLoading) {
       setTargetDate(getMostRecentDate());
     }
-  }, [mostRecentSleepLog, isLoading, getMostRecentDate]);
+  }, [mostRecentSleepLog, isSleepLogLoading, getMostRecentDate]);
 
   const handleDateChange = (days: number) => {
     setTargetDate((prevDate) => {
@@ -45,7 +44,7 @@ const Home = () => {
     setTargetDate(getMostRecentDate());
   };
 
-  if (!targetDate || isLoading) {
+  if (!targetDate || isSleepLogLoading) {
     return (
       <Box
         display="flex"
