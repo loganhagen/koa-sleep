@@ -1,35 +1,27 @@
-import { ApiError, fetchAPI } from "@/services/apiClient";
-import {
-  SleepLogAPIResponse,
-  SleepLogDTO,
-  SleepLogsAPIResponse,
-} from "@/types/api/sleep";
+import { fetchAPI } from "@/services/apiClient";
+import { SleepLog } from "@/types/api/sleep";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-const fetchSleepLogs = async (
-  userId: string
-): Promise<SleepLogDTO[] | null> => {
+const fetchSleepLogs = async (userId: string): Promise<SleepLog[] | null> => {
   const endpoint = `/users/${userId}/sleep`;
-  const res = await fetchAPI<SleepLogsAPIResponse>(endpoint);
-  return res.sleepLogs;
+  const res = await fetchAPI<SleepLog[]>(endpoint);
+  return res;
 };
 
 const fetchSleepLogByDate = async (
   userId: string,
   date: Date
-): Promise<SleepLogDTO> => {
+): Promise<SleepLog> => {
   const endpoint = `/users/${userId}/sleep/${date.toISOString()}`;
-  const res = await fetchAPI<SleepLogAPIResponse>(endpoint);
-  return res.sleepLog;
+  const res = await fetchAPI<SleepLog>(endpoint);
+  return res;
 };
 
-const fetchMostRecentSleepLog = async (
-  userId: string
-): Promise<SleepLogDTO> => {
+const fetchMostRecentSleepLog = async (userId: string): Promise<SleepLog> => {
   await new Promise((f) => setTimeout(f, 1000));
   const endpoint = `/users/${userId}/sleep/recent`;
-  const res = await fetchAPI<SleepLogAPIResponse>(endpoint);
-  return res.sleepLog;
+  const res = await fetchAPI<SleepLog>(endpoint);
+  return res;
 };
 
 export const useSleepLogs = (userId: string) => {

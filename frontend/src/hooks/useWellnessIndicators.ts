@@ -1,11 +1,11 @@
 import { ApiError, fetchAPI } from "@/services/apiClient";
-import { SkinTempAPIResponse } from "@/types/api/wellness";
+import { TemperatureLog } from "@/types/api/wellness";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchWellnessIndicatorsByDate = async (userId: string, date: Date) => {
   const endpoint = `/users/${userId}/temperature/${date.toISOString()}`;
-  const res = await fetchAPI<SkinTempAPIResponse>(endpoint);
-  return res.log;
+  const res = await fetchAPI<TemperatureLog[]>(endpoint);
+  return res;
 };
 
 export const useWellnessIndicators = (

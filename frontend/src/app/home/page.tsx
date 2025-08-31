@@ -9,7 +9,6 @@ import { Stack, CircularProgress, Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
-import { formatDateToYYYYMMDD } from "@/utils/utils";
 
 const Home = () => {
   const [targetDate, setTargetDate] = useState<Date | null>(null);

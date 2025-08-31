@@ -1,12 +1,4 @@
-export interface SleepLogsAPIResponse {
-  sleepLogs: SleepLogDTO[];
-}
-
-export interface SleepLogAPIResponse {
-  sleepLog: SleepLogDTO;
-}
-
-export interface SleepLogDTO {
+export interface SleepLog {
   id: string;
   fitbitLogId: string;
   userId: string;

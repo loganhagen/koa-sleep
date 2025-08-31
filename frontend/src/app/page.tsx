@@ -6,33 +6,17 @@ import Image from "next/image";
 import GoogleButton from "react-google-button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useRouter } from "next/navigation";
-import { useUser } from "./providers/userProvider";
-import { ApiError, fetchAPI } from "@/services/apiClient";
-import { User } from "@/types/api/user";
+import { useDemoLogin } from "@/hooks/useAuth";
 
 const Splash = () => {
   const theme = useTheme();
   const currentMode = theme.palette.mode;
   const router = useRouter();
-  const { login, logout } = useUser();
+  const { mutate: loginAsDemo } = useDemoLogin();
 
   const handleSeeDemo = async () => {
-    try {
-      const endpoint = `/users/demo`;
-      const demoUser = await fetchAPI<User>(endpoint);
-      console.log(`Successfully fetched user ${demoUser.id}`);
-      logout();
-      login(demoUser);
-      router.push("/home");
-    } catch (error) {
-      if (error instanceof ApiError) {
-        console.error(`API Error Status: ${error.status}`);
-        console.error(`Error Code: ${error.errorBody.code}`);
-        console.error(`Error Message: ${error.errorBody.message}`);
-      } else {
-        console.error("An unexpected error occurred:", error);
-      }
-    }
+    loginAsDemo();
+    router.push("/home");
   };
 
   return (

@@ -1,5 +1,3 @@
-// Child hook of useSleepLogByDate
-
 import {
   millisecondsToHoursAndMinutes,
   formatTimeTo12Hour,
