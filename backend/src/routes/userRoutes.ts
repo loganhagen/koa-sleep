@@ -12,5 +12,9 @@ router.get("/:userId/sleep", sleepController.getSleepLogsByUserId);
 router.get("/:userId/sleep/recent", sleepController.getMostRecentSleepLog);
 router.get("/:userId/sleep/:date", sleepController.getSleepLogByDate);
 router.get("/:userId/temperature", wellnessController.getSkinTempLogs);
+router.get(
+  "/:userId/temperature/:date",
+  wellnessController.getSkinTempLogByDate
+);
 
 export default router;

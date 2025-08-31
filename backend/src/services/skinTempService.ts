@@ -10,4 +10,16 @@ export const skinTempService = {
     });
     return res;
   },
+  getTemperatureLogByDate: async (
+    userId: string,
+    date: Date
+  ): Promise<SkinTemperature | null> => {
+    const log: SkinTemperature | null = await prisma.skinTemperature.findFirst({
+      where: {
+        userId: userId,
+        dateTime: date,
+      },
+    });
+    return log;
+  },
 };

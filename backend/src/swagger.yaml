@@ -7,33 +7,58 @@ paths:
   /sleep:
     get:
       summary: Get all sleep logs.
+      description: Retrieves a list of all sleep logs from all users in the database.
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with all sleep logs.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  sleepLogs:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SleepLog"
+        "404":
+          description: Not Found. No sleep logs were found.
+
   /users:
     get:
-      summary: Get all users in the database.
+      summary: Get all users.
+      description: Retrieves a list of all users in the database.
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with all users.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+        "404":
+          description: Not Found. Could not retrieve users.
+
   /users/demo:
     get:
       summary: Get the demo user.
+      description: Retrieves a specific hardcoded demo user.
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with the demo user object.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/User"
+        "404":
+          description: Not Found. The demo user could not be retrieved.
+
   /users/{email}:
     get:
       summary: Get a user by email.
@@ -44,13 +69,23 @@ paths:
           description: Email address of the user.
           schema:
             type: string
+            format: email
+            example: "mo.sleep@fitsync.com"
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with the user object.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/User"
+        "400":
+          description: Bad Request. The email parameter is missing or invalid.
+        "404":
+          description: Not Found. A user with the specified email was not found.
+
   /users/{userId}/sleep:
     get:
       summary: Get all sleep logs for a specified user.
@@ -61,16 +96,27 @@ paths:
           description: User ID.
           schema:
             type: string
+            example: "clv27x0850000rqw88plp8s6m"
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with the user's sleep logs.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  sleepLogs:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SleepLog"
+        "400":
+          description: Bad Request. The userId parameter is missing or invalid.
+        "404":
+          description: Not Found. No sleep logs were found for the specified user.
+
   /users/{userId}/sleep/{date}:
     get:
-      summary: Get a sleep log for a specific user based on a date.
+      summary: Get a sleep log for a specific user and date.
       parameters:
         - name: userId
           in: path
@@ -78,22 +124,33 @@ paths:
           description: User ID.
           schema:
             type: string
+            example: "clv27x0850000rqw88plp8s6m"
         - name: date
           in: path
           required: true
           description: The date of the log.
           schema:
             type: string
+            format: date
+            example: "2025-08-30"
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with the requested sleep log.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  sleepLog:
+                    $ref: "#/components/schemas/SleepLog"
+        "400":
+          description: Bad Request. Required parameters are missing or invalid.
+        "404":
+          description: Not Found. No sleep log was found for the specified user and date.
+
   /users/{userId}/sleep/recent:
     get:
-      summary: Get the most recent sleep log for the user.
+      summary: Get the most recent sleep log for a user.
       parameters:
         - name: userId
           in: path
@@ -101,13 +158,22 @@ paths:
           description: User ID.
           schema:
             type: string
+            example: "clv27x0850000rqw88plp8s6m"
       responses:
         "200":
-          description: A successful response.
+          description: A successful response with the most recent sleep log.
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  sleepLog:
+                    $ref: "#/components/schemas/SleepLog"
+        "400":
+          description: Bad Request. The userId parameter is missing or invalid.
+        "404":
+          description: Not Found. No sleep logs were found for the user.
+
   /users/{userId}/temperature:
     get:
       summary: Get all skin temperature logs for a specified user.
@@ -118,6 +184,7 @@ paths:
           description: User ID.
           schema:
             type: string
+            example: "clv27x0850000rqw88plp8s6m"
       responses:
         "200":
           description: A successful response with the user's skin temperature logs.
@@ -129,24 +196,106 @@ paths:
                   logs:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: "c1f7a4a9-8f0c-4a3d-9c3a-3e7b1d9c1b3a"
-                        dateTime:
-                          type: string
-                          format: date-time
-                          example: "2025-08-30T04:00:00.000Z"
-                        nightlyRelative:
-                          type: number
-                          format: float
-                          example: 1.2
-                        logType:
-                          type: string
-                          enum: [DEDICATED_TRACKER, OTHER]
-                          example: DEDICATED_TRACKER
+                      $ref: "#/components/schemas/SkinTempLog"
         "400":
-          description: Bad Request. User ID is missing or invalid.
+          description: Bad Request. The userId parameter is missing or invalid.
+        "404":
+          description: Not Found. No temperature logs were found for the user.
         "500":
           description: Internal Server Error.
+
+  /users/{userId}/temperature/{date}:
+    get:
+      summary: Get a skin temperature log for a specific user and date.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID.
+          schema:
+            type: string
+            example: "clv27x0850000rqw88plp8s6m"
+        - name: date
+          in: path
+          required: true
+          description: The date of the log.
+          schema:
+            type: string
+            format: date
+            example: "2025-08-30"
+      responses:
+        "200":
+          description: A successful response with the user's skin temperature log.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  log:
+                    $ref: "#/components/schemas/SkinTempLog"
+        "400":
+          description: Bad Request. User ID or date is missing or invalid.
+        "404":
+          description: Not Found. No log was found for the specified user and date.
+        "500":
+          description: Internal Server Error.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "clv27x0850000rqw88plp8s6m"
+        email:
+          type: string
+          format: email
+          example: "mo.sleep@fitsync.com"
+        firstName:
+          type: string
+          example: "Mo"
+        lastName:
+          type: string
+          example: "Sleep"
+
+    SleepLog:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+        dateOfSleep:
+          type: string
+          format: date
+          example: "2025-08-30"
+        sleepScore:
+          type: integer
+          example: 85
+        totalTimeInBed:
+          type: integer
+          description: Total time in bed in seconds.
+          example: 28800
+        sleepQuality:
+          type: string
+          example: "Good"
+
+    SkinTempLog:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "c1f7a4a9-8f0c-4a3d-9c3a-3e7b1d9c1b3a"
+        dateTime:
+          type: string
+          format: date-time
+          example: "2025-08-30T04:00:00.000Z"
+        nightlyRelative:
+          type: number
+          format: float
+          description: Skin temperature variation from baseline.
+          example: 1.2
+        logType:
+          type: string
+          enum: [DEDICATED_TRACKER, OTHER]
+          example: DEDICATED_TRACKER
