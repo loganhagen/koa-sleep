@@ -1,6 +1,7 @@
-import { SleepLog, User } from "@prisma/client";
+import { SkinTemperature, SleepLog, User } from "@prisma/client";
 import { UserDTO } from "../types/api/user";
 import { SleepLevels, SleepLogDTO } from "@custom_types/api/sleep";
+import { SkinTempResponseDTO } from "@custom_types/api/wellness";
 
 export const toUserDTO = (user: User): UserDTO => {
   return {
@@ -29,5 +30,14 @@ export const toSleepLogDTO = (sleepLog: SleepLog): SleepLogDTO => {
     type: sleepLog.type,
     infoCode: sleepLog.infoCode,
     levels: sleepLog.levels as SleepLevels | null,
+  };
+};
+
+export const toSkinTempDTO = (model: SkinTemperature): SkinTempResponseDTO => {
+  return {
+    id: model.id,
+    dateTime: model.dateTime,
+    nightlyRelative: model.nightlyRelative,
+    logType: model.logType,
   };
 };

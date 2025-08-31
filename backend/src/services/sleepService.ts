@@ -3,10 +3,8 @@
  * No HTTP-related code should be found here.
  */
 
-import { PrismaClient } from "@prisma/client";
 import { toSleepLogDTO } from "@utils/mappers";
-
-const prisma = new PrismaClient();
+import prisma from "lib/prisma";
 
 export const sleepService = {
   getSleepLogs: async () => {

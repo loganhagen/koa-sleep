@@ -108,3 +108,45 @@ paths:
             application/json:
               schema:
                 type: object
+  /users/{userId}/temperature:
+    get:
+      summary: Get all skin temperature logs for a specified user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A successful response with the user's skin temperature logs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "c1f7a4a9-8f0c-4a3d-9c3a-3e7b1d9c1b3a"
+                        dateTime:
+                          type: string
+                          format: date-time
+                          example: "2025-08-30T04:00:00.000Z"
+                        nightlyRelative:
+                          type: number
+                          format: float
+                          example: 1.2
+                        logType:
+                          type: string
+                          enum: [DEDICATED_TRACKER, OTHER]
+                          example: DEDICATED_TRACKER
+        "400":
+          description: Bad Request. User ID is missing or invalid.
+        "500":
+          description: Internal Server Error.
