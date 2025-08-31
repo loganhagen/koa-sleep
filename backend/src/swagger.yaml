@@ -1,16 +1,16 @@
 openapi: 3.0.0
 info:
-  title: Fitness Dashboard API
+  title: FitSync API
   version: 1.0.0
-  description: API for fitness data
+  description: API for tracking and retrieving user wellness data.
 paths:
   /sleep:
     get:
-      summary: Get all sleep logs.
-      description: Retrieves a list of all sleep logs from all users in the database.
+      summary: Get all sleep logs
+      description: Retrieves a list of all sleep logs from all users.
       responses:
         "200":
-          description: A successful response with all sleep logs.
+          description: A list of all sleep logs.
           content:
             application/json:
               schema:
@@ -20,16 +20,16 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/SleepLog"
-        "404":
-          description: Not Found. No sleep logs were found.
+        "500":
+          description: Internal Server Error.
 
   /users:
     get:
-      summary: Get all users.
-      description: Retrieves a list of all users in the database.
+      summary: Get all users
+      description: Retrieves a list of all users.
       responses:
         "200":
-          description: A successful response with all users.
+          description: A list of all users.
           content:
             application/json:
               schema:
@@ -39,16 +39,16 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/User"
-        "404":
-          description: Not Found. Could not retrieve users.
+        "500":
+          description: Internal Server Error.
 
   /users/demo:
     get:
-      summary: Get the demo user.
+      summary: Get the demo user
       description: Retrieves a specific hardcoded demo user.
       responses:
         "200":
-          description: A successful response with the demo user object.
+          description: The demo user object.
           content:
             application/json:
               schema:
@@ -57,23 +57,24 @@ paths:
                   user:
                     $ref: "#/components/schemas/User"
         "404":
-          description: Not Found. The demo user could not be retrieved.
+          description: Demo user not found.
+        "500":
+          description: Internal Server Error.
 
-  /users/{email}:
+  /users/email/{email}:
     get:
-      summary: Get a user by email.
+      summary: Get a user by email
       parameters:
         - name: email
           in: path
           required: true
-          description: Email address of the user.
+          description: Email of the user to retrieve.
           schema:
             type: string
             format: email
-            example: "mo.sleep@fitsync.com"
       responses:
         "200":
-          description: A successful response with the user object.
+          description: The requested user object.
           content:
             application/json:
               schema:
@@ -82,24 +83,25 @@ paths:
                   user:
                     $ref: "#/components/schemas/User"
         "400":
-          description: Bad Request. The email parameter is missing or invalid.
+          description: Bad Request. The email parameter is missing.
         "404":
-          description: Not Found. A user with the specified email was not found.
+          description: User with the specified email not found.
+        "500":
+          description: Internal Server Error.
 
   /users/{userId}/sleep:
     get:
-      summary: Get all sleep logs for a specified user.
+      summary: Get all sleep logs for a user
       parameters:
         - name: userId
           in: path
           required: true
-          description: User ID.
+          description: ID of the user.
           schema:
             type: string
-            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
       responses:
         "200":
-          description: A successful response with the user's sleep logs.
+          description: A list of sleep logs for the specified user.
           content:
             application/json:
               schema:
@@ -110,32 +112,57 @@ paths:
                     items:
                       $ref: "#/components/schemas/SleepLog"
         "400":
-          description: Bad Request. The userId parameter is missing or invalid.
-        "404":
-          description: Not Found. No sleep logs were found for the specified user.
+          description: Bad Request. The userId parameter is missing.
+        "500":
+          description: Internal Server Error.
 
-  /users/{userId}/sleep/{date}:
+  /users/{userId}/sleep/recent:
     get:
-      summary: Get a sleep log for a specific user and date.
+      summary: Get a user's most recent sleep log
       parameters:
         - name: userId
           in: path
           required: true
-          description: User ID.
+          description: ID of the user.
           schema:
             type: string
-            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
+      responses:
+        "200":
+          description: The most recent sleep log.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sleepLog:
+                    $ref: "#/components/schemas/SleepLog"
+        "400":
+          description: Bad Request. The userId parameter is missing.
+        "404":
+          description: No sleep logs found for this user.
+        "500":
+          description: Internal Server Error.
+
+  /users/{userId}/sleep/{date}:
+    get:
+      summary: Get a sleep log by date
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
         - name: date
           in: path
           required: true
-          description: The date of the log.
+          description: The date of the log (YYYY-MM-DD).
           schema:
             type: string
             format: date
-            example: "2025-08-30"
       responses:
         "200":
-          description: A successful response with the requested sleep log.
+          description: The requested sleep log.
           content:
             application/json:
               schema:
@@ -146,48 +173,23 @@ paths:
         "400":
           description: Bad Request. Required parameters are missing or invalid.
         "404":
-          description: Not Found. No sleep log was found for the specified user and date.
-
-  /users/{userId}/sleep/recent:
-    get:
-      summary: Get the most recent sleep log for a user.
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: User ID.
-          schema:
-            type: string
-            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
-      responses:
-        "200":
-          description: A successful response with the most recent sleep log.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  sleepLog:
-                    $ref: "#/components/schemas/SleepLog"
-        "400":
-          description: Bad Request. The userId parameter is missing or invalid.
-        "404":
-          description: Not Found. No sleep logs were found for the user.
+          description: No sleep log found for the specified date.
+        "500":
+          description: Internal Server Error.
 
   /users/{userId}/temperature:
     get:
-      summary: Get all skin temperature logs for a specified user.
+      summary: Get all skin temperature logs for a user
       parameters:
         - name: userId
           in: path
           required: true
-          description: User ID.
+          description: ID of the user.
           schema:
             type: string
-            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
       responses:
         "200":
-          description: A successful response with the user's skin temperature logs.
+          description: A list of skin temperature logs for the user.
           content:
             application/json:
               schema:
@@ -198,34 +200,30 @@ paths:
                     items:
                       $ref: "#/components/schemas/SkinTempLog"
         "400":
-          description: Bad Request. The userId parameter is missing or invalid.
-        "404":
-          description: Not Found. No temperature logs were found for the user.
+          description: Bad Request. The userId parameter is missing.
         "500":
           description: Internal Server Error.
 
   /users/{userId}/temperature/{date}:
     get:
-      summary: Get a skin temperature log for a specific user and date.
+      summary: Get a skin temperature log by date
       parameters:
         - name: userId
           in: path
           required: true
-          description: User ID.
+          description: ID of the user.
           schema:
             type: string
-            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
         - name: date
           in: path
           required: true
-          description: The date of the log.
+          description: The date of the log (YYYY-MM-DD).
           schema:
             type: string
             format: date
-            example: "2025-08-30"
       responses:
         "200":
-          description: A successful response with the user's skin temperature log.
+          description: The requested skin temperature log.
           content:
             application/json:
               schema:
@@ -234,9 +232,9 @@ paths:
                   log:
                     $ref: "#/components/schemas/SkinTempLog"
         "400":
-          description: Bad Request. User ID or date is missing or invalid.
+          description: Bad Request. Parameters are missing or invalid.
         "404":
-          description: Not Found. No log was found for the specified user and date.
+          description: No log found for the specified date.
         "500":
           description: Internal Server Error.
 
