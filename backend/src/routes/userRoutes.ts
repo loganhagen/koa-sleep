@@ -16,5 +16,9 @@ router.get(
   "/:userId/temperature/:date",
   wellnessController.getSkinTempLogByDate
 );
+router.get(
+  "/:userId/breathing-rate/:date",
+  wellnessController.getBreathingRateByDate
+);
 
 export default router;

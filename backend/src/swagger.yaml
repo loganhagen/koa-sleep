@@ -371,6 +371,57 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /users/{userId}/breathing-rate/{date}:
+    get:
+      tags:
+        - Wellness
+      summary: Get a breathing rate log by date
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The requested breathing rate log.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/BreathingRateLog"
+        "400":
+          description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     User:
@@ -430,6 +481,22 @@ components:
           type: string
           enum: [DEDICATED_TRACKER, OTHER]
           example: DEDICATED_TRACKER
+
+    BreathingRateLog:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "d1e8b5b0-9a1d-5b4e-8d4b-4f8c2e0d2c4b"
+        dateTime:
+          type: string
+          format: date-time
+          example: "2025-08-30T04:15:00.000Z"
+        breathingRateValue:
+          type: number
+          format: float
+          description: Breaths per minute.
+          example: 14.5
 
     Error:
       type: object

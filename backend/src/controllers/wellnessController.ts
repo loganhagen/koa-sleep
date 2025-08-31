@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { wellnessService } from "@services/wellnessService";
-import { toSkinTempDTO } from "@utils/mappers";
+import { toBreathingRateDTO, toSkinTempDTO } from "@utils/mappers";
 
 export const wellnessController = {
   getSkinTempLogs: async (req: Request, res: Response): Promise<void> => {
@@ -76,6 +76,56 @@ export const wellnessController = {
         "Failed to search for skin temperature log by date:",
         error
       );
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
+  getBreathingRateByDate: async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      const { userId, date } = req.params;
+      if (!userId || !date) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' and 'date' URL parameters are required.",
+          },
+        });
+        return;
+      }
+
+      const log = await wellnessService.getBreathingRateByDate(
+        userId,
+        new Date(date)
+      );
+
+      if (!log) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No breathing rate found for the specified date.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: toBreathingRateDTO(log),
+      });
+      return;
+    } catch (error) {
+      console.error("Failed to search for breathing rate log by date:", error);
       res.status(500).json({
         success: false,
         error: {
