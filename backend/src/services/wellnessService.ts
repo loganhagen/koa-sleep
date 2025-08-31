@@ -1,3 +1,4 @@
+import { WellnessSummary } from "@custom_types/api/wellness";
 import {
   BreathingRate,
   HeartRateVariability,
@@ -7,57 +8,34 @@ import {
 import prisma from "lib/prisma";
 
 export const wellnessService = {
-  getTemperatureLogs: async (userId: string): Promise<SkinTemperature[]> => {
-    const log: SkinTemperature[] = await prisma.skinTemperature.findMany({
-      where: {
-        userId: userId,
-      },
-    });
-    return log;
-  },
-  getTemperatureLogByDate: async (
+  getWellnessSummaryByDate: async (
     userId: string,
     date: Date
-  ): Promise<SkinTemperature | null> => {
-    const log: SkinTemperature | null = await prisma.skinTemperature.findFirst({
-      where: {
-        userId: userId,
-        dateTime: date,
-      },
+  ): Promise<WellnessSummary | null> => {
+    const tempPromise = prisma.skinTemperature.findFirst({
+      where: { userId, dateTime: date },
     });
-    return log;
-  },
-  getBreathingRateByDate: async (
-    userId: string,
-    date: Date
-  ): Promise<BreathingRate | null> => {
-    const log = await prisma.breathingRate.findFirst({
-      where: {
-        userId: userId,
-        dateTime: date,
-      },
+    const breathingRatePromise = prisma.breathingRate.findFirst({
+      where: { userId, dateTime: date },
     });
-    return log;
-  },
-  getHRVByDate: async (
-    userId: string,
-    date: Date
-  ): Promise<HeartRateVariability | null> => {
-    const log = await prisma.heartRateVariability.findFirst({
-      where: {
-        userId: userId,
-        dateTime: date,
-      },
+    const hrvPromise = prisma.heartRateVariability.findFirst({
+      where: { userId, dateTime: date },
     });
-    return log;
-  },
-  getSPO2ByDate: async (userId: string, date: Date): Promise<SpO2 | null> => {
-    const log = await prisma.spO2.findFirst({
-      where: {
-        userId: userId,
-        dateTime: date,
-      },
+    const spo2Promise = prisma.spO2.findFirst({
+      where: { userId, dateTime: date },
     });
-    return log;
+
+    const [temperature, breathingRate, hrv, spo2] = await Promise.all([
+      tempPromise,
+      breathingRatePromise,
+      hrvPromise,
+      spo2Promise,
+    ]);
+
+    if (!temperature && !breathingRate && !hrv && !spo2) {
+      return null;
+    }
+
+    return { temperature, breathingRate, hrv, spo2 };
   },
 };

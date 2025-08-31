@@ -41,7 +41,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-31 00:00:00', 0.4, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-31 00:00:00', 34.4, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES
@@ -68,7 +68,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-30 00:00:00', -0.2, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-30 00:00:00', 34.8, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES
@@ -96,7 +96,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-29 00:00:00', 0.1, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-29 00:00:00', 35.1, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES
@@ -124,7 +124,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-28 00:00:00', -0.5, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-28 00:00:00', 34, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES
@@ -152,7 +152,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-27 00:00:00', 0.6, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-27 00:00:00', 34.6, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES
@@ -179,7 +179,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-26 00:00:00', 0.3, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-26 00:00:00', 34.3, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES
@@ -206,7 +206,7 @@ BEGIN
   INSERT INTO "SkinTemperature" ("dateTime", "nightlyRelative", "logType", "userId")
   VALUES
   (
-    '2025-08-25 00:00:00', -0.1, 'DEDICATED_TRACKER', new_user_id
+    '2025-08-25 00:00:00', 34.9, 'DEDICATED_TRACKER', new_user_id
   );
   INSERT INTO "BreathingRate" ("dateTime", "breathingRate", "userId")
   VALUES

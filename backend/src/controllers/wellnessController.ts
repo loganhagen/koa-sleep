@@ -6,92 +6,10 @@ import {
   toSkinTempDTO,
   toSpo2DTO,
 } from "@utils/mappers";
+import { WellnessSummaryDTO } from "@custom_types/api/wellness";
 
 export const wellnessController = {
-  getSkinTempLogs: async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { userId } = req.params;
-      if (!userId) {
-        res.status(400).json({
-          success: false,
-          error: {
-            code: "INVALID_PARAMETER",
-            message: "The 'userId' URL parameter is required.",
-          },
-        });
-        return;
-      }
-
-      const logs = await wellnessService.getTemperatureLogs(userId);
-      res.status(200).json({
-        success: true,
-        data: logs.map(toSkinTempDTO),
-      });
-      return;
-    } catch (error) {
-      console.error("Failed to fetch skin temperature logs:", error);
-      res.status(500).json({
-        success: false,
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred on the server.",
-        },
-      });
-      return;
-    }
-  },
-
-  getSkinTempLogByDate: async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { userId, date } = req.params;
-      if (!userId || !date) {
-        res.status(400).json({
-          success: false,
-          error: {
-            code: "INVALID_PARAMETER",
-            message: "The 'userId' and 'date' URL parameters are required.",
-          },
-        });
-        return;
-      }
-
-      const log = await wellnessService.getTemperatureLogByDate(
-        userId,
-        new Date(date)
-      );
-
-      if (!log) {
-        res.status(404).json({
-          success: false,
-          error: {
-            code: "NOT_FOUND",
-            message: "No skin temperature log found for the specified date.",
-          },
-        });
-        return;
-      }
-
-      res.status(200).json({
-        success: true,
-        data: toSkinTempDTO(log),
-      });
-      return;
-    } catch (error) {
-      console.error(
-        "Failed to search for skin temperature log by date:",
-        error
-      );
-      res.status(500).json({
-        success: false,
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred on the server.",
-        },
-      });
-      return;
-    }
-  },
-  getBreathingRateByDate: async (
+  getWellnessSummaryByDate: async (
     req: Request,
     res: Response
   ): Promise<void> => {
@@ -108,29 +26,39 @@ export const wellnessController = {
         return;
       }
 
-      const log = await wellnessService.getBreathingRateByDate(
+      const summary = await wellnessService.getWellnessSummaryByDate(
         userId,
         new Date(date)
       );
 
-      if (!log) {
+      if (!summary) {
         res.status(404).json({
           success: false,
           error: {
             code: "NOT_FOUND",
-            message: "No breathing rate found for the specified date.",
+            message: "No wellness data found for the specified date.",
           },
         });
         return;
       }
 
+      const summaryDTO: WellnessSummaryDTO = {
+        temperature: summary.temperature
+          ? toSkinTempDTO(summary.temperature)
+          : null,
+        breathingRate: summary.breathingRate
+          ? toBreathingRateDTO(summary.breathingRate)
+          : null,
+        hrv: summary.hrv ? toHrvDTO(summary.hrv) : null,
+        spo2: summary.spo2 ? toSpo2DTO(summary.spo2) : null,
+      };
+
       res.status(200).json({
         success: true,
-        data: toBreathingRateDTO(log),
+        data: summaryDTO,
       });
-      return;
     } catch (error) {
-      console.error("Failed to search for breathing rate log by date:", error);
+      console.error("Failed to fetch wellness summary:", error);
       res.status(500).json({
         success: false,
         error: {
@@ -138,97 +66,6 @@ export const wellnessController = {
           message: "An unexpected error occurred on the server.",
         },
       });
-      return;
-    }
-  },
-
-  getHRVByDate: async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { userId, date } = req.params;
-      if (!userId || !date) {
-        res.status(400).json({
-          success: false,
-          error: {
-            code: "INVALID_PARAMETER",
-            message: "The 'userId' and 'date' URL parameters are required.",
-          },
-        });
-        return;
-      }
-
-      const log = await wellnessService.getHRVByDate(userId, new Date(date));
-
-      if (!log) {
-        res.status(404).json({
-          success: false,
-          error: {
-            code: "NOT_FOUND",
-            message: "No HRV data found for the specified date.",
-          },
-        });
-        return;
-      }
-
-      res.status(200).json({
-        success: true,
-        data: toHrvDTO(log),
-      });
-      return;
-    } catch (error) {
-      console.error("Failed to search for HRV log by date:", error);
-      res.status(500).json({
-        success: false,
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred on the server.",
-        },
-      });
-      return;
-    }
-  },
-
-  getSPO2ByDate: async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { userId, date } = req.params;
-      if (!userId || !date) {
-        res.status(400).json({
-          success: false,
-          error: {
-            code: "INVALID_PARAMETER",
-            message: "The 'userId' and 'date' URL parameters are required.",
-          },
-        });
-        return;
-      }
-
-      const log = await wellnessService.getSPO2ByDate(userId, new Date(date));
-
-      if (!log) {
-        res.status(404).json({
-          success: false,
-          error: {
-            code: "NOT_FOUND",
-            message: "No SPO2 data found for the specified date.",
-          },
-        });
-        return;
-      }
-
-      res.status(200).json({
-        success: true,
-        data: toSpo2DTO(log),
-      });
-      return;
-    } catch (error) {
-      console.error("Failed to search for SPO2 log by date:", error);
-      res.status(500).json({
-        success: false,
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred on the server.",
-        },
-      });
-      return;
     }
   },
 };

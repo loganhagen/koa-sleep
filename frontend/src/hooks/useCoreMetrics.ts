@@ -15,7 +15,7 @@ export const useCoreMetrics = (
     error,
   } = useSleepLogByDate(userId, targetDate);
 
-  const metrics = useMemo(() => {
+  const coreMetrics = useMemo(() => {
     if (!sleepLog) {
       return null;
     }
@@ -29,5 +29,5 @@ export const useCoreMetrics = (
     };
   }, [sleepLog]);
 
-  return { metrics, isLoading, error };
+  return { metrics: coreMetrics, isLoading, error };
 };

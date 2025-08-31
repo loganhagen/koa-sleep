@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Stack, Typography, Paper } from "@mui/material";
+import { Stack } from "@mui/material";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import AirIcon from "@mui/icons-material/Air";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
@@ -10,7 +10,7 @@ import { useWellnessIndicators } from "@/hooks/useWellnessIndicators";
 import { useUser } from "@/app/providers/userProvider";
 import IndicatorItem from "./IndicatorItem";
 import { WellnessIndicatorsSkeleton } from "../_skeletons/WellnessIndicatorsSkeleton";
-import NoDataDisplay from "../NoDataDisplay";
+import DashboardCard from "../DashboardCard";
 import {
   BreathingRateLog,
   HrvLog,
@@ -31,40 +31,10 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
     targetDate
   );
 
-  if (!user) {
-    return (
-      <Paper
-        elevation={0}
-        variant="outlined"
-        sx={{
-          p: 4,
-          borderRadius: 10,
-          backgroundColor: "background.paper",
-          width: "100%",
-        }}
-      >
-        <Typography>Please log in.</Typography>
-      </Paper>
-    );
-  }
-
-  if (isLoading) {
-    return <WellnessIndicatorsSkeleton />;
-  }
-
-  if (error) {
-    return (
-      <NoDataDisplay
-        title="Wellness Indicators"
-        message="Unable to retrieve data."
-      />
-    );
-  }
-
   const indicatorConfig = [
     {
       key: "temperature",
-      getValue: (d: TemperatureLog) => `${d.nightlyRelative}°F`,
+      getValue: (d: TemperatureLog) => `${d.nightlyRelative}°C`,
       label: "Skin Temp",
       Icon: ThermostatIcon,
       gradient: "linear-gradient(145deg, #66bb6a, #43a047)",
@@ -126,60 +96,37 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
         )
     : [];
 
-  if (indicators.length === 0) {
-    return (
-      <NoDataDisplay
-        title="Wellness Indicators"
-        message="No data available for the selected date."
-      />
-    );
-  }
-
   return (
-    <Paper
-      elevation={0}
-      variant="outlined"
-      sx={{
-        p: 4,
-        borderRadius: 10,
-        backgroundColor: "background.paper",
-        width: "100%",
-      }}
+    <DashboardCard
+      title="Wellness Indicators"
+      user={user}
+      isLoading={isLoading}
+      error={error}
+      skeleton={<WellnessIndicatorsSkeleton />}
+      isEmpty={!isLoading && !error && indicators.length === 0}
     >
-      <Stack direction="column" spacing={1}>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={1}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Typography variant="h5" sx={{ textAlign: "center" }}>
-            Wellness Indicators
-          </Typography>
-        </Stack>
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={{ xs: 3, md: 5 }}
-          paddingTop={3}
-          justifyContent="center"
-          alignItems="center"
-        >
-          {indicators.map((indicator) => (
-            <IndicatorItem
-              key={indicator.label}
-              value={indicator.value}
-              valueColor={indicator.valueColor}
-              label={indicator.label}
-              Icon={indicator.Icon}
-              gradient={indicator.gradient}
-              shadow={indicator.shadow}
-              tooltip={indicator.tooltip}
-              iconColor={indicator.iconColor}
-            />
-          ))}
-        </Stack>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={{ xs: 3, md: 5 }}
+        paddingTop={3}
+        justifyContent="center"
+        alignItems="center"
+      >
+        {indicators.map((indicator) => (
+          <IndicatorItem
+            key={indicator.label}
+            value={indicator.value}
+            valueColor={indicator.valueColor}
+            label={indicator.label}
+            Icon={indicator.Icon}
+            gradient={indicator.gradient}
+            shadow={indicator.shadow}
+            tooltip={indicator.tooltip}
+            iconColor={indicator.iconColor}
+          />
+        ))}
       </Stack>
-    </Paper>
+    </DashboardCard>
   );
 };
 

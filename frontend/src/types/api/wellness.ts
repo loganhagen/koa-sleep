@@ -25,3 +25,10 @@ export interface Spo2Log {
   min: number;
   max: number;
 }
+
+export interface WellnessIndicatorsData {
+  temperatureLog: TemperatureLog;
+  breathingRateLog: BreathingRateLog;
+  hrvLog: HrvLog;
+  spO2Log: Spo2Log;
+}

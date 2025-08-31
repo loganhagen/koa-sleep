@@ -1,39 +1,22 @@
+import { NotFoundError } from "@/lib/errors";
 import { fetchAPI, isNotFoundError } from "@/services/apiClient";
-import {
-  BreathingRateLog,
-  HrvLog,
-  Spo2Log,
-  TemperatureLog,
-} from "@/types/api/wellness";
+import { WellnessIndicatorsData } from "@/types/api/wellness";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-const fetchWellnessIndicatorsByDate = async (userId: string, date: Date) => {
-  const dateString = date.toISOString().split("T")[0];
+const fetchWellnessSummaryByDate = async (userId: string, date: Date) => {
+  const dateString = date.toISOString();
 
-  const temperaturePromise = fetchAPI<TemperatureLog>(
-    `/users/${userId}/temperature/${dateString}`
-  ).catch((err) => (isNotFoundError(err) ? null : Promise.reject(err)));
-
-  const breathingRatePromise = fetchAPI<BreathingRateLog>(
-    `/users/${userId}/breathing-rate/${dateString}`
-  ).catch((err) => (isNotFoundError(err) ? null : Promise.reject(err)));
-
-  const hrvPromise = fetchAPI<HrvLog>(
-    `/users/${userId}/hrv/${dateString}`
-  ).catch((err) => (isNotFoundError(err) ? null : Promise.reject(err)));
-
-  const spo2Promise = fetchAPI<Spo2Log>(
-    `/users/${userId}/spo2/${dateString}`
-  ).catch((err) => (isNotFoundError(err) ? null : Promise.reject(err)));
-
-  const [temperature, breathingRate, hrv, spo2] = await Promise.all([
-    temperaturePromise,
-    breathingRatePromise,
-    hrvPromise,
-    spo2Promise,
-  ]);
-
-  return { temperature, breathingRate, hrv, spo2 };
+  try {
+    const data = await fetchAPI<WellnessIndicatorsData>(
+      `/users/${userId}/wellness-summary/${dateString}`
+    );
+    return data;
+  } catch (error) {
+    if (isNotFoundError(error)) {
+      throw new NotFoundError("No wellness data found for the selected date.");
+    }
+    throw error;
+  }
 };
 
 export const useWellnessIndicators = (
@@ -41,9 +24,9 @@ export const useWellnessIndicators = (
   date: Date
 ) => {
   return useQuery({
-    queryKey: ["wellnessIndicators", userId, date],
+    queryKey: ["wellnessSummary", userId, date],
     queryFn: () => {
-      return fetchWellnessIndicatorsByDate(userId!, date);
+      return fetchWellnessSummaryByDate(userId!, date);
     },
     enabled: !!userId && !!date,
     retry: 0,
