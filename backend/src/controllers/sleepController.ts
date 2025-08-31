@@ -44,7 +44,7 @@ export const sleepController = {
 
       const sleepLog = await sleepService.getSleepLogByDate(
         userId as string,
-        date as string
+        new Date(date)
       );
 
       if (!sleepLog) {

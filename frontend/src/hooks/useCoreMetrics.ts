@@ -1,4 +1,4 @@
-// Child hook of useSleepLogsByDate
+// Child hook of useSleepLogByDate
 
 import {
   millisecondsToHoursAndMinutes,
@@ -9,7 +9,7 @@ import { useMemo } from "react";
 
 export const useCoreMetrics = (
   userId: string | undefined,
-  targetDate: string
+  targetDate: Date
 ) => {
   const {
     data: sleepLog,

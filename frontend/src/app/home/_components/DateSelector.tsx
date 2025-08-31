@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Stack,
   Typography,
@@ -19,18 +19,12 @@ interface DateSelectorProps {
 }
 
 const DateSelector: React.FC<DateSelectorProps> = ({
-  targetDate: currentDate,
+  targetDate,
   handleDateChange,
   handleResetToToday,
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: isMobile ? "short" : "long",
-    day: "numeric",
-  }).format(currentDate);
 
   return (
     <Stack
@@ -52,7 +46,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({
           <ArrowBackIosNewIcon fontSize={isMobile ? "small" : "medium"} />
         </IconButton>
         <Typography variant={isMobile ? "body1" : "h6"} fontWeight="bold">
-          {formattedDate}
+          {targetDate.toDateString()}
         </Typography>
         <IconButton onClick={() => handleDateChange(1)} aria-label="next day">
           <ArrowForwardIosIcon fontSize={isMobile ? "small" : "medium"} />

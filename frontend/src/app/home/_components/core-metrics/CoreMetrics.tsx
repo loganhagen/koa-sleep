@@ -12,7 +12,7 @@ import { useCoreMetrics } from "@/hooks/useCoreMetrics";
 import { MetricDisplay } from "./MetricsDisplay";
 
 interface CoreMetricsProps {
-  targetDate: string;
+  targetDate: Date;
 }
 
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {

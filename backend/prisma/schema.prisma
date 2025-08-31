@@ -44,7 +44,7 @@ model SleepLog {
   id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   fitbitLogId         BigInt
   userId              String   @db.Uuid
-  dateOfSleep         String
+  dateOfSleep         DateTime
   startTime           DateTime
   endTime             DateTime
   duration            Int

@@ -16,9 +16,9 @@ const fetchSleepLogs = async (
 
 const fetchSleepLogByDate = async (
   userId: string,
-  date: string
+  date: Date
 ): Promise<SleepLogDTO> => {
-  const endpoint = `/users/${userId}/sleep/${date}`;
+  const endpoint = `/users/${userId}/sleep/${date.toISOString()}`;
   const res = await fetchAPI<SleepLogAPIResponse>(endpoint);
   return res.sleepLog;
 };
@@ -44,7 +44,7 @@ export const useSleepLogs = (userId: string) => {
   });
 };
 
-export const useSleepLogByDate = (userId: string | undefined, date: string) => {
+export const useSleepLogByDate = (userId: string | undefined, date: Date) => {
   return useQuery({
     queryKey: ["sleepLog", userId, date],
     queryFn: () => {

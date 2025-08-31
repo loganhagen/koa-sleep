@@ -20,7 +20,7 @@ export const sleepService = {
     });
     return sleepLogs.map(toSleepLogDTO);
   },
-  getSleepLogByDate: async (userId: string, date: string) => {
+  getSleepLogByDate: async (userId: string, date: Date) => {
     const sleepLog = await prisma.sleepLog.findFirst({
       where: {
         userId: userId,

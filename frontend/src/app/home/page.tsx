@@ -19,7 +19,7 @@ const Home = () => {
 
   const getMostRecentDate = useCallback(() => {
     if (mostRecentSleepLog) {
-      return new Date(`${mostRecentSleepLog.dateOfSleep}T00:00:00`);
+      return new Date(mostRecentSleepLog.dateOfSleep);
     } else {
       return new Date();
     }
@@ -35,7 +35,7 @@ const Home = () => {
     setTargetDate((prevDate) => {
       if (!prevDate) return null;
       const newDate = new Date(prevDate);
-      newDate.setDate(newDate.getDate() + days);
+      newDate.setUTCDate(newDate.getUTCDate() + days);
       return newDate;
     });
   };
@@ -65,7 +65,7 @@ const Home = () => {
         handleResetToToday={resetTargetDate}
       />
       <Greeting />
-      <CoreMetrics targetDate={formatDateToYYYYMMDD(targetDate)} />
+      <CoreMetrics targetDate={targetDate} />
       <WellnessIndicators />
       <SleepStages />
     </Stack>

@@ -96,7 +96,7 @@ paths:
           description: User ID.
           schema:
             type: string
-            example: "clv27x0850000rqw88plp8s6m"
+            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
       responses:
         "200":
           description: A successful response with the user's sleep logs.
@@ -124,7 +124,7 @@ paths:
           description: User ID.
           schema:
             type: string
-            example: "clv27x0850000rqw88plp8s6m"
+            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
         - name: date
           in: path
           required: true
@@ -158,7 +158,7 @@ paths:
           description: User ID.
           schema:
             type: string
-            example: "clv27x0850000rqw88plp8s6m"
+            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
       responses:
         "200":
           description: A successful response with the most recent sleep log.
@@ -184,7 +184,7 @@ paths:
           description: User ID.
           schema:
             type: string
-            example: "clv27x0850000rqw88plp8s6m"
+            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
       responses:
         "200":
           description: A successful response with the user's skin temperature logs.
@@ -214,7 +214,7 @@ paths:
           description: User ID.
           schema:
             type: string
-            example: "clv27x0850000rqw88plp8s6m"
+            example: "c3a2fefb-f2bb-484b-8d46-fbf4bba39ba4"
         - name: date
           in: path
           required: true

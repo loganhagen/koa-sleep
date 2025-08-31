@@ -2,7 +2,7 @@ export interface SleepLogDTO {
   id: string;
   fitbitLogId: string;
   userId: string;
-  dateOfSleep: string;
+  dateOfSleep: Date;
   startTime: Date;
   endTime: Date;
   duration: number;
