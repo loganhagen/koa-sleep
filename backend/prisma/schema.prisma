@@ -29,15 +29,18 @@ model Connection {
 }
 
 model User {
-  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email           String            @unique
-  firstName       String
-  lastName        String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime
-  Connection      Connection[]
-  SleepLog        SleepLog[]
-  SkinTemperature SkinTemperature[]
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                String                 @unique
+  firstName            String
+  lastName             String
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime
+  Connection           Connection[]
+  SleepLog             SleepLog[]
+  SkinTemperature      SkinTemperature[]
+  BreathingRate        BreathingRate[]
+  HeartRateVariability HeartRateVariability[]
+  SpO2                 SpO2[]
 }
 
 model SleepLog {
@@ -74,6 +77,39 @@ model SkinTemperature {
   logType         TemperatureLogType
   userId          String             @db.Uuid
   user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateTime])
+}
+
+model BreathingRate {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateTime      DateTime @db.Date
+  breathingRate Float
+  userId        String   @db.Uuid
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateTime])
+}
+
+model HeartRateVariability {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateTime    DateTime @db.Date
+  dailyRmssd  Float
+  deepRmssd   Float
+  userId      String   @db.Uuid
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateTime])
+}
+
+model SpO2 {
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateTime DateTime @db.Date
+  avg      Float
+  min      Float
+  max      Float
+  userId   String   @db.Uuid
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, dateTime])
 }
