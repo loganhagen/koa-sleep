@@ -332,6 +332,58 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /users/{userId}/sleep-stages/{date}:
+    get:
+      tags:
+        - Sleep
+      summary: Get sleep stages by date
+      description: Retrieves a summary of sleep stages (awake, rem, light, deep) for a specific user and date.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The summary of sleep stages.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/SleepStages" # Corrected Schema Reference
+        "400":
+          description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No sleep log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     User:
@@ -489,3 +541,23 @@ components:
           example: false
         error:
           $ref: "#/components/schemas/Error"
+
+    SleepStages:
+      type: object
+      properties:
+        awake:
+          type: integer
+          description: Time in minutes spent in the awake stage.
+          example: 50
+        rem:
+          type: integer
+          description: Time in minutes spent in the REM stage.
+          example: 90
+        light:
+          type: integer
+          description: Time in minutes spent in the light sleep stage.
+          example: 230
+        deep:
+          type: integer
+          description: Time in minutes spent in the deep sleep stage.
+          example: 80

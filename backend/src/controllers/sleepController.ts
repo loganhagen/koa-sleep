@@ -151,4 +151,52 @@ export const sleepController = {
       return;
     }
   },
+  getSleepStagesByDate: async (req: Request, res: Response) => {
+    try {
+      const { userId, date } = req.params;
+
+      if (!userId || !date) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' and 'date' URL parameters are required.",
+          },
+        });
+        return;
+      }
+
+      const log = await sleepService.getSleepStagesByDate(
+        userId,
+        new Date(date)
+      );
+
+      if (!log) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No sleep log found for the specified date.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: log,
+      });
+      return;
+    } catch (error) {
+      console.error("Failed to search for sleep stages by date:", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
 };

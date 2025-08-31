@@ -15,5 +15,6 @@ router.get(
   "/:userId/wellness-summary/:date",
   wellnessController.getWellnessSummaryByDate
 );
+router.get("/:userId/sleep-stages/:date", sleepController.getSleepStagesByDate);
 
 export default router;
