@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { skinTempService } from "@services/skinTempService";
+import { wellnessService } from "@services/wellnessService";
 import { toSkinTempDTO } from "@utils/mappers";
 
 export const wellnessController = {
@@ -9,8 +9,8 @@ export const wellnessController = {
       if (!userId || typeof userId !== "string") {
         res.status(400).json({ error: "Missing required argument: userId" });
       } else {
-        const logs = await skinTempService.getTemperatureLogs(userId as string);
-        res.status(200).json({ logs: logs.map(toSkinTempDTO) });
+        const logs = await wellnessService.getTemperatureLogs(userId as string);
+        res.status(200).json({ data: logs.map(toSkinTempDTO) });
       }
     } catch (error) {
       console.error("Failed to fetch skin temperature logs:", error);
@@ -28,7 +28,7 @@ export const wellnessController = {
       } else if (!date || typeof date !== "string") {
         res.status(400).json({ error: "Missing required argument: date" });
       } else {
-        const log = await skinTempService.getTemperatureLogByDate(
+        const log = await wellnessService.getTemperatureLogByDate(
           userId as string,
           new Date(date)
         );
@@ -38,7 +38,7 @@ export const wellnessController = {
             message: "No skin temperature log found for the specified date.",
           });
         } else {
-          res.status(200).json({ log: toSkinTempDTO(log) });
+          res.status(200).json({ data: toSkinTempDTO(log) });
         }
       }
     } catch (error) {

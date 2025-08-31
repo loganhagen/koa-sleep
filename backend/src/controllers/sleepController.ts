@@ -6,7 +6,7 @@ export const sleepController = {
   getSleepLogs: async (req: Request, res: Response) => {
     try {
       const sleepLogs = await sleepService.getSleepLogs();
-      res.status(200).json({ sleepLogs: sleepLogs });
+      res.status(200).json({ data: sleepLogs });
     } catch (error) {
       console.error("Failed to fetch sleep logs:", error);
       res
@@ -24,7 +24,7 @@ export const sleepController = {
         const sleepLogs = await sleepService.getSleepLogsByUserId(
           userId as string
         );
-        res.status(200).json({ sleepLogs: sleepLogs });
+        res.status(200).json({ data: sleepLogs });
       }
     } catch (error) {
       console.error("Failed to fetch sleep logs by user ID:", error);
@@ -57,7 +57,7 @@ export const sleepController = {
             .status(404)
             .json({ message: "No sleep log found for the specified date." });
         } else {
-          res.status(200).json({ sleepLog: toSleepLogDTO(sleepLog) });
+          res.status(200).json({ data: toSleepLogDTO(sleepLog) });
         }
       }
     } catch (error) {
@@ -81,7 +81,7 @@ export const sleepController = {
             .status(404)
             .json({ message: "No recent sleep log found for this user." });
         } else {
-          res.status(200).json({ sleepLog: toSleepLogDTO(sleepLog) });
+          res.status(200).json({ data: toSleepLogDTO(sleepLog) });
         }
       }
     } catch (error) {

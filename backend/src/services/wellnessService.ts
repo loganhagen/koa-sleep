@@ -1,7 +1,7 @@
 import { SkinTemperature } from "@prisma/client";
 import prisma from "lib/prisma";
 
-export const skinTempService = {
+export const wellnessService = {
   getTemperatureLogs: async (userId: string): Promise<SkinTemperature[]> => {
     const res: SkinTemperature[] = await prisma.skinTemperature.findMany({
       where: {

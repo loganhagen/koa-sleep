@@ -1,21 +1,13 @@
+import { User } from "@prisma/client";
 import prisma from "lib/prisma";
 
 export const userService = {
-  getDemoUser: async () => {
-    const demoUser = await prisma.user.findUnique({
-      where: {
-        email: "mo.sleep@fitsync.com",
-      },
-    });
-
-    return demoUser;
-  },
-  getAllUsers: async () => {
-    const allUsers = await prisma.user.findMany();
+  getAllUsers: async (): Promise<User[]> => {
+    const allUsers: User[] = await prisma.user.findMany();
     return allUsers;
   },
-  getUserByEmail: async (email: string) => {
-    const user = await prisma.user.findUnique({
+  getUserByEmail: async (email: string): Promise<User | null> => {
+    const user: User | null = await prisma.user.findUnique({
       where: {
         email: email,
       },
