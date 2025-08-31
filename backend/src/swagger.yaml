@@ -3,9 +3,19 @@ info:
   title: FitSync API
   version: 1.0.0
   description: API for tracking and retrieving user wellness data.
+tags:
+  - name: Users
+    description: Operations about users
+  - name: Sleep
+    description: User sleep data operations
+  - name: Wellness
+    description: User wellness data operations (e.g., skin temperature)
+
 paths:
   /sleep:
     get:
+      tags:
+        - Sleep
       summary: Get all sleep logs
       description: Retrieves a list of all sleep logs from all users.
       responses:
@@ -16,15 +26,24 @@ paths:
               schema:
                 type: object
                 properties:
-                  sleepLogs:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     type: array
                     items:
                       $ref: "#/components/schemas/SleepLog"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users:
     get:
+      tags:
+        - Users
       summary: Get all users
       description: Retrieves a list of all users.
       responses:
@@ -35,15 +54,24 @@ paths:
               schema:
                 type: object
                 properties:
-                  users:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     type: array
                     items:
                       $ref: "#/components/schemas/User"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/demo:
     get:
+      tags:
+        - Users
       summary: Get the demo user
       description: Retrieves a specific hardcoded demo user.
       responses:
@@ -54,15 +82,28 @@ paths:
               schema:
                 type: object
                 properties:
-                  user:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     $ref: "#/components/schemas/User"
         "404":
           description: Demo user not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/{email}:
     get:
+      tags:
+        - Users
       summary: Get a user by email
       parameters:
         - name: email
@@ -80,17 +121,34 @@ paths:
               schema:
                 type: object
                 properties:
-                  user:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     $ref: "#/components/schemas/User"
         "400":
           description: Bad Request. The email parameter is missing.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: User with the specified email not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/{userId}/sleep:
     get:
+      tags:
+        - Sleep
       summary: Get all sleep logs for a user
       parameters:
         - name: userId
@@ -107,17 +165,30 @@ paths:
               schema:
                 type: object
                 properties:
-                  sleepLogs:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     type: array
                     items:
                       $ref: "#/components/schemas/SleepLog"
         "400":
           description: Bad Request. The userId parameter is missing.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/{userId}/sleep/recent:
     get:
+      tags:
+        - Sleep
       summary: Get a user's most recent sleep log
       parameters:
         - name: userId
@@ -134,17 +205,34 @@ paths:
               schema:
                 type: object
                 properties:
-                  sleepLog:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     $ref: "#/components/schemas/SleepLog"
         "400":
           description: Bad Request. The userId parameter is missing.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: No sleep logs found for this user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/{userId}/sleep/{date}:
     get:
+      tags:
+        - Sleep
       summary: Get a sleep log by date
       parameters:
         - name: userId
@@ -168,17 +256,34 @@ paths:
               schema:
                 type: object
                 properties:
-                  sleepLog:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     $ref: "#/components/schemas/SleepLog"
         "400":
           description: Bad Request. Required parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: No sleep log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/{userId}/temperature:
     get:
+      tags:
+        - Wellness
       summary: Get all skin temperature logs for a user
       parameters:
         - name: userId
@@ -195,17 +300,30 @@ paths:
               schema:
                 type: object
                 properties:
-                  logs:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     type: array
                     items:
                       $ref: "#/components/schemas/SkinTempLog"
         "400":
           description: Bad Request. The userId parameter is missing.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /users/{userId}/temperature/{date}:
     get:
+      tags:
+        - Wellness
       summary: Get a skin temperature log by date
       parameters:
         - name: userId
@@ -229,14 +347,29 @@ paths:
               schema:
                 type: object
                 properties:
-                  log:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
                     $ref: "#/components/schemas/SkinTempLog"
         "400":
           description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: No log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   schemas:
@@ -297,3 +430,22 @@ components:
           type: string
           enum: [DEDICATED_TRACKER, OTHER]
           example: DEDICATED_TRACKER
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "NOT_FOUND"
+        message:
+          type: string
+          example: "Resource not found."
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          $ref: "#/components/schemas/Error"

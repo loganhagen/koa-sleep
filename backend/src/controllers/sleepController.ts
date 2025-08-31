@@ -3,92 +3,152 @@ import { sleepService } from "@services/sleepService";
 import { toSleepLogDTO } from "@utils/mappers";
 
 export const sleepController = {
-  getSleepLogs: async (req: Request, res: Response) => {
+  getSleepLogs: async (req: Request, res: Response): Promise<void> => {
     try {
       const sleepLogs = await sleepService.getSleepLogs();
-      res.status(200).json({ data: sleepLogs });
+      res.status(200).json({
+        success: true,
+        data: sleepLogs.map(toSleepLogDTO),
+      });
+      return;
     } catch (error) {
-      console.error("Failed to fetch sleep logs:", error);
-      res
-        .status(500)
-        .json({ error: "An unexpected error occurred on the server." });
+      console.error("Failed to retrieve all sleep logs.", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
     }
   },
 
-  getSleepLogsByUserId: async (req: Request, res: Response) => {
+  getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId } = req.params;
       if (!userId || typeof userId !== "string") {
-        res.status(400).json({ error: "userId parameter is required." });
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message:
+              "The 'userId' URL parameter is required and must be a string.",
+          },
+        });
+        return;
       } else {
-        const sleepLogs = await sleepService.getSleepLogsByUserId(
-          userId as string
-        );
-        res.status(200).json({ data: sleepLogs });
+        const sleepLogs = await sleepService.getSleepLogsByUserId(userId);
+        res.status(200).json({
+          success: true,
+          data: sleepLogs.map(toSleepLogDTO),
+        });
+        return;
       }
     } catch (error) {
-      console.error("Failed to fetch sleep logs by user ID:", error);
-      res
-        .status(500)
-        .json({ error: "An unexpected error occurred on the server." });
+      console.error("Failed to retrieve sleep log by userId", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
     }
   },
 
-  getSleepLogByDate: async (req: Request, res: Response) => {
+  getSleepLogByDate: async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId, date } = req.params;
-      if (
-        !userId ||
-        typeof userId !== "string" ||
-        !date ||
-        typeof date !== "string"
-      ) {
-        res
-          .status(400)
-          .json({ error: "Missing or invalid required arguments." });
-      } else {
-        const sleepLog = await sleepService.getSleepLogByDate(
-          userId as string,
-          new Date(date)
-        );
 
-        if (!sleepLog) {
-          res
-            .status(404)
-            .json({ message: "No sleep log found for the specified date." });
-        } else {
-          res.status(200).json({ data: toSleepLogDTO(sleepLog) });
-        }
+      if (!userId || !date) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' and 'date' URL parameters are required.",
+          },
+        });
+        return;
       }
+
+      const sleepLog = await sleepService.getSleepLogByDate(
+        userId,
+        new Date(date)
+      );
+
+      if (!sleepLog) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No sleep log found for the specified date.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: toSleepLogDTO(sleepLog),
+      });
+      return;
     } catch (error) {
       console.error("Failed to search for sleep log by date:", error);
-      res
-        .status(500)
-        .json({ error: "An unexpected error occurred on the server." });
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
     }
   },
 
-  getMostRecentSleepLog: async (req: Request, res: Response) => {
+  getMostRecentSleepLog: async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId } = req.params;
-      if (!userId || typeof userId !== "string") {
-        res.status(400).json({ error: "Missing or invalid userId argument." });
-      } else {
-        const sleepLog = await sleepService.getMostRecentSleepLog(userId);
-
-        if (!sleepLog) {
-          res
-            .status(404)
-            .json({ message: "No recent sleep log found for this user." });
-        } else {
-          res.status(200).json({ data: toSleepLogDTO(sleepLog) });
-        }
+      if (!userId) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' URL parameter is required.",
+          },
+        });
+        return;
       }
+
+      const sleepLog = await sleepService.getMostRecentSleepLog(userId);
+
+      if (!sleepLog) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No recent sleep log found for this user.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: toSleepLogDTO(sleepLog),
+      });
+      return;
     } catch (error) {
       console.error("Failed to search for most recent sleep log:", error);
-      res
-        .status(500)
-        .json({ error: "An unexpected error occurred on the server." });
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
     }
   },
 };

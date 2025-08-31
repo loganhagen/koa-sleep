@@ -1,26 +1,25 @@
-/**
- * The service layer features any required business logic to translate API responses into the data required by the controller.
- * No HTTP-related code should be found here.
- */
-
+import { SleepLog } from "@prisma/client";
 import { toSleepLogDTO } from "@utils/mappers";
 import prisma from "lib/prisma";
 
 export const sleepService = {
-  getSleepLogs: async () => {
-    const sleepLogs = await prisma.sleepLog.findMany();
-    return sleepLogs.map(toSleepLogDTO);
+  getSleepLogs: async (): Promise<SleepLog[]> => {
+    const sleepLogs: SleepLog[] = await prisma.sleepLog.findMany();
+    return sleepLogs;
   },
 
-  getSleepLogsByUserId: async (userId: string) => {
-    const sleepLogs = await prisma.sleepLog.findMany({
+  getSleepLogsByUserId: async (userId: string): Promise<SleepLog[]> => {
+    const sleepLogs: SleepLog[] = await prisma.sleepLog.findMany({
       where: {
         userId: userId,
       },
     });
-    return sleepLogs.map(toSleepLogDTO);
+    return sleepLogs;
   },
-  getSleepLogByDate: async (userId: string, date: Date) => {
+  getSleepLogByDate: async (
+    userId: string,
+    date: Date
+  ): Promise<SleepLog | null> => {
     const sleepLog = await prisma.sleepLog.findFirst({
       where: {
         userId: userId,
@@ -29,7 +28,7 @@ export const sleepService = {
     });
     return sleepLog;
   },
-  getMostRecentSleepLog: async (userId: string) => {
+  getMostRecentSleepLog: async (userId: string): Promise<SleepLog | null> => {
     const mostRecentSleepLog = await prisma.sleepLog.findFirst({
       where: {
         userId: userId,
@@ -38,7 +37,6 @@ export const sleepService = {
         dateOfSleep: "desc",
       },
     });
-    console.log(mostRecentSleepLog);
     return mostRecentSleepLog;
   },
 };
