@@ -46,7 +46,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({
           <ArrowBackIosNewIcon fontSize={isMobile ? "small" : "medium"} />
         </IconButton>
         <Typography variant={isMobile ? "body1" : "h6"} fontWeight="bold">
-          {targetDate.toDateString()}
+          {targetDate.toUTCString().substring(0, 16)}
         </Typography>
         <IconButton onClick={() => handleDateChange(1)} aria-label="next day">
           <ArrowForwardIosIcon fontSize={isMobile ? "small" : "medium"} />
