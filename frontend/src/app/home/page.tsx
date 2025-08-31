@@ -4,7 +4,7 @@ import DateSelector from "./_components/DateSelector";
 import Greeting from "./_components/Greeting";
 import CoreMetrics from "./_components/core-metrics/CoreMetrics";
 import SleepStages from "./_components/SleepStages";
-import WellnessIndicators from "./_components/WellnessIndicators";
+import WellnessIndicators from "./_components/wellness-indicators/WellnessIndicators";
 import { Stack, CircularProgress, Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../providers/userProvider";
@@ -66,7 +66,7 @@ const Home = () => {
       />
       <Greeting />
       <CoreMetrics targetDate={targetDate} />
-      <WellnessIndicators />
+      <WellnessIndicators targetDate={targetDate} />
       <SleepStages />
     </Stack>
   );
