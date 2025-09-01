@@ -12,29 +12,31 @@ const fetchSleepLogs = async (userId: string): Promise<SleepLog[] | null> => {
 const fetchSleepLogByDate = async (userId: string, date: Date) => {
   try {
     const endpoint = `/users/${userId}/sleep/${date.toISOString()}`;
-    const data = await fetchAPI(endpoint);
+    const data = await fetchAPI<SleepLog>(endpoint);
     return data;
   } catch (error) {
     if (isNotFoundError(error)) {
-      throw new NotFoundError("No sleep log found for the selected date.");
+      throw new NotFoundError(`No sleep log found for ${date.toISOString()}.`);
     }
     throw error;
   }
 };
 
-const fetchMostRecentSleepLog = async (userId: string): Promise<SleepLog> => {
-  await new Promise((f) => setTimeout(f, 1000));
-  const endpoint = `/users/${userId}/sleep/recent`;
-  const res = await fetchAPI<SleepLog>(endpoint);
-  return res;
+const fetchMostRecentSleepLog = async (userId: string) => {
+  try {
+    const endpoint = `/users/${userId}/sleep/recent`;
+    const data = await fetchAPI<SleepLog>(endpoint);
+    return data;
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const useSleepLogs = (userId: string) => {
+export const useSleepLogs = (userId: string | undefined) => {
   return useQuery({
     queryKey: ["sleepLogs", userId],
-    queryFn: ({ queryKey }) => {
-      const [, userId] = queryKey;
-      return fetchSleepLogs(userId as string);
+    queryFn: () => {
+      return fetchSleepLogs(userId!);
     },
     enabled: !!userId,
     retry: 0,

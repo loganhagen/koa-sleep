@@ -3,6 +3,7 @@
 import { Paper, Stack, Typography } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
 import { useUser } from "@/app/providers/userProvider";
+import { GreetingSkeleton } from "./_skeletons/GreetingSkeleton";
 
 const Greeting = () => {
   const { user } = useUser();
@@ -19,6 +20,10 @@ const Greeting = () => {
   };
 
   const message = getGreetingMessage();
+
+  if (!user) {
+    return <GreetingSkeleton></GreetingSkeleton>;
+  }
 
   return (
     <Paper
