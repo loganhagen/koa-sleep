@@ -5,7 +5,6 @@ import { wellnessController } from "controllers/wellnessController";
 
 const router = Router();
 
-router.get("/", userController.getAllUsers);
 router.get("/demo", userController.getDemoUser);
 router.get("/:email", userController.getUserByEmail);
 router.get("/:userId/sleep", sleepController.getSleepLogsByUserId);
@@ -16,5 +15,6 @@ router.get(
   wellnessController.getWellnessSummaryByDate
 );
 router.get("/:userId/sleep-stages/:date", sleepController.getSleepStagesByDate);
+router.get("/:userId/core-metrics/:date", sleepController.getCoreMetricsByDate);
 
 export default router;

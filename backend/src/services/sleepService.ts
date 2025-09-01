@@ -87,4 +87,17 @@ export const sleepService = {
 
     return processSleepLevels(sleepLog);
   },
+  getCoreMetricsByDate: async (userId: string, date: Date) => {
+    const coreMetrics = await prisma.sleepLog.findFirst({
+      where: { userId: userId, dateOfSleep: date },
+      select: {
+        startTime: true,
+        endTime: true,
+        duration: true,
+        efficiency: true,
+      },
+    });
+
+    return coreMetrics;
+  },
 };

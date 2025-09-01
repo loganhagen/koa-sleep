@@ -3,27 +3,6 @@ import { sleepService } from "@services/sleepService";
 import { toSleepLogDTO } from "@utils/mappers";
 
 export const sleepController = {
-  getSleepLogs: async (req: Request, res: Response): Promise<void> => {
-    try {
-      const sleepLogs = await sleepService.getSleepLogs();
-      res.status(200).json({
-        success: true,
-        data: sleepLogs.map(toSleepLogDTO),
-      });
-      return;
-    } catch (error) {
-      console.error("Failed to retrieve all sleep logs.", error);
-      res.status(500).json({
-        success: false,
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred on the server.",
-        },
-      });
-      return;
-    }
-  },
-
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId } = req.params;
@@ -189,6 +168,54 @@ export const sleepController = {
       return;
     } catch (error) {
       console.error("Failed to search for sleep stages by date:", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
+  getCoreMetricsByDate: async (req: Request, res: Response) => {
+    try {
+      const { userId, date } = req.params;
+
+      if (!userId || !date) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' and 'date' URL parameters are required.",
+          },
+        });
+        return;
+      }
+
+      const coreMetrics = await sleepService.getCoreMetricsByDate(
+        userId,
+        new Date(date)
+      );
+
+      if (!coreMetrics) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No core metrics found for the specified date.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: coreMetrics,
+      });
+      return;
+    } catch (error) {
+      console.error("Failed to search for core metrics by date:", error);
       res.status(500).json({
         success: false,
         error: {

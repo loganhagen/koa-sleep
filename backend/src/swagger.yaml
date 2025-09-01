@@ -12,62 +12,6 @@ tags:
     description: User wellness data operations (e.g., skin temperature)
 
 paths:
-  /sleep:
-    get:
-      tags:
-        - Sleep
-      summary: Get all sleep logs
-      description: Retrieves a list of all sleep logs from all users.
-      responses:
-        "200":
-          description: A list of all sleep logs.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/SleepLog"
-        "500":
-          description: Internal Server Error.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /users:
-    get:
-      tags:
-        - Users
-      summary: Get all users
-      description: Retrieves a list of all users.
-      responses:
-        "200":
-          description: A list of all users.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/User"
-        "500":
-          description: Internal Server Error.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
   /users/demo:
     get:
       tags:
@@ -280,6 +224,110 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /users/{userId}/sleep-stages/{date}:
+    get:
+      tags:
+        - Sleep
+      summary: Get sleep stages by date
+      description: Retrieves a summary of sleep stages (awake, rem, light, deep) for a specific user and date.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The summary of sleep stages.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/SleepStages"
+        "400":
+          description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No sleep log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /users/{userId}/core-metrics/{date}:
+    get:
+      tags:
+        - Sleep
+      summary: Get core sleep metrics by date
+      description: Retrieves core sleep metrics (startTime, endTime, duration, efficiency) for a specific user and date.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user.
+          schema:
+            type: string
+        - name: date
+          in: path
+          required: true
+          description: The date of the log (YYYY-MM-DD).
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: The requested core sleep metrics.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/CoreMetrics"
+        "400":
+          description: Bad Request. Parameters are missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: No sleep log found for the specified date.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /users/{userId}/wellness-summary/{date}:
     get:
       tags:
@@ -332,58 +380,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /users/{userId}/sleep-stages/{date}:
-    get:
-      tags:
-        - Sleep
-      summary: Get sleep stages by date
-      description: Retrieves a summary of sleep stages (awake, rem, light, deep) for a specific user and date.
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: ID of the user.
-          schema:
-            type: string
-        - name: date
-          in: path
-          required: true
-          description: The date of the log (YYYY-MM-DD).
-          schema:
-            type: string
-            format: date
-      responses:
-        "200":
-          description: The summary of sleep stages.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: true
-                  data:
-                    $ref: "#/components/schemas/SleepStages" # Corrected Schema Reference
-        "400":
-          description: Bad Request. Parameters are missing or invalid.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "404":
-          description: No sleep log found for the specified date.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "500":
-          description: Internal Server Error.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
 components:
   schemas:
     User:
@@ -423,6 +419,46 @@ components:
         sleepQuality:
           type: string
           example: "Good"
+
+    CoreMetrics:
+      type: object
+      properties:
+        startTime:
+          type: string
+          format: date-time
+          example: "2025-08-29T22:05:00.000Z"
+        endTime:
+          type: string
+          format: date-time
+          example: "2025-08-30T06:15:00.000Z"
+        duration:
+          type: integer
+          description: "Duration in seconds."
+          example: 29400
+        efficiency:
+          type: integer
+          description: "Sleep efficiency score (0-100)."
+          example: 96
+
+    SleepStages:
+      type: object
+      properties:
+        awake:
+          type: integer
+          description: Time in minutes spent in the awake stage.
+          example: 50
+        rem:
+          type: integer
+          description: Time in minutes spent in the REM stage.
+          example: 90
+        light:
+          type: integer
+          description: Time in minutes spent in the light sleep stage.
+          example: 230
+        deep:
+          type: integer
+          description: Time in minutes spent in the deep sleep stage.
+          example: 80
 
     SkinTempLog:
       type: object
@@ -541,23 +577,3 @@ components:
           example: false
         error:
           $ref: "#/components/schemas/Error"
-
-    SleepStages:
-      type: object
-      properties:
-        awake:
-          type: integer
-          description: Time in minutes spent in the awake stage.
-          example: 50
-        rem:
-          type: integer
-          description: Time in minutes spent in the REM stage.
-          example: 90
-        light:
-          type: integer
-          description: Time in minutes spent in the light sleep stage.
-          example: 230
-        deep:
-          type: integer
-          description: Time in minutes spent in the deep sleep stage.
-          example: 80

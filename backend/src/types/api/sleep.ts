@@ -39,3 +39,10 @@ export interface SleepLevels {
   data: SleepLevelData[];
   shortData?: SleepLevelData[];
 }
+
+export interface CoreMetrics {
+  startTime: Date;
+  endTime: Date;
+  duration: number;
+  efficiency: number;
+}
