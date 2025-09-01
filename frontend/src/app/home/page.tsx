@@ -69,7 +69,7 @@ const Home = () => {
       <Greeting />
       <CoreMetrics targetDate={targetDate} />
       <WellnessIndicators targetDate={targetDate} />
-      <SleepStages />
+      <SleepStages targetDate={targetDate} />
     </Stack>
   );
 };

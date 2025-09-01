@@ -34,6 +34,6 @@ export const fetchAPI = async <T>(
   }
 };
 
-export const isNotFoundError = (error: any): boolean => {
+export const isNotFoundError = (error: unknown): boolean => {
   return error instanceof ApiError && error.status === 404;
 };

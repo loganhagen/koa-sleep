@@ -4,12 +4,9 @@ import { WellnessIndicatorsData } from "@/types/api/wellness";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchWellnessSummaryByDate = async (userId: string, date: Date) => {
-  const dateString = date.toISOString();
-
   try {
-    const data = await fetchAPI<WellnessIndicatorsData>(
-      `/users/${userId}/wellness-summary/${dateString}`
-    );
+    const endpoint = `/users/${userId}/wellness-summary/${date.toISOString()}`;
+    const data = await fetchAPI<WellnessIndicatorsData>(endpoint);
     return data;
   } catch (error) {
     if (isNotFoundError(error)) {

@@ -99,7 +99,6 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
   return (
     <DashboardCard
       title="Wellness Indicators"
-      user={user}
       isLoading={isLoading}
       error={error}
       skeleton={<WellnessIndicatorsSkeleton />}

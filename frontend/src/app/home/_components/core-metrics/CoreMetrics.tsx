@@ -56,7 +56,6 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   return (
     <DashboardCard
       title="Core Metrics"
-      user={user}
       isLoading={isLoading}
       error={error}
       skeleton={<CoreMetricsSkeleton />}

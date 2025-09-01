@@ -30,12 +30,13 @@ export interface SleepLevelData {
 }
 
 export interface SleepLevels {
-  summary: {
-    deep: SleepLevelSummaryItem;
-    light: SleepLevelSummaryItem;
-    rem: SleepLevelSummaryItem;
-    wake: SleepLevelSummaryItem;
-  };
   data: SleepLevelData[];
   shortData?: SleepLevelData[];
+}
+
+export interface SleepStages {
+  awake: number;
+  rem: number;
+  light: number;
+  deep: number;
 }

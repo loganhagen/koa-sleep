@@ -7,7 +7,6 @@ import { NotFoundError } from "@/lib/errors";
 
 interface DashboardCardProps {
   title: string;
-  user: any;
   isLoading: boolean;
   error: unknown;
   children: React.ReactNode;
@@ -18,7 +17,6 @@ interface DashboardCardProps {
 
 const DashboardCard: React.FC<DashboardCardProps> = ({
   title,
-  user,
   isLoading,
   error,
   children,
@@ -26,10 +24,6 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   isEmpty,
   noDataMessage = "No data available for the selected date.",
 }) => {
-  if (!user) {
-    return <Typography>Please log in.</Typography>;
-  }
-
   if (isLoading) {
     return <>{skeleton}</>;
   }
