@@ -43,31 +43,31 @@ const Home = () => {
     setTargetDate(getMostRecentDate());
   };
 
-  // if (!targetDate || isSleepLogLoading) {
-  //   return (
-  //     <Box
-  //       display="flex"
-  //       justifyContent="center"
-  //       alignItems="center"
-  //       height="80vh"
-  //     >
-  //       <CircularProgress />
-  //     </Box>
-  //   );
-  // }
+  if (!targetDate || isSleepLogLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="80vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Stack direction={"column"} spacing={3}>
-      {/* <DateSelector
+      <DateSelector
         targetDate={targetDate}
         handleDateChange={handleDateChange}
         handleResetToToday={resetTargetDate}
         mostRecentLogDate={
           mostRecentSleepLog ? new Date(mostRecentSleepLog.dateOfSleep) : null
         }
-      /> */}
+      />
       <Greeting />
-      <CoreMetrics targetDate={new Date()} />
+      <CoreMetrics targetDate={targetDate} />
       {/* <WellnessIndicators targetDate={targetDate} /> */}
       {/* <SleepStages targetDate={targetDate} /> */}
     </Stack>

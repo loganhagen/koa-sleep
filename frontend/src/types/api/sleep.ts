@@ -40,3 +40,10 @@ export interface SleepStages {
   light: number;
   deep: number;
 }
+
+export interface CoreMetrics {
+  startTime: Date;
+  endTime: Date;
+  duration: number;
+  efficiency: number;
+}

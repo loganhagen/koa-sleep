@@ -46,3 +46,10 @@ export interface CoreMetrics {
   duration: number;
   efficiency: number;
 }
+
+export interface CoreMetricsDTO {
+  startTime: string;
+  endTime: string;
+  duration: string;
+  efficiency: string;
+}

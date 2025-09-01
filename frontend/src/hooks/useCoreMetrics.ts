@@ -1,33 +1,21 @@
-import {
-  millisecondsToHoursAndMinutes,
-  formatTimeTo12Hour,
-} from "@/utils/utils";
-import { useSleepLogByDate } from "./useSleepLogs";
-import { useMemo } from "react";
+import { fetchAPI } from "@/services/apiClient";
+import { CoreMetrics } from "@/types/api/sleep";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export const useCoreMetrics = (
-  userId: string | undefined,
-  targetDate: Date
-) => {
-  const {
-    data: sleepLog,
-    isLoading,
-    error,
-  } = useSleepLogByDate(userId, targetDate);
+const fetchCoreMetricsByDate = async (userId: string, date: Date) => {
+  const endpoint = `/users/${userId}/core-metrics/${date.toISOString()}`;
+  const data = await fetchAPI<CoreMetrics>(endpoint);
+  return data;
+};
 
-  const coreMetrics = useMemo(() => {
-    if (!sleepLog) {
-      return null;
-    }
-
-    const [hours, minutes] = millisecondsToHoursAndMinutes(sleepLog.duration);
-    return {
-      bedtime: formatTimeTo12Hour(new Date(sleepLog.startTime)),
-      wakeup: formatTimeTo12Hour(new Date(sleepLog.endTime)),
-      totalSleep: `${hours}h ${minutes}m`,
-      efficiency: `${sleepLog.efficiency}%`,
-    };
-  }, [sleepLog]);
-
-  return { metrics: coreMetrics, isLoading, error };
+export const useCoreMetrics = (userId: string | undefined, date: Date) => {
+  return useQuery({
+    queryKey: ["core-metrics", userId, date],
+    queryFn: () => {
+      return fetchCoreMetricsByDate(userId!, date);
+    },
+    enabled: !!userId && !!date,
+    retry: 0,
+    placeholderData: keepPreviousData,
+  });
 };

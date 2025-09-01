@@ -308,7 +308,7 @@ paths:
                     type: boolean
                     example: true
                   data:
-                    $ref: "#/components/schemas/CoreMetrics"
+                    $ref: "#/components/schemas/CoreMetricsDTO"
         "400":
           description: Bad Request. Parameters are missing or invalid.
           content:
@@ -420,25 +420,25 @@ components:
           type: string
           example: "Good"
 
-    CoreMetrics:
+    CoreMetricsDTO:
       type: object
       properties:
         startTime:
           type: string
-          format: date-time
-          example: "2025-08-29T22:05:00.000Z"
+          description: "Bedtime in 12-hour format."
+          example: "10:05 PM"
         endTime:
           type: string
-          format: date-time
-          example: "2025-08-30T06:15:00.000Z"
+          description: "Wake-up time in 12-hour format."
+          example: "6:15 AM"
         duration:
-          type: integer
+          type: string
           description: "Duration in seconds."
-          example: 29400
+          example: "29400"
         efficiency:
-          type: integer
+          type: string
           description: "Sleep efficiency score (0-100)."
-          example: 96
+          example: "96"
 
     SleepStages:
       type: object

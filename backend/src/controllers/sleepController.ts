@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
-import { toSleepLogDTO } from "@utils/mappers";
+import { toCoreMetricsDTO, toSleepLogDTO } from "@utils/mappers";
 
 export const sleepController = {
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
@@ -211,7 +211,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: coreMetrics,
+        data: toCoreMetricsDTO(coreMetrics),
       });
       return;
     } catch (error) {

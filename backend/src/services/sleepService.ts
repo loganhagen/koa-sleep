@@ -1,3 +1,4 @@
+import { CoreMetrics } from "@custom_types/api/sleep";
 import { SleepLog } from "@prisma/client";
 import prisma from "lib/prisma";
 import { SleepLevelsSchema } from "schemas/sleep";
@@ -88,7 +89,7 @@ export const sleepService = {
     return processSleepLevels(sleepLog);
   },
   getCoreMetricsByDate: async (userId: string, date: Date) => {
-    const coreMetrics = await prisma.sleepLog.findFirst({
+    const coreMetrics: CoreMetrics | null = await prisma.sleepLog.findFirst({
       where: { userId: userId, dateOfSleep: date },
       select: {
         startTime: true,

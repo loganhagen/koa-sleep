@@ -7,13 +7,19 @@ import {
   User,
 } from "@prisma/client";
 import { UserDTO } from "../types/api/user";
-import { SleepLevels, SleepLogDTO } from "@custom_types/api/sleep";
+import {
+  CoreMetrics,
+  CoreMetricsDTO,
+  SleepLevels,
+  SleepLogDTO,
+} from "@custom_types/api/sleep";
 import {
   BreathingRateDTO,
   HrvDTO,
   Spo2DTO,
   TemperatureDTO,
 } from "@custom_types/api/wellness";
+import { millisecondsToHours } from "./converters";
 
 export const toUserDTO = (user: User): UserDTO => {
   return {
@@ -78,5 +84,20 @@ export const toSpo2DTO = (model: SpO2): Spo2DTO => {
     avg: model.avg,
     min: model.min,
     max: model.max,
+  };
+};
+
+export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
+  const timeFormatOptions: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  };
+
+  return {
+    startTime: model.startTime.toLocaleTimeString("en-US", timeFormatOptions),
+    endTime: model.endTime.toLocaleTimeString("en-US", timeFormatOptions),
+    duration: millisecondsToHours(model.duration).toString(),
+    efficiency: model.efficiency.toString(),
   };
 };

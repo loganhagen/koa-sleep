@@ -133,13 +133,13 @@ const SidebarComponent: React.FC = () => {
           >
             Home
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             icon={<AutoGraph />}
             active={pathname.startsWith("/sleep-journey")}
             component={<a href="/sleep-journey/onboarding" />}
           >
             Sleep Journey
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             icon={<CalendarMonth />}
             active={pathname === "/history"}

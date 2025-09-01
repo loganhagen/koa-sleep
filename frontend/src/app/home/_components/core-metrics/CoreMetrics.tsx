@@ -18,36 +18,32 @@ interface CoreMetricsProps {
 
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   const { user } = useUser();
-  const { metrics, isLoading, error } = useCoreMetrics(user?.id, targetDate);
+  const { data, isLoading, error } = useCoreMetrics(user?.id, targetDate);
 
   const allMetricsPresent =
-    metrics &&
-    metrics.bedtime &&
-    metrics.wakeup &&
-    metrics.totalSleep &&
-    metrics.efficiency;
+    data && data.startTime && data.endTime && data.duration && data.efficiency;
 
   const metricsData =
-    metrics && allMetricsPresent
+    data && allMetricsPresent
       ? [
           {
             label: "Bedtime",
-            value: metrics.bedtime,
+            value: data.startTime,
             icon: <BedtimeIcon fontSize="small" color="primary" />,
           },
           {
             label: "Wake-Up",
-            value: metrics.wakeup,
+            value: data.endTime,
             icon: <SunnyIcon fontSize="small" sx={{ color: "warning.main" }} />,
           },
           {
             label: "Total Sleep",
-            value: metrics.totalSleep,
+            value: data.duration,
             icon: <ScheduleIcon fontSize="small" color="primary" />,
           },
           {
             label: "Efficiency",
-            value: metrics.efficiency,
+            value: data.efficiency,
             icon: <InsightsIcon fontSize="small" color="primary" />,
           },
         ]
@@ -72,7 +68,7 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
           <MetricDisplay
             key={metric.label}
             label={metric.label}
-            value={metric.value}
+            value={metric.value.toString()}
             icon={metric.icon}
           />
         ))}
