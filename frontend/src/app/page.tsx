@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Stack, Typography, Button } from "@mui/material";
+import { Box, Stack, Typography, Button, Tooltip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import GoogleButton from "react-google-button";
@@ -62,7 +62,17 @@ const Splash = () => {
           spacing={2}
           sx={{ pt: 3 }}
         >
-          <GoogleButton type={currentMode} onClick={() => {}} />
+          <Tooltip title="Coming Soon!" arrow>
+            <Box component="span" sx={{ display: "inline-block" }}>
+              <GoogleButton
+                type={currentMode}
+                style={{
+                  opacity: 0.5,
+                  pointerEvents: "none",
+                }}
+              />
+            </Box>
+          </Tooltip>
           <Button
             variant="outlined"
             size="large"
