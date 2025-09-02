@@ -17,6 +17,7 @@ import {
   Spo2Log,
   TemperatureLog,
 } from "@/types/api/wellness";
+import { grey } from "@mui/material/colors";
 
 interface WellnessIndicatorsProps {
   targetDate: Date;
@@ -26,7 +27,7 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
   targetDate,
 }) => {
   const { user } = useUser();
-  const { data, isLoading, error } = useWellnessIndicators(
+  const { data, isLoading, error, isPlaceholderData } = useWellnessIndicators(
     user?.id,
     targetDate
   );
@@ -81,28 +82,34 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
     },
   ];
 
-  const indicators = data
-    ? indicatorConfig
-        .map((config) => {
-          const indicatorData = data[config.key as keyof typeof data];
-          if (!indicatorData) return null;
-          return {
-            ...config,
-            value: config.getValue(indicatorData as any),
-          };
-        })
-        .filter((indicator): indicator is NonNullable<typeof indicator> =>
-          Boolean(indicator)
-        )
-    : [];
+  const indicators = indicatorConfig.map((config) => {
+    const useRealData = !isLoading && !error && !isPlaceholderData && data;
+    const indicatorData = useRealData
+      ? data[config.key as keyof typeof data]
+      : undefined;
+
+    if (indicatorData) {
+      return {
+        ...config,
+        value: config.getValue(indicatorData as any),
+      };
+    } else {
+      return {
+        ...config,
+        value: "--",
+        valueColor: "text.secondary",
+        iconColor: "disabled",
+        gradient: `linear-gradient(145deg, ${grey[200]}, ${grey[300]})`,
+        shadow: "none",
+      };
+    }
+  });
 
   return (
     <DashboardCard
       title="Wellness Indicators"
       isLoading={isLoading}
-      error={error}
       skeleton={<WellnessIndicatorsSkeleton />}
-      isEmpty={!isLoading && !error && indicators.length === 0}
     >
       <Stack
         direction={{ xs: "column", md: "row" }}
