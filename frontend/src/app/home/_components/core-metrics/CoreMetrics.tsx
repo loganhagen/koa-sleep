@@ -16,6 +16,29 @@ interface CoreMetricsProps {
   targetDate: Date;
 }
 
+const emptyMetrics = [
+  {
+    label: "Bedtime",
+    value: "--",
+    icon: <BedtimeIcon fontSize="small" color="disabled" />,
+  },
+  {
+    label: "Wake-Up",
+    value: "--",
+    icon: <SunnyIcon fontSize="small" color="disabled" />,
+  },
+  {
+    label: "Total Sleep",
+    value: "--",
+    icon: <ScheduleIcon fontSize="small" color="disabled" />,
+  },
+  {
+    label: "Efficiency",
+    value: "--",
+    icon: <InsightsIcon fontSize="small" color="disabled" />,
+  },
+];
+
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   const { user } = useUser();
   const { data, isLoading, error } = useCoreMetrics(user?.id, targetDate);
@@ -24,7 +47,7 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
     data && data.startTime && data.endTime && data.duration && data.efficiency;
 
   const metricsData =
-    data && allMetricsPresent
+    !error && allMetricsPresent
       ? [
           {
             label: "Bedtime",
@@ -47,15 +70,13 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
             icon: <InsightsIcon fontSize="small" color="primary" />,
           },
         ]
-      : [];
+      : emptyMetrics;
 
   return (
     <DashboardCard
       title="Core Metrics"
       isLoading={isLoading}
-      error={error}
       skeleton={<CoreMetricsSkeleton />}
-      isEmpty={!isLoading && !error && metricsData.length === 0}
     >
       <Stack
         direction={{ xs: "column", md: "row" }}

@@ -2,41 +2,22 @@
 
 import React from "react";
 import { Paper, Typography, Stack } from "@mui/material";
-import NoDataDisplay from "./NoDataDisplay";
-import { NotFoundError } from "@/lib/errors";
 
 interface DashboardCardProps {
   title: string;
   isLoading: boolean;
-  error: unknown;
   children: React.ReactNode;
   skeleton: React.ReactNode;
-  noDataMessage?: string;
-  isEmpty?: boolean;
 }
 
 const DashboardCard: React.FC<DashboardCardProps> = ({
   title,
   isLoading,
-  error,
   children,
   skeleton,
-  isEmpty,
-  noDataMessage = "No data available for the selected date.",
 }) => {
   if (isLoading) {
     return <>{skeleton}</>;
-  }
-
-  if (error) {
-    if (error instanceof NotFoundError) {
-      return <NoDataDisplay title={title} message={noDataMessage} />;
-    }
-    return <NoDataDisplay title={title} message="Unable to retrieve data." />;
-  }
-
-  if (isEmpty) {
-    return <NoDataDisplay title={title} message={noDataMessage} />;
   }
 
   return (
