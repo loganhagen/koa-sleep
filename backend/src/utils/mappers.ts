@@ -95,8 +95,8 @@ export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
   };
 
   return {
-    startTime: model.startTime.toLocaleTimeString("en-US", timeFormatOptions),
-    endTime: model.endTime.toLocaleTimeString("en-US", timeFormatOptions),
+    startTime: model.startTime.toISOString(),
+    endTime: model.endTime.toISOString(),
     duration: millisecondsToHHMM(model.duration),
     efficiency: model.efficiency.toString(),
   };
