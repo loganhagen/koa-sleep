@@ -19,7 +19,7 @@ import {
   Spo2DTO,
   TemperatureDTO,
 } from "@custom_types/api/wellness";
-import { millisecondsToHours } from "./converters";
+import { millisecondsToHHMM, millisecondsToHours } from "./converters";
 
 export const toUserDTO = (user: User): UserDTO => {
   return {
@@ -97,7 +97,7 @@ export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
   return {
     startTime: model.startTime.toLocaleTimeString("en-US", timeFormatOptions),
     endTime: model.endTime.toLocaleTimeString("en-US", timeFormatOptions),
-    duration: millisecondsToHours(model.duration).toString(),
+    duration: millisecondsToHHMM(model.duration),
     efficiency: model.efficiency.toString(),
   };
 };
