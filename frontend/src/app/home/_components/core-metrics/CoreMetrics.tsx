@@ -12,6 +12,15 @@ import { useCoreMetrics } from "@/hooks/useCoreMetrics";
 import { MetricDisplay } from "./MetricsDisplay";
 import DashboardCard from "../DashboardCard";
 
+const formatTime = (isoObject: Date): string => {
+  const date = new Date(isoObject);
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
 interface CoreMetricsProps {
   targetDate: Date;
 }
@@ -54,12 +63,12 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
       ? [
           {
             label: "Bedtime",
-            value: data.startTime,
+            value: formatTime(data.startTime),
             icon: <BedtimeIcon fontSize="small" color="primary" />,
           },
           {
             label: "Wake-Up",
-            value: data.endTime,
+            value: formatTime(data.endTime),
             icon: <SunnyIcon fontSize="small" sx={{ color: "warning.main" }} />,
           },
           {
