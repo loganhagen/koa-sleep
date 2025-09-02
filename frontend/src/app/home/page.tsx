@@ -5,7 +5,7 @@ import Greeting from "./_components/Greeting";
 import CoreMetrics from "./_components/core-metrics/CoreMetrics";
 import SleepStages from "./_components/SleepStages";
 import WellnessIndicators from "./_components/wellness-indicators/WellnessIndicators";
-import { Stack, CircularProgress, Box } from "@mui/material";
+import { Stack, CircularProgress, Box, Divider } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
@@ -43,7 +43,7 @@ const Home = () => {
     setTargetDate(getMostRecentDate());
   };
 
-  if (!targetDate || isSleepLogLoading) {
+  if (!targetDate) {
     return (
       <Box
         display="flex"
@@ -57,20 +57,24 @@ const Home = () => {
   }
 
   return (
-    <Stack direction={"column"} spacing={3}>
-      <DateSelector
-        targetDate={targetDate}
-        handleDateChange={handleDateChange}
-        handleResetToToday={resetTargetDate}
-        mostRecentLogDate={
-          mostRecentSleepLog ? new Date(mostRecentSleepLog.dateOfSleep) : null
-        }
-      />
-      <Greeting />
-      <CoreMetrics targetDate={targetDate} />
-      {/* <WellnessIndicators targetDate={targetDate} /> */}
-      {/* <SleepStages targetDate={targetDate} /> */}
-    </Stack>
+    <Box>
+      <Box sx={{ marginBottom: 5 }}>
+        <Greeting />
+      </Box>
+      <Stack direction={"column"} spacing={3}>
+        <DateSelector
+          targetDate={targetDate}
+          handleDateChange={handleDateChange}
+          handleResetToToday={resetTargetDate}
+          mostRecentLogDate={
+            mostRecentSleepLog ? new Date(mostRecentSleepLog.dateOfSleep) : null
+          }
+        />
+        <CoreMetrics targetDate={targetDate} />
+        {/* <WellnessIndicators targetDate={targetDate} /> */}
+        {/* <SleepStages targetDate={targetDate} /> */}
+      </Stack>
+    </Box>
   );
 };
 

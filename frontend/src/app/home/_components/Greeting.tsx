@@ -1,6 +1,6 @@
 "use client";
 
-import { Paper, Stack, Typography } from "@mui/material";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
 import { useUser } from "@/app/providers/userProvider";
 import { GreetingSkeleton } from "./_skeletons/GreetingSkeleton";
@@ -26,19 +26,20 @@ const Greeting = () => {
   }
 
   return (
-    <Paper
-      elevation={11}
-      variant="outlined"
-      sx={{
-        p: 4,
-        borderRadius: 10,
-        backgroundColor: "background.paper",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-      }}
-    >
+    // <Paper
+    //   elevation={0}
+    //   variant="outlined"
+    //   sx={{
+    //     p: 4,
+    //     borderRadius: 10,
+    //     backgroundColor: "background.paper",
+    //     display: "flex",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     width: "100%",
+    //   }}
+    // >
+    <Box>
       <Stack direction={"column"} alignItems="center">
         <Typography
           variant="h4"
@@ -61,7 +62,9 @@ const Greeting = () => {
           <WavingHandIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>
       </Stack>
-    </Paper>
+    </Box>
+
+    // </Paper>
   );
 };
 

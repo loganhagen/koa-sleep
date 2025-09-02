@@ -51,25 +51,27 @@ const DateSelector: React.FC<DateSelectorProps> = ({
       justifyContent="space-between"
       sx={{ width: "100%" }}
     >
-      <IconButton
-        onClick={() => handleDateChange(-1)}
-        aria-label="previous day"
-      >
-        <ArrowBackIosNewIcon fontSize={isMobile ? "small" : "medium"} />
-      </IconButton>
+      <Box sx={{ width: 48, height: 48 }} />
 
-      <Typography
-        variant={isMobile ? "body1" : "h6"}
-        fontWeight="bold"
-        sx={{ textAlign: "center" }}
-      >
-        {targetDate.toUTCString().substring(0, 16)}
-      </Typography>
-
-      <Stack direction="row">
-        <IconButton onClick={handleResetToToday} aria-label="today">
-          <TodayIcon />
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <IconButton
+          onClick={() => handleDateChange(-1)}
+          aria-label="previous day"
+        >
+          <ArrowBackIosNewIcon fontSize={isMobile ? "small" : "medium"} />
         </IconButton>
+
+        <Typography
+          variant={isMobile ? "body1" : "h6"}
+          fontWeight="bold"
+          sx={{
+            textAlign: "center",
+            minWidth: isMobile ? "125px" : "150px",
+          }}
+        >
+          {targetDate.toUTCString().substring(0, 16)}
+        </Typography>
+
         <IconButton
           onClick={() => handleDateChange(1)}
           aria-label="next day"
@@ -78,6 +80,10 @@ const DateSelector: React.FC<DateSelectorProps> = ({
           <ArrowForwardIosIcon fontSize={isMobile ? "small" : "medium"} />
         </IconButton>
       </Stack>
+
+      <IconButton onClick={handleResetToToday} aria-label="today">
+        <TodayIcon />
+      </IconButton>
     </Stack>
   );
 };
