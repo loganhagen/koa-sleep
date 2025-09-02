@@ -3,7 +3,7 @@
 import DateSelector from "./_components/DateSelector";
 import Greeting from "./_components/Greeting";
 import CoreMetrics from "./_components/core-metrics/CoreMetrics";
-import SleepStages from "./_components/SleepStages";
+import SleepStages from "./_components/sleep-stages/SleepStages";
 import WellnessIndicators from "./_components/wellness-indicators/WellnessIndicators";
 import { Stack, CircularProgress, Box, Divider } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
@@ -72,7 +72,7 @@ const Home = () => {
         />
         <CoreMetrics targetDate={targetDate} />
         <WellnessIndicators targetDate={targetDate} />
-        {/* <SleepStages targetDate={targetDate} /> */}
+        <SleepStages targetDate={targetDate} />
       </Stack>
     </Box>
   );
