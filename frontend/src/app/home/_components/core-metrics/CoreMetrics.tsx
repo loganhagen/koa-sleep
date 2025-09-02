@@ -41,13 +41,16 @@ const emptyMetrics = [
 
 const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   const { user } = useUser();
-  const { data, isLoading, error } = useCoreMetrics(user?.id, targetDate);
+  const { data, isLoading, error, isPlaceholderData } = useCoreMetrics(
+    user?.id,
+    targetDate
+  );
 
   const allMetricsPresent =
     data && data.startTime && data.endTime && data.duration && data.efficiency;
 
   const metricsData =
-    !error && allMetricsPresent
+    !error && allMetricsPresent && !isPlaceholderData
       ? [
           {
             label: "Bedtime",
