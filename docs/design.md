@@ -31,8 +31,7 @@
 
     ![onboarding](./assets/onboarding.jpeg)
 
-  - **_Needed Flows:_** _Onboarding (Sign-up -> Fitbit Connect -> Start Journey), Daily Check-in (Open App -> View Summary & Advice), Managing Settings._
-    s
+  - **_Needed Flows:_** _Daily Check-in (Open App -> View Summary & Advice), Managing Settings._
 
 - **2.3 UI Sketches:**
   - _This section needs visual representations for each of the app's screens. These can be low-fidelity rough sketches._
@@ -42,34 +41,19 @@
 
 - **3.1 High-Level Architecture:**
   - **Frontend:** A Next.js single-page application (SPA) that serves the browser client. It will also act as a reverse proxy, handling incoming HTTP requests from the browser and forwarding them to the appropriate backend services. This layer is responsible for receiving data from the backend and shaping it into the necessary format for the UI components.
-  - **Backend:** A headless, frontend-agnostic API service. Its sole responsibility is to expose data and execute business logic without any knowledge of what client is consuming it. This includes interacting with external services like the Fitbit API, managing all database operations, and providing the data required for the Sleep Journey feature.
+  - **Backend:** A headless, frontend-agnostic API service. Its sole responsibility is to expose data and execute business logic without any knowledge of the client consuming it. This includes interacting with external services like the Fitbit API, managing all database operations, and providing the data required for the Sleep Journey feature.
 - **3.2 Technology Stack:**
-  - _This section needs an explicit list of all planned technologies, libraries, and services._
-  - **_Example:_** _Frontend (Next.js, TypeScript, Tailwind CSS, Vercel), Backend (Node.js, Express, PostgreSQL, Docker, Render/AWS), Authentication (Google OAuth, Fitbit OAuth)._
+  - Frontend: Next.js, TypeScript, MUI, Vercel, Tanstack Query
+  - Backend: Express.js, Prisma, Zod, Render
+  - Database: Postgresql
+  - Authentication: Google OAuth2.0
 - **3.3 Data Models & Database Schema:**
-  - _This section needs the detailed structure for each database table, including column names, data types, constraints, and relationships (e.g., primary and foreign keys). This is the blueprint for the database._
-  - **_Needed Schemas:_** _`users`, `sleep_journeys`, `daily_sleep_logs`._
+  - See Prisma schema in backend directory.
 
 ## **4.0 Detailed Technical Specifications**
 
 - **4.1 API Specification (Endpoints):**
-  - _This section requires a complete definition for every API endpoint. For each one, specify the HTTP method, URL path, required permissions, and the exact structure of request and response bodies (JSON schemas)._
-  - **_Example Endpoint:_**
-    - **`GET /api/journey/summary`**
-    - **Description:** Fetches the daily summary for the logged-in user's active journey.
-    - **Response `200 OK`:**
-      ```json
-      {
-        "lastNightSleep": {
-          "date": "2025-08-12",
-          "bedtime": "2025-08-12T23:55:00Z",
-          "wakeUpTime": "2025-08-13T07:30:00Z"
-        },
-        "journey": {
-          "dailyAdvice": "Last night you went to bed a bit later than usual. Let's aim for a time closer to your average. Try to be in bed by 11:40 PM tonight."
-        }
-      }
-      ```
+  - See Swagger documentation in backend directory.
 - **4.2 Core Business Logic (Sleep Journey):**
   - The Sleep Journey feature is the core engine for user coaching. Its logic resides entirely within the backend service.
   - **Journey Initiation & Baseline:** To begin, the backend fetches the user's historical sleep data from Fitbit for the last 14-30 days. It analyzes this data to establish a baseline for the "Improve Sleep Consistency" journey. This involves calculating the average bedtime, wake-up time, and standard deviation (bedtime variance). A coefficient of variation is then calculated from the standard deviation to assign a grade for the user's sleep schedule consistency.
