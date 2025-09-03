@@ -73,3 +73,56 @@
   - **_Specific Target:_** _API p95 latency must be < 300ms. Frontend Largest Contentful Paint (LCP) must be < 2.5 seconds._
 - **5.3 Data Integrity:** User sleep data must be stored securely to track progress over time.
   - **_Specific Target:_** _Implement daily backups of the production database with a 30-day retention policy._
+
+## 6.0 MVP Checkpoints
+
+### MVP 1: The Read-Only Wellness Dashboard
+
+Goal: To deliver a functional, end-to-end, read-only dashboard that visualizes a demo user's sleep and wellness data. This MVP focuses on establishing a solid foundation for the data flow from the database to the UI, without the complexities of user authentication or advanced coaching features.
+
+#### Home Dashboard
+
+- Display of core sleep metrics (Bedtime, Wake-Up, Total Sleep, Efficiency).
+- Display of daily wellness indicators (Skin Temp, Breathing Rate, HRV, SpO2).
+- Visualization of sleep stages (Awake, REM, Light, Deep) in a chart.
+- A date selector to navigate through the demo user's historical data, which updates all modules on the page.
+
+#### Sleep History Page
+
+- A tabular data grid displaying a comprehensive list of all sleep logs from the demo user.
+- The table will include columns for key metrics like bedtime, wake-up time, total sleep, and sleep stages.
+
+#### API Endpoints
+
+- GET /users/demo: Endpoint to retrieve the hardcoded demo user.
+- GET /users/:userId/sleep: Endpoint to fetch all sleep logs for the user.
+- GET /users/:userId/sleep/recent: Endpoint for the most recent sleep log.
+- GET /users/:userId/sleep/:date: Endpoint to get a specific sleep log by date.
+- GET /users/:userId/core-metrics/:date: Endpoint for the core metrics card.
+- GET /users/:userId/sleep-stages/:date: Endpoint for the sleep stages chart.
+- GET /users/:userId/wellness-summary/:date: Endpoint for the wellness indicators.
+
+#### Data Layer
+
+- A PostgreSQL database seeded with a comprehensive set of sample data for a single demo user.
+
+#### Features (Out of Scope for MVP 1)
+
+- User Authentication: No Google OAuth or any other real user login system. The entire experience will be based on the demo user.
+- Sleep Journey Feature: The entire guided coaching experience, including onboarding, advice generation, and progress tracking, will be deferred to MVP 2.
+- Data Modification: All API endpoints will be read-only (GET). There will be no functionality to add, edit, or delete data (e.g., the "Daily Check-In" feature).
+- Fitbit Integration: No live connection or data sync with the Fitbit API. All data will come from the pre-populated database.
+
+#### Definition of Done
+
+- A user can launch the application and land on the splash page.
+- Clicking the "See a Demo" button successfully navigates the user to the home page, loading the demo user's data.
+- The Home page correctly displays all core metrics, wellness indicators, and sleep stages for the most recent sleep log.
+- The user can use the date selector to view data from previous days, and all components on the Home page update accordingly.
+- The user can navigate to the History page and view a complete, scrollable table of the demo user's sleep data.
+- The backend API is fully functional for all specified GET endpoints and returns data in the documented DTO format.
+- The application is styled and responsive for a good user experience on both desktop and mobile devices.
+
+#### Scheduled Completion Date
+
+- September 30, 2025
