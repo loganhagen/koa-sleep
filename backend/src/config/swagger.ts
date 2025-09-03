@@ -15,6 +15,83 @@ const options: swaggerJSDoc.Options = {
     ],
     components: {
       schemas: {
+        User: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              format: "uuid",
+              description: "The unique identifier for the user.",
+            },
+            email: {
+              type: "string",
+              format: "email",
+              description: "The user's email address.",
+            },
+            firstName: {
+              type: "string",
+              description: "The user's first name.",
+            },
+            lastName: {
+              type: "string",
+              description: "The user's last name.",
+            },
+          },
+        },
+        SleepLog: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              format: "uuid",
+              description: "The unique identifier for the sleep log.",
+            },
+            userId: {
+              type: "string",
+              format: "uuid",
+              description: "The unique identifier for the user.",
+            },
+            dateTime: {
+              type: "string",
+              format: "date-time",
+              description: "The date and time the sleep log was recorded.",
+            },
+            bedTime: {
+              type: "string",
+              format: "date-time",
+              description: "The time the user went to bed.",
+            },
+            wakeTime: {
+              type: "string",
+              format: "date-time",
+              description: "The time the user woke up.",
+            },
+            duration: {
+              type: "integer",
+              description: "The total duration of the sleep in minutes.",
+            },
+            efficiency: {
+              type: "integer",
+              description: "The sleep efficiency score.",
+            },
+            awakeMins: {
+              type: "integer",
+              description: "The number of minutes the user was awake.",
+            },
+            lightMins: {
+              type: "integer",
+              description: "The number of minutes the user was in light sleep.",
+            },
+            deepMins: {
+              type: "integer",
+              description: "The number of minutes the user was in deep sleep.",
+            },
+            remMins: {
+              type: "integer",
+              description: "The number of minutes the user was in REM sleep.",
+            },
+          },
+        },
         Error: {
           type: "object",
           properties: {
