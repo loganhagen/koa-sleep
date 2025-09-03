@@ -1,25 +1,11 @@
 import {
   BreathingRate,
   HeartRateVariability,
-  SkinTemperature,
-  SleepLog,
   SpO2,
   User,
 } from "@prisma/client";
 import { UserDTO } from "../types/api/user";
-import {
-  CoreMetrics,
-  CoreMetricsDTO,
-  SleepLevels,
-  SleepLogDTO,
-} from "@custom_types/api/sleep";
-import {
-  BreathingRateDTO,
-  HrvDTO,
-  Spo2DTO,
-  TemperatureDTO,
-} from "@custom_types/api/wellness";
-import { millisecondsToHHMM, millisecondsToHours } from "./converters";
+import { BreathingRateDTO, HrvDTO, Spo2DTO } from "@custom_types/api/wellness";
 
 export const toUserDTO = (user: User): UserDTO => {
   return {
@@ -27,36 +13,6 @@ export const toUserDTO = (user: User): UserDTO => {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-  };
-};
-
-export const toSleepLogDTO = (sleepLog: SleepLog): SleepLogDTO => {
-  return {
-    id: sleepLog.id,
-    fitbitLogId: sleepLog.fitbitLogId.toString(),
-    userId: sleepLog.userId,
-    dateOfSleep: sleepLog.dateOfSleep,
-    startTime: sleepLog.startTime,
-    endTime: sleepLog.endTime,
-    duration: sleepLog.duration,
-    efficiency: sleepLog.efficiency,
-    minutesToFallAsleep: sleepLog.minutesToFallAsleep,
-    minutesAsleep: sleepLog.minutesAsleep,
-    minutesAwake: sleepLog.minutesAwake,
-    timeInBed: sleepLog.timeInBed,
-    isMainSleep: sleepLog.isMainSleep,
-    type: sleepLog.type,
-    infoCode: sleepLog.infoCode,
-    levels: sleepLog.levels as SleepLevels | null,
-  };
-};
-
-export const toSkinTempDTO = (model: SkinTemperature): TemperatureDTO => {
-  return {
-    id: model.id,
-    dateTime: model.dateTime,
-    nightlyRelative: model.nightlyRelative,
-    logType: model.logType,
   };
 };
 
@@ -84,20 +40,5 @@ export const toSpo2DTO = (model: SpO2): Spo2DTO => {
     avg: model.avg,
     min: model.min,
     max: model.max,
-  };
-};
-
-export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
-  const timeFormatOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  };
-
-  return {
-    startTime: model.startTime.toISOString(),
-    endTime: model.endTime.toISOString(),
-    duration: millisecondsToHHMM(model.duration),
-    efficiency: model.efficiency.toString(),
   };
 };

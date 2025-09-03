@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
 import { wellnessService } from "@services/wellnessService";
-import {
-  toBreathingRateDTO,
-  toHrvDTO,
-  toSkinTempDTO,
-  toSpo2DTO,
-} from "@utils/mappers";
+import { toBreathingRateDTO, toHrvDTO, toSpo2DTO } from "@utils/mappers";
 import { WellnessSummaryDTO } from "@custom_types/api/wellness";
 
 export const wellnessController = {
@@ -42,20 +37,9 @@ export const wellnessController = {
         return;
       }
 
-      const summaryDTO: WellnessSummaryDTO = {
-        temperature: summary.temperature
-          ? toSkinTempDTO(summary.temperature)
-          : null,
-        breathingRate: summary.breathingRate
-          ? toBreathingRateDTO(summary.breathingRate)
-          : null,
-        hrv: summary.hrv ? toHrvDTO(summary.hrv) : null,
-        spo2: summary.spo2 ? toSpo2DTO(summary.spo2) : null,
-      };
-
       res.status(200).json({
         success: true,
-        data: summaryDTO,
+        data: summary,
       });
     } catch (error) {
       console.error("Failed to fetch wellness summary:", error);

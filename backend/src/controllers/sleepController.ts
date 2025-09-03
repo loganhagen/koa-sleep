@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
-import { toCoreMetricsDTO, toSleepLogDTO } from "@utils/mappers";
 
 export const sleepController = {
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
@@ -20,7 +19,7 @@ export const sleepController = {
         const sleepLogs = await sleepService.getSleepLogsByUserId(userId);
         res.status(200).json({
           success: true,
-          data: sleepLogs.map(toSleepLogDTO),
+          data: sleepLogs,
         });
         return;
       }
@@ -70,7 +69,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: toSleepLogDTO(sleepLog),
+        data: sleepLog,
       });
       return;
     } catch (error) {
@@ -115,7 +114,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: toSleepLogDTO(sleepLog),
+        data: sleepLog,
       });
       return;
     } catch (error) {
@@ -211,7 +210,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: toCoreMetricsDTO(coreMetrics),
+        data: coreMetrics,
       });
       return;
     } catch (error) {

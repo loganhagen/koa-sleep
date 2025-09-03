@@ -7,26 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ConnectionProvider {
-  GOOGLE
-  FITBIT
-}
+// enum ConnectionProvider {
+//   GOOGLE
+//   FITBIT
+// }
 
-model Connection {
-  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  provider          ConnectionProvider
-  providerAccountId String
-  accessToken       String?
-  refreshToken      String?
-  expiresAt         DateTime?
-  scope             String?
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime
-  userId            String             @db.Uuid
-  User              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+// model Connection {
+//   id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   provider          ConnectionProvider
+//   providerAccountId String
+//   accessToken       String?
+//   refreshToken      String?
+//   expiresAt         DateTime?
+//   scope             String?
+//   createdAt         DateTime           @default(now())
+//   updatedAt         DateTime
+//   userId            String             @db.Uuid
+//   User              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
-}
+//   @@unique([provider, providerAccountId])
+// }
 
 model User {
   id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -35,35 +35,40 @@ model User {
   lastName             String
   createdAt            DateTime               @default(now())
   updatedAt            DateTime
-  Connection           Connection[]
+  // Connection           Connection[]
   SleepLog             SleepLog[]
   SkinTemperature      SkinTemperature[]
   BreathingRate        BreathingRate[]
   HeartRateVariability HeartRateVariability[]
   SpO2                 SpO2[]
+  // FitbitRawSleepLog    FitbitRawSleepLog[]
 }
 
 model SleepLog {
-  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  fitbitLogId         BigInt
-  userId              String   @db.Uuid
-  dateOfSleep         DateTime
-  startTime           DateTime
-  endTime             DateTime
-  duration            Int
-  efficiency          Int
-  minutesToFallAsleep Int
-  minutesAsleep       Int
-  minutesAwake        Int
-  timeInBed           Int
-  isMainSleep         Boolean
-  type                String
-  infoCode            Int
-  levels              Json?
-  User                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId, dateOfSleep])
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @db.Uuid
+  dateTime   DateTime
+  bedTime    DateTime
+  wakeTime   DateTime
+  duration   Int
+  efficiency Int
+  awakeMins  Int
+  lightMins  Int
+  deepMins   Int
+  remMins    Int
+  // rawLog   FitbitRawSleepLog @relation(fields: [rawLogId], references: [id])
+  // rawLogId String            @unique @db.Uuid
+  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+// model FitbitRawSleepLog {
+//   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   userId    String
+//   payload   Json
+//   createdAt DateTime
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   SleepLog SleepLog[]
+// }
 
 enum TemperatureLogType {
   DEDICATED_TRACKER
@@ -71,12 +76,11 @@ enum TemperatureLogType {
 }
 
 model SkinTemperature {
-  id              String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dateTime        DateTime
-  nightlyRelative Float
-  logType         TemperatureLogType
-  userId          String             @db.Uuid
-  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateTime DateTime
+  average  Float
+  userId   String   @db.Uuid
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, dateTime])
 }
@@ -92,12 +96,12 @@ model BreathingRate {
 }
 
 model HeartRateVariability {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dateTime    DateTime @db.Date
-  dailyRmssd  Float
-  deepRmssd   Float
-  userId      String   @db.Uuid
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dateTime   DateTime @db.Date
+  dailyRmssd Float
+  deepRmssd  Float
+  userId     String   @db.Uuid
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, dateTime])
 }

@@ -2,11 +2,13 @@ import "./initEnv";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger";
 import sleepRoutes from "./routes/sleepRoutes";
 import morgan from "morgan";
 import logger from "@utils/logger";
 import userRoutes from "@routes/userRoutes";
+import { swaggerSpec } from "config/swagger";
+
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
@@ -20,12 +22,12 @@ app.use(
     },
   })
 );
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/sleep", sleepRoutes);
-app.use("/users", userRoutes);
+app.use("/api/sleep", sleepRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server is running");
+  res.send(`API docs available at http://localhost:${PORT}/api/docs`);
 });
 
 export default app;
