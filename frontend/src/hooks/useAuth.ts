@@ -2,18 +2,18 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useUser } from "@/app/providers/userProvider";
 import { ApiError, fetchAPI } from "@/services/apiClient";
-import { User } from "@/types/api/user";
+import { UserDTO } from "@/types/api/user";
 
-const fetchDemoUser = async (): Promise<User> => {
-  const endpoint = `/users/demo`;
-  return await fetchAPI<User>(endpoint);
+const fetchDemoUser = async (): Promise<UserDTO> => {
+  const endpoint = `/user/demo%40fitsync`;
+  return await fetchAPI<UserDTO>(endpoint);
 };
 
 export const useDemoLogin = () => {
   const router = useRouter();
   const { login } = useUser();
 
-  return useMutation<User, Error>({
+  return useMutation<UserDTO, Error>({
     mutationFn: fetchDemoUser,
     onSuccess: (demoUser) => {
       console.log(`Successfully fetched user ${demoUser.id}`);

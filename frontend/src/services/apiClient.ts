@@ -20,10 +20,7 @@ export const fetchAPI = async <T>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_ROUTE}${endpoint}`,
-    options
-  );
+  const res = await fetch(`/api/${endpoint}`, options);
 
   const envelope: ApiResponse<T> = await res.json();
 

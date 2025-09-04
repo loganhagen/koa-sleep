@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.EXPRESS_URL}/:path*`,
+        destination: `${process.env.EXPRESS_URL}/api/:path*`,
       },
     ];
   },
