@@ -34,13 +34,6 @@ export interface Spo2DTO {
   max: number;
 }
 
-export interface WellnessSummary {
-  temperature: SkinTemperature | null;
-  breathingRate: BreathingRate | null;
-  hrv: HeartRateVariability | null;
-  spo2: SpO2 | null;
-}
-
 export interface WellnessSummaryDTO {
   temperature: TemperatureDTO | null;
   breathingRate: BreathingRateDTO | null;

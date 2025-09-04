@@ -6,7 +6,12 @@ import {
 } from "@prisma/client";
 import { UserDTO } from "../types/api/user";
 import { BreathingRateDTO, HrvDTO, Spo2DTO } from "@custom_types/api/wellness";
-import { ComprehensiveSleepData } from "@custom_types/db";
+import { ComprehensiveSleepData, CoreMetrics } from "@custom_types/db/db";
+
+import {
+  formatDateString,
+  formatMillisecondsToHoursMinutes,
+} from "./formatters";
 import {
   ComprehensiveSleepDataDTO,
   ComprehensiveSleepRecordDTO,
@@ -18,6 +23,13 @@ export const toUserDTO = (user: User): UserDTO => {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
+  };
+};
+
+export const toCoreMetricsDTO = (coreMetrics: CoreMetrics) => {
+  return {
+    ...coreMetrics,
+    duration: formatMillisecondsToHoursMinutes(coreMetrics.duration),
   };
 };
 
@@ -48,13 +60,6 @@ export const toSpo2DTO = (model: SpO2): Spo2DTO => {
   };
 };
 
-const toDateString = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
 export const toComprehensiveSleepDataDTO = (
   userData: ComprehensiveSleepData
 ): ComprehensiveSleepDataDTO => {
@@ -63,24 +68,30 @@ export const toComprehensiveSleepDataDTO = (
   }
 
   const skinTempMap = new Map(
-    userData.SkinTemperature.map((item) => [toDateString(item.dateTime), item])
+    userData.SkinTemperature.map((item) => [
+      formatDateString(item.dateTime),
+      item,
+    ])
   );
   const breathingRateMap = new Map(
-    userData.BreathingRate.map((item) => [toDateString(item.dateTime), item])
+    userData.BreathingRate.map((item) => [
+      formatDateString(item.dateTime),
+      item,
+    ])
   );
   const hrvMap = new Map(
     userData.HeartRateVariability.map((item) => [
-      toDateString(item.dateTime),
+      formatDateString(item.dateTime),
       item,
     ])
   );
   const spo2Map = new Map(
-    userData.SpO2.map((item) => [toDateString(item.dateTime), item])
+    userData.SpO2.map((item) => [formatDateString(item.dateTime), item])
   );
 
   const records: ComprehensiveSleepRecordDTO[] = userData.SleepLog.map(
     (log) => {
-      const recordDateStr = toDateString(log.wakeTime);
+      const recordDateStr = formatDateString(log.wakeTime);
 
       const skinTempData = skinTempMap.get(recordDateStr);
       const breathingRateData = breathingRateMap.get(recordDateStr);

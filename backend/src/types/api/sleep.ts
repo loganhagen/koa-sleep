@@ -1,15 +1,8 @@
-export interface CoreMetrics {
+export interface CoreMetricsDTO {
   bedTime: Date;
   wakeTime: Date;
-  duration: number;
+  duration: string;
   efficiency: number;
-}
-
-export interface SleepStages {
-  awakeMins: number;
-  lightMins: number;
-  deepMins: number;
-  remMins: number;
 }
 
 export interface ComprehensiveSleepRecordDTO {

@@ -1,4 +1,4 @@
-import { WellnessSummary } from "@custom_types/api/wellness";
+import { WellnessSummary } from "@custom_types/db/db";
 import {
   BreathingRate,
   HeartRateVariability,

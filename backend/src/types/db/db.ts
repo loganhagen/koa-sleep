@@ -1,3 +1,10 @@
+import {
+  SkinTemperature,
+  BreathingRate,
+  HeartRateVariability,
+  SpO2,
+} from "@prisma/client";
+
 interface SleepLogData {
   dateTime: Date;
   bedTime: Date;
@@ -37,4 +44,18 @@ export interface ComprehensiveSleepData {
   BreathingRate: BreathingRateData[];
   HeartRateVariability: HeartRateVariabilityData[];
   SpO2: SpO2Data[];
+}
+
+export interface CoreMetrics {
+  bedTime: Date;
+  wakeTime: Date;
+  duration: number;
+  efficiency: number;
+}
+
+export interface WellnessSummary {
+  temperature: SkinTemperature | null;
+  breathingRate: BreathingRate | null;
+  hrv: HeartRateVariability | null;
+  spo2: SpO2 | null;
 }

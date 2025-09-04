@@ -1,5 +1,4 @@
-import { CoreMetrics } from "@custom_types/api/sleep";
-import { ComprehensiveSleepData } from "@custom_types/db";
+import { ComprehensiveSleepData, CoreMetrics } from "@custom_types/db/db";
 import { SleepLog } from "@prisma/client";
 import prisma from "lib/prisma";
 

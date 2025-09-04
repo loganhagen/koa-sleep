@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
-import { toComprehensiveSleepDataDTO } from "@utils/mappers";
+import { toComprehensiveSleepDataDTO, toCoreMetricsDTO } from "@utils/mappers";
 import { SleepLogDTO } from "@custom_types/api/sleep";
 
 export const sleepController = {
@@ -212,7 +212,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: coreMetrics,
+        data: toCoreMetricsDTO(coreMetrics),
       });
       return;
     } catch (error) {
