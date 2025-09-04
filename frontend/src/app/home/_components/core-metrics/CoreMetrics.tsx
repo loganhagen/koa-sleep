@@ -56,19 +56,19 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   );
 
   const allMetricsPresent =
-    data && data.startTime && data.endTime && data.duration && data.efficiency;
+    data && data.bedTime && data.wakeTime && data.duration && data.efficiency;
 
   const metricsData =
     !error && allMetricsPresent && !isPlaceholderData
       ? [
           {
             label: "Bedtime",
-            value: formatTime(data.startTime),
+            value: formatTime(data.bedTime),
             icon: <BedtimeIcon fontSize="small" color="primary" />,
           },
           {
             label: "Wake-Up",
-            value: formatTime(data.endTime),
+            value: formatTime(data.wakeTime),
             icon: <SunnyIcon fontSize="small" sx={{ color: "warning.main" }} />,
           },
           {

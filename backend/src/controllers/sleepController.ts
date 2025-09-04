@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
 import { toComprehensiveSleepDataDTO } from "@utils/mappers";
+import { SleepLogDTO } from "@custom_types/api/sleep";
 
 export const sleepController = {
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
@@ -52,7 +53,7 @@ export const sleepController = {
         return;
       }
 
-      const sleepLog = await sleepService.getSleepLogByDate(
+      const sleepLog: SleepLogDTO | null = await sleepService.getSleepLogByDate(
         userId,
         new Date(date)
       );

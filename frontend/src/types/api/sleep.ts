@@ -17,6 +17,20 @@ export interface SleepLog {
   levels?: SleepLevels | null;
 }
 
+export interface SleepLogDTO {
+  id: string;
+  userId: string;
+  dateTime: Date;
+  bedTime: Date;
+  wakeTime: Date;
+  duration: number;
+  efficiency: number;
+  awakeMins: number;
+  lightMins: number;
+  deepMins: number;
+  remMins: number;
+}
+
 export interface SleepLevelSummaryItem {
   count: number;
   minutes: number;
@@ -42,8 +56,8 @@ export interface SleepStages {
 }
 
 export interface CoreMetrics {
-  startTime: Date;
-  endTime: Date;
+  bedTime: Date;
+  wakeTime: Date;
   duration: number;
   efficiency: number;
 }

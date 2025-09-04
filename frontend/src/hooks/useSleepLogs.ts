@@ -1,6 +1,6 @@
 import { NotFoundError } from "@/lib/errors";
 import { fetchAPI, isNotFoundError } from "@/services/apiClient";
-import { SleepLog } from "@/types/api/sleep";
+import { SleepLog, SleepLogDTO } from "@/types/api/sleep";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchSleepLogs = async (userId: string): Promise<SleepLog[] | null> => {
@@ -24,8 +24,8 @@ const fetchSleepLogByDate = async (userId: string, date: Date) => {
 
 const fetchMostRecentSleepLog = async (userId: string) => {
   try {
-    const endpoint = `/users/${userId}/sleep/recent`;
-    const data = await fetchAPI<SleepLog>(endpoint);
+    const endpoint = `/user/${userId}/sleep/recent`;
+    const data = await fetchAPI<SleepLogDTO>(endpoint);
     return data;
   } catch (error) {
     throw error;
