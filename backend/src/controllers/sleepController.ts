@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
 import { toComprehensiveSleepDataDTO, toCoreMetricsDTO } from "@utils/mappers";
-import { SleepLogDTO } from "@custom_types/api/sleep";
+import { SleepLogDTO, SleepStagesDTO } from "@custom_types/api/sleep";
 
 export const sleepController = {
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
@@ -146,12 +146,10 @@ export const sleepController = {
         return;
       }
 
-      const log = await sleepService.getSleepStagesByDate(
-        userId,
-        new Date(date)
-      );
+      const data: SleepStagesDTO | null =
+        await sleepService.getSleepStagesByDate(userId, new Date(date));
 
-      if (!log) {
+      if (!data) {
         res.status(404).json({
           success: false,
           error: {
@@ -164,7 +162,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: log,
+        data: data,
       });
       return;
     } catch (error) {

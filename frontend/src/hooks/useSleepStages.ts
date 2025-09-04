@@ -1,12 +1,12 @@
 import { NotFoundError } from "@/lib/errors";
 import { fetchAPI, isNotFoundError } from "@/services/apiClient";
-import { SleepStages } from "@/types/api/sleep";
+import { SleepStagesDTO } from "@/types/api/sleep";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchSleepStagesByDate = async (userId: string, date: Date) => {
   try {
-    const endpoint = `/users/${userId}/sleep-stages/${date.toISOString()}`;
-    const data = await fetchAPI<SleepStages>(endpoint);
+    const endpoint = `/user/${userId}/sleep-stages/${date.toISOString()}`;
+    const data = await fetchAPI<SleepStagesDTO>(endpoint);
     return data;
   } catch (error) {
     if (isNotFoundError(error)) {

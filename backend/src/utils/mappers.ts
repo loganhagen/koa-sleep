@@ -24,6 +24,7 @@ import {
 import {
   ComprehensiveSleepDataDTO,
   ComprehensiveSleepRecordDTO,
+  SleepStagesDTO,
 } from "@custom_types/api/sleep";
 
 export const toUserDTO = (user: User): UserDTO => {

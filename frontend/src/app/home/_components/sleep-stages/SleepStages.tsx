@@ -35,16 +35,15 @@ const SleepStages: React.FC<SleepStagesProps> = ({ targetDate }) => {
 
   const pieChartData = useRealData
     ? Object.entries(data)
-        .map(([stage, value], id) => ({
-          id,
-          value,
-          label:
-            sleepStageConfig[stage as keyof SleepStagesData]?.label ||
-            "Unknown",
-          color:
-            sleepStageConfig[stage as keyof SleepStagesData]?.color ||
-            "#808080",
-        }))
+        .map(([stage, value], id) => {
+          const stageName = stage.replace("Mins", "") as keyof SleepStagesData;
+          return {
+            id,
+            value,
+            label: sleepStageConfig[stageName]?.label || "Unknown",
+            color: sleepStageConfig[stageName]?.color || "#808080",
+          };
+        })
         .sort((a, b) => a.id - b.id)
     : Object.entries(sleepStageConfig).map(([stage, config], id) => ({
         id,

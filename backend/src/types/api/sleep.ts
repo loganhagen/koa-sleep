@@ -5,6 +5,13 @@ export interface CoreMetricsDTO {
   efficiency: number;
 }
 
+export interface SleepStagesDTO {
+  awakeMins: number;
+  lightMins: number;
+  deepMins: number;
+  remMins: number;
+}
+
 export interface ComprehensiveSleepRecordDTO {
   date: Date;
   bedtime: Date;

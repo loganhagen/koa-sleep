@@ -61,3 +61,10 @@ export interface CoreMetrics {
   duration: number;
   efficiency: number;
 }
+
+export interface SleepStagesDTO {
+  awakeMins: number;
+  lightMins: number;
+  deepMins: number;
+  remMins: number;
+}
