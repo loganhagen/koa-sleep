@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
+import { toComprehensiveSleepDataDTO } from "@utils/mappers";
 
 export const sleepController = {
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
@@ -215,6 +216,51 @@ export const sleepController = {
       return;
     } catch (error) {
       console.error("Failed to search for core metrics by date:", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
+  getComprehensiveSleepData: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' parameter is required.",
+          },
+        });
+        return;
+      }
+
+      const sleepData = await sleepService.getComprehensiveSleepData(userId);
+
+      if (!sleepData) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No data found for the specified user.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: sleepData.map(toComprehensiveSleepDataDTO),
+      });
+      return;
+    } catch (error) {
+      console.error("Failed to search for data by date:", error);
       res.status(500).json({
         success: false,
         error: {

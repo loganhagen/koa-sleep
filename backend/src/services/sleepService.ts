@@ -1,4 +1,5 @@
 import { CoreMetrics } from "@custom_types/api/sleep";
+import { ComprehensiveSleepData } from "@custom_types/db";
 import { SleepLog } from "@prisma/client";
 import prisma from "lib/prisma";
 
@@ -59,5 +60,66 @@ export const sleepService = {
       },
     });
     return sleepStages;
+  },
+  getComprehensiveSleepData: async (userId: string) => {
+    const data: ComprehensiveSleepData[] = await prisma.user.findMany({
+      where: { id: userId },
+      select: {
+        id: true,
+        SleepLog: {
+          select: {
+            dateTime: true,
+            bedTime: true,
+            wakeTime: true,
+            duration: true,
+            efficiency: true,
+            awakeMins: true,
+            lightMins: true,
+            deepMins: true,
+            remMins: true,
+          },
+          orderBy: {
+            dateTime: "desc",
+          },
+        },
+        SkinTemperature: {
+          select: {
+            dateTime: true,
+            average: true,
+          },
+          orderBy: {
+            dateTime: "desc",
+          },
+        },
+        BreathingRate: {
+          select: {
+            dateTime: true,
+            breathingRate: true,
+          },
+          orderBy: {
+            dateTime: "desc",
+          },
+        },
+        HeartRateVariability: {
+          select: {
+            dateTime: true,
+            dailyRmssd: true,
+          },
+          orderBy: {
+            dateTime: "desc",
+          },
+        },
+        SpO2: {
+          select: {
+            dateTime: true,
+            avg: true,
+          },
+          orderBy: {
+            dateTime: "desc",
+          },
+        },
+      },
+    });
+    return data;
   },
 };
