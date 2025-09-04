@@ -1,10 +1,4 @@
 import { WellnessSummary } from "@custom_types/db/db";
-import {
-  BreathingRate,
-  HeartRateVariability,
-  SkinTemperature,
-  SpO2,
-} from "@prisma/client";
 import prisma from "lib/prisma";
 
 export const wellnessService = {

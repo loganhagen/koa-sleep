@@ -11,12 +11,7 @@ import { useUser } from "@/app/providers/userProvider";
 import IndicatorItem from "./IndicatorItem";
 import { WellnessIndicatorsSkeleton } from "../_skeletons/WellnessIndicatorsSkeleton";
 import DashboardCard from "../DashboardCard";
-import {
-  BreathingRateLog,
-  HrvLog,
-  Spo2Log,
-  TemperatureLog,
-} from "@/types/api/wellness";
+import { WellnessSummaryDTO } from "@/types/api/wellness";
 import { grey } from "@mui/material/colors";
 
 interface WellnessIndicatorsProps {
@@ -34,8 +29,8 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
 
   const indicatorConfig = [
     {
-      key: "temperature",
-      getValue: (d: TemperatureLog) => `${d.nightlyRelative}°C`,
+      key: "skinTemperature",
+      getValue: (data: WellnessSummaryDTO) => `${data.skinTemperature}°C`,
       label: "Skin Temp",
       Icon: ThermostatIcon,
       gradient: "linear-gradient(145deg, #66bb6a, #43a047)",
@@ -47,7 +42,7 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
     },
     {
       key: "breathingRate",
-      getValue: (d: BreathingRateLog) => `${d.breathingRateValue} br/min`,
+      getValue: (d: WellnessSummaryDTO) => `${d.breathingRate} br/min`,
       label: "Breathing Rate",
       Icon: AirIcon,
       gradient: "linear-gradient(145deg, #42a5f5, #2196f3)",
@@ -59,7 +54,7 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
     },
     {
       key: "hrv",
-      getValue: (d: HrvLog) => `${d.dailyRmssd} ms`,
+      getValue: (d: WellnessSummaryDTO) => `${d.hrv} ms`,
       label: "HRV",
       Icon: MonitorHeartIcon,
       gradient: "linear-gradient(145deg, #ab47bc, #8e24aa)",
@@ -71,7 +66,7 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
     },
     {
       key: "spo2",
-      getValue: (d: Spo2Log) => `${d.avg}%`,
+      getValue: (d: WellnessSummaryDTO) => `${d.spo2}%`,
       label: "SpO2",
       Icon: BloodtypeIcon,
       gradient: "linear-gradient(145deg, #ef9a9a, #e57373)",
@@ -84,25 +79,25 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
 
   const indicators = indicatorConfig.map((config) => {
     const useRealData = !isLoading && !error && !isPlaceholderData && data;
-    const indicatorData = useRealData
-      ? data[config.key as keyof typeof data]
-      : undefined;
 
-    if (indicatorData) {
-      return {
-        ...config,
-        value: config.getValue(indicatorData as any),
-      };
-    } else {
-      return {
-        ...config,
-        value: "--",
-        valueColor: "text.secondary",
-        iconColor: "disabled",
-        gradient: `linear-gradient(145deg, ${grey[200]}, ${grey[300]})`,
-        shadow: "none",
-      };
+    if (useRealData) {
+      const indicatorValue = data[config.key as keyof WellnessSummaryDTO];
+      if (indicatorValue != null) {
+        return {
+          ...config,
+          value: config.getValue(data),
+        };
+      }
     }
+
+    return {
+      ...config,
+      value: "--",
+      valueColor: "text.secondary",
+      iconColor: "disabled",
+      gradient: `linear-gradient(145deg, ${grey[200]}, ${grey[300]})`,
+      shadow: "none",
+    };
   });
 
   return (

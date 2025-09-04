@@ -1,34 +1,6 @@
-export interface TemperatureLog {
-  id: string;
-  dateTime: Date;
-  nightlyRelative: number;
-  logType: string;
-}
-
-export interface BreathingRateLog {
-  id: string;
-  dateTime: Date;
-  breathingRateValue: number;
-}
-
-export interface HrvLog {
-  id: string;
-  dateTime: Date;
-  dailyRmssd: number;
-  deepRmssd: number;
-}
-
-export interface Spo2Log {
-  id: string;
-  dateTime: Date;
-  avg: number;
-  min: number;
-  max: number;
-}
-
-export interface WellnessIndicatorsData {
-  temperatureLog: TemperatureLog;
-  breathingRateLog: BreathingRateLog;
-  hrvLog: HrvLog;
-  spO2Log: Spo2Log;
+export interface WellnessSummaryDTO {
+  skinTemperature: string;
+  breathingRate: string;
+  hrv: string;
+  spo2: string;
 }

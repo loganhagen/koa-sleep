@@ -1,12 +1,12 @@
 import { NotFoundError } from "@/lib/errors";
 import { fetchAPI, isNotFoundError } from "@/services/apiClient";
-import { WellnessIndicatorsData } from "@/types/api/wellness";
+import { WellnessSummaryDTO } from "@/types/api/wellness";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchWellnessSummaryByDate = async (userId: string, date: Date) => {
   try {
-    const endpoint = `/users/${userId}/wellness-summary/${date.toISOString()}`;
-    const data = await fetchAPI<WellnessIndicatorsData>(endpoint);
+    const endpoint = `/user/${userId}/wellness-summary/${date.toISOString()}`;
+    const data = await fetchAPI<WellnessSummaryDTO>(endpoint);
     return data;
   } catch (error) {
     if (isNotFoundError(error)) {

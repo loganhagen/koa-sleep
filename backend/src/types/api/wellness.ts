@@ -1,10 +1,4 @@
-import {
-  BreathingRate,
-  HeartRateVariability,
-  SkinTemperature,
-  SpO2,
-  TemperatureLogType,
-} from "@prisma/client";
+import { TemperatureLogType } from "@prisma/client";
 
 export interface TemperatureDTO {
   id: string;
@@ -35,8 +29,8 @@ export interface Spo2DTO {
 }
 
 export interface WellnessSummaryDTO {
-  temperature: TemperatureDTO | null;
-  breathingRate: BreathingRateDTO | null;
-  hrv: HrvDTO | null;
-  spo2: Spo2DTO | null;
+  skinTemperature: string;
+  breathingRate: string;
+  hrv: string;
+  spo2: string;
 }

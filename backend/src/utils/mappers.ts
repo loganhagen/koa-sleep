@@ -5,8 +5,17 @@ import {
   User,
 } from "@prisma/client";
 import { UserDTO } from "../types/api/user";
-import { BreathingRateDTO, HrvDTO, Spo2DTO } from "@custom_types/api/wellness";
-import { ComprehensiveSleepData, CoreMetrics } from "@custom_types/db/db";
+import {
+  BreathingRateDTO,
+  HrvDTO,
+  Spo2DTO,
+  WellnessSummaryDTO,
+} from "@custom_types/api/wellness";
+import {
+  ComprehensiveSleepData,
+  CoreMetrics,
+  WellnessSummary,
+} from "@custom_types/db/db";
 
 import {
   formatDateString,
@@ -57,6 +66,18 @@ export const toSpo2DTO = (model: SpO2): Spo2DTO => {
     avg: model.avg,
     min: model.min,
     max: model.max,
+  };
+};
+
+export const toWellnessSummaryDTO = (
+  wellnessSummary: WellnessSummary
+): WellnessSummaryDTO => {
+  return {
+    skinTemperature: wellnessSummary.temperature?.average.toString() ?? "N/A",
+    breathingRate:
+      wellnessSummary.breathingRate?.breathingRate.toString() ?? "N/A",
+    hrv: wellnessSummary.hrv?.dailyRmssd.toString() ?? "N/A",
+    spo2: wellnessSummary.spo2?.avg.toString() ?? "N/A",
   };
 };
 

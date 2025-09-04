@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { wellnessService } from "@services/wellnessService";
-import { toBreathingRateDTO, toHrvDTO, toSpo2DTO } from "@utils/mappers";
-import { WellnessSummaryDTO } from "@custom_types/api/wellness";
+import { toWellnessSummaryDTO } from "@utils/mappers";
 
 export const wellnessController = {
   getWellnessSummaryByDate: async (
@@ -39,7 +38,7 @@ export const wellnessController = {
 
       res.status(200).json({
         success: true,
-        data: summary,
+        data: toWellnessSummaryDTO(summary),
       });
     } catch (error) {
       console.error("Failed to fetch wellness summary:", error);
