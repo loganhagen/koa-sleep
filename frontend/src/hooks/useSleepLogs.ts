@@ -1,9 +1,24 @@
 import { NotFoundError } from "@/lib/errors";
 import { fetchAPI, isNotFoundError } from "@/services/apiClient";
-import { SleepLogDTO } from "@/types/api/sleep";
+import { FullLogDTO, SleepLogDTO } from "@/types/api/sleep";
 import { SleepLog } from "@/types/ui/sleep";
 import { toSleepLog } from "@/utils/mappers";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
+const fetchFullLogs = async (userId: string) => {
+  const endpoint = `/user/${userId}/full-logs`;
+
+  try {
+    const data = await fetchAPI<SleepLogDTO[]>(endpoint);
+    const logs = data.map(toSleepLog);
+    return logs;
+  } catch (error) {
+    if (isNotFoundError(error)) {
+      throw new NotFoundError(`No full logs found for ${userId}.`);
+    }
+    throw error;
+  }
+};
 
 const fetchSleepLogs = async (userId: string): Promise<SleepLog[] | null> => {
   const endpoint = `/user/${userId}/sleep`;
@@ -33,6 +48,18 @@ const fetchMostRecentSleepLog = async (userId: string) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const useFullLogs = (userId: string | undefined) => {
+  return useQuery({
+    queryKey: ["full-logs", userId],
+    queryFn: () => {
+      return fetchFullLogs(userId!);
+    },
+    enabled: !!userId,
+    retry: 0,
+    placeholderData: keepPreviousData,
+  });
 };
 
 export const useSleepLogs = (userId: string | undefined) => {

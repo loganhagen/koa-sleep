@@ -10,6 +10,10 @@ export interface SleepLog {
   lightMins: number;
   deepMins: number;
   remMins: number;
+  skinTemperature: number | null;
+  breathingRate: number | null;
+  hrv: number | null;
+  spo2: number | null;
 }
 
 export interface SleepStages {

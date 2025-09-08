@@ -13,11 +13,11 @@ import {
 } from "@mui/material";
 import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 import { useUser } from "../providers/userProvider";
-import { useSleepLogs } from "@/hooks/useSleepLogs";
+import { useFullLogs, useSleepLogs } from "@/hooks/useSleepLogs";
 
 const History = () => {
   const { user } = useUser();
-  const { data: sleepLogs, isLoading, error } = useSleepLogs(user?.id);
+  const { data: sleepLogs, isLoading, error } = useFullLogs(user?.id);
   const [isMounted, setIsMounted] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -42,6 +42,10 @@ const History = () => {
       light: `${log.lightMins}m`,
       deep: `${log.deepMins}m`,
       efficiency: log.efficiency,
+      skinTemperature: log.skinTemperature,
+      breathingRate: log.breathingRate,
+      hrv: log.hrv,
+      spo2: log.spo2,
     }));
   }, [sleepLogs]);
 
@@ -135,6 +139,38 @@ const History = () => {
       align: "center",
       sortComparator: (v1, v2) => v1 - v2,
     },
+    {
+      field: "breathingRate",
+      headerName: "Breathing Rate",
+      width: 120,
+      headerAlign: "center",
+      align: "center",
+      sortComparator: (v1, v2) => v1 - v2,
+    },
+    {
+      field: "hrv",
+      headerName: "HRV",
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+      sortComparator: (v1, v2) => v1 - v2,
+    },
+    {
+      field: "spo2",
+      headerName: "SpO2",
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+      sortComparator: (v1, v2) => v1 - v2,
+    },
+    {
+      field: "skinTemperature",
+      headerName: "Skin Temp",
+      width: 120,
+      headerAlign: "center",
+      align: "center",
+      sortComparator: (v1, v2) => v1 - v2,
+    },
   ];
 
   const renderDataGrid = () => {
@@ -194,21 +230,24 @@ const History = () => {
           },
         }}
       >
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          rowHeight={80}
-          loading={isLoading}
-          disableRowSelectionOnClick
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
+        <Box sx={{ height: "100%", overflowX: "auto" }}>
+          <DataGrid
+            sx={{ minWidth: "1450px" }}
+            rows={rows}
+            columns={columns}
+            rowHeight={80}
+            loading={isLoading}
+            disableRowSelectionOnClick
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 10,
+                },
               },
-            },
-          }}
-          pageSizeOptions={[5, 10, 25]}
-        />
+            }}
+            pageSizeOptions={[5, 10, 25]}
+          />
+        </Box>
       </Paper>
     );
   };
