@@ -1,5 +1,5 @@
 import { SleepStagesDTO } from "@custom_types/api/sleep";
-import { ComprehensiveSleepData, CoreMetrics } from "@custom_types/db/db";
+import { CoreMetrics } from "@custom_types/db/db";
 import { SleepLog } from "@prisma/client";
 import prisma from "lib/prisma";
 
@@ -64,8 +64,8 @@ export const sleepService = {
     });
     return sleepStages;
   },
-  getComprehensiveSleepData: async (userId: string) => {
-    const data: ComprehensiveSleepData[] = await prisma.user.findMany({
+  getSleepHistory: async (userId: string) => {
+    const data = await prisma.user.findMany({
       where: { id: userId },
       select: {
         id: true,

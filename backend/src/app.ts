@@ -2,7 +2,6 @@ import "./initEnv";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import sleepRoutes from "./routes/sleepRoutes";
 import morgan from "morgan";
 import logger from "@utils/logger";
 import userRoutes from "@routes/userRoutes";
@@ -22,7 +21,6 @@ app.use(
     },
   })
 );
-app.use("/api/sleep", sleepRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

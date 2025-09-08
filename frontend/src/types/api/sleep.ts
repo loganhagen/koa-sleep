@@ -1,22 +1,3 @@
-export interface SleepLog {
-  id: string;
-  fitbitLogId: string;
-  userId: string;
-  dateOfSleep: Date;
-  startTime: Date;
-  endTime: Date;
-  duration: number;
-  efficiency: number;
-  minutesToFallAsleep: number;
-  minutesAsleep: number;
-  minutesAwake: number;
-  timeInBed: number;
-  isMainSleep: boolean;
-  type: string;
-  infoCode: number;
-  levels?: SleepLevels | null;
-}
-
 export interface SleepLogDTO {
   id: string;
   userId: string;
@@ -30,24 +11,6 @@ export interface SleepLogDTO {
   deepMins: number;
   remMins: number;
 }
-
-export interface SleepLevelSummaryItem {
-  count: number;
-  minutes: number;
-  thirtyDayAvgMinutes: number;
-}
-
-export interface SleepLevelData {
-  dateTime: string;
-  level: "deep" | "light" | "rem" | "wake";
-  seconds: number;
-}
-
-export interface SleepLevels {
-  data: SleepLevelData[];
-  shortData?: SleepLevelData[];
-}
-
 export interface SleepStages {
   awake: number;
   rem: number;

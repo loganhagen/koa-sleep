@@ -13,6 +13,9 @@ export const formatDateToYYYYMMDD = (date: Date): string => {
 };
 
 export const formatTimeTo12Hour = (date: Date): string => {
+  if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
+    return "";
+  }
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",

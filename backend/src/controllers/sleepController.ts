@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
-import { toComprehensiveSleepDataDTO, toCoreMetricsDTO } from "@utils/mappers";
+import { toCoreMetricsDTO } from "@utils/mappers";
 import { SleepLogDTO, SleepStagesDTO } from "@custom_types/api/sleep";
 
 export const sleepController = {
@@ -225,7 +225,7 @@ export const sleepController = {
       return;
     }
   },
-  getComprehensiveSleepData: async (req: Request, res: Response) => {
+  getSleepHistory: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
 
@@ -240,7 +240,7 @@ export const sleepController = {
         return;
       }
 
-      const sleepData = await sleepService.getComprehensiveSleepData(userId);
+      const sleepData = await sleepService.getSleepHistory(userId);
 
       if (!sleepData) {
         res.status(404).json({
@@ -255,7 +255,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: sleepData.map(toComprehensiveSleepDataDTO),
+        data: sleepData,
       });
       return;
     } catch (error) {
