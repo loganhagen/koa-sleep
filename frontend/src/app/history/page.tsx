@@ -6,7 +6,6 @@ import { Box, Typography, Stack, useMediaQuery, useTheme } from "@mui/material";
 import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 import { useUser } from "../providers/userProvider";
 import { useSleepLogs } from "@/hooks/useSleepLogs";
-import { toSleepLog } from "@/utils/mappers";
 
 const History = () => {
   const { user } = useUser();
@@ -54,6 +53,9 @@ const History = () => {
       width: 120,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        new Date(`01/01/2000 ${v1}`).getTime() -
+        new Date(`01/01/2000 ${v2}`).getTime(),
     },
     {
       field: "wakeUpTime",
@@ -61,6 +63,9 @@ const History = () => {
       width: 130,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        new Date(`01/01/2000 ${v1}`).getTime() -
+        new Date(`01/01/2000 ${v2}`).getTime(),
     },
     {
       field: "totalSleep",
@@ -68,6 +73,15 @@ const History = () => {
       width: 120,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) => {
+        const toMinutes = (s: string) => {
+          const parts = s.split("h ");
+          const hours = parseInt(parts[0], 10);
+          const minutes = parseInt(parts[1].replace("m", ""), 10);
+          return hours * 60 + minutes;
+        };
+        return toMinutes(v1) - toMinutes(v2);
+      },
     },
     {
       field: "awake",
@@ -75,6 +89,8 @@ const History = () => {
       width: 100,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        parseInt(v1.replace("m", "")) - parseInt(v2.replace("m", "")),
     },
     {
       field: "rem",
@@ -82,6 +98,8 @@ const History = () => {
       width: 100,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        parseInt(v1.replace("m", "")) - parseInt(v2.replace("m", "")),
     },
     {
       field: "light",
@@ -89,6 +107,8 @@ const History = () => {
       width: 100,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        parseInt(v1.replace("m", "")) - parseInt(v2.replace("m", "")),
     },
     {
       field: "deep",
@@ -96,6 +116,8 @@ const History = () => {
       width: 100,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        parseInt(v1.replace("m", "")) - parseInt(v2.replace("m", "")),
     },
     {
       field: "efficiency",
@@ -103,6 +125,7 @@ const History = () => {
       width: 120,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) => v1 - v2,
     },
   ];
 
