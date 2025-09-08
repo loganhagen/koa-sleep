@@ -45,6 +45,8 @@ const History = () => {
       width: 120,
       headerAlign: "center",
       align: "center",
+      sortComparator: (v1, v2) =>
+        new Date(v1).getTime() - new Date(v2).getTime(),
     },
     {
       field: "bedtime",

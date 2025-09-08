@@ -1,7 +1,7 @@
 export interface SleepLogDTO {
   id: string;
   userId: string;
-  dateTime: Date;
+  dateTime: string;
   bedTime: Date;
   wakeTime: Date;
   duration: number;
