@@ -2,7 +2,15 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import { Box, Typography, Stack, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Stack,
+  useMediaQuery,
+  useTheme,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 import { useUser } from "../providers/userProvider";
 import { useSleepLogs } from "@/hooks/useSleepLogs";
@@ -129,13 +137,95 @@ const History = () => {
     },
   ];
 
+  const renderDataGrid = () => {
+    if (!isMounted) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 650,
+            width: "100%",
+            maxWidth: "1180px",
+            mx: "auto",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      );
+    }
+    return (
+      <Paper
+        elevation={3}
+        sx={{
+          height: 650,
+          width: "100%",
+          maxWidth: "1180px",
+          mx: "auto",
+          borderRadius: 2,
+          overflow: "hidden",
+          backgroundColor: theme.palette.background.paper,
+          "& .MuiDataGrid-root": {
+            border: "none",
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: theme.palette.grey[100],
+            borderBottom: `1px solid ${theme.palette.divider}`,
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
+            fontSize: "0.95rem",
+            color: theme.palette.text.secondary,
+          },
+          "& .MuiDataGrid-cell": {
+            fontSize: "0.9rem",
+            color: theme.palette.text.primary,
+            borderBottom: `1px dashed ${theme.palette.grey[200]}`,
+          },
+          "& .MuiDataGrid-row": {
+            "&:hover": {
+              backgroundColor: theme.palette.action.hover,
+            },
+          },
+          "& .MuiDataGrid-footerContainer": {
+            borderTop: `1px solid ${theme.palette.divider}`,
+            backgroundColor: theme.palette.grey[50],
+          },
+        }}
+      >
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          rowHeight={80}
+          loading={isLoading}
+          disableRowSelectionOnClick
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+              },
+            },
+          }}
+          pageSizeOptions={[5, 10, 25]}
+        />
+      </Paper>
+    );
+  };
+
   return (
     <Stack sx={{ p: { xs: 2, sm: 3 }, alignItems: "center" }}>
       <Typography
         variant="h3"
         component="h1"
         gutterBottom
-        sx={{ textAlign: "center", fontSize: { xs: "2rem", sm: "3rem" } }}
+        sx={{
+          textAlign: "center",
+          fontSize: { xs: "2rem", sm: "3rem" },
+          mb: { xs: 3, sm: 5 },
+          fontWeight: 700,
+          color: "text.primary",
+        }}
       >
         Sleep History
       </Typography>
@@ -149,6 +239,9 @@ const History = () => {
               textAlign: "center",
               height: "60vh",
               p: 2,
+              backgroundColor: theme.palette.background.paper,
+              borderRadius: 2,
+              boxShadow: theme.shadows[3],
             }}
           >
             <ImportantDevicesIcon
@@ -162,27 +255,7 @@ const History = () => {
             </Typography>
           </Stack>
         ) : (
-          <Box
-            sx={{
-              height: 650,
-              width: "100%",
-              maxWidth: "1180px",
-              mx: "auto",
-              "& .MuiDataGrid-columnHeaderTitle": {
-                fontSize: "1rem",
-                fontWeight: "bold",
-              },
-            }}
-          >
-            {isMounted && (
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                rowHeight={80}
-                loading={isLoading}
-              />
-            )}
-          </Box>
+          renderDataGrid()
         )}
       </Box>
     </Stack>
