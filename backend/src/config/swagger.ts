@@ -92,6 +92,122 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
+        WellnessSummary: {
+          type: "object",
+          properties: {
+            skinTemperature: {
+              type: "string",
+            },
+            breathingRate: {
+              type: "string",
+            },
+            hrv: {
+              type: "string",
+            },
+            spo2: {
+              type: "string",
+            },
+          },
+        },
+        CoreMetrics: {
+          type: "object",
+          properties: {
+            bedTime: {
+              type: "string",
+              format: "date-time",
+            },
+            wakeTime: {
+              type: "string",
+              format: "date-time",
+            },
+            duration: {
+              type: "string",
+            },
+            efficiency: {
+              type: "number",
+            },
+          },
+        },
+        SleepStages: {
+          type: "object",
+          properties: {
+            awakeMins: {
+              type: "number",
+            },
+            lightMins: {
+              type: "number",
+            },
+            deepMins: {
+              type: "number",
+            },
+            remMins: {
+              type: "number",
+            },
+          },
+        },
+        Log: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+            },
+            userId: {
+              type: "string",
+            },
+            dateTime: {
+              type: "string",
+              format: "date-time",
+            },
+            bedTime: {
+              type: "string",
+              format: "date-time",
+            },
+            wakeTime: {
+              type: "string",
+              format: "date-time",
+            },
+            duration: {
+              type: "string",
+            },
+            efficiency: {
+              type: "number",
+            },
+            awakeMins: {
+              type: "number",
+            },
+            lightMins: {
+              type: "number",
+            },
+            deepMins: {
+              type: "number",
+            },
+            remMins: {
+              type: "number",
+            },
+            skinTemperature: {
+              type: "number",
+              nullable: true,
+            },
+            breathingRate: {
+              type: "number",
+              nullable: true,
+            },
+            hrv: {
+              type: "number",
+              nullable: true,
+            },
+            spo2: {
+              type: "number",
+              nullable: true,
+            },
+          },
+        },
+        FullLogs: {
+          type: "array",
+          items: {
+            $ref: "#/components/schemas/Log",
+          },
+        },
         Error: {
           type: "object",
           properties: {

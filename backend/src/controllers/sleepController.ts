@@ -1,9 +1,59 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
 import { toCoreMetricsDTO } from "@utils/mappers";
-import { SleepLogDTO, SleepStagesDTO } from "@custom_types/api/sleep";
+import {
+  FullLogDTO,
+  SleepLogDTO,
+  SleepStagesDTO,
+} from "@custom_types/api/sleep";
+import { userService } from "@services/userService";
 
 export const sleepController = {
+  getFullLogs: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' URL parameter is required.",
+          },
+        });
+        return;
+      }
+
+      const fullLogs: FullLogDTO[] = await userService.getFullLogs(userId);
+
+      if (!fullLogs) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No full logs found.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: fullLogs,
+      });
+      return;
+    } catch (error) {
+      console.error("Failed to search for core metrics by date:", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId } = req.params;
@@ -215,51 +265,6 @@ export const sleepController = {
       return;
     } catch (error) {
       console.error("Failed to search for core metrics by date:", error);
-      res.status(500).json({
-        success: false,
-        error: {
-          code: "INTERNAL_SERVER_ERROR",
-          message: "An unexpected error occurred on the server.",
-        },
-      });
-      return;
-    }
-  },
-  getSleepHistory: async (req: Request, res: Response) => {
-    try {
-      const { userId } = req.params;
-
-      if (!userId) {
-        res.status(400).json({
-          success: false,
-          error: {
-            code: "INVALID_PARAMETER",
-            message: "The 'userId' parameter is required.",
-          },
-        });
-        return;
-      }
-
-      const sleepData = await sleepService.getSleepHistory(userId);
-
-      if (!sleepData) {
-        res.status(404).json({
-          success: false,
-          error: {
-            code: "NOT_FOUND",
-            message: "No data found for the specified user.",
-          },
-        });
-        return;
-      }
-
-      res.status(200).json({
-        success: true,
-        data: sleepData,
-      });
-      return;
-    } catch (error) {
-      console.error("Failed to search for data by date:", error);
       res.status(500).json({
         success: false,
         error: {

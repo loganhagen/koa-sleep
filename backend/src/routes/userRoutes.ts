@@ -354,4 +354,49 @@ router.get("/:userId/sleep-stages/:date", sleepController.getSleepStagesByDate);
  */
 router.get("/:userId/core-metrics/:date", sleepController.getCoreMetricsByDate);
 
+/**
+ * @swagger
+ * /user/{userId}/full-logs:
+ *   get:
+ *     summary: Get all logs for a user
+ *     tags: [Sleep]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: All logs for the user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/FullLogs'
+ *       400:
+ *         description: Invalid user ID supplied
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.get("/:userId/full-logs", sleepController.getFullLogs);
 export default router;
