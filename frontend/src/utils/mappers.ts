@@ -5,6 +5,7 @@ import { formatMillisecondsToHoursMinutes, formatTimeTo12Hour } from "./utils";
 export const toSleepLog = (sleepLogDTO: SleepLogDTO): SleepLog => {
   return {
     ...sleepLogDTO,
+    dateTime: new Date(sleepLogDTO.dateTime).toLocaleDateString("en-CA"),
     duration: formatMillisecondsToHoursMinutes(sleepLogDTO.duration),
     bedTime: formatTimeTo12Hour(new Date(sleepLogDTO.bedTime)),
     wakeTime: formatTimeTo12Hour(new Date(sleepLogDTO.wakeTime)),

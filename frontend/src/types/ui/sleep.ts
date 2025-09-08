@@ -1,7 +1,7 @@
 export interface SleepLog {
   id: string;
   userId: string;
-  dateTime: Date;
+  dateTime: string;
   bedTime: string;
   wakeTime: string;
   duration: string;
@@ -10,4 +10,18 @@ export interface SleepLog {
   lightMins: number;
   deepMins: number;
   remMins: number;
+}
+
+export interface SleepStages {
+  awake: number;
+  rem: number;
+  light: number;
+  deep: number;
+}
+
+export interface CoreMetrics {
+  bedTime: Date;
+  wakeTime: Date;
+  duration: number;
+  efficiency: number;
 }

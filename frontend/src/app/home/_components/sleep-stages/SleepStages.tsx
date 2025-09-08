@@ -8,7 +8,7 @@ import { useUser } from "@/app/providers/userProvider";
 import { useSleepStages } from "@/hooks/useSleepStages";
 import SleepStagesSkeleton from "../_skeletons/SleepStagesSkeleton";
 import DashboardCard from "../DashboardCard";
-import { SleepStages as SleepStagesData } from "@/types/api/sleep";
+import { SleepStages as SleepStagesData } from "@/types/ui/sleep";
 
 interface SleepStagesProps {
   targetDate: Date;

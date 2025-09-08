@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/services/apiClient";
-import { CoreMetrics } from "@/types/api/sleep";
+import { CoreMetrics } from "@/types/ui/sleep";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchCoreMetricsByDate = async (userId: string, date: Date) => {
