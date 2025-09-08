@@ -1,38 +1,12 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import {
-  Box,
-  Typography,
-  Stack,
-  useMediaQuery,
-  useTheme,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Typography, Stack, useMediaQuery, useTheme } from "@mui/material";
 import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 import { useUser } from "../providers/userProvider";
 import { useSleepLogs } from "@/hooks/useSleepLogs";
-
-// Helper function to format duration from minutes to "Xh Ym"
-const formatDuration = (totalMinutes: number): string => {
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  return `${hours}h ${minutes}m`;
-};
-
-// Helper function to format a Date object to "HH:mm"
-const formatTime = (date: Date): string => {
-  const d = new Date(date);
-  const hours = d.getHours().toString().padStart(2, "0");
-  const minutes = d.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
-};
-
-// Helper function to format a Date object to "YYYY-MM-DD"
-const formatDate = (date: Date): string => {
-  return new Date(date).toISOString().split("T")[0];
-};
+import { toSleepLog } from "@/utils/mappers";
 
 const History = () => {
   const { user } = useUser();
@@ -45,23 +19,176 @@ const History = () => {
     setIsMounted(true);
   }, []);
 
-  const gridRows: GridRowsProp = useMemo(() => {
-    if (!data) {
-      return [];
-    }
-    return data.map((log) => ({
-      id: log.id,
-      date: formatDate(log.dateTime),
-      bedtime: formatTime(log.bedTime),
-      wakeUpTime: formatTime(log.wakeTime),
-      totalSleep: formatDuration(log.duration),
-      awake: `${log.awakeMins}m`,
-      rem: `${log.remMins}m`,
-      light: `${log.lightMins}m`,
-      deep: `${log.deepMins}m`,
-      efficiency: log.efficiency,
-    }));
-  }, [data]);
+  const rows: GridRowsProp = [
+    {
+      id: 1,
+      date: "2024-07-28",
+      bedtime: "23:30",
+      wakeUpTime: "07:00",
+      totalSleep: "7h 30m",
+      awake: "23m",
+      rem: "99m",
+      light: "225m",
+      deep: "104m",
+      efficiency: "92",
+    },
+    {
+      id: 2,
+      date: "2024-07-27",
+      bedtime: "00:15",
+      wakeUpTime: "07:00",
+      totalSleep: "6h 45m",
+      awake: "20m",
+      rem: "89m",
+      light: "203m",
+      deep: "93m",
+      efficiency: "88",
+    },
+    {
+      id: 3,
+      date: "2024-07-26",
+      bedtime: "22:45",
+      wakeUpTime: "07:00",
+      totalSleep: "8h 15m",
+      awake: "25m",
+      rem: "109m",
+      light: "248m",
+      deep: "114m",
+      efficiency: "96",
+    },
+    {
+      id: 4,
+      date: "2024-07-25",
+      bedtime: "23:55",
+      wakeUpTime: "06:55",
+      totalSleep: "7h 00m",
+      awake: "21m",
+      rem: "92m",
+      light: "210m",
+      deep: "97m",
+      efficiency: "90",
+    },
+    {
+      id: 5,
+      date: "2024-07-24",
+      bedtime: "23:10",
+      wakeUpTime: "07:00",
+      totalSleep: "7h 50m",
+      awake: "24m",
+      rem: "103m",
+      light: "235m",
+      deep: "108m",
+      efficiency: "94",
+    },
+    {
+      id: 6,
+      date: "2024-07-23",
+      bedtime: "00:30",
+      wakeUpTime: "07:00",
+      totalSleep: "6h 30m",
+      awake: "20m",
+      rem: "86m",
+      light: "195m",
+      deep: "90m",
+      efficiency: "85",
+    },
+    {
+      id: 7,
+      date: "2024-07-22",
+      bedtime: "23:00",
+      wakeUpTime: "07:00",
+      totalSleep: "8h 00m",
+      awake: "24m",
+      rem: "106m",
+      light: "240m",
+      deep: "110m",
+      efficiency: "95",
+    },
+    {
+      id: 8,
+      date: "2024-07-21",
+      bedtime: "23:45",
+      wakeUpTime: "07:00",
+      totalSleep: "7h 15m",
+      awake: "22m",
+      rem: "96m",
+      light: "218m",
+      deep: "100m",
+      efficiency: "91",
+    },
+    {
+      id: 9,
+      date: "2024-07-20",
+      bedtime: "01:00",
+      wakeUpTime: "07:05",
+      totalSleep: "6h 05m",
+      awake: "18m",
+      rem: "80m",
+      light: "183m",
+      deep: "84m",
+      efficiency: "82",
+    },
+    {
+      id: 10,
+      date: "2024-07-19",
+      bedtime: "22:15",
+      wakeUpTime: "07:00",
+      totalSleep: "8h 45m",
+      awake: "26m",
+      rem: "116m",
+      light: "263m",
+      deep: "121m",
+      efficiency: "98",
+    },
+    {
+      id: 11,
+      date: "2024-07-18",
+      bedtime: "23:40",
+      wakeUpTime: "07:00",
+      totalSleep: "7h 20m",
+      awake: "22m",
+      rem: "97m",
+      light: "220m",
+      deep: "101m",
+      efficiency: "93",
+    },
+    {
+      id: 12,
+      date: "2024-07-17",
+      bedtime: "01:10",
+      wakeUpTime: "07:00",
+      totalSleep: "5h 50m",
+      awake: "18m",
+      rem: "77m",
+      light: "175m",
+      deep: "80m",
+      efficiency: "80",
+    },
+    {
+      id: 13,
+      date: "2024-07-16",
+      bedtime: "22:50",
+      wakeUpTime: "07:00",
+      totalSleep: "8h 10m",
+      awake: "25m",
+      rem: "108m",
+      light: "245m",
+      deep: "113m",
+      efficiency: "95",
+    },
+    {
+      id: 14,
+      date: "2024-07-15",
+      bedtime: "23:05",
+      wakeUpTime: "07:00",
+      totalSleep: "7h 55m",
+      awake: "24m",
+      rem: "105m",
+      light: "238m",
+      deep: "109m",
+      efficiency: "97",
+    },
+  ];
 
   const columns: GridColDef[] = [
     {
@@ -129,10 +256,6 @@ const History = () => {
     },
   ];
 
-  if (error) {
-    return <Typography color="error">Failed to load sleep data.</Typography>;
-  }
-
   return (
     <Stack sx={{ p: { xs: 2, sm: 3 }, alignItems: "center" }}>
       <Typography
@@ -179,12 +302,7 @@ const History = () => {
             }}
           >
             {isMounted && (
-              <DataGrid
-                rows={gridRows}
-                columns={columns}
-                rowHeight={80}
-                loading={isLoading}
-              />
+              <DataGrid rows={rows} columns={columns} rowHeight={80} />
             )}
           </Box>
         )}

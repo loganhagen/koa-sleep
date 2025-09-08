@@ -11,6 +11,7 @@ export interface SleepLogDTO {
   deepMins: number;
   remMins: number;
 }
+
 export interface SleepStages {
   awake: number;
   rem: number;
