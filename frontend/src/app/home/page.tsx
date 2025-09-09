@@ -5,7 +5,7 @@ import Greeting from "./_components/Greeting";
 import CoreMetrics from "./_components/core-metrics/CoreMetrics";
 import SleepStages from "./_components/sleep-stages/SleepStages";
 import WellnessIndicators from "./_components/wellness-indicators/WellnessIndicators";
-import { Stack, CircularProgress, Box, Divider } from "@mui/material";
+import { Stack, CircularProgress, Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";

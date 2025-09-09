@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, useTheme } from "@mui/material";
+import { Typography, Stack, useTheme } from "@mui/material";
 import ImportantDevicesIcon from "@mui/icons-material/ImportantDevices";
 
 const MobileMessage = () => {
@@ -17,9 +17,7 @@ const MobileMessage = () => {
         boxShadow: theme.shadows[3],
       }}
     >
-      <ImportantDevicesIcon
-        sx={{ fontSize: 60, color: "primary.main" }}
-      />
+      <ImportantDevicesIcon sx={{ fontSize: 60, color: "primary.main" }} />
       <Typography variant="h5" component="h2" gutterBottom>
         Please view on a larger screen
       </Typography>

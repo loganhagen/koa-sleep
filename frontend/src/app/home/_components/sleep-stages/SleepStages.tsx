@@ -45,7 +45,7 @@ const SleepStages: React.FC<SleepStagesProps> = ({ targetDate }) => {
           };
         })
         .sort((a, b) => a.id - b.id)
-    : Object.entries(sleepStageConfig).map(([stage, config], id) => ({
+    : Object.entries(sleepStageConfig).map(([_, config], id) => ({
         id,
         value: 1,
         label: config.label,

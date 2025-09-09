@@ -2,7 +2,6 @@ import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
 import {
   Home,
   Settings,
-  AutoGraph,
   CalendarMonth,
   CheckCircleOutline,
   ExpandLess,
