@@ -2,6 +2,7 @@
 
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Box, Paper, CircularProgress, useTheme } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 
 interface HistoryTableProps {
@@ -64,6 +65,9 @@ const HistoryTable = ({ rows, columns, isLoading }: HistoryTableProps) => {
           color: theme.palette.text.primary,
           borderBottom: `1px dashed ${theme.palette.grey[200]}`,
         },
+        "& .MuiDataGrid-row:nth-of-type(odd)": {
+          backgroundColor: alpha(theme.palette.primary.main, 0.04),
+        },
         "& .MuiDataGrid-row": {
           "&:hover": {
             backgroundColor: theme.palette.action.hover,
@@ -77,7 +81,7 @@ const HistoryTable = ({ rows, columns, isLoading }: HistoryTableProps) => {
     >
       <Box sx={{ height: "100%", overflowX: "auto" }}>
         <DataGrid
-          sx={{ minWidth: "1450px" }}
+          sx={{ minWidth: "1500px" }}
           rows={rows}
           columns={columns}
           rowHeight={80}

@@ -1,4 +1,23 @@
+import React from "react";
 import { GridColDef } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
+import AirIcon from "@mui/icons-material/Air";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import BloodtypeIcon from "@mui/icons-material/Bloodtype";
+
+const IconHeader = ({
+  icon,
+  text,
+}: {
+  icon: React.ReactNode;
+  text: string;
+}) => (
+  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+    {icon}
+    {text}
+  </Box>
+);
 
 export const getHistoryTableColumns = (): GridColDef[] => [
   {
@@ -93,10 +112,13 @@ export const getHistoryTableColumns = (): GridColDef[] => [
   {
     field: "breathingRate",
     headerName: "Breathing Rate",
-    width: 120,
+    width: 150,
     headerAlign: "center",
     align: "center",
     sortComparator: (v1, v2) => v1 - v2,
+    renderHeader: () => (
+      <IconHeader icon={<AirIcon />} text="Breathing Rate" />
+    ),
   },
   {
     field: "hrv",
@@ -105,6 +127,7 @@ export const getHistoryTableColumns = (): GridColDef[] => [
     headerAlign: "center",
     align: "center",
     sortComparator: (v1, v2) => v1 - v2,
+    renderHeader: () => <IconHeader icon={<MonitorHeartIcon />} text="HRV" />,
   },
   {
     field: "spo2",
@@ -113,13 +136,17 @@ export const getHistoryTableColumns = (): GridColDef[] => [
     headerAlign: "center",
     align: "center",
     sortComparator: (v1, v2) => v1 - v2,
+    renderHeader: () => <IconHeader icon={<BloodtypeIcon />} text="SpO2" />,
   },
   {
     field: "skinTemperature",
     headerName: "Skin Temp",
-    width: 120,
+    width: 140,
     headerAlign: "center",
     align: "center",
     sortComparator: (v1, v2) => v1 - v2,
+    renderHeader: () => (
+      <IconHeader icon={<ThermostatIcon />} text="Skin Temp" />
+    ),
   },
 ];
