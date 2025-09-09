@@ -1,6 +1,6 @@
 import { NotFoundError } from "@/lib/errors";
 import { fetchAPI, isNotFoundError } from "@/services/apiClient";
-import { FullLogDTO, SleepLogDTO } from "@/types/api/sleep";
+import { SleepLogDTO } from "@/types/api/sleep";
 import { SleepLog } from "@/types/ui/sleep";
 import { toSleepLog } from "@/utils/mappers";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
