@@ -7,8 +7,8 @@ import {
 
 export interface CoreMetrics {
   bed_time: Date;
-  wake_tim: Date;
-  duration: number;
+  wake_time: Date;
+  duration_ms: BigInt;
   efficiency: number;
 }
 

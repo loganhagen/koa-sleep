@@ -1,10 +1,9 @@
-import { users } from "@prisma/client";
-import { formatMillisecondsToHoursMinutes } from "@utils/formatters";
 import prisma from "@lib/prisma";
 import { FullSleepLog } from "@custom_types/db/db";
+import { users } from "@prisma/client";
 
 export const userService = {
-  getUserByEmail: async (email: string) => {
+  getUserByEmail: async (email: string): Promise<users | null> => {
     const user = await prisma.users.findUnique({
       where: {
         email,
@@ -12,7 +11,7 @@ export const userService = {
     });
     return user;
   },
-  getFullLogs: async (user_id: string): Promise<FullSleepLog[]> => {
+  getFullSleepLogs: async (user_id: string): Promise<FullSleepLog[]> => {
     const [
       sleepLogs,
       skinTemps,
@@ -50,18 +49,18 @@ export const userService = {
 
       return {
         id: sleepLog.id,
-        userId: sleepLog.user_id,
-        dateTime: sleepLog.date,
-        bedTime: sleepLog.bed_time,
-        wakeTime: sleepLog.wake_time,
-        duration: sleepLog.duration_ms,
+        user_id: sleepLog.user_id,
+        date: sleepLog.date,
+        bed_time: sleepLog.bed_time,
+        wake_time: sleepLog.wake_time,
+        duration_ms: sleepLog.duration_ms,
         efficiency: sleepLog.efficiency,
-        awakeMins: sleepLog.awake_mins,
-        lightMins: sleepLog.light_mins,
-        deepMins: sleepLog.deep_mins,
-        remMins: sleepLog.rem_mins,
-        skinTemperature: skinTempMap.get(dateKey) ?? null,
-        breathingRate: breathingRateMap.get(dateKey) ?? null,
+        awake_mins: sleepLog.awake_mins,
+        light_mins: sleepLog.light_mins,
+        deep_mins: sleepLog.deep_mins,
+        rem_mins: sleepLog.rem_mins,
+        skin_temperature: skinTempMap.get(dateKey) ?? null,
+        breathing_rate: breathingRateMap.get(dateKey) ?? null,
         hrv: hrvMap.get(dateKey) ?? null,
         spo2: spo2Map.get(dateKey) ?? null,
       };

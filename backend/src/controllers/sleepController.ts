@@ -22,7 +22,9 @@ export const sleepController = {
         return;
       }
 
-      const fullLogs: FullSleepLog[] = await userService.getFullLogs(userId);
+      const fullLogs: FullSleepLog[] = await userService.getFullSleepLogs(
+        userId
+      );
 
       if (!fullLogs) {
         res.status(404).json({

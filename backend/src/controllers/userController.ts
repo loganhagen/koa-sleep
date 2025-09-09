@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userService } from "@services/userService";
 import { toUserDTO } from "@utils/mappers";
+import { users } from "@prisma/client";
 
 export const userController = {
   getUserByEmail: async (req: Request, res: Response): Promise<void> => {
@@ -18,7 +19,7 @@ export const userController = {
         return;
       }
 
-      const userRecord = await userService.getUserByEmail(email);
+      const userRecord: users | null = await userService.getUserByEmail(email);
 
       if (!userRecord) {
         res.status(404).json({

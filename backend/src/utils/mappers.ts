@@ -57,7 +57,7 @@ export const toSleepLogDTO = (log: FullSleepLog): SleepLogDTO => {
 export const toCoreMetricsDTO = (coreMetrics: CoreMetrics) => {
   return {
     ...coreMetrics,
-    duration: formatMillisecondsToHoursMinutes(coreMetrics.duration),
+    duration: formatMillisecondsToHoursMinutes(coreMetrics.duration_ms),
   };
 };
 

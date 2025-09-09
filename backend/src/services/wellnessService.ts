@@ -1,7 +1,11 @@
+import { WellnessSummary } from "@custom_types/db/db";
 import prisma from "@lib/prisma";
 
 export const wellnessService = {
-  getWellnessSummaryByDate: async (user_id: string, date: Date) => {
+  getWellnessSummaryByDate: async (
+    user_id: string,
+    date: Date
+  ): Promise<WellnessSummary | null> => {
     const tempPromise = prisma.skin_temperatures.findFirst({
       where: { user_id, date },
     });
@@ -15,17 +19,22 @@ export const wellnessService = {
       where: { user_id, date },
     });
 
-    const [temperature, breathingRate, hrv, spo2] = await Promise.all([
+    const [skin_temperature, breathing_rate, hrv, spo2] = await Promise.all([
       tempPromise,
       breathingRatePromise,
       hrvPromise,
       spo2Promise,
     ]);
 
-    if (!temperature && !breathingRate && !hrv && !spo2) {
+    if (!skin_temperature && !breathing_rate && !hrv && !spo2) {
       return null;
     }
 
-    return { temperature, breathingRate, hrv, spo2 };
+    return {
+      skin_temperature,
+      breathing_rate,
+      hrv,
+      spo2,
+    };
   },
 };
