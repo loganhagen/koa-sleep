@@ -45,13 +45,13 @@ const Splash = () => {
           style={{ maxWidth: "80vw", height: "auto" }}
         />
         <Typography variant="h3" fontWeight="bold" color="text.primary">
-          Welcome to FitSync
+          Welcome to Koa Sleep
         </Typography>
         <Typography variant="h6" color="text.secondary">
           Unlock the science of your sleep.
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ pt: 2 }}>
-          FitSync transforms your Fitbit data into a personalized coaching
+          Koa Sleep transforms your Fitbit data into a personalized coaching
           experience. Instead of just showing you data, we guide you through a
           Sleep Journey — a tailored program designed to help you build
           healthier habits and achieve your sleep goals, one night at a time.

@@ -121,7 +121,7 @@ const SidebarComponent: React.FC = () => {
               transition: "width 0.3s ease-in-out, opacity 0.2s ease-in-out",
             }}
           >
-            FitSync
+            Koa
           </Typography>
         </Box>
         <Menu menuItemStyles={menuItemStyles} style={{ flexGrow: 1 }}>
