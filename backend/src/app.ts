@@ -5,7 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
 import logger from "@utils/logger";
 import userRoutes from "@routes/userRoutes";
-import { swaggerSpec } from "config/swagger";
+import { swaggerSpec } from "@config/swagger";
 
 const PORT = process.env.PORT || 5000;
 

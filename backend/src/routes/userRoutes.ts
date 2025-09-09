@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { userController } from "../controllers/userController";
-import { sleepController } from "../controllers/sleepController";
-import { wellnessController } from "controllers/wellnessController";
+import { userController } from "@controllers/userController";
+import { sleepController } from "@controllers/sleepController";
+import { wellnessController } from "@controllers/wellnessController";
 
 const router = Router();
 

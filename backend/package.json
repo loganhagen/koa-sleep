@@ -54,6 +54,9 @@
     "@utils": "dist/utils",
     "@custom_types": "dist/types",
     "@services": "dist/services",
-    "@routes": "dist/routes"
+    "@routes": "dist/routes",
+    "@lib": "dist/lib",
+    "@controllers": "dist/controllers",
+    "@config": "dist/config"
   }
 }

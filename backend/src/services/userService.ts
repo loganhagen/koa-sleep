@@ -1,17 +1,17 @@
-import { User } from "@prisma/client";
+import { users } from "@prisma/client";
 import { formatMillisecondsToHoursMinutes } from "@utils/formatters";
-import prisma from "lib/prisma";
+import prisma from "@lib/prisma";
 
 export const userService = {
-  getUserByEmail: async (email: string): Promise<User | null> => {
-    const user: User | null = await prisma.user.findUnique({
+  getUserByEmail: async (email: string) => {
+    const user = await prisma.users.findUnique({
       where: {
-        email: email,
+        email,
       },
     });
     return user;
   },
-  getFullLogs: async (userId: string) => {
+  getFullLogs: async (user_id: string) => {
     const [
       sleepLogs,
       skinTemps,
@@ -19,52 +19,48 @@ export const userService = {
       hrVariabilities,
       spo2Readings,
     ] = await Promise.all([
-      prisma.sleepLog.findMany({
-        where: { userId },
-        orderBy: { dateTime: "desc" },
+      prisma.sleep_logs.findMany({
+        where: { user_id },
+        orderBy: { date: "desc" },
       }),
-      prisma.skinTemperature.findMany({ where: { userId } }),
-      prisma.breathingRate.findMany({ where: { userId } }),
-      prisma.heartRateVariability.findMany({ where: { userId } }),
-      prisma.spO2.findMany({ where: { userId } }),
+      prisma.skin_temperatures.findMany({ where: { user_id } }),
+      prisma.breathing_rates.findMany({ where: { user_id } }),
+      prisma.heart_rate_variabilities.findMany({ where: { user_id } }),
+      prisma.spo2_readings.findMany({ where: { user_id } }),
     ]);
 
     const getDateKey = (date: Date) => date.toISOString().split("T")[0];
 
     const skinTempMap = new Map(
-      skinTemps.map((item) => [getDateKey(item.dateTime), item.average])
+      skinTemps.map((item) => [getDateKey(item.date), item.average])
     );
     const breathingRateMap = new Map(
-      breathingRates.map((item) => [
-        getDateKey(item.dateTime),
-        item.breathingRate,
-      ])
+      breathingRates.map((item) => [getDateKey(item.date), item.breathing_rate])
     );
     const hrvMap = new Map(
-      hrVariabilities.map((item) => [
-        getDateKey(item.dateTime),
-        item.dailyRmssd,
-      ])
+      hrVariabilities.map((item) => [getDateKey(item.date), item.daily_rmssd])
     );
     const spo2Map = new Map(
-      spo2Readings.map((item) => [getDateKey(item.dateTime), item.avg])
+      spo2Readings.map((item) => [getDateKey(item.date), item.avg])
     );
 
     const combinedLogs = sleepLogs.map((sleepLog) => {
-      const dateKey = getDateKey(sleepLog.dateTime);
+      const dateKey = getDateKey(sleepLog.date);
 
       return {
         id: sleepLog.id,
-        userId: sleepLog.userId,
-        dateTime: sleepLog.dateTime.toISOString(),
-        bedTime: sleepLog.bedTime.toISOString(),
-        wakeTime: sleepLog.wakeTime.toISOString(),
-        duration: formatMillisecondsToHoursMinutes(sleepLog.duration),
+        userId: sleepLog.user_id,
+        dateTime: sleepLog.date.toISOString(),
+        bedTime: sleepLog.bed_time.toISOString(),
+        wakeTime: sleepLog.wake_time.toISOString(),
+        duration: formatMillisecondsToHoursMinutes(
+          Number(sleepLog.duration_ms)
+        ),
         efficiency: sleepLog.efficiency,
-        awakeMins: sleepLog.awakeMins,
-        lightMins: sleepLog.lightMins,
-        deepMins: sleepLog.deepMins,
-        remMins: sleepLog.remMins,
+        awakeMins: sleepLog.awake_mins,
+        lightMins: sleepLog.light_mins,
+        deepMins: sleepLog.deep_mins,
+        remMins: sleepLog.rem_mins,
         skinTemperature: skinTempMap.get(dateKey) ?? null,
         breathingRate: breathingRateMap.get(dateKey) ?? null,
         hrv: hrvMap.get(dateKey) ?? null,

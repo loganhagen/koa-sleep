@@ -4,7 +4,7 @@ const options: swaggerJSDoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "FitSync API",
+      title: "Koa Sleep API",
       version: "1.0.0",
       description: "API for tracking and retrieving user wellness data.",
     },

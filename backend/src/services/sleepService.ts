@@ -1,13 +1,11 @@
-import { SleepStagesDTO } from "@custom_types/api/sleep";
-import { CoreMetrics } from "@custom_types/db/db";
-import { SleepLog } from "@prisma/client";
-import prisma from "lib/prisma";
+import { sleep_logs } from "@prisma/client";
+import prisma from "@lib/prisma";
 
 export const sleepService = {
-  getSleepLogsByUserId: async (userId: string): Promise<SleepLog[]> => {
-    const sleepLogs: SleepLog[] = await prisma.sleepLog.findMany({
+  getSleepLogsByUserId: async (userId: string) => {
+    const sleepLogs: sleep_logs[] = await prisma.sleep_logs.findMany({
       where: {
-        userId: userId,
+        user_id: userId,
       },
     });
     return sleepLogs;
@@ -16,51 +14,47 @@ export const sleepService = {
   getSleepLogByDate: async (
     userId: string,
     date: Date
-  ): Promise<SleepLog | null> => {
-    const sleepLog: SleepLog | null = await prisma.sleepLog.findFirst({
+  ): Promise<sleep_logs | null> => {
+    const sleepLog: sleep_logs | null = await prisma.sleep_logs.findFirst({
       where: {
-        userId: userId,
-        dateTime: date,
+        user_id: userId,
+        date: date,
       },
     });
     return sleepLog;
   },
-  getMostRecentSleepLog: async (userId: string): Promise<SleepLog | null> => {
-    const mostRecentSleepLog: SleepLog | null = await prisma.sleepLog.findFirst(
-      {
+  getMostRecentSleepLog: async (userId: string) => {
+    const mostRecentSleepLog: sleep_logs | null =
+      await prisma.sleep_logs.findFirst({
         where: {
-          userId: userId,
+          user_id: userId,
         },
         orderBy: {
-          dateTime: "desc",
+          date: "desc",
         },
-      }
-    );
+      });
     return mostRecentSleepLog;
   },
   getCoreMetricsByDate: async (userId: string, date: Date) => {
-    const coreMetrics: CoreMetrics | null = await prisma.sleepLog.findFirst({
-      where: { userId: userId, dateTime: date },
+    const coreMetrics = await prisma.sleep_logs.findFirst({
+      where: { user_id: userId, date: date },
       select: {
-        bedTime: true,
-        wakeTime: true,
-        duration: true,
+        bed_time: true,
+        wake_time: true,
+        duration_ms: true,
         efficiency: true,
       },
     });
     return coreMetrics;
   },
-  getSleepStagesByDate: async (
-    userId: string,
-    date: Date
-  ): Promise<SleepStagesDTO | null> => {
-    const sleepStages = await prisma.sleepLog.findFirst({
-      where: { userId: userId, dateTime: date },
+  getSleepStagesByDate: async (userId: string, date: Date) => {
+    const sleepStages = await prisma.sleep_logs.findFirst({
+      where: { user_id: userId, date: date },
       select: {
-        awakeMins: true,
-        lightMins: true,
-        deepMins: true,
-        remMins: true,
+        awake_mins: true,
+        light_mins: true,
+        deep_mins: true,
+        rem_mins: true,
       },
     });
     return sleepStages;

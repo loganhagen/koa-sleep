@@ -7,113 +7,85 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// enum ConnectionProvider {
-//   GOOGLE
-//   FITBIT
-// }
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model breathing_rates {
+  id             Int      @id @default(autoincrement())
+  user_id        String   @db.Uuid
+  date           DateTime @db.Date
+  breathing_rate Float
+  users          users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-// model Connection {
-//   id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-//   provider          ConnectionProvider
-//   providerAccountId String
-//   accessToken       String?
-//   refreshToken      String?
-//   expiresAt         DateTime?
-//   scope             String?
-//   createdAt         DateTime           @default(now())
-//   updatedAt         DateTime
-//   userId            String             @db.Uuid
-//   User              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@unique([provider, providerAccountId])
-// }
-
-model User {
-  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email                String                 @unique
-  firstName            String
-  lastName             String
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime
-  // Connection           Connection[]
-  SleepLog             SleepLog[]
-  SkinTemperature      SkinTemperature[]
-  BreathingRate        BreathingRate[]
-  HeartRateVariability HeartRateVariability[]
-  SpO2                 SpO2[]
-  // FitbitRawSleepLog    FitbitRawSleepLog[]
+  @@unique([user_id, date])
+  @@index([user_id, date])
 }
 
-model SleepLog {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId     String   @db.Uuid
-  dateTime   DateTime
-  bedTime    DateTime
-  wakeTime   DateTime
-  duration   Int
-  efficiency Int
-  awakeMins  Int
-  lightMins  Int
-  deepMins   Int
-  remMins    Int
-  // rawLog   FitbitRawSleepLog @relation(fields: [rawLogId], references: [id])
-  // rawLogId String            @unique @db.Uuid
-  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model heart_rate_variabilities {
+  id          Int      @id @default(autoincrement())
+  user_id     String   @db.Uuid
+  date        DateTime @db.Date
+  daily_rmssd Float
+  deep_rmssd  Float
+  users       users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, date])
+  @@index([user_id, date])
 }
 
-// model FitbitRawSleepLog {
-//   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-//   userId    String
-//   payload   Json
-//   createdAt DateTime
-//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   SleepLog SleepLog[]
-// }
+model skin_temperatures {
+  id      Int      @id @default(autoincrement())
+  user_id String   @db.Uuid
+  date    DateTime @db.Date
+  average Float
+  users   users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-enum TemperatureLogType {
-  DEDICATED_TRACKER
-  OTHER
+  @@unique([user_id, date])
+  @@index([user_id, date])
 }
 
-model SkinTemperature {
-  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dateTime DateTime
-  average  Float
-  userId   String   @db.Uuid
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model sleep_logs {
+  id          Int      @id @default(autoincrement())
+  user_id     String   @db.Uuid
+  date        DateTime @db.Date
+  bed_time    DateTime @db.Timestamptz(6)
+  wake_time   DateTime @db.Timestamptz(6)
+  duration_ms BigInt
+  efficiency  Int
+  awake_mins  Int
+  light_mins  Int
+  deep_mins   Int
+  rem_mins    Int
+  users       users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@unique([userId, dateTime])
+  @@unique([user_id, date])
+  @@index([user_id, date])
 }
 
-model BreathingRate {
-  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dateTime      DateTime @db.Date
-  breathingRate Float
-  userId        String   @db.Uuid
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model spo2_readings {
+  id      Int      @id @default(autoincrement())
+  user_id String   @db.Uuid
+  date    DateTime @db.Date
+  avg     Int
+  min     Int
+  max     Int
+  users   users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@unique([userId, dateTime])
+  @@unique([user_id, date])
+  @@index([user_id, date])
 }
 
-model HeartRateVariability {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dateTime   DateTime @db.Date
-  dailyRmssd Float
-  deepRmssd  Float
-  userId     String   @db.Uuid
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, dateTime])
-}
-
-model SpO2 {
-  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  dateTime DateTime @db.Date
-  avg      Float
-  min      Float
-  max      Float
-  userId   String   @db.Uuid
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, dateTime])
+model users {
+  id                       String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                    String                     @unique
+  first_name               String?
+  last_name                String?
+  created_at               DateTime                   @default(now()) @db.Timestamptz(6)
+  updated_at               DateTime                   @default(now()) @db.Timestamptz(6)
+  breathing_rates          breathing_rates[]
+  heart_rate_variabilities heart_rate_variabilities[]
+  skin_temperatures        skin_temperatures[]
+  sleep_logs               sleep_logs[]
+  spo2_readings            spo2_readings[]
 }
