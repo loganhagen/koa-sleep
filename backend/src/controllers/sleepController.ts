@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
 import { sleepService } from "@services/sleepService";
-import { toCoreMetricsDTO } from "@utils/mappers";
-import {
-  FullLogDTO,
-  SleepLogDTO,
-  SleepStagesDTO,
-} from "@custom_types/api/sleep";
+import { toCoreMetricsDTO, toSleepLogDTO } from "@utils/mappers";
+import { SleepLogDTO, SleepStagesDTO } from "@custom_types/api/sleep";
 import { userService } from "@services/userService";
+import { sleep_logs } from "@prisma/client";
+import { FullSleepLog } from "@custom_types/db/db";
 
 export const sleepController = {
   getFullLogs: async (req: Request, res: Response) => {
@@ -24,7 +22,7 @@ export const sleepController = {
         return;
       }
 
-      const fullLogs: FullLogDTO[] = await userService.getFullLogs(userId);
+      const fullLogs: FullSleepLog[] = await userService.getFullLogs(userId);
 
       if (!fullLogs) {
         res.status(404).json({
@@ -39,7 +37,7 @@ export const sleepController = {
 
       res.status(200).json({
         success: true,
-        data: fullLogs,
+        data: fullLogs.map(toSleepLogDTO),
       });
       return;
     } catch (error) {
@@ -103,7 +101,7 @@ export const sleepController = {
         return;
       }
 
-      const sleepLog: SleepLogDTO | null = await sleepService.getSleepLogByDate(
+      const sleepLog: sleep_logs | null = await sleepService.getSleepLogByDate(
         userId,
         new Date(date)
       );

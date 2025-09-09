@@ -1,20 +1,39 @@
 import {
-  SkinTemperature,
-  BreathingRate,
-  HeartRateVariability,
-  SpO2,
+  skin_temperatures,
+  breathing_rates,
+  heart_rate_variabilities,
+  spo2_readings,
 } from "@prisma/client";
 
 export interface CoreMetrics {
-  bedTime: Date;
-  wakeTime: Date;
+  bed_time: Date;
+  wake_tim: Date;
   duration: number;
   efficiency: number;
 }
 
 export interface WellnessSummary {
-  temperature: SkinTemperature | null;
-  breathingRate: BreathingRate | null;
-  hrv: HeartRateVariability | null;
-  spo2: SpO2 | null;
+  skin_temperature: skin_temperatures | null;
+  breathing_rate: breathing_rates | null;
+  hrv: heart_rate_variabilities | null;
+  spo2: spo2_readings | null;
+}
+
+/* This is the data structure returned by the getFullLogs() user service function. */
+export interface FullSleepLog {
+  id: number;
+  user_id: string;
+  date: Date;
+  bed_time: Date;
+  wake_time: Date;
+  duration_ms: bigint;
+  efficiency: number;
+  awake_mins: number;
+  light_mins: number;
+  deep_mins: number;
+  rem_mins: number;
+  skin_temperature: number | null;
+  breathing_rate: number | null;
+  hrv: number | null;
+  spo2: number | null;
 }

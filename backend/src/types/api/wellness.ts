@@ -1,36 +1,30 @@
-import { TemperatureLogType } from "@prisma/client";
-
 export interface TemperatureDTO {
   id: string;
-  dateTime: Date;
-  nightlyRelative: number;
-  logType: TemperatureLogType;
+  date: Date;
+  value: number;
 }
 
 export interface BreathingRateDTO {
   id: string;
-  dateTime: Date;
-  breathingRateValue: number;
+  date: Date;
+  value: number;
 }
 
 export interface HrvDTO {
   id: string;
-  dateTime: Date;
-  dailyRmssd: number;
-  deepRmssd: number;
+  date: Date;
+  value: number;
 }
 
 export interface Spo2DTO {
   id: string;
-  dateTime: Date;
-  avg: number;
-  min: number;
-  max: number;
+  date: Date;
+  value: number;
 }
 
 export interface WellnessSummaryDTO {
-  skinTemperature: string;
-  breathingRate: string;
+  skin_temperature: string;
+  breathing_rate: string;
   hrv: string;
   spo2: string;
 }

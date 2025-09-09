@@ -1,6 +1,7 @@
 import { users } from "@prisma/client";
 import { formatMillisecondsToHoursMinutes } from "@utils/formatters";
 import prisma from "@lib/prisma";
+import { FullSleepLog } from "@custom_types/db/db";
 
 export const userService = {
   getUserByEmail: async (email: string) => {
@@ -11,7 +12,7 @@ export const userService = {
     });
     return user;
   },
-  getFullLogs: async (user_id: string) => {
+  getFullLogs: async (user_id: string): Promise<FullSleepLog[]> => {
     const [
       sleepLogs,
       skinTemps,
@@ -50,12 +51,10 @@ export const userService = {
       return {
         id: sleepLog.id,
         userId: sleepLog.user_id,
-        dateTime: sleepLog.date.toISOString(),
-        bedTime: sleepLog.bed_time.toISOString(),
-        wakeTime: sleepLog.wake_time.toISOString(),
-        duration: formatMillisecondsToHoursMinutes(
-          Number(sleepLog.duration_ms)
-        ),
+        dateTime: sleepLog.date,
+        bedTime: sleepLog.bed_time,
+        wakeTime: sleepLog.wake_time,
+        duration: sleepLog.duration_ms,
         efficiency: sleepLog.efficiency,
         awakeMins: sleepLog.awake_mins,
         lightMins: sleepLog.light_mins,

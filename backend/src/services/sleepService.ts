@@ -1,5 +1,7 @@
 import { sleep_logs } from "@prisma/client";
 import prisma from "@lib/prisma";
+import { SleepStagesDTO } from "@custom_types/api/sleep";
+import { CoreMetrics } from "@custom_types/db/db";
 
 export const sleepService = {
   getSleepLogsByUserId: async (userId: string) => {
@@ -35,7 +37,10 @@ export const sleepService = {
       });
     return mostRecentSleepLog;
   },
-  getCoreMetricsByDate: async (userId: string, date: Date) => {
+  getCoreMetricsByDate: async (
+    userId: string,
+    date: Date
+  ): Promise<CoreMetrics | null> => {
     const coreMetrics = await prisma.sleep_logs.findFirst({
       where: { user_id: userId, date: date },
       select: {
@@ -47,7 +52,10 @@ export const sleepService = {
     });
     return coreMetrics;
   },
-  getSleepStagesByDate: async (userId: string, date: Date) => {
+  getSleepStagesByDate: async (
+    userId: string,
+    date: Date
+  ): Promise<SleepStagesDTO | null> => {
     const sleepStages = await prisma.sleep_logs.findFirst({
       where: { user_id: userId, date: date },
       select: {

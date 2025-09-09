@@ -1,45 +1,31 @@
 export interface CoreMetricsDTO {
-  bedTime: Date;
-  wakeTime: Date;
+  bed_time: Date;
+  wake_time: Date;
   duration: string;
   efficiency: number;
 }
 
 export interface SleepStagesDTO {
-  awakeMins: number;
-  lightMins: number;
-  deepMins: number;
-  remMins: number;
+  awake_mins: number;
+  light_mins: number;
+  deep_mins: number;
+  rem_mins: number;
 }
 
 export interface SleepLogDTO {
   id: string;
-  userId: string;
-  dateTime: Date;
-  bedTime: Date;
-  wakeTime: Date;
-  duration: number;
-  efficiency: number;
-  awakeMins: number;
-  lightMins: number;
-  deepMins: number;
-  remMins: number;
-}
-
-export type FullLogDTO = {
-  id: string;
-  userId: string;
-  dateTime: string;
-  bedTime: string;
-  wakeTime: string;
+  user_id: string;
+  date: string;
+  bed_time: string;
+  wake_time: string;
   duration: string;
   efficiency: number;
-  awakeMins: number;
-  lightMins: number;
-  deepMins: number;
-  remMins: number;
-  skinTemperature: number | null;
-  breathingRate: number | null;
+  awake_mins: number;
+  light_mins: number;
+  deep_mins: number;
+  rem_mins: number;
+  skin_temperature: number | null;
+  breathing_rate: number | null;
   hrv: number | null;
   spo2: number | null;
-};
+}
