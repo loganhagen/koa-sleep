@@ -22,10 +22,3 @@ export interface SleepStages {
   light: number;
   deep: number;
 }
-
-export interface CoreMetrics {
-  bedTime: Date;
-  wakeTime: Date;
-  duration: number;
-  efficiency: number;
-}

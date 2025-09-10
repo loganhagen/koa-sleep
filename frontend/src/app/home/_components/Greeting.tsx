@@ -44,7 +44,7 @@ const Greeting = () => {
           alignItems="center"
         >
           <Typography variant="h4" sx={{ color: "text.primary" }}>
-            {user?.firstName}
+            {user?.first_name}
           </Typography>
           <WavingHandIcon sx={{ fontSize: 30, color: "info.main" }} />
         </Stack>

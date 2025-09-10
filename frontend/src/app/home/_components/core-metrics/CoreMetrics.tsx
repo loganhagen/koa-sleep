@@ -12,8 +12,8 @@ import { useCoreMetrics } from "@/hooks/useCoreMetrics";
 import { MetricDisplay } from "./MetricsDisplay";
 import DashboardCard from "../DashboardCard";
 
-const formatTime = (isoObject: Date): string => {
-  const date = new Date(isoObject);
+const formatTime = (isoString: string): string => {
+  const date = new Date(isoString);
   return date.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -56,19 +56,19 @@ const CoreMetrics: React.FC<CoreMetricsProps> = ({ targetDate }) => {
   );
 
   const allMetricsPresent =
-    data && data.bedTime && data.wakeTime && data.duration && data.efficiency;
+    data && data.bed_time && data.wake_time && data.duration && data.efficiency;
 
   const metricsData =
     !error && allMetricsPresent && !isPlaceholderData
       ? [
           {
             label: "Bedtime",
-            value: formatTime(data.bedTime),
+            value: formatTime(data.bed_time),
             icon: <BedtimeIcon fontSize="small" color="primary" />,
           },
           {
             label: "Wake-Up",
-            value: formatTime(data.wakeTime),
+            value: formatTime(data.wake_time),
             icon: <SunnyIcon fontSize="small" sx={{ color: "warning.main" }} />,
           },
           {

@@ -5,7 +5,7 @@ import { ApiError, fetchAPI } from "@/services/apiClient";
 import { UserDTO } from "@/types/api/user";
 
 const fetchDemoUser = async (): Promise<UserDTO> => {
-  const endpoint = `/user/demo%40fitsync`;
+  const endpoint = `/user/demo%40koa`;
   return await fetchAPI<UserDTO>(endpoint);
 };
 

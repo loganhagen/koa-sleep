@@ -1,24 +1,27 @@
 export interface SleepLogDTO {
   id: string;
-  userId: string;
-  dateTime: string;
-  bedTime: Date;
-  wakeTime: Date;
+  user_id: string;
+  date: string;
+  bed_time: string;
+  wake_time: string;
   duration: string;
   efficiency: number;
-  awakeMins: number;
-  lightMins: number;
-  deepMins: number;
-  remMins: number;
-  skinTemperature: number | null;
-  breathingRate: number | null;
-  hrv: number | null;
-  spo2: number | null;
+  awake_mins: number;
+  light_mins: number;
+  deep_mins: number;
+  rem_mins: number;
 }
 
 export interface SleepStagesDTO {
-  awakeMins: number;
-  lightMins: number;
-  deepMins: number;
-  remMins: number;
+  awake_mins: number;
+  light_mins: number;
+  deep_mins: number;
+  rem_mins: number;
+}
+
+export interface CoreMetricsDTO {
+  bed_time: string;
+  wake_time: string;
+  duration: string;
+  efficiency: number;
 }

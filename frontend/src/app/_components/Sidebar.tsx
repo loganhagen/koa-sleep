@@ -196,8 +196,8 @@ const SidebarComponent: React.FC = () => {
             }}
           >
             <Avatar sx={{ bgcolor: "primary.main" }}>
-              {user?.firstName[0]}
-              {user?.lastName[0]}
+              {user?.first_name?.[0] ?? "User"}
+              {user?.last_name?.[0] ?? "Name"}
             </Avatar>
             <Box
               sx={{
@@ -210,7 +210,7 @@ const SidebarComponent: React.FC = () => {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}>
-                {user?.firstName} {user?.lastName}
+                {user?.first_name} {user?.last_name}
               </Typography>
             </Box>
           </Box>

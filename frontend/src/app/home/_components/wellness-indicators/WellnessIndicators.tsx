@@ -29,8 +29,8 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
 
   const indicatorConfig = [
     {
-      key: "skinTemperature",
-      getValue: (data: WellnessSummaryDTO) => `${data.skinTemperature}°C`,
+      key: "skin_temperature",
+      getValue: (d: WellnessSummaryDTO) => `${d.skin_temperature}°C`,
       label: "Skin Temp",
       Icon: ThermostatIcon,
       gradient: "linear-gradient(145deg, #66bb6a, #43a047)",
@@ -41,8 +41,8 @@ const WellnessIndicators: React.FC<WellnessIndicatorsProps> = ({
         "Fitbit estimates your skin temperature variation to help you understand changes in your body, which can be affected by factors like your menstrual cycle, circadian rhythm, or a fever.",
     },
     {
-      key: "breathingRate",
-      getValue: (d: WellnessSummaryDTO) => `${d.breathingRate} br/min`,
+      key: "breathing_rate",
+      getValue: (d: WellnessSummaryDTO) => `${d.breathing_rate} br/min`,
       label: "Breathing Rate",
       Icon: AirIcon,
       gradient: "linear-gradient(145deg, #42a5f5, #2196f3)",

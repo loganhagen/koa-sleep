@@ -18,7 +18,7 @@ const Home = () => {
 
   const getMostRecentDate = useCallback(() => {
     if (mostRecentSleepLog) {
-      return new Date(mostRecentSleepLog.dateTime);
+      return new Date(mostRecentSleepLog.date);
     } else {
       return new Date();
     }
@@ -67,7 +67,7 @@ const Home = () => {
           handleDateChange={handleDateChange}
           handleResetToToday={resetTargetDate}
           mostRecentLogDate={
-            mostRecentSleepLog ? new Date(mostRecentSleepLog.dateTime) : null
+            mostRecentSleepLog ? new Date(mostRecentSleepLog.date) : null
           }
         />
         <CoreMetrics targetDate={targetDate} />

@@ -1,10 +1,10 @@
 import { fetchAPI } from "@/services/apiClient";
-import { CoreMetrics } from "@/types/ui/sleep";
+import { CoreMetricsDTO } from "@/types/api/sleep";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchCoreMetricsByDate = async (userId: string, date: Date) => {
   const endpoint = `/user/${userId}/core-metrics/${date.toISOString()}`;
-  const data = await fetchAPI<CoreMetrics>(endpoint);
+  const data = await fetchAPI<CoreMetricsDTO>(endpoint);
   return data;
 };
 
