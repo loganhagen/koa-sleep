@@ -8,20 +8,20 @@ import { useUser } from "@/app/providers/userProvider";
 import { useSleepStages } from "@/hooks/useSleepStages";
 import SleepStagesSkeleton from "../_skeletons/SleepStagesSkeleton";
 import DashboardCard from "../DashboardCard";
-import { SleepStages as SleepStagesData } from "@/types/ui/sleep";
+import { SleepStagesDTO } from "@/types/api/sleep";
 
 interface SleepStagesProps {
   targetDate: Date;
 }
 
 const sleepStageConfig: Record<
-  keyof SleepStagesData,
+  keyof SleepStagesDTO,
   { label: string; color: string }
 > = {
-  awake: { label: "Awake", color: "#ffc107" },
-  rem: { label: "REM", color: "#f44336" },
-  light: { label: "Light", color: "#03a9f4" },
-  deep: { label: "Deep", color: "#4caf50" },
+  awake_mins: { label: "Awake", color: "#ffc107" },
+  rem_mins: { label: "REM", color: "#f44336" },
+  light_mins: { label: "Light", color: "#03a9f4" },
+  deep_mins: { label: "Deep", color: "#4caf50" },
 };
 
 const SleepStages: React.FC<SleepStagesProps> = ({ targetDate }) => {
@@ -34,18 +34,15 @@ const SleepStages: React.FC<SleepStagesProps> = ({ targetDate }) => {
   const useRealData = !error && !isPlaceholderData && data;
 
   const pieChartData = useRealData
-    ? Object.entries(data)
-        .map(([stage, value], id) => {
-          const stageName = stage.replace("Mins", "") as keyof SleepStagesData;
-          return {
-            id,
-            value,
-            label: sleepStageConfig[stageName]?.label || "Unknown",
-            color: sleepStageConfig[stageName]?.color || "#808080",
-          };
-        })
+    ? (Object.keys(data) as Array<keyof SleepStagesDTO>)
+        .map((stage, id) => ({
+          id,
+          value: data[stage],
+          label: sleepStageConfig[stage]?.label || "Unknown",
+          color: sleepStageConfig[stage]?.color || "#808080",
+        }))
         .sort((a, b) => a.id - b.id)
-    : Object.entries(sleepStageConfig).map(([_, config], id) => ({
+    : Object.values(sleepStageConfig).map((config, id) => ({
         id,
         value: 1,
         label: config.label,

@@ -15,10 +15,3 @@ export interface SleepLog {
   hrv: number | null;
   spo2: number | null;
 }
-
-export interface SleepStages {
-  awake: number;
-  rem: number;
-  light: number;
-  deep: number;
-}
