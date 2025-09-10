@@ -1,4 +1,4 @@
-# FitSync Dashboard
+# Koa Sleep
 
 An open-source web dashboard for viewing FitBit data.
 
@@ -20,7 +20,7 @@ Ensure your system meets the following requirements:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/loganhagen/fitsync-dashboard.git
+    git clone https://github.com/loganhagen/koa-sleep.git
     cd fitsync-dashboard
     ```
 
