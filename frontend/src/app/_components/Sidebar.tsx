@@ -8,6 +8,7 @@ import {
   Logout,
 } from "@mui/icons-material";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Box,
@@ -19,6 +20,7 @@ import {
   IconButton,
   useMediaQuery,
   Button,
+  Skeleton,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useUser } from "../providers/userProvider";
@@ -29,7 +31,7 @@ const SidebarComponent: React.FC = () => {
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const { user, logout } = useUser();
+  const { user, logout, isLoading } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -128,28 +130,21 @@ const SidebarComponent: React.FC = () => {
           <MenuItem
             icon={<Home />}
             active={pathname === "/home"}
-            component={<a href="/home" />}
+            component={<Link href="/home" />}
           >
             Home
           </MenuItem>
-          {/* <MenuItem
-            icon={<AutoGraph />}
-            active={pathname.startsWith("/sleep-journey")}
-            component={<a href="/sleep-journey/onboarding" />}
-          >
-            Sleep Journey
-          </MenuItem> */}
           <MenuItem
             icon={<CalendarMonth />}
             active={pathname === "/history"}
-            component={<a href="/history" />}
+            component={<Link href="/history" />}
           >
             History
           </MenuItem>
           <MenuItem
             icon={<Settings />}
             active={pathname === "/settings"}
-            component={<a href="/settings" />}
+            component={<Link href="/settings" />}
           >
             Settings
           </MenuItem>
@@ -187,67 +182,115 @@ const SidebarComponent: React.FC = () => {
             overflow: "hidden",
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              mb: 2,
-            }}
-          >
-            <Avatar sx={{ bgcolor: "primary.main" }}>
-              {user?.first_name?.[0] ?? "User"}
-              {user?.last_name?.[0] ?? "Name"}
-            </Avatar>
-            <Box
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                width: isCollapsed ? 0 : "auto",
-                opacity: isCollapsed ? 0 : 1,
-                transition: "width 0.3s ease-in-out, opacity 0.2s ease-in-out",
-                ml: isCollapsed ? 0 : 2,
-              }}
-            >
-              <Typography sx={{ fontWeight: 600 }}>
-                {user?.first_name} {user?.last_name}
-              </Typography>
-            </Box>
-          </Box>
-          <Box sx={{ textAlign: "center", mb: 2 }}>
-            {isCollapsed ? (
-              <CheckCircleOutline color="success" />
-            ) : (
-              <Chip
-                icon={<CheckCircleOutline />}
-                label="Fitbit Connected"
-                color="success"
-                size="small"
-                sx={{ width: "100%" }}
-              />
-            )}
-          </Box>
-          <Box sx={{ textAlign: "center" }}>
-            {isCollapsed ? (
-              <IconButton
-                onClick={() => console.log("Logging out...")}
-                color="inherit"
+          {isLoading ? (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mb: 2,
+                  justifyContent: "center",
+                }}
               >
-                <Logout />
-              </IconButton>
-            ) : (
-              <Button
-                onClick={handleLogout}
-                startIcon={<Logout />}
-                size="small"
-                variant="outlined"
-                color="inherit"
-                sx={{ width: "100%" }}
+                <Skeleton variant="circular" width={40} height={40} />
+                <Box
+                  sx={{
+                    width: isCollapsed ? 0 : "auto",
+                    opacity: isCollapsed ? 0 : 1,
+                    ml: isCollapsed ? 0 : 2,
+                  }}
+                >
+                  <Skeleton variant="text" width={120} />
+                </Box>
+              </Box>
+              <Box sx={{ textAlign: "center", mb: 2 }}>
+                {isCollapsed ? (
+                  <Skeleton
+                    variant="circular"
+                    width={24}
+                    height={24}
+                    sx={{ mx: "auto" }}
+                  />
+                ) : (
+                  <Skeleton variant="rounded" height={24} />
+                )}
+              </Box>
+              <Box sx={{ textAlign: "center" }}>
+                {isCollapsed ? (
+                  <Skeleton
+                    variant="circular"
+                    width={34}
+                    height={34}
+                    sx={{ mx: "auto" }}
+                  />
+                ) : (
+                  <Skeleton variant="rounded" height={32} />
+                )}
+              </Box>
+            </>
+          ) : (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  mb: 2,
+                }}
               >
-                Logout
-              </Button>
-            )}
-          </Box>
+                <Avatar sx={{ bgcolor: "primary.main" }}>
+                  {user?.first_name?.[0] ?? "U"}
+                  {user?.last_name?.[0] ?? "N"}
+                </Avatar>
+                <Box
+                  sx={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    width: isCollapsed ? 0 : "auto",
+                    opacity: isCollapsed ? 0 : 1,
+                    transition:
+                      "width 0.3s ease-in-out, opacity 0.2s ease-in-out",
+                    ml: isCollapsed ? 0 : 2,
+                  }}
+                >
+                  <Typography sx={{ fontWeight: 600 }}>
+                    {user?.first_name} {user?.last_name}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box sx={{ textAlign: "center", mb: 2 }}>
+                {isCollapsed ? (
+                  <CheckCircleOutline color="success" />
+                ) : (
+                  <Chip
+                    icon={<CheckCircleOutline />}
+                    label="Fitbit Connected"
+                    color="success"
+                    size="small"
+                    sx={{ width: "100%" }}
+                  />
+                )}
+              </Box>
+              <Box sx={{ textAlign: "center" }}>
+                {isCollapsed ? (
+                  <IconButton onClick={handleLogout} color="inherit">
+                    <Logout />
+                  </IconButton>
+                ) : (
+                  <Button
+                    onClick={handleLogout}
+                    startIcon={<Logout />}
+                    size="small"
+                    variant="outlined"
+                    color="inherit"
+                    sx={{ width: "100%" }}
+                  >
+                    Logout
+                  </Button>
+                )}
+              </Box>
+            </>
+          )}
         </Box>
       </Stack>
     </Sidebar>

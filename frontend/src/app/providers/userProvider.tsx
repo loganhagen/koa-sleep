@@ -14,23 +14,30 @@ type UserContextType = {
   user: UserDTO | null;
   login: (user: UserDTO) => void;
   logout: () => void;
+  isLoading: boolean;
 };
 
 const UserContext = createContext<UserContextType>({
   user: null,
   login: () => {},
   logout: () => {},
+  isLoading: true,
 });
 
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider({ children }: { children: ReactNode }) {
   const [currentUser, setUser] = useState<UserDTO | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("currentUser");
-    if (storedValue) {
-      setUser(JSON.parse(storedValue) as UserDTO);
+    try {
+      const storedValue = localStorage.getItem("currentUser");
+      if (storedValue) {
+        setUser(JSON.parse(storedValue) as UserDTO);
+      }
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
@@ -46,8 +53,8 @@ export default function UserProvider({ children }: { children: ReactNode }) {
   };
 
   const contextValue = useMemo(
-    () => ({ user: currentUser, login, logout }),
-    [currentUser]
+    () => ({ user: currentUser, login, logout, isLoading }),
+    [currentUser, isLoading]
   );
 
   return (
