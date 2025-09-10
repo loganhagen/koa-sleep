@@ -26,6 +26,7 @@ export const getHistoryTableColumns = (): GridColDef[] => [
     width: 120,
     headerAlign: "center",
     align: "center",
+    renderCell: (params) => params.value.slice(0, 10),
     sortComparator: (v1, v2) =>
       new Date(v1).getTime() - new Date(v2).getTime(),
   },
