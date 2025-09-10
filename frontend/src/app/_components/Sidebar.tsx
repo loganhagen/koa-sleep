@@ -111,7 +111,7 @@ const SidebarComponent: React.FC = () => {
             sx={{
               fontSize: "28px",
               fontWeight: "700",
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "Outfit, sans-serif",
               color: muiTheme.palette.text.primary,
               ml: 1,
               whiteSpace: "nowrap",

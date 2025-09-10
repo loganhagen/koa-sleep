@@ -48,13 +48,12 @@ const Splash = () => {
           Welcome to Koa Sleep
         </Typography>
         <Typography variant="h6" color="text.secondary">
-          Unlock the science of your sleep.
+          A clear picture of your sleep health.
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ pt: 2 }}>
-          Koa Sleep transforms your Fitbit data into a personalized coaching
-          experience. Instead of just showing you data, we guide you through a
-          Sleep Journey — a tailored program designed to help you build
-          healthier habits and achieve your sleep goals, one night at a time.
+          Koa provides a clear picture of your sleep health by visualizing your
+          Fitbit data. Track key metrics, spot trends, and gain a deeper
+          understanding of your sleep patterns.
         </Typography>
 
         <Stack
