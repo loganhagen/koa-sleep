@@ -18,11 +18,12 @@ import {
   WellnessSummary,
 } from "@custom_types/db/db";
 
+import { formatMillisecondsToHoursMinutes } from "./formatters";
 import {
-  formatDateString,
-  formatMillisecondsToHoursMinutes,
-} from "./formatters";
-import { SleepLogDTO } from "@custom_types/api/sleep";
+  CoreMetricsDTO,
+  FullSleepLogDTO,
+  SleepLogDTO,
+} from "@custom_types/api/sleep";
 
 export const toUserDTO = (user: users): UserDTO => {
   return {
@@ -33,20 +34,36 @@ export const toUserDTO = (user: users): UserDTO => {
   };
 };
 
-/* Maps a FullSleepLog to a SleepLogDTO */
-export const toSleepLogDTO = (log: FullSleepLog): SleepLogDTO => {
+export const toSleepLogDTO = (log: sleep_logs): SleepLogDTO => {
   return {
     id: log.id.toString(),
     user_id: log.user_id,
-    date: log.dateTime.toISOString(),
+    date: log.date.toISOString(),
     bed_time: log.bed_time.toISOString(),
     wake_time: log.wake_time.toISOString(),
-    duration: formatMillisecondsToHoursMinutes(Number(log.duration_ms)),
+    duration: formatMillisecondsToHoursMinutes(log.duration_ms),
     efficiency: log.efficiency,
-    awake_mins: log.efficiency,
+    awake_mins: log.awake_mins,
     light_mins: log.light_mins,
     deep_mins: log.deep_mins,
-    rem_mins: log.remMins,
+    rem_mins: log.rem_mins,
+  };
+};
+
+/* Maps a FullSleepLog to a SleepLogDTO */
+export const toFullSleepLogDTO = (log: FullSleepLog): FullSleepLogDTO => {
+  return {
+    id: log.id.toString(),
+    user_id: log.user_id,
+    date: log.date.toISOString(),
+    bed_time: log.bed_time.toISOString(),
+    wake_time: log.wake_time.toISOString(),
+    duration: formatMillisecondsToHoursMinutes(log.duration_ms),
+    efficiency: log.efficiency,
+    awake_mins: log.awake_mins,
+    light_mins: log.light_mins,
+    deep_mins: log.deep_mins,
+    rem_mins: log.rem_mins,
     skin_temperature: log.skin_temperature,
     breathing_rate: log.breathing_rate,
     hrv: log.hrv,
@@ -54,10 +71,12 @@ export const toSleepLogDTO = (log: FullSleepLog): SleepLogDTO => {
   };
 };
 
-export const toCoreMetricsDTO = (coreMetrics: CoreMetrics) => {
+export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
   return {
-    ...coreMetrics,
-    duration: formatMillisecondsToHoursMinutes(coreMetrics.duration_ms),
+    bed_time: model.bed_time.toISOString(),
+    wake_time: model.wake_time.toISOString(),
+    duration: formatMillisecondsToHoursMinutes(model.duration_ms),
+    efficiency: model.efficiency,
   };
 };
 
@@ -66,7 +85,7 @@ export const toBreathingRateDTO = (
 ): BreathingRateDTO => {
   return {
     id: model.id.toString(),
-    date: model.date,
+    date: model.date.toISOString(),
     value: model.breathing_rate,
   };
 };
@@ -74,19 +93,16 @@ export const toBreathingRateDTO = (
 export const toHrvDTO = (model: heart_rate_variabilities): HrvDTO => {
   return {
     id: model.id.toString(),
-    date: model.date,
+    date: model.date.toISOString(),
     value: model.daily_rmssd,
-    deepRmssd: model.deep_rmssd,
   };
 };
 
 export const toSpo2DTO = (model: spo2_readings): Spo2DTO => {
   return {
     id: model.id.toString(),
-    date: model.date,
+    date: model.date.toISOString(),
     value: model.avg,
-    min: model.min,
-    max: model.max,
   };
 };
 
@@ -96,9 +112,9 @@ export const toWellnessSummaryDTO = (
   return {
     skin_temperature:
       wellnessSummary.skin_temperature?.average.toString() ?? "N/A",
-    breathingRate:
-      wellnessSummary.breathing_rate?.breathingRate.toString() ?? "N/A",
-    hrv: wellnessSummary.hrv?.dailyRmssd.toString() ?? "N/A",
+    breathing_rate:
+      wellnessSummary.breathing_rate?.breathing_rate.toString() ?? "N/A",
+    hrv: wellnessSummary.hrv?.daily_rmssd.toString() ?? "N/A",
     spo2: wellnessSummary.spo2?.avg.toString() ?? "N/A",
   };
 };

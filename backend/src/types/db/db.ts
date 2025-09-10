@@ -1,3 +1,5 @@
+/** These are data structure defs for values returned by Prisma queries. */
+
 import {
   skin_temperatures,
   breathing_rates,
@@ -8,7 +10,7 @@ import {
 export interface CoreMetrics {
   bed_time: Date;
   wake_time: Date;
-  duration_ms: BigInt;
+  duration_ms: bigint;
   efficiency: number;
 }
 
@@ -19,7 +21,7 @@ export interface WellnessSummary {
   spo2: spo2_readings | null;
 }
 
-/* This is the data structure returned by the getFullLogs() user service function. */
+/* Returned by the getFullLogs() user service function. */
 export interface FullSleepLog {
   id: number;
   user_id: string;
