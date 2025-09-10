@@ -79,24 +79,21 @@ const HistoryTable = ({ rows, columns, isLoading }: HistoryTableProps) => {
         },
       }}
     >
-      <Box sx={{ height: "100%", overflowX: "auto" }}>
-        <DataGrid
-          sx={{ minWidth: "1500px" }}
-          rows={rows}
-          columns={columns}
-          rowHeight={80}
-          loading={isLoading}
-          disableRowSelectionOnClick
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 10,
-              },
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        rowHeight={80}
+        loading={isLoading}
+        disableRowSelectionOnClick
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 10,
             },
-          }}
-          pageSizeOptions={[5, 10, 25]}
-        />
-      </Box>
+          },
+        }}
+        pageSizeOptions={[5, 10, 25]}
+      />
     </Paper>
   );
 };
