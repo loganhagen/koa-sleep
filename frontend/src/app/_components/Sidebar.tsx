@@ -6,6 +6,7 @@ import {
   CheckCircleOutline,
   ExpandLess,
   Logout,
+  Info,
 } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,6 +26,7 @@ import {
 import { useState, useEffect } from "react";
 import { useUser } from "../providers/userProvider";
 import { useRouter } from "next/navigation";
+import InfoIcon from "@mui/icons-material/Info";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -148,6 +150,7 @@ const SidebarComponent: React.FC = () => {
           >
             Settings
           </MenuItem>
+          <MenuItem icon={<InfoIcon />}>About</MenuItem>
         </Menu>
 
         <IconButton
