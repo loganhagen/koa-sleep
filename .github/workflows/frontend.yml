@@ -1,5 +1,3 @@
-# .github/workflows/frontend.yml
-
 name: Frontend CI/CD
 
 on:
@@ -12,10 +10,6 @@ on:
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ./frontend 
 
     steps:
       - name: 1. Checkout Repository
@@ -27,15 +21,15 @@ jobs:
           node-version: '20'
 
       - name: 3. Install Dependencies
-        run: npm install 
+        run: npm install --prefix ./frontend
 
       - name: 4. Run Linter and Tests
         run: |
-          npm run lint
-          # npm run test
+          npm run lint --prefix ./frontend
+          npm run test --prefix ./frontend
       
       - name: 5. Deploy Frontend to Vercel
-        run: npx vercel . --prod --token ${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel ./frontend --prod --token ${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
