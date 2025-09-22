@@ -27,6 +27,6 @@ jobs:
       - name: 3. Install Dependencies
         run: npm install 
 
-      - name: 4. Run Linter and Tests
+      - name: 4. Run Linter 
         run: |
           npm run lint
