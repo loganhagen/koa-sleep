@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'frontend/**' 
+    # paths:
+    #   - 'frontend/**' 
 
 jobs:
   deploy-frontend:
@@ -27,6 +27,13 @@ jobs:
       - name: 3. Install Dependencies
         run: npm install 
 
-      - name: 4. Run Linter 
+      - name: 4. Run Linter and Tests
         run: |
           npm run lint
+          # npm run test
+      
+      - name: 5. Deploy Frontend to Vercel
+        run: npx vercel ./frontend --prod --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }} 
