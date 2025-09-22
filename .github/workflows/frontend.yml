@@ -1,0 +1,25 @@
+name: Build, Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+
+      - name: 3. Install Dependencies
+        run: npm install 
+
+      - name: 4. Run Linter and Tests
+        run: |
+          npm run lint
