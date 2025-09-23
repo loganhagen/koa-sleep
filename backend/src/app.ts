@@ -7,11 +7,26 @@ import logger from "@utils/logger";
 import userRoutes from "@routes/userRoutes";
 import { swaggerSpec } from "@config/swagger";
 
-const PORT = process.env.PORT || 5000;
-
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
+  ? process.env.CORS_ALLOWED_ORIGINS.split(",")
+  : [];
+const options: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg =
+        "The CORS policy for this site does not " +
+        "allow access from the specified Origin.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+};
+
+app.use(cors(options));
 app.use(
   morgan("combined", {
     stream: {
@@ -23,9 +38,5 @@ app.use(
 );
 app.use("/api/user", userRoutes);
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-app.get("/", (req: Request, res: Response) => {
-  res.send(`API docs available at http://localhost:${PORT}/api/docs`);
-});
 
 export default app;
