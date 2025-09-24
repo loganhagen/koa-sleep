@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { de } from "zod/v4/locales/index.cjs";
 
 interface TokenPayload {
   userId: string;
@@ -18,9 +17,8 @@ export const authenticateToken = (
   const token = req.cookies["auth-token"];
 
   if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Access denied. No token provided." });
+    res.status(401).json({ message: "Access denied. No token provided." });
+    return;
   }
 
   try {

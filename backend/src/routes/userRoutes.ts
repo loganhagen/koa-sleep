@@ -2,6 +2,7 @@ import { Router } from "express";
 import { userController } from "@controllers/userController";
 import { sleepController } from "@controllers/sleepController";
 import { wellnessController } from "@controllers/wellnessController";
+import { authenticateToken } from "middleware/authMiddleware";
 
 const router = Router();
 
@@ -91,7 +92,11 @@ router.get("/:email", userController.getUserByEmail);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/:userId/sleep", sleepController.getSleepLogsByUserId);
+router.get(
+  "/:userId/sleep",
+  authenticateToken,
+  sleepController.getSleepLogsByUserId
+);
 
 /**
  * @swagger

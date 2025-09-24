@@ -9,6 +9,7 @@ import { SleepStagesDTO } from "@custom_types/api/sleep";
 import { userService } from "@services/userService";
 import { sleep_logs } from "@prisma/client";
 import { FullSleepLog } from "@custom_types/db/db";
+import { AuthenticatedRequest } from "middleware/authMiddleware";
 
 export const sleepController = {
   getFullLogs: async (req: Request, res: Response) => {
@@ -58,10 +59,15 @@ export const sleepController = {
       return;
     }
   },
-  getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
+  getSleepLogsByUserId: async (
+    req: AuthenticatedRequest,
+    res: Response
+  ): Promise<void> => {
     try {
-      const { userId } = req.params;
-      if (!userId || typeof userId !== "string") {
+      const authenticatedUserId = req.user?.userId;
+      const requestedUserId = req.params.userId;
+
+      if (!requestedUserId || typeof requestedUserId !== "string") {
         res.status(400).json({
           success: false,
           error: {
@@ -71,24 +77,39 @@ export const sleepController = {
           },
         });
         return;
-      } else {
-        const sleepLogs = await sleepService.getSleepLogsByUserId(userId);
-        if (!sleepLogs) {
-          res.status(404).json({
-            success: false,
-            error: {
-              code: "NOT_FOUND",
-              message: "No sleep logs found.",
-            },
-          });
-          return;
-        }
-        res.status(200).json({
-          success: true,
-          data: sleepLogs.map(toSleepLogDTO),
+      }
+
+      if (authenticatedUserId != requestedUserId) {
+        res.status(403).json({
+          success: false,
+          error: {
+            code: "FORBIDDEN",
+            message: "You are not authorized to access this resource.",
+          },
         });
         return;
       }
+
+      const sleepLogs = await sleepService.getSleepLogsByUserId(
+        requestedUserId
+      );
+
+      if (!sleepLogs) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No sleep logs found.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: sleepLogs.map(toSleepLogDTO),
+      });
+      return;
     } catch (error) {
       console.error("Failed to retrieve sleep log by userId", error);
       res.status(500).json({
