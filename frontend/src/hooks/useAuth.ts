@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/app/providers/userProvider";
 import { ApiError, fetchAPI } from "@/services/apiClient";
 import { UserDTO } from "@/types/api/user";
@@ -42,6 +42,31 @@ export const useDemoLogin = () => {
       } else {
         console.error("An unexpected error occurred:", error);
       }
+    },
+  });
+};
+
+const logoutUser = async () => {
+  return await fetchAPI("/auth/logout", { method: "POST" });
+};
+
+export const useLogout = () => {
+  const router = useRouter();
+  const { logout } = useUser();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      logout();
+      queryClient.clear();
+      router.push("/");
+    },
+    onError: (error) => {
+      console.error("Logout failed", error);
+      logout();
+      queryClient.clear();
+      router.push("/");
     },
   });
 };

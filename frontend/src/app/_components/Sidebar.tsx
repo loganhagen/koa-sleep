@@ -6,7 +6,6 @@ import {
   CheckCircleOutline,
   ExpandLess,
   Logout,
-  Info,
 } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,26 +23,21 @@ import {
   Skeleton,
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useUser } from "../providers/userProvider";
-import { useRouter } from "next/navigation";
+import { useUser } from "../../providers/userProvider";
 import InfoIcon from "@mui/icons-material/Info";
+import { useLogout } from "@/hooks/useAuth";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const { user, logout, isLoading } = useUser();
-  const router = useRouter();
+  const { user, isLoading } = useUser();
+  const { mutate: logoutUser } = useLogout();
 
   useEffect(() => {
     setIsCollapsed(isMobile);
   }, [isMobile]);
-
-  const handleLogout = () => {
-    logout();
-    router.push("/");
-  };
 
   const menuItemStyles: MenuItemStyles = {
     button: ({ active }) => {
@@ -276,12 +270,12 @@ const SidebarComponent: React.FC = () => {
               </Box>
               <Box sx={{ textAlign: "center" }}>
                 {isCollapsed ? (
-                  <IconButton onClick={handleLogout} color="inherit">
+                  <IconButton onClick={() => logoutUser()} color="inherit">
                     <Logout />
                   </IconButton>
                 ) : (
                   <Button
-                    onClick={handleLogout}
+                    onClick={() => logoutUser()}
                     startIcon={<Logout />}
                     size="small"
                     variant="outlined"
