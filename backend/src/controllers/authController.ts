@@ -7,9 +7,13 @@ export const authController = {
   login: async (req: Request, res: Response): Promise<void> => {
     try {
       const { email } = req.body;
-      const user = await userService.getUserByEmail(email);
-      console.log(user);
 
+      if (email !== "demo@koa") {
+        res.status(403).json({ message: "Access forbidden" });
+        return;
+      }
+
+      const user = await userService.getUserByEmail(email);
       if (!user) {
         res.status(401).json({ message: "Invalid credentials" });
         return;
