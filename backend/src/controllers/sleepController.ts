@@ -5,7 +5,7 @@ import {
   toFullSleepLogDTO,
   toSleepLogDTO,
 } from "@utils/mappers";
-import { FullSleepLogDTO, SleepStagesDTO } from "@custom_types/api/sleep";
+import { SleepStagesDTO } from "@custom_types/api/sleep";
 import { userService } from "@services/userService";
 import { sleep_logs } from "@prisma/client";
 import { FullSleepLog } from "@custom_types/db/db";
