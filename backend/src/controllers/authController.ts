@@ -29,7 +29,7 @@ export const authController = {
         sameSite: "strict",
       });
 
-      res.status(200).json({ success: true, userId: user.id });
+      res.status(200).json({ success: true, data: { userId: user.id } });
     } catch (error) {
       res.status(500).json({ message: "Server error" });
     }

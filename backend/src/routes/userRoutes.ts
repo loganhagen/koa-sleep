@@ -8,6 +8,39 @@ const router = Router();
 
 /**
  * @swagger
+ * /user/me:
+ *   get:
+ *     summary: Get the currently logged in user.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: The user's data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       404:
+ *        description: User not found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.get("/me", authenticateToken, userController.getCurrentUser);
+
+/**
+ * @swagger
  * /user/{email}:
  *   get:
  *     summary: Get user by email

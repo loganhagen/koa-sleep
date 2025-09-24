@@ -2,8 +2,45 @@ import { Request, Response } from "express";
 import { userService } from "@services/userService";
 import { toUserDTO } from "@utils/mappers";
 import { users } from "@prisma/client";
+import { AuthenticatedRequest } from "middleware/authMiddleware";
 
 export const userController = {
+  getCurrentUser: async (
+    req: AuthenticatedRequest,
+    res: Response
+  ): Promise<void> => {
+    try {
+      const authenticatedUserId = req.user!.userId;
+
+      const userRecord = await userService.getUserById(authenticatedUserId);
+
+      if (!userRecord) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "USER_NOT_FOUND",
+            message: `User not found.`,
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: toUserDTO(userRecord),
+      });
+    } catch (error) {
+      console.error("Failed to retrieve user by id:", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
   getUserByEmail: async (req: Request, res: Response): Promise<void> => {
     try {
       const { email } = req.params;
