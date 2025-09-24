@@ -19,12 +19,10 @@ import { motion } from "framer-motion";
 const Splash = () => {
   const theme = useTheme();
   const currentMode = theme.palette.mode;
-  const router = useRouter();
-  const { mutate: loginAsDemo } = useDemoLogin();
+  const { mutate: performDemoLogin } = useDemoLogin();
 
   const handleSeeDemo = async () => {
-    loginAsDemo();
-    router.push("/home");
+    performDemoLogin();
   };
 
   const containerVariants = {

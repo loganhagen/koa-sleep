@@ -14,9 +14,14 @@ const loginUser = async (email: string): Promise<{ userId: string }> => {
   });
 };
 
-const fetchDemoUser = async (): Promise<UserDTO> => {
-  const endpoint = `/user/demo%40koa`;
+const fetchCurrentUser = async (): Promise<UserDTO> => {
+  const endpoint = `/user/me`;
   return await fetchAPI<UserDTO>(endpoint);
+};
+
+const performDemoLogin = async (): Promise<UserDTO> => {
+  await loginUser("demo@koa");
+  return await fetchCurrentUser();
 };
 
 export const useDemoLogin = () => {
@@ -24,9 +29,8 @@ export const useDemoLogin = () => {
   const { login } = useUser();
 
   return useMutation<UserDTO, Error>({
-    mutationFn: fetchDemoUser,
+    mutationFn: performDemoLogin,
     onSuccess: (demoUser) => {
-      console.log(`Successfully fetched user ${demoUser.id}`);
       login(demoUser);
       router.push("/home");
     },
