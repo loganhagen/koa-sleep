@@ -3,13 +3,16 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 export const authController = {
-  login: async (req: Request, res: Response) => {
+  // Designed for demo use.
+  login: async (req: Request, res: Response): Promise<void> => {
     try {
       const { email } = req.body;
       const user = await userService.getUserByEmail(email);
+      console.log(user);
 
       if (!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
+        res.status(401).json({ message: "Invalid credentials" });
+        return;
       }
 
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
