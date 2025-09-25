@@ -10,6 +10,8 @@ on:
 jobs:
   bump-version:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
