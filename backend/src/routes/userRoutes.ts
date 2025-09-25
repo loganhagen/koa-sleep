@@ -2,7 +2,7 @@ import { Router } from "express";
 import { userController } from "@controllers/userController";
 import { sleepController } from "@controllers/sleepController";
 import { wellnessController } from "@controllers/wellnessController";
-import { authenticateToken, verifyUserAccess } from "middleware/authMiddleware";
+import { authenticateToken, verifyUserAccess } from "../middleware/authMiddleware";
 
 const router = Router();
 
