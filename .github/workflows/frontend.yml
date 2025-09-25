@@ -8,7 +8,7 @@ on:
     #   - "frontend/**"
 
 jobs:
-bump-version:
+  bump-version:
     runs-on: ubuntu-latest
     steps:
       - name: 1. Checkout Repository
@@ -18,7 +18,7 @@ bump-version:
       - name: 2. Bump version
         uses: phips28/gh-action-bump-version@master
         with:
-          PACKAGEJSON_DIR: "frontend" 
+          PACKAGEJSON_DIR: "frontend"
           default: "patch"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
