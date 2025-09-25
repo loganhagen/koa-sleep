@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "cross-env NODE_ENV=production node -r module-alias/register dist/index.js",
+    "start": "cross-env NODE_ENV=production node -r module-alias/register dist/src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
   },
   "prisma": {
@@ -60,12 +60,12 @@
     "tsconfig-paths": "^4.2.0"
   },
   "_moduleAliases": {
-    "@utils": "dist/utils",
-    "@custom_types": "dist/types",
-    "@services": "dist/services",
-    "@routes": "dist/routes",
-    "@lib": "dist/lib",
-    "@controllers": "dist/controllers",
-    "@config": "dist/config"
+    "@utils": "dist/src/utils",
+    "@custom_types": "dist/src/types",
+    "@services": "dist/src/services",
+    "@routes": "dist/src/routes",
+    "@lib": "dist/src/lib",
+    "@controllers": "dist/src/controllers",
+    "@config": "dist/src/config"
   }
 }
