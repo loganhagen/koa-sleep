@@ -9,7 +9,6 @@ import { SleepStagesDTO } from "@custom_types/api/sleep";
 import { userService } from "@services/userService";
 import { sleep_logs } from "@prisma/client";
 import { FullSleepLog } from "@custom_types/db/db";
-import { AuthenticatedRequest } from "middleware/authMiddleware";
 
 export const sleepController = {
   getFullLogs: async (req: Request, res: Response) => {
@@ -59,12 +58,8 @@ export const sleepController = {
       return;
     }
   },
-  getSleepLogsByUserId: async (
-    req: AuthenticatedRequest,
-    res: Response
-  ): Promise<void> => {
+  getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
     try {
-      const authenticatedUserId = req.user?.userId;
       const requestedUserId = req.params.userId;
 
       if (!requestedUserId || typeof requestedUserId !== "string") {
@@ -74,17 +69,6 @@ export const sleepController = {
             code: "INVALID_PARAMETER",
             message:
               "The 'userId' URL parameter is required and must be a string.",
-          },
-        });
-        return;
-      }
-
-      if (authenticatedUserId != requestedUserId) {
-        res.status(403).json({
-          success: false,
-          error: {
-            code: "FORBIDDEN",
-            message: "You are not authorized to access this resource.",
           },
         });
         return;
@@ -264,9 +248,9 @@ export const sleepController = {
   },
   getCoreMetricsByDate: async (req: Request, res: Response) => {
     try {
-      const { userId, date } = req.params;
+      const { userId: requestedUserId, date } = req.params;
 
-      if (!userId || !date) {
+      if (!requestedUserId || !date) {
         res.status(400).json({
           success: false,
           error: {
@@ -278,7 +262,7 @@ export const sleepController = {
       }
 
       const coreMetrics = await sleepService.getCoreMetricsByDate(
-        userId,
+        requestedUserId,
         new Date(date)
       );
 

@@ -2,9 +2,11 @@ import { Router } from "express";
 import { userController } from "@controllers/userController";
 import { sleepController } from "@controllers/sleepController";
 import { wellnessController } from "@controllers/wellnessController";
-import { authenticateToken } from "middleware/authMiddleware";
+import { authenticateToken, verifyUserAccess } from "middleware/authMiddleware";
 
 const router = Router();
+
+router.use(authenticateToken);
 
 /**
  * @swagger
@@ -37,7 +39,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/me", authenticateToken, userController.getCurrentUser);
+router.get("/me", userController.getCurrentUser);
 
 /**
  * @swagger
@@ -127,7 +129,7 @@ router.get("/:email", userController.getUserByEmail);
  */
 router.get(
   "/:userId/sleep",
-  authenticateToken,
+  verifyUserAccess,
   sleepController.getSleepLogsByUserId
 );
 
@@ -175,7 +177,11 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/:userId/sleep/recent", sleepController.getMostRecentSleepLog);
+router.get(
+  "/:userId/sleep/recent",
+  verifyUserAccess,
+  sleepController.getMostRecentSleepLog
+);
 
 /**
  * @swagger
@@ -228,7 +234,11 @@ router.get("/:userId/sleep/recent", sleepController.getMostRecentSleepLog);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/:userId/sleep/:date", sleepController.getSleepLogByDate);
+router.get(
+  "/:userId/sleep/:date",
+  verifyUserAccess,
+  sleepController.getSleepLogByDate
+);
 
 /**
  * @swagger
@@ -283,6 +293,7 @@ router.get("/:userId/sleep/:date", sleepController.getSleepLogByDate);
  */
 router.get(
   "/:userId/wellness-summary/:date",
+  verifyUserAccess,
   wellnessController.getWellnessSummaryByDate
 );
 
@@ -337,7 +348,11 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/:userId/sleep-stages/:date", sleepController.getSleepStagesByDate);
+router.get(
+  "/:userId/sleep-stages/:date",
+  verifyUserAccess,
+  sleepController.getSleepStagesByDate
+);
 
 /**
  * @swagger
@@ -390,7 +405,11 @@ router.get("/:userId/sleep-stages/:date", sleepController.getSleepStagesByDate);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/:userId/core-metrics/:date", sleepController.getCoreMetricsByDate);
+router.get(
+  "/:userId/core-metrics/:date",
+  verifyUserAccess,
+  sleepController.getCoreMetricsByDate
+);
 
 /**
  * @swagger
@@ -436,5 +455,5 @@ router.get("/:userId/core-metrics/:date", sleepController.getCoreMetricsByDate);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-router.get("/:userId/full-logs", sleepController.getFullLogs);
+router.get("/:userId/full-logs", verifyUserAccess, sleepController.getFullLogs);
 export default router;

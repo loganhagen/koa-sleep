@@ -29,3 +29,25 @@ export const authenticateToken = (
     res.status(400).json({ message: "Invalid token" });
   }
 };
+
+export const verifyUserAccess = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const authenticatedUserId = req.user?.userId;
+  const requestedUserId = req.params.userId;
+
+  if (authenticatedUserId !== requestedUserId) {
+    res.status(403).json({
+      success: false,
+      error: {
+        code: "FORBIDDEN",
+        message: "You are not authorized to access this resource.",
+      },
+    });
+    return;
+  }
+
+  next();
+};
