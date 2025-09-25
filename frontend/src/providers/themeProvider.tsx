@@ -10,7 +10,7 @@ import {
 } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { darkTheme, lightTheme } from "../../../theme";
+import { darkTheme, lightTheme } from "../../theme";
 
 type ThemeMode = "light" | "dark";
 
@@ -36,7 +36,7 @@ export default function ThemeProvider({
     setMode(newMode);
     document.cookie = `theme-mode=${newMode}; path=/; max-age=31536000`;
   }, [mode]);
-  
+
   const theme = useMemo(
     () => (mode === "light" ? lightTheme : darkTheme),
     [mode]

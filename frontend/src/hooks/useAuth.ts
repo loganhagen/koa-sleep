@@ -1,8 +1,8 @@
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@/app/providers/userProvider";
 import { ApiError, fetchAPI } from "@/services/apiClient";
 import { UserDTO } from "@/types/api/user";
+import { useUser } from "@/providers/userProvider";
 
 const loginUser = async (email: string): Promise<{ userId: string }> => {
   return await fetchAPI<{ userId: string }>("/auth/login", {

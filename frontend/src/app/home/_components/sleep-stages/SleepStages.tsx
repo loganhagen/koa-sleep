@@ -4,7 +4,7 @@ import * as React from "react";
 import { Stack, Typography, Box, Divider } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { PieChart } from "@mui/x-charts/PieChart";
-import { useUser } from "@/app/providers/userProvider";
+import { useUser } from "@/providers/userProvider";
 import { useSleepStages } from "@/hooks/useSleepStages";
 import SleepStagesSkeleton from "../_skeletons/SleepStagesSkeleton";
 import DashboardCard from "../DashboardCard";
