@@ -7,6 +7,7 @@ import {
   Button,
   Tooltip,
   Container,
+  CircularProgress,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
@@ -18,7 +19,7 @@ import { motion } from "framer-motion";
 const Splash = () => {
   const theme = useTheme();
   const currentMode = theme.palette.mode;
-  const { mutate: performDemoLogin } = useDemoLogin();
+  const { mutate: performDemoLogin, isPending } = useDemoLogin();
 
   const handleSeeDemo = async () => {
     performDemoLogin();
@@ -133,8 +134,15 @@ const Splash = () => {
                   <Button
                     variant="outlined"
                     size="large"
-                    endIcon={<ArrowForwardIcon />}
+                    endIcon={
+                      isPending ? (
+                        <CircularProgress size={16} color="inherit" />
+                      ) : (
+                        <ArrowForwardIcon />
+                      )
+                    }
                     onClick={handleSeeDemo}
+                    disabled={isPending}
                   >
                     See a Demo
                   </Button>
