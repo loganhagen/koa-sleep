@@ -21,6 +21,7 @@ import {
   useMediaQuery,
   Button,
   Skeleton,
+  CircularProgress,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useUser } from "../../providers/userProvider";
@@ -33,7 +34,7 @@ const SidebarComponent: React.FC = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
   const { user, isLoading } = useUser();
-  const { mutate: logoutUser } = useLogout();
+  const { mutate: logoutUser, isPending: isLoggingOut } = useLogout();
 
   useEffect(() => {
     setIsCollapsed(isMobile);
@@ -270,19 +271,34 @@ const SidebarComponent: React.FC = () => {
               </Box>
               <Box sx={{ textAlign: "center" }}>
                 {isCollapsed ? (
-                  <IconButton onClick={() => logoutUser()} color="inherit">
-                    <Logout />
+                  <IconButton
+                    onClick={() => logoutUser()}
+                    color="inherit"
+                    disabled={isLoggingOut}
+                  >
+                    {isLoggingOut ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      <Logout />
+                    )}
                   </IconButton>
                 ) : (
                   <Button
                     onClick={() => logoutUser()}
-                    startIcon={<Logout />}
+                    startIcon={
+                      isLoggingOut ? (
+                        <CircularProgress size={20} color="inherit" />
+                      ) : (
+                        <Logout />
+                      )
+                    }
                     size="small"
                     variant="outlined"
                     color="inherit"
                     sx={{ width: "100%" }}
+                    disabled={isLoggingOut}
                   >
-                    Logout
+                    {isLoggingOut ? "Logging out..." : "Logout"}
                   </Button>
                 )}
               </Box>

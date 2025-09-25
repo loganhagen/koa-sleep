@@ -59,14 +59,14 @@ export const useLogout = () => {
     mutationFn: logoutUser,
     onSuccess: () => {
       logout();
-      queryClient.clear();
       router.push("/");
+      queryClient.clear();
     },
     onError: (error) => {
       console.error("Logout failed", error);
       logout();
-      queryClient.clear();
       router.push("/");
+      queryClient.clear();
     },
   });
 };
