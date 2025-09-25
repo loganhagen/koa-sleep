@@ -11,6 +11,9 @@
     "start": "cross-env NODE_ENV=production node -r module-alias/register dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node -r tsconfig-paths/register src/index.ts"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
