@@ -295,6 +295,17 @@ const SidebarComponent: React.FC = () => {
             </>
           )}
         </Box>
+        <Box
+          sx={{
+            p: 2,
+            textAlign: "center",
+            display: isCollapsed ? "none" : "block",
+          }}
+        >
+          <Typography variant="caption" color="textSecondary">
+            Version: {process.env.NEXT_PUBLIC_APP_VERSION}
+          </Typography>
+        </Box>
       </Stack>
     </Sidebar>
   );
