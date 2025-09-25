@@ -5,7 +5,7 @@ import {
   toFullSleepLogDTO,
   toSleepLogDTO,
 } from "@utils/mappers";
-import { FullSleepLogDTO, SleepStagesDTO } from "@custom_types/api/sleep";
+import { SleepStagesDTO } from "@custom_types/api/sleep";
 import { userService } from "@services/userService";
 import { sleep_logs } from "@prisma/client";
 import { FullSleepLog } from "@custom_types/db/db";
@@ -60,8 +60,9 @@ export const sleepController = {
   },
   getSleepLogsByUserId: async (req: Request, res: Response): Promise<void> => {
     try {
-      const { userId } = req.params;
-      if (!userId || typeof userId !== "string") {
+      const requestedUserId = req.params.userId;
+
+      if (!requestedUserId || typeof requestedUserId !== "string") {
         res.status(400).json({
           success: false,
           error: {
@@ -71,24 +72,28 @@ export const sleepController = {
           },
         });
         return;
-      } else {
-        const sleepLogs = await sleepService.getSleepLogsByUserId(userId);
-        if (!sleepLogs) {
-          res.status(404).json({
-            success: false,
-            error: {
-              code: "NOT_FOUND",
-              message: "No sleep logs found.",
-            },
-          });
-          return;
-        }
-        res.status(200).json({
-          success: true,
-          data: sleepLogs.map(toSleepLogDTO),
+      }
+
+      const sleepLogs = await sleepService.getSleepLogsByUserId(
+        requestedUserId
+      );
+
+      if (!sleepLogs) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No sleep logs found.",
+          },
         });
         return;
       }
+
+      res.status(200).json({
+        success: true,
+        data: sleepLogs.map(toSleepLogDTO),
+      });
+      return;
     } catch (error) {
       console.error("Failed to retrieve sleep log by userId", error);
       res.status(500).json({
@@ -243,9 +248,9 @@ export const sleepController = {
   },
   getCoreMetricsByDate: async (req: Request, res: Response) => {
     try {
-      const { userId, date } = req.params;
+      const { userId: requestedUserId, date } = req.params;
 
-      if (!userId || !date) {
+      if (!requestedUserId || !date) {
         res.status(400).json({
           success: false,
           error: {
@@ -257,7 +262,7 @@ export const sleepController = {
       }
 
       const coreMetrics = await sleepService.getCoreMetricsByDate(
-        userId,
+        requestedUserId,
         new Date(date)
       );
 

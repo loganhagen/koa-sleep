@@ -7,7 +7,7 @@ import SunnyIcon from "@mui/icons-material/Sunny";
 import InsightsIcon from "@mui/icons-material/Insights";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import { CoreMetricsSkeleton } from "../_skeletons/CoreMetricsSkeleton";
-import { useUser } from "@/app/providers/userProvider";
+import { useUser } from "@/providers/userProvider";
 import { useCoreMetrics } from "@/hooks/useCoreMetrics";
 import { MetricDisplay } from "./MetricsDisplay";
 import DashboardCard from "../DashboardCard";

@@ -7,7 +7,7 @@ import AirIcon from "@mui/icons-material/Air";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import { useWellnessIndicators } from "@/hooks/useWellnessIndicators";
-import { useUser } from "@/app/providers/userProvider";
+import { useUser } from "@/providers/userProvider";
 import IndicatorItem from "./IndicatorItem";
 import { WellnessIndicatorsSkeleton } from "../_skeletons/WellnessIndicatorsSkeleton";
 import DashboardCard from "../DashboardCard";

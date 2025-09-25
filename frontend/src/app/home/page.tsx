@@ -7,7 +7,7 @@ import SleepStages from "./_components/sleep-stages/SleepStages";
 import WellnessIndicators from "./_components/wellness-indicators/WellnessIndicators";
 import { Stack, CircularProgress, Box } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { useUser } from "../providers/userProvider";
+import { useUser } from "../../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
 
 const Home = () => {

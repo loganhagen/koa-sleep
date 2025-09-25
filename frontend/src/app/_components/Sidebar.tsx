@@ -1,12 +1,15 @@
-import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
+import {
+  Sidebar,
+  Menu,
+  MenuItem as ProSidebarMenuItem,
+  MenuItemStyles,
+} from "react-pro-sidebar";
 import {
   Home,
   Settings,
   CalendarMonth,
-  CheckCircleOutline,
   ExpandLess,
   Logout,
-  Info,
 } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,33 +20,41 @@ import {
   useTheme,
   Avatar,
   Stack,
-  Chip,
   IconButton,
   useMediaQuery,
-  Button,
   Skeleton,
+  CircularProgress,
+  Menu as MuiMenu,
+  MenuItem as MuiMenuItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useUser } from "../providers/userProvider";
-import { useRouter } from "next/navigation";
+import { useUser } from "../../providers/userProvider";
 import InfoIcon from "@mui/icons-material/Info";
+import { useLogout } from "@/hooks/useAuth";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
-  const { user, logout, isLoading } = useUser();
-  const router = useRouter();
+  const { user, isLoading } = useUser();
+  const { mutate: logoutUser, isPending: isLoggingOut } = useLogout();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     setIsCollapsed(isMobile);
   }, [isMobile]);
-
-  const handleLogout = () => {
-    logout();
-    router.push("/");
-  };
 
   const menuItemStyles: MenuItemStyles = {
     button: ({ active }) => {
@@ -129,28 +140,22 @@ const SidebarComponent: React.FC = () => {
           </Typography>
         </Box>
         <Menu menuItemStyles={menuItemStyles} style={{ flexGrow: 1 }}>
-          <MenuItem
+          <ProSidebarMenuItem
             icon={<Home />}
             active={pathname === "/home"}
             component={<Link href="/home" />}
           >
             Home
-          </MenuItem>
-          <MenuItem
+          </ProSidebarMenuItem>
+          <ProSidebarMenuItem
             icon={<CalendarMonth />}
             active={pathname === "/history"}
             component={<Link href="/history" />}
           >
             History
-          </MenuItem>
-          <MenuItem
-            icon={<Settings />}
-            active={pathname === "/settings"}
-            component={<Link href="/settings" />}
-          >
-            Settings
-          </MenuItem>
-          <MenuItem icon={<InfoIcon />}>About</MenuItem>
+          </ProSidebarMenuItem>
+          <ProSidebarMenuItem icon={<Settings />}>Settings</ProSidebarMenuItem>
+          <ProSidebarMenuItem icon={<InfoIcon />}>About</ProSidebarMenuItem>
         </Menu>
 
         <IconButton
@@ -206,30 +211,6 @@ const SidebarComponent: React.FC = () => {
                   <Skeleton variant="text" width={120} />
                 </Box>
               </Box>
-              <Box sx={{ textAlign: "center", mb: 2 }}>
-                {isCollapsed ? (
-                  <Skeleton
-                    variant="circular"
-                    width={24}
-                    height={24}
-                    sx={{ mx: "auto" }}
-                  />
-                ) : (
-                  <Skeleton variant="rounded" height={24} />
-                )}
-              </Box>
-              <Box sx={{ textAlign: "center" }}>
-                {isCollapsed ? (
-                  <Skeleton
-                    variant="circular"
-                    width={34}
-                    height={34}
-                    sx={{ mx: "auto" }}
-                  />
-                ) : (
-                  <Skeleton variant="rounded" height={32} />
-                )}
-              </Box>
             </>
           ) : (
             <>
@@ -238,12 +219,18 @@ const SidebarComponent: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  mb: 2,
+                  p: 1,
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: muiTheme.palette.action.hover,
+                  },
+                  borderRadius: 2,
                 }}
+                onClick={handleClick}
               >
                 <Avatar sx={{ bgcolor: "primary.main" }}>
-                  {user?.first_name?.[0] ?? "U"}
-                  {user?.last_name?.[0] ?? "N"}
+                  {user?.first_name?.[0] ?? ""}
+                  {user?.last_name?.[0] ?? ""}
                 </Avatar>
                 <Box
                   sx={{
@@ -257,41 +244,54 @@ const SidebarComponent: React.FC = () => {
                   }}
                 >
                   <Typography sx={{ fontWeight: 600 }}>
-                    {user?.first_name} {user?.last_name}
+                    {user ? `${user.first_name} ${user.last_name}` : ""}
                   </Typography>
                 </Box>
               </Box>
-              <Box sx={{ textAlign: "center", mb: 2 }}>
-                {isCollapsed ? (
-                  <CheckCircleOutline color="success" />
-                ) : (
-                  <Chip
-                    icon={<CheckCircleOutline />}
-                    label="Fitbit Connected"
-                    color="success"
-                    size="small"
-                    sx={{ width: "100%" }}
-                  />
-                )}
-              </Box>
-              <Box sx={{ textAlign: "center" }}>
-                {isCollapsed ? (
-                  <IconButton onClick={handleLogout} color="inherit">
-                    <Logout />
-                  </IconButton>
-                ) : (
-                  <Button
-                    onClick={handleLogout}
-                    startIcon={<Logout />}
-                    size="small"
-                    variant="outlined"
-                    color="inherit"
-                    sx={{ width: "100%" }}
-                  >
-                    Logout
-                  </Button>
-                )}
-              </Box>
+              <MuiMenu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      width: isCollapsed ? 150 : 200,
+                      mb: 1,
+                    },
+                  },
+                }}
+              >
+                <MuiMenuItem>
+                  <ListItemIcon>
+                    <ManageAccountsIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText>Account</ListItemText>
+                </MuiMenuItem>
+                <MuiMenuItem
+                  onClick={() => {
+                    logoutUser();
+                    handleClose();
+                  }}
+                  disabled={isLoggingOut}
+                >
+                  <ListItemIcon>
+                    {isLoggingOut ? (
+                      <CircularProgress size={20} />
+                    ) : (
+                      <Logout fontSize="small" />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText>Logout</ListItemText>
+                </MuiMenuItem>
+              </MuiMenu>
             </>
           )}
         </Box>

@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { Box, Typography, Stack, useMediaQuery, useTheme } from "@mui/material";
-import { useUser } from "../providers/userProvider";
+import { useUser } from "../../providers/userProvider";
 import { useFullLogs } from "@/hooks/useSleepLogs";
 import HistoryTable from "./_components/HistoryTable";
 import MobileMessage from "./_components/MobileMessage";
