@@ -4,13 +4,28 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - 'frontend/**'
+    paths:
+      - "frontend/**"
 
 jobs:
-  deploy-frontend:
+  bump-version:
     runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 2. Bump version
+        uses: phips28/gh-action-bump-version@v1.0.0
+        with:
+          package-json-path: "frontend/package.json"
+          default-bump: "patch"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  deploy-frontend:
+    needs: bump-version
+    runs-on: ubuntu-latest
     steps:
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
@@ -18,7 +33,7 @@ jobs:
       - name: 2. Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: 3. Install Dependencies
         run: npm install --prefix ./frontend
@@ -27,7 +42,7 @@ jobs:
         run: |
           npm run lint --prefix ./frontend
           # npm run test --prefix ./frontend
-      
+
       - name: 5. Deploy Frontend to Vercel
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
         env:
