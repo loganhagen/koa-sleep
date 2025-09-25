@@ -3,7 +3,6 @@ import {
   Home,
   Settings,
   CalendarMonth,
-  CheckCircleOutline,
   ExpandLess,
   Logout,
 } from "@mui/icons-material";
@@ -16,7 +15,6 @@ import {
   useTheme,
   Avatar,
   Stack,
-  Chip,
   IconButton,
   useMediaQuery,
   Button,
@@ -201,18 +199,6 @@ const SidebarComponent: React.FC = () => {
                   <Skeleton variant="text" width={120} />
                 </Box>
               </Box>
-              <Box sx={{ textAlign: "center", mb: 2 }}>
-                {isCollapsed ? (
-                  <Skeleton
-                    variant="circular"
-                    width={24}
-                    height={24}
-                    sx={{ mx: "auto" }}
-                  />
-                ) : (
-                  <Skeleton variant="rounded" height={24} />
-                )}
-              </Box>
               <Box sx={{ textAlign: "center" }}>
                 {isCollapsed ? (
                   <Skeleton
@@ -237,8 +223,8 @@ const SidebarComponent: React.FC = () => {
                 }}
               >
                 <Avatar sx={{ bgcolor: "primary.main" }}>
-                  {user?.first_name?.[0] ?? "U"}
-                  {user?.last_name?.[0] ?? "N"}
+                  {user?.first_name?.[0] ?? "A"}
+                  {user?.last_name?.[0] ?? ""}
                 </Avatar>
                 <Box
                   sx={{
@@ -252,22 +238,11 @@ const SidebarComponent: React.FC = () => {
                   }}
                 >
                   <Typography sx={{ fontWeight: 600 }}>
-                    {user?.first_name} {user?.last_name}
+                    {user
+                      ? `${user.first_name} ${user.last_name}`
+                      : "Anonymous User"}
                   </Typography>
                 </Box>
-              </Box>
-              <Box sx={{ textAlign: "center", mb: 2 }}>
-                {isCollapsed ? (
-                  <CheckCircleOutline color="success" />
-                ) : (
-                  <Chip
-                    icon={<CheckCircleOutline />}
-                    label="Fitbit Connected"
-                    color="success"
-                    size="small"
-                    sx={{ width: "100%" }}
-                  />
-                )}
               </Box>
               <Box sx={{ textAlign: "center" }}>
                 {isCollapsed ? (
