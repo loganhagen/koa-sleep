@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: 2. Bump version
-        uses: phips28/gh-action-bump-version@v1.0.0
+        uses: phips28/gh-action-bump-version@master
         with:
           package-json-path: "frontend/package.json"
           default-bump: "patch"
