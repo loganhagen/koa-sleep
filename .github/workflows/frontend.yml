@@ -18,7 +18,6 @@ jobs:
       - name: 2. Bump version
         uses: phips28/gh-action-bump-version@master
         with:
-          path: frontend/
           package-json-path: "frontend/package.json"
           default-bump: "patch"
         env:
