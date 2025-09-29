@@ -111,4 +111,37 @@ Goal: To deliver a functional, end-to-end, read-only dashboard that visualizes a
 
 #### Scheduled Completion Date
 
-- September 30, 2025
+- September 30, 2025 
+
+### MVP 2: High-Impact Testing Suite
+
+Goal: To implement a foundational testing suite across the full stack that demonstrates a commitment to code quality and reliability. This MVP prioritizes testing the most critical and reusable pieces of logic to maximize impact.
+
+#### Back-End
+
+- 1: Integrate **Jest** and **ts-jest** into the back-end project.
+- 2: Configure a separate test database or a mechanism to seed and tear down the database for tests to ensure they are isolated and repeatable.
+- 3: Write unit tests for all functions in `mappers.ts` and `formatters.ts`.
+- 4: Write integration tests for two key API endpoints in `userRoutes.ts`: 
+	- `GET /user/:userId/core-metrics/:date`
+	- `GET /user/:userId/full-logs`
+
+#### Front-End
+
+- 1: Set up **Jest** and **React Testing Library** in the front-end project.
+- 2: Write a simple "smoke test" for a presentational component like `Greeting.tsx` to ensure it renders without crashing.
+- 3: Write tests for the `CoreMetrics.tsx` component.
+	- Test that the `CoreMetricsSkeleton` renders when `isLoading` is true.
+	- Test that the component correctly displays the data passed to it when `isLoading` is false.
+- 4: Write unit tests for the `useCoreMetrics` hook.
+
+#### Definition of Done
+
+- A developer can clone the repository and run `npm test` in both the `frontend` and `backend` directories.
+- The back-end has unit tests for all data transformation logic and integration tests for its most critical endpoints.
+- The front-end has meaningful tests for a key data-display component and a custom data-fetching hook.
+- The GitHub Actions workflows are updated to run the new tests automatically.
+
+#### Scheduled Completion Date
+
+- October 18, 2025 
