@@ -32,7 +32,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../providers/userProvider";
 import InfoIcon from "@mui/icons-material/Info";
 import { useLogout } from "@/hooks/useAuth";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+// import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -273,12 +273,12 @@ const SidebarComponent: React.FC = () => {
                   },
                 }}
               >
-                <MuiMenuItem>
+                {/* <MuiMenuItem>
                   <ListItemIcon>
                     <ManageAccountsIcon fontSize="small" />
                   </ListItemIcon>
                   <ListItemText>Account</ListItemText>
-                </MuiMenuItem>
+                </MuiMenuItem> */}
                 <MuiMenuItem
                   onClick={() => {
                     logoutUser();
