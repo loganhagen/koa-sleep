@@ -6,10 +6,10 @@ import {
 } from "react-pro-sidebar";
 import {
   Home,
-  Settings,
   CalendarMonth,
   ExpandLess,
   Logout,
+  Info,
 } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
@@ -154,8 +154,13 @@ const SidebarComponent: React.FC = () => {
           >
             History
           </ProSidebarMenuItem>
-          <ProSidebarMenuItem icon={<Settings />}>Settings</ProSidebarMenuItem>
-          <ProSidebarMenuItem icon={<InfoIcon />}>About</ProSidebarMenuItem>
+          <ProSidebarMenuItem
+            icon={<InfoIcon />}
+            active={pathname === "/about"}
+            component={<Link href="/about" />}
+          >
+            About
+          </ProSidebarMenuItem>
         </Menu>
 
         <IconButton
