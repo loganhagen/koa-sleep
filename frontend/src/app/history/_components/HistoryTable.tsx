@@ -52,7 +52,10 @@ const HistoryTable = ({ rows, columns, isLoading }: HistoryTableProps) => {
           border: "none",
         },
         "& .MuiDataGrid-columnHeaders": {
-          backgroundColor: theme.palette.grey[100],
+          backgroundColor:
+            theme.palette.mode === "dark"
+              ? theme.palette.grey[900]
+              : theme.palette.grey[100],
           borderBottom: `1px solid ${theme.palette.divider}`,
         },
         "& .MuiDataGrid-columnHeaderTitle": {
@@ -63,7 +66,7 @@ const HistoryTable = ({ rows, columns, isLoading }: HistoryTableProps) => {
         "& .MuiDataGrid-cell": {
           fontSize: "0.9rem",
           color: theme.palette.text.primary,
-          borderBottom: `1px dashed ${theme.palette.grey[200]}`,
+          borderBottom: `1px dashed ${theme.palette.divider}`,
         },
         "& .MuiDataGrid-row:nth-of-type(odd)": {
           backgroundColor: alpha(theme.palette.primary.main, 0.04),
@@ -75,7 +78,10 @@ const HistoryTable = ({ rows, columns, isLoading }: HistoryTableProps) => {
         },
         "& .MuiDataGrid-footerContainer": {
           borderTop: `1px solid ${theme.palette.divider}`,
-          backgroundColor: theme.palette.grey[50],
+          backgroundColor:
+            theme.palette.mode === "dark"
+              ? theme.palette.grey[900]
+              : theme.palette.grey[50],
         },
       }}
     >

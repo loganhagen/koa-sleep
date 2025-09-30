@@ -33,6 +33,8 @@ const Greeting = () => {
           sx={{
             color: "text.primary",
             textAlign: "center",
+            fontSize: { xs: "1.5rem", sm: "2.5rem" },
+            fontWeight: 700,
           }}
         >
           {message},
@@ -43,7 +45,14 @@ const Greeting = () => {
           paddingTop={1}
           alignItems="center"
         >
-          <Typography variant="h4" sx={{ color: "text.primary" }}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "text.primary",
+              fontSize: { xs: "1.5rem", sm: "2.5rem" },
+              fontWeight: 700,
+            }}
+          >
             {user?.first_name}
           </Typography>
           <WavingHandIcon sx={{ fontSize: 30, color: "info.main" }} />
