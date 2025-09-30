@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
-import GoogleButton from "react-google-button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useDemoLogin } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
@@ -121,14 +120,21 @@ const Splash = () => {
                 >
                   <Tooltip title="Coming Soon!" arrow>
                     <Box component="span">
-                      <GoogleButton
-                        type={currentMode}
-                        style={{
-                          opacity: 0.5,
-                          pointerEvents: "none",
-                          width: "100%",
-                        }}
-                      />
+                      <Button
+                        variant="contained"
+                        size="large"
+                        startIcon={
+                          <Image
+                            src="/fitbit-icon.svg"
+                            alt="Fitbit Icon"
+                            width={24}
+                            height={24}
+                          />
+                        }
+                        disabled
+                      >
+                        Connect Fitbit
+                      </Button>
                     </Box>
                   </Tooltip>
                   <Button
