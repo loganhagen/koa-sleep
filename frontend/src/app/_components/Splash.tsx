@@ -121,6 +121,7 @@ const Splash = () => {
                   <Tooltip title="Coming Soon!" arrow>
                     <Box component="span">
                       <Button
+                        disabled
                         variant="contained"
                         size="large"
                         startIcon={
@@ -131,7 +132,12 @@ const Splash = () => {
                             height={24}
                           />
                         }
-                        disabled
+                        sx={{
+                          "&:not(:disabled)": {
+                            backgroundColor: "white",
+                            color: "black",
+                          },
+                        }}
                       >
                         Connect Fitbit
                       </Button>
