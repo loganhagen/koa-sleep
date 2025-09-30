@@ -21,18 +21,26 @@ const AboutPage = () => {
         margin: "0 auto",
       }}
     >
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          fontSize: { xs: "1.5rem", sm: "2.5rem" },
+          mb: { xs: 2, sm: 3 },
+          fontWeight: 700,
+          color: "text.primary",
+        }}
+      >
+        About
+      </Typography>
       <Paper
         elevation={3}
         sx={{ p: { xs: 2, sm: 3, md: 4 }, borderRadius: 2 }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-          <Typography variant="h4" component="h1">
-            About Koa-Sleep
-          </Typography>
-        </Box>
         <Typography variant="body1">
           Koa-Sleep is a personal health dashboard that displays both basic and
-          advanced data analysis about a user's sleep, as tracked by their
+          advanced data analysis about a user&apos;s sleep, as tracked by their
           Fitbit.
         </Typography>
         <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 2 }}>

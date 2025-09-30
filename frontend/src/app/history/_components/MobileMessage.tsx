@@ -18,7 +18,16 @@ const MobileMessage = () => {
       }}
     >
       <ImportantDevicesIcon sx={{ fontSize: 60, color: "primary.main" }} />
-      <Typography variant="h5" component="h2" gutterBottom>
+      <Typography
+        variant="h4"
+        component="h2"
+        gutterBottom
+        sx={{
+          fontSize: { xs: "1.5rem", sm: "2.5rem" },
+          fontWeight: 700,
+          color: "text.primary",
+        }}
+      >
         Please view on a larger screen
       </Typography>
       <Typography variant="body1" color="text.secondary">

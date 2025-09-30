@@ -21,13 +21,12 @@ const HistoryPage = () => {
   return (
     <Stack sx={{ p: { xs: 2, sm: 3 }, alignItems: "center" }}>
       <Typography
-        variant="h3"
-        component="h1"
+        variant="h4"
         gutterBottom
         sx={{
           textAlign: "center",
-          fontSize: { xs: "2rem", sm: "3rem" },
-          mb: { xs: 3, sm: 5 },
+          fontSize: { xs: "1.5rem", sm: "2.5rem" },
+          mb: { xs: 1, sm: 1 },
           fontWeight: 700,
           color: "text.primary",
         }}
