@@ -1,9 +1,20 @@
 import { Paper, Stack, Typography, Box, Chip } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { useState } from "react";
+import { useSmartSummary } from "@/hooks/useSmartSummary";
+import { useUser } from "@/providers/userProvider";
 
-const SmartSummary = () => {
-  const [summaryText, setSummaryText] = useState("Smart summary unavailable.")
+interface SmartSummaryProps {
+  targetDate: Date;
+}
+
+const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
+  const { user } = useUser();
+    const { data, isLoading, error, isPlaceholderData } = useSmartSummary(
+      user?.id,
+      targetDate
+    );
+
+
   return (
     <Paper
       elevation={0}
@@ -50,7 +61,7 @@ const SmartSummary = () => {
           color="text.secondary"
           sx={{ textAlign: "center" }}
         >
-          {summaryText}
+          {data?.summary || "Smart summary unavailable for current date."}
         </Typography>
       </Stack>
     </Paper>
