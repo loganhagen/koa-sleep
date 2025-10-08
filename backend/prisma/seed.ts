@@ -228,55 +228,227 @@ async function main() {
 
   await prisma.heart_rate_variabilities.createMany({
     data: [
-      { user_id: user.id, date: new Date("2025-08-18"), daily_rmssd: 43.1, deep_rmssd: 49.5 },
-      { user_id: user.id, date: new Date("2025-08-19"), daily_rmssd: 58.9, deep_rmssd: 66.2 },
-      { user_id: user.id, date: new Date("2025-08-20"), daily_rmssd: 59.5, deep_rmssd: 67.0 },
-      { user_id: user.id, date: new Date("2025-08-21"), daily_rmssd: 44.5, deep_rmssd: 50.1 },
-      { user_id: user.id, date: new Date("2025-08-22"), daily_rmssd: 61.2, deep_rmssd: 69.0 },
-      { user_id: user.id, date: new Date("2025-08-23"), daily_rmssd: 57.3, deep_rmssd: 64.8 },
-      { user_id: user.id, date: new Date("2025-08-24"), daily_rmssd: 42.0, deep_rmssd: 48.8 },
-      { user_id: user.id, date: new Date("2025-08-25"), daily_rmssd: 53.4, deep_rmssd: 60.1 },
-      { user_id: user.id, date: new Date("2025-08-26"), daily_rmssd: 58.2, deep_rmssd: 65.0 },
-      { user_id: user.id, date: new Date("2025-08-27"), daily_rmssd: 60.1, deep_rmssd: 68.3 },
-      { user_id: user.id, date: new Date("2025-08-28"), daily_rmssd: 41.5, deep_rmssd: 48.2 },
-      { user_id: user.id, date: new Date("2025-08-29"), daily_rmssd: 51.0, deep_rmssd: 58.5 },
-      { user_id: user.id, date: new Date("2025-08-30"), daily_rmssd: 42.0, deep_rmssd: 48.8 },
-      { user_id: user.id, date: new Date("2025-08-31"), daily_rmssd: 48.2, deep_rmssd: 55.9 },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-18"),
+        daily_rmssd: 43.1,
+        deep_rmssd: 49.5,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-19"),
+        daily_rmssd: 58.9,
+        deep_rmssd: 66.2,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-20"),
+        daily_rmssd: 59.5,
+        deep_rmssd: 67.0,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-21"),
+        daily_rmssd: 44.5,
+        deep_rmssd: 50.1,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-22"),
+        daily_rmssd: 61.2,
+        deep_rmssd: 69.0,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-23"),
+        daily_rmssd: 57.3,
+        deep_rmssd: 64.8,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-24"),
+        daily_rmssd: 42.0,
+        deep_rmssd: 48.8,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-25"),
+        daily_rmssd: 53.4,
+        deep_rmssd: 60.1,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-26"),
+        daily_rmssd: 58.2,
+        deep_rmssd: 65.0,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-27"),
+        daily_rmssd: 60.1,
+        deep_rmssd: 68.3,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-28"),
+        daily_rmssd: 41.5,
+        deep_rmssd: 48.2,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-29"),
+        daily_rmssd: 51.0,
+        deep_rmssd: 58.5,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-30"),
+        daily_rmssd: 42.0,
+        deep_rmssd: 48.8,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-31"),
+        daily_rmssd: 48.2,
+        deep_rmssd: 55.9,
+      },
     ],
   });
 
   await prisma.spo2_readings.createMany({
     data: [
-      { user_id: user.id, date: new Date("2025-08-18"), avg: 94, min: 90, max: 98 },
-      { user_id: user.id, date: new Date("2025-08-19"), avg: 97, min: 94, max: 100 },
-      { user_id: user.id, date: new Date("2025-08-20"), avg: 98, min: 95, max: 100 },
-      { user_id: user.id, date: new Date("2025-08-21"), avg: 95, min: 91, max: 99 },
-      { user_id: user.id, date: new Date("2025-08-22"), avg: 97, min: 94, max: 99 },
-      { user_id: user.id, date: new Date("2025-08-23"), avg: 96, min: 93, max: 100 },
-      { user_id: user.id, date: new Date("2025-08-24"), avg: 94, min: 90, max: 97 },
-      { user_id: user.id, date: new Date("2025-08-25"), avg: 97, min: 95, max: 100 },
-      { user_id: user.id, date: new Date("2025-08-26"), avg: 96, min: 93, max: 99 },
-      { user_id: user.id, date: new Date("2025-08-27"), avg: 97, min: 94, max: 100 },
-      { user_id: user.id, date: new Date("2025-08-28"), avg: 95, min: 91, max: 98 },
-      { user_id: user.id, date: new Date("2025-08-29"), avg: 96, min: 92, max: 99 },
-      { user_id: user.id, date: new Date("2025-08-30"), avg: 94, min: 90, max: 97 },
-      { user_id: user.id, date: new Date("2025-08-31"), avg: 96, min: 93, max: 99 },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-18"),
+        avg: 94,
+        min: 90,
+        max: 98,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-19"),
+        avg: 97,
+        min: 94,
+        max: 100,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-20"),
+        avg: 98,
+        min: 95,
+        max: 100,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-21"),
+        avg: 95,
+        min: 91,
+        max: 99,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-22"),
+        avg: 97,
+        min: 94,
+        max: 99,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-23"),
+        avg: 96,
+        min: 93,
+        max: 100,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-24"),
+        avg: 94,
+        min: 90,
+        max: 97,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-25"),
+        avg: 97,
+        min: 95,
+        max: 100,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-26"),
+        avg: 96,
+        min: 93,
+        max: 99,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-27"),
+        avg: 97,
+        min: 94,
+        max: 100,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-28"),
+        avg: 95,
+        min: 91,
+        max: 98,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-29"),
+        avg: 96,
+        min: 92,
+        max: 99,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-30"),
+        avg: 94,
+        min: 90,
+        max: 97,
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-31"),
+        avg: 96,
+        min: 93,
+        max: 99,
+      },
     ],
   });
 
-    await prisma.smart_summary.createMany({
+  await prisma.smart_summary.createMany({
     data: [
       {
-        user_id: user.id, date: new Date("2025-08-29"),
-        summary: "You had an excellent night's rest. Your total sleep duration of 7 hours and 50 minutes, combined with a high efficiency score of 93%, indicates very restorative sleep. You spent a significant amount of time in both deep and REM sleep, which are crucial for physical recovery and mental processing. Your health metrics all appear stable. The slight rise in your skin temperature is not a concern given your other strong results, but be aware that a cooler environment can sometimes enhance sleep quality even further."
+        user_id: user.id,
+        date: new Date("2025-08-27"),
+        summary:
+          "You had an excellent night of restorative sleep. Your total time of 7 hours and 45 minutes combined with an outstanding 96% efficiency score indicates very high-quality rest. You achieved healthy amounts of both deep and REM sleep, which are vital for physical repair and mental clarity. Your vital signs, including a strong Heart Rate Variability (HRV) and stable breathing rate, suggest your nervous system recovered well overnight. All other health metrics appear stable and within a healthy range.",
       },
       {
-        user_id: user.id, date: new Date("2025-08-30"),
-        summary: "Your sleep last night was a bit restless. While you achieved respectable amounts of deep and REM sleep, your overall efficiency was lowered by over an hour of awake time. A key insight is your elevated skin temperature; this increase can sometimes interfere with sleep quality and might suggest your sleeping environment was too warm. Your other metrics, including your blood oxygen and HRV, fall within a range that suggests your body was managing okay despite the restlessness."
+        user_id: user.id,
+        date: new Date("2025-08-28"),
+        summary:
+          "You had a decent night of rest, though your sleep efficiency of 88% was impacted by nearly an hour of awake time. On the positive side, you achieved healthy amounts of both deep and REM sleep, which are essential for physical repair and cognitive function. A notable highlight is the significant drop in your skin temperature; this cooling is a key physiological trigger for high-quality, restorative sleep. Your breathing rate, HRV, and SpO2 levels all appear stable.",
       },
       {
-        user_id: user.id, date: new Date("2025-08-31"),
-        summary: "You achieved a highly restorative night's rest. Your total sleep time of 7 hours and 45 minutes, paired with an excellent 92% efficiency score, indicates very effective sleep. You spent healthy amounts of time in both deep and REM sleep, which are crucial for physical recovery and memory consolidation. Notably, the slight drop in your skin temperature is a positive sign; this cooling process is a key physiological trigger for deep, quality sleep. Your other health metrics all appear stable and healthy."
+        user_id: user.id,
+        date: new Date("2025-08-29"),
+        summary:
+          "You had an excellent night's rest. Your total sleep duration of 7 hours and 50 minutes, combined with a high efficiency score of 93%, indicates very restorative sleep. You spent a significant amount of time in both deep and REM sleep, which are crucial for physical recovery and mental processing. Your health metrics all appear stable. The slight rise in your skin temperature is not a concern given your other strong results, but be aware that a cooler environment can sometimes enhance sleep quality even further.",
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-30"),
+        summary:
+          "Your sleep last night was a bit restless. While you achieved respectable amounts of deep and REM sleep, your overall efficiency was lowered by over an hour of awake time. A key insight is your elevated skin temperature; this increase can sometimes interfere with sleep quality and might suggest your sleeping environment was too warm. Your other metrics, including your blood oxygen and HRV, fall within a range that suggests your body was managing okay despite the restlessness.",
+      },
+      {
+        user_id: user.id,
+        date: new Date("2025-08-31"),
+        summary:
+          "You achieved a highly restorative night's rest. Your total sleep time of 7 hours and 45 minutes, paired with an excellent 92% efficiency score, indicates very effective sleep. You spent healthy amounts of time in both deep and REM sleep, which are crucial for physical recovery and memory consolidation. Notably, the slight drop in your skin temperature is a positive sign; this cooling process is a key physiological trigger for deep, quality sleep. Your other health metrics all appear stable and healthy.",
       },
     ],
   });

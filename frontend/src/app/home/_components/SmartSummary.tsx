@@ -1,4 +1,12 @@
-import { Paper, Stack, Typography, Box, Chip, IconButton } from "@mui/material";
+import {
+  Paper,
+  Stack,
+  Typography,
+  Box,
+  Chip,
+  IconButton,
+  Skeleton,
+} from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
@@ -11,7 +19,10 @@ interface SmartSummaryProps {
 
 const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
   const { user } = useUser();
-  const { data, error } = useSmartSummary(user?.id, targetDate);
+  const { data, error, isPending, isError } = useSmartSummary(
+    user?.id,
+    targetDate
+  );
 
   return (
     <Paper
@@ -55,13 +66,25 @@ const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
           </Box>
         </Stack>
 
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          sx={{ textAlign: "center", pb: 4 }}
-        >
-          {data?.summary || error?.message}
-        </Typography>
+        {isPending ? (
+          <Stack sx={{ alignItems: "center", pb: 4 }}>
+            <Skeleton variant="text" width="90%" />
+            <Skeleton variant="text" width="80%" />
+            <Skeleton variant="text" width="95%" />
+          </Stack>
+        ) : isError ? (
+          <Typography variant="body1" sx={{ textAlign: "center", pb: 4 }}>
+            {error?.message || "An unexpected error occurred."}
+          </Typography>
+        ) : (
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ textAlign: "center", pb: 4 }}
+          >
+            {data?.summary}
+          </Typography>
+        )}
       </Stack>
       {data?.summary ? (
         <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>

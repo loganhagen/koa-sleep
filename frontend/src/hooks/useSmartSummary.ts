@@ -5,6 +5,8 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 const fetchSmartSummaryByDate = async (userId: string, date: Date) => {
   try {
+    // Simulate a delay
+    await new Promise(resolve => setTimeout(resolve, 750));
     const endpoint = `/user/${userId}/sleep/smart-summary/${date.toISOString()}`;
     const data = await fetchAPI<SmartSummaryDTO>(endpoint);
     return data;
@@ -26,6 +28,6 @@ export const useSmartSummary = (userId: string | undefined, date: Date) => {
     },
     enabled: !!userId && !!date,
     retry: 0,
-    placeholderData: keepPreviousData,
+    // placeholderData: keepPreviousData,
   });
 };
