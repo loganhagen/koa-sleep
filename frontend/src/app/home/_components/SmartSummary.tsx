@@ -11,7 +11,7 @@ interface SmartSummaryProps {
 
 const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
   const { user } = useUser();
-  const { data } = useSmartSummary(user?.id, targetDate);
+  const { data, error } = useSmartSummary(user?.id, targetDate);
 
   return (
     <Paper
@@ -60,7 +60,7 @@ const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
           color="text.secondary"
           sx={{ textAlign: "center", pb: 4 }}
         >
-          {data?.summary || "Smart summary unavailable for current date."}
+          {data?.summary || error?.message}
         </Typography>
       </Stack>
       <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>

@@ -21,9 +21,8 @@ export const fetchAPI = async <T>(
   options?: RequestInit
 ): Promise<T> => {
   const res = await fetch(`/api/${endpoint}`, options);
-
   const envelope: ApiResponse<T> = await res.json();
-
+  
   if (envelope.success) {
     return envelope.data as T;
   } else {
