@@ -71,6 +71,7 @@ export const userService = {
         breathing_rate: breathingRateMap.get(dateKey) ?? null,
         hrv: hrvMap.get(dateKey) ?? null,
         spo2: spo2Map.get(dateKey) ?? null,
+        
       };
     });
     return combinedLogs;

@@ -2,7 +2,10 @@ import { Router } from "express";
 import { userController } from "@controllers/userController";
 import { sleepController } from "@controllers/sleepController";
 import { wellnessController } from "@controllers/wellnessController";
-import { authenticateToken, verifyUserAccess } from "../middleware/authMiddleware";
+import {
+  authenticateToken,
+  verifyUserAccess,
+} from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -130,7 +133,7 @@ router.get("/:email", userController.getUserByEmail);
 router.get(
   "/:userId/sleep",
   verifyUserAccess,
-  sleepController.getSleepLogsByUserId
+  sleepController.getSleepLogsByUserId,
 );
 
 /**
@@ -180,7 +183,7 @@ router.get(
 router.get(
   "/:userId/sleep/recent",
   verifyUserAccess,
-  sleepController.getMostRecentSleepLog
+  sleepController.getMostRecentSleepLog,
 );
 
 /**
@@ -237,7 +240,7 @@ router.get(
 router.get(
   "/:userId/sleep/:date",
   verifyUserAccess,
-  sleepController.getSleepLogByDate
+  sleepController.getSleepLogByDate,
 );
 
 /**
@@ -294,7 +297,7 @@ router.get(
 router.get(
   "/:userId/wellness-summary/:date",
   verifyUserAccess,
-  wellnessController.getWellnessSummaryByDate
+  wellnessController.getWellnessSummaryByDate,
 );
 
 /**
@@ -351,7 +354,7 @@ router.get(
 router.get(
   "/:userId/sleep-stages/:date",
   verifyUserAccess,
-  sleepController.getSleepStagesByDate
+  sleepController.getSleepStagesByDate,
 );
 
 /**
@@ -408,7 +411,7 @@ router.get(
 router.get(
   "/:userId/core-metrics/:date",
   verifyUserAccess,
-  sleepController.getCoreMetricsByDate
+  sleepController.getSleepSummaryByDate,
 );
 
 /**
@@ -456,4 +459,61 @@ router.get(
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.get("/:userId/full-logs", verifyUserAccess, sleepController.getFullLogs);
+/**
+ * @swagger
+ * /user/{userId}/sleep/smart-summary/{date}:
+ *   get:
+ *     summary: Get smart summary by date for a user
+ *     tags: [Sleep]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user ID
+ *       - in: path
+ *         name: date
+ *         schema:
+ *           type: string
+ *           format: date
+ *         required: true
+ *         description: The date for the smart summary (YYYY-MM-DD)
+ *     responses:
+ *       200:
+ *         description: The smart summary
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   $ref: '#/components/schemas/SmartSummary'
+ *       400:
+ *         description: Invalid user ID or date supplied
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Smart summary not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.get(
+  "/:userId/sleep/smart-summary/:date",
+  verifyUserAccess,
+  sleepController.getSmartSummaryByDate,
+);
+
 export default router;

@@ -71,6 +71,7 @@ export const toFullSleepLogDTO = (log: FullSleepLog): FullSleepLogDTO => {
   };
 };
 
+
 export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
   return {
     bed_time: model.bed_time.toISOString(),

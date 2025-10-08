@@ -43,3 +43,10 @@ export interface CoreMetricsDTO {
   duration: string;
   efficiency: number;
 }
+
+export interface SmartSummaryDTO {
+  id: string,
+  user_id: string,
+  date: string,
+  summary: string
+}

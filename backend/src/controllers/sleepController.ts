@@ -246,7 +246,7 @@ export const sleepController = {
       return;
     }
   },
-  getCoreMetricsByDate: async (req: Request, res: Response) => {
+  getSleepSummaryByDate: async (req: Request, res: Response) => {
     try {
       const { userId: requestedUserId, date } = req.params;
 
@@ -284,6 +284,54 @@ export const sleepController = {
       return;
     } catch (error) {
       console.error("Failed to search for core metrics by date:", error);
+      res.status(500).json({
+        success: false,
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          message: "An unexpected error occurred on the server.",
+        },
+      });
+      return;
+    }
+  },
+  getSmartSummaryByDate: async (req: Request, res: Response) => {
+    try {
+      const { userId: requestedUserId, date } = req.params;
+
+      if (!requestedUserId || !date) {
+        res.status(400).json({
+          success: false,
+          error: {
+            code: "INVALID_PARAMETER",
+            message: "The 'userId' and 'date' URL parameters are required.",
+          },
+        });
+        return;
+      }
+
+      const smart_summary = await sleepService.getSmartSummaryByDate(
+        requestedUserId,
+        new Date(date)
+      );
+
+      if (!smart_summary) {
+        res.status(404).json({
+          success: false,
+          error: {
+            code: "NOT_FOUND",
+            message: "No smart summary found for the specified date.",
+          },
+        });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: smart_summary,
+      });
+      return;
+    } catch (error) {
+      console.error("Failed to search for smart summary by date:", error);
       res.status(500).json({
         success: false,
         error: {

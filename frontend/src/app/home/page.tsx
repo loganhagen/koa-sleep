@@ -2,10 +2,11 @@
 
 import DateSelector from "./_components/DateSelector";
 import Greeting from "./_components/Greeting";
+import SmartSummary from "./_components/SmartSummary";
 import CoreMetrics from "./_components/core-metrics/CoreMetrics";
 import SleepStages from "./_components/sleep-stages/SleepStages";
 import WellnessIndicators from "./_components/wellness-indicators/WellnessIndicators";
-import { Stack, CircularProgress, Box } from "@mui/material";
+import { Stack, CircularProgress, Box, Container } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useUser } from "../../providers/userProvider";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
@@ -57,7 +58,7 @@ const Home = () => {
   }
 
   return (
-    <Box>
+    <Container maxWidth="md">
       <Box sx={{ marginBottom: 5 }}>
         <Greeting />
       </Box>
@@ -70,11 +71,12 @@ const Home = () => {
             mostRecentSleepLog ? new Date(mostRecentSleepLog.date) : null
           }
         />
+        <SmartSummary targetDate={targetDate}/>
         <CoreMetrics targetDate={targetDate} />
         <WellnessIndicators targetDate={targetDate} />
         <SleepStages targetDate={targetDate} />
       </Stack>
-    </Box>
+    </Container>
   );
 };
 
