@@ -1,5 +1,7 @@
-import { Paper, Stack, Typography, Box, Chip } from "@mui/material";
+import { Paper, Stack, Typography, Box, Chip, IconButton } from "@mui/material";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import { useSmartSummary } from "@/hooks/useSmartSummary";
 import { useUser } from "@/providers/userProvider";
 
@@ -9,11 +11,7 @@ interface SmartSummaryProps {
 
 const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
   const { user } = useUser();
-    const { data, isLoading, error, isPlaceholderData } = useSmartSummary(
-      user?.id,
-      targetDate
-    );
-
+  const { data } = useSmartSummary(user?.id, targetDate);
 
   return (
     <Paper
@@ -24,6 +22,7 @@ const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
         borderRadius: 10,
         backgroundColor: "background.paper",
         textAlign: "left",
+        position: "relative",
       }}
     >
       <Stack direction="column" spacing={2}>
@@ -59,11 +58,21 @@ const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
         <Typography
           variant="body1"
           color="text.secondary"
-          sx={{ textAlign: "center" }}
+          sx={{ textAlign: "center", pb: 4 }}
         >
           {data?.summary || "Smart summary unavailable for current date."}
         </Typography>
       </Stack>
+      <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
+        <Stack direction="row" spacing={0.5}>
+          <IconButton size="small" aria-label="summary helpful">
+            <ThumbUpOutlinedIcon fontSize="small" />
+          </IconButton>
+          <IconButton size="small" aria-label="summary not helpful">
+            <ThumbDownOutlinedIcon fontSize="small" />
+          </IconButton>
+        </Stack>
+      </Box>
     </Paper>
   );
 };
