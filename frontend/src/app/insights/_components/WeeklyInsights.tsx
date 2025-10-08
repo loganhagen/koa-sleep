@@ -1,7 +1,14 @@
 "use client";
 
 import React from "react";
-import { Divider, Typography, Stack, IconButton, Paper } from "@mui/material";
+import {
+  Divider,
+  Typography,
+  Stack,
+  IconButton,
+  Paper,
+  Box,
+} from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import SleepConsistency from "./SleepConsistency";
 import SleepScheduleChart from "@/app/sleep-journey/active/_components/progress/SleepScheduleChart";
@@ -18,28 +25,27 @@ const WeeklyInsights: React.FC = () => {
         textAlign: "center",
       }}
     >
-      <Typography variant="h4" sx={{ pb: 5 }}>
+      <Typography variant="h5" sx={{ pb: 2 }}>
         Sleep Consistency
       </Typography>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-        spacing={2}
-      >
+      <Typography variant="body1" color="text.secondary" sx={{ pb: 3 }}>
+        Maintaining a regular sleep pattern is key to improving your sleep
+        quality. This section analyzes how consistent your sleep schedule has
+        been over the past week.
+      </Typography>
+      <Stack direction="row" alignItems="center" justifyContent="center">
         <IconButton aria-label="previous week">
           <ArrowBackIos />
         </IconButton>
         <Typography
-          variant="h5"
-          component="h2"
+          variant="h6"
           sx={{
-            fontWeight: "bold",
             minWidth: "220px",
             textAlign: "center",
+            mx: -2,
           }}
         >
-          Jul 28 - Aug 3
+          Aug 24 - Aug 31
         </Typography>
         <IconButton aria-label="next week">
           <ArrowForwardIos />
@@ -53,7 +59,9 @@ const WeeklyInsights: React.FC = () => {
         sx={{ mt: 2 }}
       >
         <SleepConsistency />
-        <SleepScheduleChart />
+        <Box sx={{ display: { xs: "none", md: "block" }, width: "100%" }}>
+          <SleepScheduleChart />
+        </Box>
       </Stack>
     </Paper>
   );

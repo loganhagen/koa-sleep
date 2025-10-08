@@ -4,12 +4,7 @@ import {
   MenuItem as ProSidebarMenuItem,
   MenuItemStyles,
 } from "react-pro-sidebar";
-import {
-  Home,
-  CalendarMonth,
-  ExpandLess,
-  Logout,
-} from "@mui/icons-material";
+import { Home, CalendarMonth, ExpandLess, Logout } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -32,6 +27,7 @@ import { useState, useEffect } from "react";
 import { useUser } from "../../providers/userProvider";
 import InfoIcon from "@mui/icons-material/Info";
 import { useLogout } from "@/hooks/useAuth";
+import InsightsIcon from "@mui/icons-material/Insights";
 // import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const SidebarComponent: React.FC = () => {
@@ -145,6 +141,13 @@ const SidebarComponent: React.FC = () => {
             component={<Link href="/home" />}
           >
             Home
+          </ProSidebarMenuItem>
+          <ProSidebarMenuItem
+            icon={<InsightsIcon />}
+            active={pathname === "/insights"}
+            component={<Link href="/insights" />}
+          >
+            Insights
           </ProSidebarMenuItem>
           <ProSidebarMenuItem
             icon={<CalendarMonth />}
