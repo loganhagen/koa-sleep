@@ -63,16 +63,20 @@ const SmartSummary: React.FC<SmartSummaryProps> = ({ targetDate }) => {
           {data?.summary || error?.message}
         </Typography>
       </Stack>
-      <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
-        <Stack direction="row" spacing={0.5}>
-          <IconButton size="small" aria-label="summary helpful">
-            <ThumbUpOutlinedIcon fontSize="small" />
-          </IconButton>
-          <IconButton size="small" aria-label="summary not helpful">
-            <ThumbDownOutlinedIcon fontSize="small" />
-          </IconButton>
-        </Stack>
-      </Box>
+      {data?.summary ? (
+        <Box sx={{ position: "absolute", bottom: 8, right: 8 }}>
+          <Stack direction="row" spacing={0.5}>
+            <IconButton size="small" aria-label="summary helpful">
+              <ThumbUpOutlinedIcon fontSize="small" />
+            </IconButton>
+            <IconButton size="small" aria-label="summary not helpful">
+              <ThumbDownOutlinedIcon fontSize="small" />
+            </IconButton>
+          </Stack>
+        </Box>
+      ) : (
+        <></>
+      )}
     </Paper>
   );
 };
