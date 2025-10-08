@@ -164,14 +164,14 @@ async function main() {
       {
         user_id: user.id,
         date: new Date("2025-08-30"),
-        bed_time: new Date("2025-08-29T23:05:00Z"),
-        wake_time: new Date("2025-08-30T07:15:00Z"),
-        duration_ms: 29400000,
-        efficiency: 95,
-        awake_mins: 38,
-        light_mins: 260,
-        deep_mins: 80,
-        rem_mins: 110,
+        bed_time: new Date("2025-08-29T23:10:00Z"),
+        wake_time: new Date("2025-08-30T06:00:00Z"),
+        duration_ms: 24600000,
+        efficiency: 85,
+        awake_mins: 62,
+        light_mins: 225,
+        deep_mins: 58,
+        rem_mins: 85,
       },
       {
         user_id: user.id,
@@ -202,7 +202,7 @@ async function main() {
       { user_id: user.id, date: new Date("2025-08-27"), average: 0.0 },
       { user_id: user.id, date: new Date("2025-08-28"), average: -1.2 },
       { user_id: user.id, date: new Date("2025-08-29"), average: 0.3 },
-      { user_id: user.id, date: new Date("2025-08-30"), average: 0.1 },
+      { user_id: user.id, date: new Date("2025-08-30"), average: 0.9 },
       { user_id: user.id, date: new Date("2025-08-31"), average: -0.4 },
     ],
   });
@@ -221,7 +221,7 @@ async function main() {
       { user_id: user.id, date: new Date("2025-08-27"), breathing_rate: 15.4 },
       { user_id: user.id, date: new Date("2025-08-28"), breathing_rate: 16.4 },
       { user_id: user.id, date: new Date("2025-08-29"), breathing_rate: 16.1 },
-      { user_id: user.id, date: new Date("2025-08-30"), breathing_rate: 15.2 },
+      { user_id: user.id, date: new Date("2025-08-30"), breathing_rate: 16.5 },
       { user_id: user.id, date: new Date("2025-08-31"), breathing_rate: 15.7 },
     ],
   });
@@ -240,7 +240,7 @@ async function main() {
       { user_id: user.id, date: new Date("2025-08-27"), daily_rmssd: 60.1, deep_rmssd: 68.3 },
       { user_id: user.id, date: new Date("2025-08-28"), daily_rmssd: 41.5, deep_rmssd: 48.2 },
       { user_id: user.id, date: new Date("2025-08-29"), daily_rmssd: 51.0, deep_rmssd: 58.5 },
-      { user_id: user.id, date: new Date("2025-08-30"), daily_rmssd: 55.6, deep_rmssd: 62.1 },
+      { user_id: user.id, date: new Date("2025-08-30"), daily_rmssd: 42.0, deep_rmssd: 48.8 },
       { user_id: user.id, date: new Date("2025-08-31"), daily_rmssd: 48.2, deep_rmssd: 55.9 },
     ],
   });
@@ -259,8 +259,25 @@ async function main() {
       { user_id: user.id, date: new Date("2025-08-27"), avg: 97, min: 94, max: 100 },
       { user_id: user.id, date: new Date("2025-08-28"), avg: 95, min: 91, max: 98 },
       { user_id: user.id, date: new Date("2025-08-29"), avg: 96, min: 92, max: 99 },
-      { user_id: user.id, date: new Date("2025-08-30"), avg: 97, min: 94, max: 100 },
+      { user_id: user.id, date: new Date("2025-08-30"), avg: 94, min: 90, max: 97 },
       { user_id: user.id, date: new Date("2025-08-31"), avg: 96, min: 93, max: 99 },
+    ],
+  });
+
+    await prisma.smart_summary.createMany({
+    data: [
+      {
+        user_id: user.id, date: new Date("2025-08-29"),
+        summary: "You had an excellent night's rest. Your total sleep duration of 7 hours and 50 minutes, combined with a high efficiency score of 93%, indicates very restorative sleep. You spent a significant amount of time in both deep and REM sleep, which are crucial for physical recovery and mental processing. Your health metrics all appear stable. The slight rise in your skin temperature is not a concern given your other strong results, but be aware that a cooler environment can sometimes enhance sleep quality even further."
+      },
+      {
+        user_id: user.id, date: new Date("2025-08-30"),
+        summary: "Your sleep last night was a bit restless. While you achieved respectable amounts of deep and REM sleep, your overall efficiency was lowered by over an hour of awake time. A key insight is your elevated skin temperature; this increase can sometimes interfere with sleep quality and might suggest your sleeping environment was too warm. Your other metrics, including your blood oxygen and HRV, fall within a range that suggests your body was managing okay despite the restlessness."
+      },
+      {
+        user_id: user.id, date: new Date("2025-08-31"),
+        summary: "You achieved a highly restorative night's rest. Your total sleep time of 7 hours and 45 minutes, paired with an excellent 92% efficiency score, indicates very effective sleep. You spent healthy amounts of time in both deep and REM sleep, which are crucial for physical recovery and memory consolidation. Notably, the slight drop in your skin temperature is a positive sign; this cooling process is a key physiological trigger for deep, quality sleep. Your other health metrics all appear stable and healthy."
+      },
     ],
   });
 
