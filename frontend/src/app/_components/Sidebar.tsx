@@ -310,7 +310,7 @@ const SidebarComponent: React.FC = () => {
           }}
         >
           <Typography variant="caption" color="textSecondary">
-            Version: {process.env.NEXT_PUBLIC_APP_VERSION}
+            UI Version: {process.env.NEXT_PUBLIC_APP_VERSION}
           </Typography>
         </Box>
       </Stack>
