@@ -1,0 +1,61 @@
+name: Deploy Frontend to Production
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+
+jobs:
+  bump-version:
+    if: github.actor != 'github-actions[bot]'
+    
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write 
+    outputs:
+      new_version: ${{ steps.bump.outputs.new-version }} 
+      
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: 2. Bump version
+        id: bump 
+        uses: phips28/gh-action-bump-version@master
+        with:
+          PACKAGEJSON_DIR: "frontend"
+          default: "patch"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  deploy:
+    needs: bump-version 
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: 'main' 
+
+      - name: 2. Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 3. Install Dependencies
+        run: npm install --prefix ./frontend
+
+      - name: 4. Run Linter and Tests
+        run: |
+          npm run lint --prefix ./frontend
+          npm run test --prefix ./frontend
+
+      - name: 5. Deploy Frontend to Vercel
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
