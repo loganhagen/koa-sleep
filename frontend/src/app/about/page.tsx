@@ -34,12 +34,9 @@ const AboutPage = () => {
       >
         About
       </Typography>
-      <Paper
-        elevation={3}
-        sx={{ p: { xs: 2, sm: 3, md: 4 }, borderRadius: 2 }}
-      >
+      <Paper elevation={3} sx={{ p: { xs: 2, sm: 3, md: 4 }, borderRadius: 2 }}>
         <Typography variant="body1">
-          Koa-Sleep is a personal health dashboard that displays both basic and
+          Koa Sleep is a personal health dashboard that displays both basic and
           advanced data analysis about a user&apos;s sleep, as tracked by their
           Fitbit.
         </Typography>
