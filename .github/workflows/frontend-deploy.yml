@@ -35,6 +35,11 @@ jobs:
   deploy:
     needs: bump-version 
     runs-on: ubuntu-latest
+
+    defaults: 
+      run:
+        working-directory: ./frontend
+
     steps:
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
@@ -47,11 +52,11 @@ jobs:
           node-version: "20"
 
       - name: 3. Install Dependencies
-        run: npm install --prefix ./frontend
+        run: npm install 
 
       - name: 4. Run Linter 
         run: |
-          npm run lint --prefix ./frontend
+          npm run lint 
 
       - name: 5. Deploy Frontend to Vercel
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
