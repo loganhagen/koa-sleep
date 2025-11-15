@@ -93,3 +93,11 @@ Follow the provided steps in the root of the backend directory.
     ```bash
     npx prisma studio
     ```
+
+## Versioning
+
+### Front-End
+
+1. Check-out a new branch (Ex. `chore/bump-version`).
+2. Run `npm version patch --no-git-tag-version -m "chore: bump version to %s"`
+3. Push to remote and create a PR.
