@@ -68,13 +68,10 @@ export const sleepService = {
     });
     return sleepStages;
   },
-  getSmartSummaryByDate: async (
-    userId: string,
-    date: Date
-  ) => {
+  getSmartSummaryByDate: async (userId: string, date: Date) => {
     const smartSummary = await prisma.smart_summary.findFirst({
       where: { user_id: userId, date: date },
-    })
-    return smartSummary
-  }
+    });
+    return smartSummary;
+  },
 };
