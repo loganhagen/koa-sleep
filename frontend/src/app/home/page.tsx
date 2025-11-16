@@ -71,7 +71,7 @@ const Home = () => {
             mostRecentSleepLog ? new Date(mostRecentSleepLog.date) : null
           }
         />
-        <SmartSummary targetDate={targetDate}/>
+        <SmartSummary targetDate={targetDate} />
         <CoreMetrics targetDate={targetDate} />
         <WellnessIndicators targetDate={targetDate} />
         <SleepStages targetDate={targetDate} />

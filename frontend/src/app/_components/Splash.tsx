@@ -20,6 +20,10 @@ const Splash = () => {
   const currentMode = theme.palette.mode;
   const { mutate: performDemoLogin, isPending } = useDemoLogin();
 
+  const handleFitbitLogin = async () => {
+    window.location.href = `/api/auth/fitbit/login`;
+  };
+
   const handleSeeDemo = async () => {
     performDemoLogin();
   };
@@ -118,31 +122,29 @@ const Splash = () => {
                     justifyContent: { xs: "center", md: "flex-start" },
                   }}
                 >
-                  <Tooltip title="Coming Soon!" arrow>
-                    <Box component="span">
-                      <Button
-                        disabled
-                        variant="contained"
-                        size="large"
-                        startIcon={
-                          <Image
-                            src="/fitbit-icon.svg"
-                            alt="Fitbit Icon"
-                            width={24}
-                            height={24}
-                          />
-                        }
-                        sx={{
-                          "&:not(:disabled)": {
-                            backgroundColor: "white",
-                            color: "black",
-                          },
-                        }}
-                      >
-                        Connect Fitbit
-                      </Button>
-                    </Box>
-                  </Tooltip>
+                  <Box component="span">
+                    <Button
+                      onClick={handleFitbitLogin}
+                      variant="contained"
+                      size="large"
+                      startIcon={
+                        <Image
+                          src="/fitbit-icon.svg"
+                          alt="Fitbit Icon"
+                          width={24}
+                          height={24}
+                        />
+                      }
+                      sx={{
+                        "&:not(:disabled)": {
+                          backgroundColor: "white",
+                          color: "black",
+                        },
+                      }}
+                    >
+                      Connect Fitbit
+                    </Button>
+                  </Box>
                   <Button
                     variant="outlined"
                     size="large"
