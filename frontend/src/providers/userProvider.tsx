@@ -1,6 +1,5 @@
 "use client";
 
-import { fetchAPI } from "@/services/apiClient";
 import { UserDTO } from "@/types/api/user";
 import {
   createContext,
@@ -10,56 +9,54 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useFetchCurrentUser } from "@/hooks/useAuth";
 
 type UserContextType = {
   user: UserDTO | null;
-  login: (user: UserDTO) => void;
-  logout: () => void;
+  setUser: (user: UserDTO) => void;
+  clearUser: () => void;
   isLoading: boolean;
 };
 
 const UserContext = createContext<UserContextType>({
   user: null,
-  login: () => {},
-  logout: () => {},
+  setUser: () => {},
+  clearUser: () => {},
   isLoading: true,
 });
-
-export const fetchCurrentUser = async (): Promise<UserDTO> => {
-  const endpoint = `/user/me`;
-  return await fetchAPI<UserDTO>(endpoint);
-};
 
 export const useUser = () => useContext(UserContext);
 
 export default function UserProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setUser] = useState<UserDTO | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setUserState] = useState<UserDTO | null>(null);
+  const { data, isLoading, isError } = useFetchCurrentUser();
 
   useEffect(() => {
-    try {
-      const storedValue = localStorage.getItem("currentUser");
-      if (storedValue) {
-        setUser(JSON.parse(storedValue) as UserDTO);
-      }
-    } finally {
-      setIsLoading(false);
+    if (data) {
+      setUserState(data);
     }
-  }, []);
+  }, [data]);
 
-  const login = (user: UserDTO) => {
-    const userJson = JSON.stringify(user);
-    localStorage.setItem("currentUser", userJson);
-    setUser(user);
+  useEffect(() => {
+    if (isError) {
+      setUserState(null);
+    }
+  }, [isError]);
+  const setUser = (user: UserDTO) => {
+    setUserState(user);
   };
 
-  const logout = () => {
-    localStorage.removeItem("currentUser");
-    setUser(null);
+  const clearUser = () => {
+    setUserState(null);
   };
 
   const contextValue = useMemo(
-    () => ({ user: currentUser, login, logout, isLoading }),
+    () => ({
+      user: currentUser,
+      setUser,
+      clearUser,
+      isLoading,
+    }),
     [currentUser, isLoading]
   );
 

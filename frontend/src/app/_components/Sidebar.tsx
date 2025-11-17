@@ -26,7 +26,6 @@ import {
 import { useState, useEffect } from "react";
 import { useUser } from "../../providers/userProvider";
 import InfoIcon from "@mui/icons-material/Info";
-import { useLogout } from "@/hooks/useAuth";
 import InsightsIcon from "@mui/icons-material/Insights";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -36,7 +35,6 @@ const SidebarComponent: React.FC = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
   const { user, isLoading } = useUser();
-  const { mutate: logoutUser, isPending: isLoggingOut } = useLogout();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -276,17 +274,9 @@ const SidebarComponent: React.FC = () => {
                   },
                 }}
               >
-                <MuiMenuItem
-                  component="a"
-                  href="/api/demo/logout"
-                  disabled={isLoggingOut}
-                >
+                <MuiMenuItem component="a" href="/api/demo/logout">
                   <ListItemIcon>
-                    {isLoggingOut ? (
-                      <CircularProgress size={20} />
-                    ) : (
-                      <Logout fontSize="small" />
-                    )}
+                    <Logout fontSize="small" />
                   </ListItemIcon>
                   <ListItemText>Logout</ListItemText>
                 </MuiMenuItem>

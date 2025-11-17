@@ -1,33 +1,22 @@
 // Custom hook which solely exists to talk to the API
 // server for authentication purposes.
 
-import { useRouter } from "next/navigation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiError, fetchAPI } from "@/services/apiClient";
+import { fetchAPI } from "@/services/apiClient";
 import { UserDTO } from "@/types/api/user";
-import { useUser } from "@/providers/userProvider";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-const logoutUser = async () => {
-  return await fetchAPI("/auth/logout", { method: "POST" });
+export const fetchCurrentUser = async (): Promise<UserDTO> => {
+  const endpoint = `/user/me`;
+  return await fetchAPI<UserDTO>(endpoint);
 };
 
-export const useLogout = () => {
-  const router = useRouter();
-  const { logout } = useUser();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: logoutUser,
-    onSuccess: () => {
-      logout();
-      router.push("/");
-      queryClient.clear();
+export const useFetchCurrentUser = () => {
+  return useQuery({
+    queryKey: ["current-user"],
+    queryFn: () => {
+      return fetchCurrentUser();
     },
-    onError: (error) => {
-      console.error("Logout failed", error);
-      logout();
-      router.push("/");
-      queryClient.clear();
-    },
+    retry: 0,
+    placeholderData: keepPreviousData,
   });
 };
