@@ -12,12 +12,11 @@ import {
 import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useDemoLogin } from "@/hooks/useAuth";
+import { useDemoLogin } from "@/hooks/useDemoLogin";
 import { motion } from "framer-motion";
 
 const Splash = () => {
   const theme = useTheme();
-  const currentMode = theme.palette.mode;
   const { mutate: performDemoLogin, isPending } = useDemoLogin();
 
   const handleFitbitLogin = async () => {

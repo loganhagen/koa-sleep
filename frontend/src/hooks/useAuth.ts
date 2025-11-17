@@ -1,3 +1,6 @@
+// Custom hook which solely exists to talk to the API
+// server for authentication purposes.
+
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiError, fetchAPI } from "@/services/apiClient";
@@ -17,33 +20,6 @@ const loginUser = async (email: string): Promise<{ userId: string }> => {
 const fetchCurrentUser = async (): Promise<UserDTO> => {
   const endpoint = `/user/me`;
   return await fetchAPI<UserDTO>(endpoint);
-};
-
-const performDemoLogin = async (): Promise<UserDTO> => {
-  await loginUser("demo@koa");
-  return await fetchCurrentUser();
-};
-
-export const useDemoLogin = () => {
-  const router = useRouter();
-  const { login } = useUser();
-
-  return useMutation<UserDTO, Error>({
-    mutationFn: performDemoLogin,
-    onSuccess: (demoUser) => {
-      login(demoUser);
-      router.push("/home");
-    },
-    onError: (error) => {
-      if (error instanceof ApiError) {
-        console.error(`API Error Status: ${error.status}`);
-        console.error(`Error Code: ${error.errorBody.code}`);
-        console.error(`Error Message: ${error.errorBody.message}`);
-      } else {
-        console.error("An unexpected error occurred:", error);
-      }
-    },
-  });
 };
 
 const logoutUser = async () => {

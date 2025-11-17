@@ -2,7 +2,7 @@ import { userService } from "@services/userService";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-export const authController = {
+export const demoController = {
   // Designed for demo use.
   login: async (req: Request, res: Response): Promise<void> => {
     try {
