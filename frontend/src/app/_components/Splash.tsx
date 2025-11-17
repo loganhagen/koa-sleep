@@ -1,32 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Stack,
-  Typography,
-  Button,
-  Tooltip,
-  Container,
-  CircularProgress,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Stack, Typography, Button, Container } from "@mui/material";
 import Image from "next/image";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useDemoLogin } from "@/hooks/useDemoLogin";
+import { useDemoLogin } from "@/hooks/useDemo";
 import { motion } from "framer-motion";
 
 const Splash = () => {
-  const theme = useTheme();
-  const { mutate: performDemoLogin, isPending } = useDemoLogin();
-
-  const handleFitbitLogin = async () => {
-    window.location.href = `/api/auth/fitbit/login`;
-  };
-
-  const handleSeeDemo = async () => {
-    performDemoLogin();
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -123,7 +103,7 @@ const Splash = () => {
                 >
                   <Box component="span">
                     <Button
-                      onClick={handleFitbitLogin}
+                      href="/api/auth/fitbit/login"
                       variant="contained"
                       size="large"
                       startIcon={
@@ -145,17 +125,10 @@ const Splash = () => {
                     </Button>
                   </Box>
                   <Button
+                    href="/api/demo/login"
                     variant="outlined"
                     size="large"
-                    endIcon={
-                      isPending ? (
-                        <CircularProgress size={16} color="inherit" />
-                      ) : (
-                        <ArrowForwardIcon />
-                      )
-                    }
-                    onClick={handleSeeDemo}
-                    disabled={isPending}
+                    endIcon={<ArrowForwardIcon />}
                   >
                     See a Demo
                   </Button>

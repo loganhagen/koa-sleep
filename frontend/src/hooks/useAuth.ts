@@ -7,21 +7,6 @@ import { ApiError, fetchAPI } from "@/services/apiClient";
 import { UserDTO } from "@/types/api/user";
 import { useUser } from "@/providers/userProvider";
 
-const loginUser = async (email: string): Promise<{ userId: string }> => {
-  return await fetchAPI<{ userId: string }>("/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email }),
-  });
-};
-
-const fetchCurrentUser = async (): Promise<UserDTO> => {
-  const endpoint = `/user/me`;
-  return await fetchAPI<UserDTO>(endpoint);
-};
-
 const logoutUser = async () => {
   return await fetchAPI("/auth/logout", { method: "POST" });
 };

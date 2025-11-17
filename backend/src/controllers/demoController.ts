@@ -3,19 +3,13 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 export const demoController = {
-  // Designed for demo use.
-  login: async (req: Request, res: Response): Promise<void> => {
+  login: async (_req: Request, res: Response): Promise<void> => {
     try {
-      const { email } = req.body;
-
-      if (email !== "demo@koa") {
-        res.status(403).json({ message: "Access forbidden" });
-        return;
-      }
-
-      const user = await userService.getUserByEmail(email);
+      const user = await userService.getUserByEmail("demo@koa");
       if (!user) {
-        res.status(401).json({ message: "Invalid credentials" });
+        res
+          .status(500)
+          .send("Server configuration error: Demo user not found.");
         return;
       }
 
@@ -29,9 +23,10 @@ export const demoController = {
         sameSite: "strict",
       });
 
-      res.status(200).json({ success: true, data: { userId: user.id } });
+      res.redirect("/home");
     } catch (error) {
-      res.status(500).json({ message: "Server error" });
+      console.error("Error in demo login:", error);
+      res.status(500).send("An internal server error occurred.");
     }
   },
 };

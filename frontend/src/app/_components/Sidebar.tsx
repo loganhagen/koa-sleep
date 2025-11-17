@@ -29,7 +29,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useLogout } from "@/hooks/useAuth";
 import InsightsIcon from "@mui/icons-material/Insights";
 import SettingsIcon from "@mui/icons-material/Settings";
-// import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
