@@ -276,17 +276,9 @@ const SidebarComponent: React.FC = () => {
                   },
                 }}
               >
-                {/* <MuiMenuItem>
-                  <ListItemIcon>
-                    <ManageAccountsIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Account</ListItemText>
-                </MuiMenuItem> */}
                 <MuiMenuItem
-                  onClick={() => {
-                    logoutUser();
-                    handleClose();
-                  }}
+                  component="a"
+                  href="/api/demo/logout"
                   disabled={isLoggingOut}
                 >
                   <ListItemIcon>

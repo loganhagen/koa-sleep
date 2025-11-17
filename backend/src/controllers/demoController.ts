@@ -29,4 +29,18 @@ export const demoController = {
       res.status(500).send("An internal server error occurred.");
     }
   },
+  logout: async (_req: Request, res: Response): Promise<void> => {
+    try {
+      res.clearCookie("auth-token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
+
+      res.redirect("/");
+    } catch (error) {
+      console.error("Error in demo logout:", error);
+      res.status(500).send("An internal server error occurred.");
+    }
+  },
 };

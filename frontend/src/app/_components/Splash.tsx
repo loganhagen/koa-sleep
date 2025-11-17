@@ -3,7 +3,6 @@
 import { Box, Stack, Typography, Button, Container } from "@mui/material";
 import Image from "next/image";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useDemoLogin } from "@/hooks/useDemo";
 import { motion } from "framer-motion";
 
 const Splash = () => {

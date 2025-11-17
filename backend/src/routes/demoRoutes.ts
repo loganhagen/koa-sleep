@@ -21,7 +21,7 @@ router.get("/login", demoController.login);
 /**
  * @swagger
  * /demo/logout:
- *   post:
+ *   get:
  *     summary: Logs out the demo user by clearing the JWT cookie
  *     tags: [Auth]
  *     responses:
@@ -39,9 +39,6 @@ router.get("/login", demoController.login);
  *                   type: string
  *                   example: "Logged out successfully"
  */
-router.post("/logout", (_, res) => {
-  res.clearCookie("auth-token");
-  res.status(200).json({ success: true, message: "Logged out successfully" });
-});
+router.get("/logout", demoController.logout);
 
 export default router;
