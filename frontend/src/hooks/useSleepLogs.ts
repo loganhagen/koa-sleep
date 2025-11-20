@@ -85,10 +85,10 @@ export const useSleepLogByDate = (userId: string | undefined, date: Date) => {
   });
 };
 
-export const useMostRecentSleepLog = (userId: string | undefined) => {
+export const useMostRecentSleepLog = (userId: string) => {
   return useQuery({
     queryKey: ["mostRecentSleepLog", userId],
-    queryFn: () => fetchMostRecentSleepLog(userId!),
+    queryFn: () => fetchMostRecentSleepLog(userId),
     enabled: !!userId,
     retry: 0,
     placeholderData: keepPreviousData,
