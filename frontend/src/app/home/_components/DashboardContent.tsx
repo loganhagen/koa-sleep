@@ -16,27 +16,23 @@ interface DashboardContentProps {
 }
 
 const DashboardContent = ({ user }: DashboardContentProps) => {
-  const [targetDate, setTargetDate] = useState<Date | null>(null);
+  const [targetDate, setTargetDate] = useState<Date>(new Date());
+
   const { data: mostRecentSleepLog, isLoading: isSleepLogLoading } =
     useMostRecentSleepLog(user.id);
 
-  const getMostRecentDate = useCallback(() => {
-    if (mostRecentSleepLog) {
-      return new Date(mostRecentSleepLog.date);
-    } else {
-      return new Date();
-    }
-  }, [mostRecentSleepLog]);
+  const anchorDate = mostRecentSleepLog
+    ? new Date(mostRecentSleepLog.date)
+    : new Date();
 
   useEffect(() => {
     if (!isSleepLogLoading) {
-      setTargetDate(getMostRecentDate());
+      setTargetDate(anchorDate);
     }
-  }, [mostRecentSleepLog, isSleepLogLoading, getMostRecentDate]);
+  }, [isSleepLogLoading]);
 
   const handleDateChange = (days: number) => {
     setTargetDate((prevDate) => {
-      if (!prevDate) return null;
       const newDate = new Date(prevDate);
       newDate.setUTCDate(newDate.getUTCDate() + days);
       return newDate;
@@ -44,14 +40,10 @@ const DashboardContent = ({ user }: DashboardContentProps) => {
   };
 
   const resetTargetDate = () => {
-    setTargetDate(getMostRecentDate());
+    setTargetDate(anchorDate);
   };
 
-  if (!user) {
-    return <div>Please log in to view metrics.</div>;
-  }
-
-  if (!targetDate) {
+  if (isSleepLogLoading) {
     return (
       <Box
         display="flex"
@@ -74,9 +66,7 @@ const DashboardContent = ({ user }: DashboardContentProps) => {
           targetDate={targetDate}
           handleDateChange={handleDateChange}
           handleResetToToday={resetTargetDate}
-          mostRecentLogDate={
-            mostRecentSleepLog ? new Date(mostRecentSleepLog.date) : null
-          }
+          mostRecentLogDate={mostRecentSleepLog ? anchorDate : null}
         />
         <SmartSummary targetDate={targetDate} />
         <CoreMetrics targetDate={targetDate} />
