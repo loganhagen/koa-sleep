@@ -7,7 +7,7 @@ import CoreMetrics from "./core-metrics/CoreMetrics";
 import SleepStages from "./sleep-stages/SleepStages";
 import WellnessIndicators from "./wellness-indicators/WellnessIndicators";
 import { Stack, CircularProgress, Box, Container } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMostRecentSleepLog } from "@/hooks/useSleepLogs";
 import { UserDTO } from "@/types/api/user";
 
@@ -21,9 +21,9 @@ const DashboardContent = ({ user }: DashboardContentProps) => {
   const { data: mostRecentSleepLog, isLoading: isSleepLogLoading } =
     useMostRecentSleepLog(user.id);
 
-  const anchorDate = mostRecentSleepLog
-    ? new Date(mostRecentSleepLog.date)
-    : new Date();
+  const anchorDate = useMemo(() => {
+    return mostRecentSleepLog ? new Date(mostRecentSleepLog.date) : new Date();
+  }, [mostRecentSleepLog]);
 
   useEffect(() => {
     if (!isSleepLogLoading) {
