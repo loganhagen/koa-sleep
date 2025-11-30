@@ -10,6 +10,7 @@ import ThemeProvider from "../providers/themeProvider";
 import Layout from "./_components/SplashLayout";
 import { QueryProvider } from "../providers/queryProvider";
 import UserProvider from "../providers/userProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 type ThemeMode = "light" | "dark";
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
           <UserProvider>
             <QueryProvider>
               <Layout>{children}</Layout>
+              <Analytics />
             </QueryProvider>
           </UserProvider>
         </ThemeProvider>
