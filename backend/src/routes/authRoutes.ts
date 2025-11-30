@@ -25,7 +25,7 @@ router.get("/fitbit/mock-consent", (_, res) => {
         <a 
           href="/"
           style="padding: 10px 15px; margin: 10px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-          Go Back
+          Deny
         </a>
       </body>
     </html>
