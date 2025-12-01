@@ -16,15 +16,15 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
-app.use(
-  morgan("combined", {
-    stream: {
-      write: (message) => {
-        logger.info(message.trim());
-      },
-    },
-  })
-);
+// app.use(
+//   morgan("combined", {
+//     stream: {
+//       write: (message) => {
+//         logger.info(message.trim());
+//       },
+//     },
+//   })
+// );
 
 app.use("/api/demo", demoRoutes);
 app.use("/api/auth", authRoutes);

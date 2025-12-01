@@ -2,8 +2,6 @@ import prisma from "@lib/prisma";
 import { FullSleepLog } from "@custom_types/db/db";
 import { users } from "@prisma/client";
 
-// REMOVE THIS
-
 export const userService = {
   getUserById: async (id: string): Promise<users | null> => {
     const user = await prisma.users.findUnique({

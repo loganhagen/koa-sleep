@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "@services/userService";
+import { fitbitService } from "@services/fitbitService";
+import { FitbitTokenResponse } from "@custom_types/fitbit/fitbit";
 
 export const authController = {
   callback: async (req: Request, res: Response) => {
@@ -16,7 +18,7 @@ export const authController = {
     }
 
     try {
-      const tokens = await exchangeCodeForTokens(code);
+      const tokens = await fitbitService.exchangeCodeForTokens(code);
 
       const user = await userService.getUserByEmail("demo@koa");
       if (!user) {
@@ -40,21 +42,14 @@ export const authController = {
       res.redirect("/");
     }
   },
-};
-
-const exchangeCodeForTokens = async (code: string) => {
-  if (code != "MOCK_CODE_12345") {
-    throw new Error("Invalid code");
-  }
-
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  const mockTokenResponse = {
-    access_token: "MOCK_ACCESS_TOKEN",
-    refresh_token: "MOCK_REFRESH_TOKEN",
-    expires_in: 28800,
-    user_id: "MOCK_FITBIT_USER_ID",
-  };
-
-  return mockTokenResponse;
+  getTokens: async (req: Request, res: Response) => {
+    const mockTokenResponse: FitbitTokenResponse = {
+      access_token: "eyJhbGciOiJIUzI1",
+      refresh_token: "c643a63c072f0f05478e9d18b991db80ef6061e",
+      expires_in: 28800,
+      user_id: "GGNJL9",
+      token_type: "Bearer",
+    };
+    res.status(200).send({ data: mockTokenResponse });
+  },
 };
