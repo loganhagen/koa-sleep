@@ -1,9 +1,70 @@
 import prisma from "@lib/prisma";
 import { FullSleepLog } from "@custom_types/db/db";
 import { users } from "@prisma/client";
+import {
+  UserProfileData,
+  FitbitTokenResponse,
+} from "@custom_types/fitbit/fitbit";
+import { fitbitService } from "./fitbitService";
 
 export const userService = {
-  addUser: async () => {},
+  addUser: async (
+    userDetails: UserProfileData,
+    userTokens: FitbitTokenResponse
+  ): Promise<users> => {
+    const expiresAt = new Date(Date.now() + userTokens.expires_in * 1000);
+
+    const newUser = await prisma.users.create({
+      data: {
+        first_name: userDetails.firstName,
+        display_name: userDetails.displayName,
+        full_name: userDetails.fullName,
+
+        fitbitTokens: {
+          create: {
+            fitbit_user_id: userTokens.user_id,
+            access_token: userTokens.access_token,
+            refresh_token: userTokens.refresh_token,
+            expires_at: expiresAt,
+          },
+        },
+      },
+
+      include: {
+        fitbitTokens: true,
+      },
+    });
+
+    return newUser;
+  },
+  findOrCreateFromFitbit: async (userTokens: FitbitTokenResponse) => {
+    // Look for the tokens in the database.
+    const existingToken = await prisma.fitbit_tokens.findUnique({
+      where: { fitbit_user_id: userTokens.user_id },
+      include: { users: true },
+    });
+
+    const expiresAt = new Date(Date.now() + userTokens.expires_in * 1000);
+
+    // Update the existing user's tokens with the new tokens.
+    if (existingToken) {
+      await prisma.fitbit_tokens.update({
+        where: { id: existingToken.id },
+        data: {
+          access_token: userTokens.access_token,
+          refresh_token: userTokens.refresh_token,
+          expires_at: expiresAt,
+        },
+      });
+      return existingToken.users;
+    }
+
+    // Create a new user using the tokens and user profile.
+    const userProfile = await fitbitService.getUserProfile(
+      userTokens.access_token
+    );
+    return await userService.addUser(userProfile.user, userTokens);
+  },
   getUserById: async (id: string): Promise<users | null> => {
     const user = await prisma.users.findUnique({
       where: {

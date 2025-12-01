@@ -11,7 +11,7 @@ export interface FitbitUserProfileResponse {
 }
 
 export interface UserProfileData {
-  displayName: string;
-  firstName: string;
+  displayName?: string;
+  firstName?: string;
   fullName: string;
 }

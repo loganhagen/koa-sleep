@@ -28,7 +28,7 @@ import {
 export const toUserDTO = (user: users): UserDTO => {
   return {
     id: user.id,
-    email: user.email,
+    email: user.email ?? undefined,
     first_name: user.first_name,
     last_name: user.last_name,
   };
@@ -70,7 +70,6 @@ export const toFullSleepLogDTO = (log: FullSleepLog): FullSleepLogDTO => {
     spo2: log.spo2,
   };
 };
-
 
 export const toCoreMetricsDTO = (model: CoreMetrics): CoreMetricsDTO => {
   return {

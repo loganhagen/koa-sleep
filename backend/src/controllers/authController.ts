@@ -21,25 +21,21 @@ export const authController = {
     }
 
     try {
+      // Get the tokens
       const tokens = await fitbitService.exchangeCodeForTokens(code);
-      const user = await userService.getUserByFitbitId(tokens.user_id);
+      const user = await userService.findOrCreateFromFitbit(tokens);
 
-      if (!user) {
-        const userProfile = await fitbitService.getUserProfile(
-          tokens.access_token
-        );
-        res.status(401).json({ message: "User does not exist." });
-        return;
-      }
-
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
+      // Sign the JWT
+      const webToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "1h",
       });
 
-      res.cookie("auth-token", token, {
+      // Create the cookie using the JWT
+      res.cookie("auth-token", webToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
+        maxAge: 3600000,
       });
 
       res.redirect("/home");
