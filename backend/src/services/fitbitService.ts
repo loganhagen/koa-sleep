@@ -23,7 +23,11 @@ export const fitbitService = {
     );
     return res.data;
   },
+<<<<<<< HEAD
   getUserProfile: async (access_token: String) => {
+=======
+  getUserProfile: async (_: string) => {
+>>>>>>> 9eed458 (feat: begin scaffolding callback logic)
     const res = await axios.get<FitbitUserProfileResponse>(
       `${process.env.BACKEND_URL}/api/auth/fitbit/user`
     );
