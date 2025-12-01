@@ -6,6 +6,7 @@ import {
   FitbitTokenResponse,
 } from "@custom_types/fitbit/fitbit";
 import { fitbitService } from "./fitbitService";
+import { encrypt } from "@utils/encryption";
 
 export const userService = {
   addUser: async (
@@ -23,8 +24,8 @@ export const userService = {
         fitbitTokens: {
           create: {
             fitbit_user_id: userTokens.user_id,
-            access_token: userTokens.access_token,
-            refresh_token: userTokens.refresh_token,
+            access_token: encrypt(userTokens.access_token),
+            refresh_token: encrypt(userTokens.refresh_token),
             expires_at: expiresAt,
           },
         },
@@ -51,8 +52,8 @@ export const userService = {
       await prisma.fitbit_tokens.update({
         where: { id: existingToken.id },
         data: {
-          access_token: userTokens.access_token,
-          refresh_token: userTokens.refresh_token,
+          access_token: encrypt(userTokens.access_token),
+          refresh_token: encrypt(userTokens.refresh_token),
           expires_at: expiresAt,
         },
       });
