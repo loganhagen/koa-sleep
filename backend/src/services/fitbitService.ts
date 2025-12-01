@@ -1,12 +1,11 @@
-import { FitbitTokenResponse } from "@custom_types/fitbit/fitbit";
+import {
+  FitbitTokenResponse,
+  FitbitUserProfileResponse,
+} from "@custom_types/fitbit/fitbit";
 import axios from "axios";
 
 export const fitbitService = {
   exchangeCodeForTokens: async (code: string) => {
-    if (code != "MOCK_CODE_12345") {
-      throw new Error("Invalid code");
-    }
-
     const client_id = process.env.FITBIT_CLIENT_ID;
 
     if (!client_id) {
@@ -21,6 +20,12 @@ export const fitbitService = {
 
     const res = await axios.post<FitbitTokenResponse>(
       `${process.env.BACKEND_URL}/api/auth/fitbit/token`
+    );
+    return res.data;
+  },
+  getUserProfile: async (access_token: String) => {
+    const res = await axios.get<FitbitUserProfileResponse>(
+      `${process.env.BACKEND_URL}/api/auth/fitbit/user`
     );
     return res.data;
   },

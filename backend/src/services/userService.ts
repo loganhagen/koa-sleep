@@ -3,6 +3,7 @@ import { FullSleepLog } from "@custom_types/db/db";
 import { users } from "@prisma/client";
 
 export const userService = {
+  addUser: async () => {},
   getUserById: async (id: string): Promise<users | null> => {
     const user = await prisma.users.findUnique({
       where: {
@@ -10,6 +11,18 @@ export const userService = {
       },
     });
     return user;
+  },
+  getUserByFitbitId: async (fitbitId: string): Promise<users | null> => {
+    const tokenRecord = await prisma.fitbit_tokens.findUnique({
+      where: {
+        fitbit_user_id: fitbitId,
+      },
+      include: {
+        users: true,
+      },
+    });
+
+    return tokenRecord?.users || null;
   },
   getUserByEmail: async (email: string): Promise<users | null> => {
     const user = await prisma.users.findUnique({

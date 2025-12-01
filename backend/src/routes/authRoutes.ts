@@ -34,5 +34,6 @@ router.get("/fitbit/mock-consent", (_, res) => {
 router.get("/fitbit/callback", authController.callback);
 
 router.post("/fitbit/token", authController.getTokens);
+router.get("/fitbit/user", authController.getProfile);
 
 export default router;

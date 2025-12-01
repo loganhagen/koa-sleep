@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "@services/userService";
 import { fitbitService } from "@services/fitbitService";
-import { FitbitTokenResponse } from "@custom_types/fitbit/fitbit";
+import {
+  FitbitTokenResponse,
+  FitbitUserProfileResponse,
+} from "@custom_types/fitbit/fitbit";
 
 export const authController = {
   callback: async (req: Request, res: Response) => {
@@ -19,10 +22,13 @@ export const authController = {
 
     try {
       const tokens = await fitbitService.exchangeCodeForTokens(code);
+      const user = await userService.getUserByFitbitId(tokens.user_id);
 
-      const user = await userService.getUserByEmail("demo@koa");
       if (!user) {
-        res.status(401).json({ message: "Invalid credentials" });
+        const userProfile = await fitbitService.getUserProfile(
+          tokens.access_token
+        );
+        res.status(401).json({ message: "User does not exist." });
         return;
       }
 
@@ -42,14 +48,24 @@ export const authController = {
       res.redirect("/");
     }
   },
-  getTokens: async (req: Request, res: Response) => {
-    const mockTokenResponse: FitbitTokenResponse = {
+  getTokens: async (_: Request, res: Response) => {
+    const tokenResponse: FitbitTokenResponse = {
       access_token: "eyJhbGciOiJIUzI1",
       refresh_token: "c643a63c072f0f05478e9d18b991db80ef6061e",
       expires_in: 28800,
       user_id: "GGNJL9",
       token_type: "Bearer",
     };
-    res.status(200).send({ data: mockTokenResponse });
+    res.status(200).send(tokenResponse);
+  },
+  getProfile: (_: Request, res: Response) => {
+    const userProfileResponse: FitbitUserProfileResponse = {
+      user: {
+        displayName: "love2sleep",
+        firstName: "Johnny",
+        fullName: "Johnny Snooze",
+      },
+    };
+    res.status(200).send(userProfileResponse);
   },
 };
