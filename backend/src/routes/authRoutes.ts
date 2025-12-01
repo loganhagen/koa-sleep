@@ -31,7 +31,7 @@ router.get("/fitbit/mock-consent", (_, res) => {
   `);
 });
 
-router.get("/fitbit/callback", authController.callback);
+router.get("/fitbit/callback", authController.handleFitbitCallback);
 // Mock for /oauth2/token
 router.post("/fitbit/token", authController.getTokens);
 // Mock for /1/user/[user-id]/profile.json

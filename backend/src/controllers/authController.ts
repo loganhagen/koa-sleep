@@ -8,8 +8,11 @@ import {
 } from "@custom_types/fitbit/fitbit";
 
 export const authController = {
-  callback: async (req: Request, res: Response) => {
-    const { code, error } = req.query;
+  handleFitbitCallback: async (req: Request, res: Response) => {
+    const { code, error, state } = req.query;
+
+    console.log(`code: ${code}`);
+    console.log(`state: ${state}`);
 
     if (error) {
       console.log("User denied Fitbit access.");
@@ -23,6 +26,7 @@ export const authController = {
     try {
       // Get the tokens
       const tokens = await fitbitService.exchangeCodeForTokens(code);
+      // Get the user or create if new
       const user = await userService.findOrCreateFromFitbit(tokens);
 
       // Sign the JWT
