@@ -5,8 +5,37 @@ import {
 import axios from "axios";
 
 const FITBIT_TOKEN_URL = "https://api.fitbit.com/oauth2/token";
+const FITBIT_AUTH_URL = "https://www.fitbit.com/oauth2/authorize";
 
 export const fitbitService = {
+  getAuthorizationUrl: () => {
+    const scopes = [
+      "activity",
+      "cardio_fitness",
+      "electrocardiogram",
+      "heartrate",
+      "irregular_rhythm_notifications",
+      "location",
+      "nutrition",
+      "oxygen_saturation",
+      "profile",
+      "respiratory_rate",
+      "settings",
+      "sleep",
+      "social",
+      "temperature",
+      "weight",
+    ].join(" ");
+
+    const params = new URLSearchParams({
+      client_id: process.env.FITBIT_CLIENT_ID!,
+      response_type: "code",
+      scope: scopes,
+      redirect_uri: process.env.FITBIT_REDIRECT_URI!,
+    });
+
+    return `${FITBIT_AUTH_URL}?${params.toString()}`;
+  },
   exchangeCodeForTokens: async (code: string) => {
     const client_id = process.env.FITBIT_CLIENT_ID;
 

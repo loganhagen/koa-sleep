@@ -8,6 +8,10 @@ import {
 } from "@custom_types/fitbit/fitbit";
 
 export const authController = {
+  handleFitbitAuthRedirect: async (_: Request, res: Response) => {
+    const fitbitLoginURI = fitbitService.getAuthorizationUrl();
+    res.redirect(fitbitLoginURI);
+  },
   handleFitbitCallback: async (req: Request, res: Response) => {
     const { code, error, state } = req.query;
 

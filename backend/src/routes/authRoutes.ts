@@ -3,9 +3,7 @@ import { authController } from "@controllers/authController";
 
 const router = Router();
 
-router.get("/fitbit/login", (_, res) => {
-  res.redirect("/api/auth/fitbit/mock-consent");
-});
+router.get("/fitbit/login", authController.handleFitbitAuthRedirect);
 
 router.get("/fitbit/mock-consent", (_, res) => {
   const fakeCode = "MOCK_CODE_12345";
