@@ -5,6 +5,7 @@ const router = Router();
 
 router.get("/fitbit/login", authController.handleFitbitAuthRedirect);
 
+// Mock Fitbit authorization screen
 router.get("/fitbit/mock-consent", (_, res) => {
   const fakeCode = "MOCK_CODE_12345";
 

@@ -15,12 +15,9 @@ export const authController = {
   handleFitbitCallback: async (req: Request, res: Response) => {
     const { code, error, state } = req.query;
 
-    console.log(`code: ${code}`);
-    console.log(`state: ${state}`);
-
     if (error) {
       console.log("User denied Fitbit access.");
-      return res.redirect("/");
+      return res.redirect(`${process.env.FRONTEND_URL}/`);
     }
 
     if (!code || typeof code !== "string") {
@@ -42,14 +39,14 @@ export const authController = {
       res.cookie("auth-token", webToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 3600000,
       });
 
-      res.redirect("/home");
+      res.redirect(`${process.env.FRONTEND_URL}/home`);
     } catch (error) {
       console.error("Error in mock callback:", error);
-      res.redirect("/");
+      res.redirect(`${process.env.FRONTEND_URL}/`);
     }
   },
   getTokens: async (_: Request, res: Response) => {
