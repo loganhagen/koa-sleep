@@ -13,6 +13,7 @@ export const demoController = {
         return;
       }
 
+      // Signing the token with the user id is "logging in" the user
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "1h",
       });
