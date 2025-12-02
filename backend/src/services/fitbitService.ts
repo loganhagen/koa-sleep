@@ -1,12 +1,13 @@
 import {
   FitbitTokenResponse,
-  FitbitUserProfileResponse,
+  FitbitUserProfileData,
 } from "@custom_types/fitbit/fitbit";
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
 
 const FITBIT_AUTH_URL = "https://www.fitbit.com/oauth2/authorize";
 const FITBIT_TOKEN_URL = "https://api.fitbit.com/oauth2/token";
+const FITBIT_PROFILE_URL = "https://api.fitbit.com/1/user/-/profile.json";
 
 export const fitbitService = {
   getAuthorizationUrl: () => {
@@ -113,10 +114,25 @@ export const fitbitService = {
       throw new Error("Failed to refresh Fitbit token");
     }
   },
-  getUserProfile: async (_: string) => {
-    const res = await axios.get<FitbitUserProfileResponse>(
-      `${process.env.BACKEND_URL}/api/auth/fitbit/user`
-    );
-    return res.data;
+  getUserProfile: async (accessToken: string) => {
+    try {
+      const res: AxiosResponse = await axios.get(FITBIT_PROFILE_URL, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/json",
+        },
+      });
+
+      return res.data.user as FitbitUserProfileData;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Profile Fetch Error:",
+          error.response?.status,
+          error.response?.data
+        );
+      }
+      throw error;
+    }
   },
 };

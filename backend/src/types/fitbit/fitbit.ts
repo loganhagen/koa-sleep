@@ -6,12 +6,8 @@ export interface FitbitTokenResponse {
   user_id: string;
 }
 
-export interface FitbitUserProfileResponse {
-  user: UserProfileData;
-}
-
-export interface UserProfileData {
+export interface FitbitUserProfileData {
+  fullName: string;
   displayName?: string;
   firstName?: string;
-  fullName: string;
 }

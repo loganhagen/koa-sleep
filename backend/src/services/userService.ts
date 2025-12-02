@@ -2,7 +2,7 @@ import prisma from "@lib/prisma";
 import { FullSleepLog } from "@custom_types/db/db";
 import { users } from "@prisma/client";
 import {
-  UserProfileData,
+  FitbitUserProfileData,
   FitbitTokenResponse,
 } from "@custom_types/fitbit/fitbit";
 import { fitbitService } from "./fitbitService";
@@ -10,7 +10,7 @@ import { encrypt } from "@utils/encryption";
 
 export const userService = {
   addUser: async (
-    userDetails: UserProfileData,
+    userDetails: FitbitUserProfileData,
     userTokens: FitbitTokenResponse
   ): Promise<users> => {
     const expiresAt = new Date(Date.now() + userTokens.expires_in * 1000);
@@ -64,7 +64,8 @@ export const userService = {
     const userProfile = await fitbitService.getUserProfile(
       userTokens.access_token
     );
-    return await userService.addUser(userProfile.user, userTokens);
+
+    return await userService.addUser(userProfile, userTokens);
   },
   getUserById: async (id: string): Promise<users | null> => {
     const user = await prisma.users.findUnique({

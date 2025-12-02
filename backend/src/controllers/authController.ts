@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "@services/userService";
 import { fitbitService } from "@services/fitbitService";
-import {
-  FitbitTokenResponse,
-  FitbitUserProfileResponse,
-} from "@custom_types/fitbit/fitbit";
+import { FitbitTokenResponse } from "@custom_types/fitbit/fitbit";
 
 export const authController = {
   handleFitbitAuthRedirect: async (_: Request, res: Response) => {
@@ -48,25 +45,5 @@ export const authController = {
       console.error("Error in mock callback:", error);
       res.redirect(`${process.env.FRONTEND_URL}/`);
     }
-  },
-  getTokens: async (_: Request, res: Response) => {
-    const tokenResponse: FitbitTokenResponse = {
-      access_token: "eyJhbGciOiJIUzI1",
-      refresh_token: "c643a63c072f0f05478e9d18b991db80ef6061e",
-      expires_in: 28800,
-      user_id: "GGNJL9",
-      token_type: "Bearer",
-    };
-    res.status(200).send(tokenResponse);
-  },
-  getProfile: (_: Request, res: Response) => {
-    const userProfileResponse: FitbitUserProfileResponse = {
-      user: {
-        displayName: "love2sleep",
-        firstName: "Johnny",
-        fullName: "Johnny Snooze",
-      },
-    };
-    res.status(200).send(userProfileResponse);
   },
 };
