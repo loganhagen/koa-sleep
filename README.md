@@ -1,6 +1,6 @@
 # Koa Sleep
 
-An open-source web dashboard for viewing and analyzing your Fitbit sleep data. Built with the MERN stack (MongoDB, Express, React, Node.js) and TypeScript.
+An open-source web dashboard for viewing and analyzing your Fitbit sleep data. Built with the MERN stack (Postgres, Express, React, Node.js) and TypeScript.
 
 [Live Deployment](https://koasleep.dev)
 
