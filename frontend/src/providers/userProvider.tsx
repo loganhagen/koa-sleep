@@ -4,6 +4,7 @@ import { UserDTO } from "@/types/api/user";
 import {
   createContext,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -42,13 +43,14 @@ export default function UserProvider({ children }: { children: ReactNode }) {
       setUserState(null);
     }
   }, [isError]);
-  const setUser = (user: UserDTO) => {
-    setUserState(user);
-  };
 
-  const clearUser = () => {
+  const setUser = useCallback((user: UserDTO) => {
+    setUserState(user);
+  }, []);
+
+  const clearUser = useCallback(() => {
     setUserState(null);
-  };
+  }, []);
 
   const contextValue = useMemo(
     () => ({
@@ -57,7 +59,7 @@ export default function UserProvider({ children }: { children: ReactNode }) {
       clearUser,
       isLoading,
     }),
-    [currentUser, isLoading]
+    [currentUser, isLoading, setUser, clearUser]
   );
 
   return (
