@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "@services/userService";
 import { fitbitService } from "@services/fitbitService";
-import { FitbitTokenResponse } from "@custom_types/fitbit/fitbit";
 
 export const authController = {
   handleFitbitAuthRedirect: async (_: Request, res: Response) => {
@@ -42,7 +41,7 @@ export const authController = {
 
       res.redirect(`${process.env.FRONTEND_URL}/home`);
     } catch (error) {
-      console.error("Error in mock callback:", error);
+      console.error("Error in Fitbit callback:", error);
       res.redirect(`${process.env.FRONTEND_URL}/`);
     }
   },

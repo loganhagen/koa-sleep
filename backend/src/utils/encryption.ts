@@ -34,3 +34,26 @@ export const decrypt = (text: string): string => {
   decrypted = Buffer.concat([decrypted, decipher.final()]);
   return decrypted.toString();
 };
+
+export const generateCodeVerifier = (): string => {
+  return crypto
+    .randomBytes(32)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=/g, "");
+};
+
+export const generateCodeChallenge = (verifier: string): string => {
+  return crypto
+    .createHash("sha256")
+    .update(verifier)
+    .digest("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=/g, "");
+};
+
+export const generateState = (): string => {
+  return crypto.randomBytes(16).toString("hex");
+};
