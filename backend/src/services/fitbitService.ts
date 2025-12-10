@@ -18,6 +18,7 @@ export const fitbitService = {
   getAuthorizationUrl: () => {
     const clientId = process.env.FITBIT_CLIENT_ID!;
     const redirectUri = process.env.FITBIT_REDIRECT_URI!;
+
     const state = generateState();
     const verifier = generateCodeVerifier();
     const challenge = generateCodeChallenge(verifier);
@@ -54,9 +55,14 @@ export const fitbitService = {
       code_challenge_method: "S256",
     });
 
-    return `${FITBIT_AUTH_URL}?${params.toString()}`;
+    return {
+      url: `${FITBIT_AUTH_URL}?${params.toString()}`,
+      state,
+      verifier,
+    };
   },
-  exchangeCodeForTokens: async (code: string) => {
+
+  exchangeCodeForTokens: async (code: string, code_verifier: string) => {
     const clientId = process.env.FITBIT_CLIENT_ID;
     const clientSecret = process.env.FITBIT_CLIENT_SECRET;
     const redirectUri = process.env.FITBIT_REDIRECT_URI;
@@ -73,6 +79,8 @@ export const fitbitService = {
       grant_type: "authorization_code",
       code: code,
       redirect_uri: redirectUri,
+      client_id: clientId,
+      code_verifier: code_verifier,
     });
 
     try {
@@ -97,13 +105,15 @@ export const fitbitService = {
       throw error;
     }
   },
+
   refreshAccessToken: async (
     refreshToken: string
   ): Promise<FitbitTokenResponse> => {
     const clientId = process.env.FITBIT_CLIENT_ID!;
     const clientSecret = process.env.FITBIT_CLIENT_SECRET!;
-    const authHeader = Buffer.from(`${clientId}:${clientSecret}`);
-    const base64credentials = authHeader.toString("base64");
+    const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString(
+      "base64"
+    );
 
     const params = new URLSearchParams();
     params.append("grant_type", "refresh_token");
@@ -115,7 +125,7 @@ export const fitbitService = {
         params,
         {
           headers: {
-            Authorization: `Basic ${base64credentials}`,
+            Authorization: `Basic ${credentials}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },
         }
@@ -126,6 +136,7 @@ export const fitbitService = {
       throw new Error("Failed to refresh Fitbit token");
     }
   },
+
   getUserProfile: async (accessToken: string) => {
     try {
       const res: AxiosResponse = await axios.get(FITBIT_PROFILE_URL, {

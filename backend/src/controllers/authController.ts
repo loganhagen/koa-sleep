@@ -2,12 +2,29 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { userService } from "@services/userService";
 import { fitbitService } from "@services/fitbitService";
+import { decrypt, encrypt } from "@utils/encryption";
+
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax" as const,
+  maxAge: 3600000,
+};
 
 export const authController = {
   handleFitbitAuthRedirect: async (_: Request, res: Response) => {
-    const fitbitLoginURI = fitbitService.getAuthorizationUrl();
-    res.redirect(fitbitLoginURI);
+    try {
+      const { url, state, verifier } = fitbitService.getAuthorizationUrl();
+
+      res.cookie("oauth_state", encrypt(state), COOKIE_OPTIONS);
+      res.cookie("code_verifier", encrypt(verifier), COOKIE_OPTIONS);
+      res.redirect(url);
+    } catch (err) {
+      console.error("Error generating auth URL:", err);
+      res.status(500).send("Internal Server Error");
+    }
   },
+
   handleFitbitCallback: async (req: Request, res: Response) => {
     const { code, error, state } = req.query;
 
@@ -16,13 +33,35 @@ export const authController = {
       return res.redirect(`${process.env.FRONTEND_URL}/`);
     }
 
-    if (!code || typeof code !== "string") {
-      return res.status(400).send("Missing authorization code");
+    if (
+      !code ||
+      typeof code !== "string" ||
+      !state ||
+      typeof state !== "string"
+    ) {
+      return res.status(400).send("Missing authorization code or state");
     }
 
+    const stateCookie = req.cookies["oauth_state"];
+    const verifierCookie = req.cookies["code_verifier"];
+
+    if (!stateCookie || !verifierCookie) {
+      return res
+        .status(400)
+        .send("Session expired or invalid cookies. Please try again.");
+    }
+
+    const codeVerifier = decrypt(verifierCookie);
+
     try {
+      const decryptedState = decrypt(stateCookie);
+
       // Get the tokens
-      const tokens = await fitbitService.exchangeCodeForTokens(code);
+      const tokens = await fitbitService.exchangeCodeForTokens(
+        code,
+        codeVerifier
+      );
+
       // Get the user or create if new
       const user = await userService.findOrCreateFromFitbit(tokens);
 
@@ -30,6 +69,9 @@ export const authController = {
       const webToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "1h",
       });
+
+      res.clearCookie("oauth_state");
+      res.clearCookie("code_verifier");
 
       // Create the cookie using the JWT
       res.cookie("auth-token", webToken, {
