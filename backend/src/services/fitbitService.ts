@@ -2,6 +2,11 @@ import {
   FitbitTokenResponse,
   FitbitUserProfileData,
 } from "@custom_types/fitbit/fitbit";
+import {
+  generateCodeChallenge,
+  generateCodeVerifier,
+  generateState,
+} from "@utils/encryption";
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
 
@@ -13,6 +18,9 @@ export const fitbitService = {
   getAuthorizationUrl: () => {
     const clientId = process.env.FITBIT_CLIENT_ID!;
     const redirectUri = process.env.FITBIT_REDIRECT_URI!;
+    const state = generateState();
+    const verifier = generateCodeVerifier();
+    const challenge = generateCodeChallenge(verifier);
 
     if (!clientId || !redirectUri) {
       throw new Error("Missing client ID or redirect URI.");
@@ -41,6 +49,9 @@ export const fitbitService = {
       response_type: "code",
       scope: scopes,
       redirect_uri: redirectUri,
+      state: state,
+      code_challenge: challenge,
+      code_challenge_method: "S256",
     });
 
     return `${FITBIT_AUTH_URL}?${params.toString()}`;
