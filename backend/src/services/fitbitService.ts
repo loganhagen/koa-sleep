@@ -91,7 +91,8 @@ export const fitbitService = {
   ): Promise<FitbitTokenResponse> => {
     const clientId = process.env.FITBIT_CLIENT_ID!;
     const clientSecret = process.env.FITBIT_CLIENT_SECRET!;
-    const authHeader = Buffer.from(`${clientId}:${clientSecret}`.toString());
+    const authHeader = Buffer.from(`${clientId}:${clientSecret}`);
+    const base64credentials = authHeader.toString("base64");
 
     const params = new URLSearchParams();
     params.append("grant_type", "refresh_token");
@@ -103,7 +104,7 @@ export const fitbitService = {
         params,
         {
           headers: {
-            Authorization: `Basic ${authHeader}`,
+            Authorization: `Basic ${base64credentials}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },
         }
