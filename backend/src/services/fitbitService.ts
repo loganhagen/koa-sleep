@@ -120,14 +120,15 @@ export const fitbitService = {
       "base64"
     );
 
-    const params = new URLSearchParams();
-    params.append("grant_type", "refresh_token");
-    params.append("refresh_token", refreshToken);
+    const data = qs.stringify({
+      grant_type: "refresh_token",
+      refresh_token: refreshToken,
+    });
 
     try {
       const res = await axios.post<FitbitTokenResponse>(
         FITBIT_TOKEN_URL,
-        params,
+        data,
         {
           headers: {
             Authorization: `Basic ${credentials}`,
