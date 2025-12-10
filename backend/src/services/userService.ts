@@ -6,32 +6,25 @@ import {
   FitbitTokenResponse,
 } from "@custom_types/fitbit/fitbit";
 import { fitbitService } from "./fitbitService";
-import { decrypt, encrypt } from "@utils/encryption";
-import { calculateExpirationDate, isTokenExpired } from "@utils/tokens";
+import { isTokenExpired } from "@utils/tokens";
+import { tokenStorage } from "./tokenStorage";
 
 export const userService = {
   addUser: async (
     userDetails: FitbitUserProfileData,
     userTokens: FitbitTokenResponse
   ): Promise<users> => {
-    const expiresAt = calculateExpirationDate(userTokens.expires_in);
+    const tokenData = tokenStorage.getEncryptedPayload(userTokens);
 
     const newUser = await prisma.users.create({
       data: {
         first_name: userDetails.firstName,
         display_name: userDetails.displayName,
         full_name: userDetails.fullName,
-
         fitbitTokens: {
-          create: {
-            fitbit_user_id: userTokens.user_id,
-            access_token: encrypt(userTokens.access_token),
-            refresh_token: encrypt(userTokens.refresh_token),
-            expires_at: expiresAt,
-          },
+          create: tokenData,
         },
       },
-
       include: {
         fitbitTokens: true,
       },
@@ -40,71 +33,42 @@ export const userService = {
     return newUser;
   },
 
-  findOrCreateFromFitbit: async (userTokens: FitbitTokenResponse) => {
-    // Look for the tokens in the database.
+  findOrCreateFromFitbit: async (rawTokens: FitbitTokenResponse) => {
     const existingToken = await prisma.fitbit_tokens.findUnique({
-      where: { fitbit_user_id: userTokens.user_id },
+      where: { fitbit_user_id: rawTokens.user_id },
       include: { users: true },
     });
 
-    const expiresAt = calculateExpirationDate(userTokens.expires_in);
-
-    // Replace the existing user's tokens with the new tokens and return.
     if (existingToken) {
-      await prisma.fitbit_tokens.update({
-        where: { id: existingToken.id },
-        data: {
-          access_token: encrypt(userTokens.access_token),
-          refresh_token: encrypt(userTokens.refresh_token),
-          expires_at: expiresAt,
-        },
-      });
+      await tokenStorage.saveTokens(existingToken.user_id, rawTokens);
       return existingToken.users;
     }
 
     const userProfile = await fitbitService.getUserProfile(
-      userTokens.access_token
+      rawTokens.access_token
     );
 
-    // Create a new user using the tokens and user profile.
-    return await userService.addUser(userProfile, userTokens);
+    return await userService.addUser(userProfile, rawTokens);
   },
 
-  // Refresh the access token if expired.
+  // Will refresh the token if needed.
   getValidAccessToken: async (userId: string) => {
-    const tokenRecord = await prisma.fitbit_tokens.findUnique({
-      where: {
-        user_id: userId,
-      },
-    });
+    const tokens = await tokenStorage.getTokens(userId);
 
-    if (!tokenRecord) {
+    if (!tokens) {
       throw new Error("User has no Fitbit tokens connected.");
     }
 
-    const now = new Date();
-    const fiveMinutes = 5 * 60 * 1000;
-    const expiresAt = new Date(tokenRecord.expires_at).getTime();
-
-    if (!isTokenExpired(tokenRecord.expires_at)) {
-      return decrypt(tokenRecord.access_token);
+    if (!isTokenExpired(tokens.expires_at)) {
+      return tokens.access_token;
     }
 
     try {
-      const currentRefreshToken = tokenRecord.refresh_token;
       const newTokens = await fitbitService.refreshAccessToken(
-        currentRefreshToken
+        tokens.refresh_token
       );
-      const newExpiresAt = calculateExpirationDate(newTokens.expires_in);
 
-      await prisma.fitbit_tokens.update({
-        where: { id: tokenRecord.id },
-        data: {
-          access_token: encrypt(newTokens.access_token),
-          refresh_token: encrypt(newTokens.refresh_token),
-          expires_at: newExpiresAt,
-        },
-      });
+      await tokenStorage.saveTokens(userId, newTokens);
 
       return newTokens.access_token;
     } catch (err) {
