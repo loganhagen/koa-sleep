@@ -109,8 +109,13 @@ export const fitbitService = {
   refreshAccessToken: async (
     refreshToken: string
   ): Promise<FitbitTokenResponse> => {
-    const clientId = process.env.FITBIT_CLIENT_ID!;
-    const clientSecret = process.env.FITBIT_CLIENT_SECRET!;
+    const clientId = process.env.FITBIT_CLIENT_ID;
+    const clientSecret = process.env.FITBIT_CLIENT_SECRET;
+
+    if (!clientId || !clientSecret) {
+      throw new Error("Missing Fitbit credentials.");
+    }
+
     const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString(
       "base64"
     );
