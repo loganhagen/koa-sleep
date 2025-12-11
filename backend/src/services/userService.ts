@@ -8,6 +8,9 @@ import {
 import { fitbitService } from "./fitbitService";
 import { isTokenExpired } from "@utils/tokens";
 import { tokenStorage } from "./tokenStorage";
+import { Mutex } from "async-mutex";
+
+const refreshMutexes = new Map<string, Mutex>();
 
 export const userService = {
   addUser: async (
@@ -53,30 +56,41 @@ export const userService = {
 
   // Will refresh the token if needed.
   getValidAccessToken: async (userId: string) => {
-    const tokens = await tokenStorage.getTokens(userId);
-
-    if (!tokens) {
-      throw new Error("User has no Fitbit tokens connected.");
+    // Register the user id within the mutex map.
+    if (!refreshMutexes.has(userId)) {
+      refreshMutexes.set(userId, new Mutex());
     }
 
-    if (!isTokenExpired(tokens.expires_at)) {
-      return tokens.access_token;
-    }
+    const mutex = refreshMutexes.get(userId)!;
 
-    try {
-      const newTokens = await fitbitService.refreshAccessToken(
-        tokens.refresh_token
-      );
+    // Ensure only one
+    return await mutex.runExclusive(async () => {
+      const tokens = await tokenStorage.getTokens(userId);
 
-      await tokenStorage.saveTokens(userId, newTokens);
+      if (!tokens) {
+        throw new Error("User has no Fitbit tokens connected.");
+      }
 
-      return newTokens.access_token;
-    } catch (err) {
-      console.error("Failed to refresh token:", err);
-      throw new Error(
-        "Failed to refresh token. User may need to re-authenticate."
-      );
-    }
+      if (!isTokenExpired(tokens.expires_at)) {
+        return tokens.access_token;
+      }
+
+      try {
+        const newTokens = await fitbitService.refreshAccessToken(
+          tokens.refresh_token
+        );
+
+        await tokenStorage.saveTokens(userId, newTokens);
+
+        return newTokens.access_token;
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Unknown error";
+        console.error("Failed to refresh token:", msg);
+        throw new Error(
+          "Failed to refresh token. User may need to re-authenticate."
+        );
+      }
+    });
   },
 
   getUserById: async (id: string): Promise<users | null> => {
