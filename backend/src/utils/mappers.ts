@@ -28,9 +28,10 @@ import {
 export const toUserDTO = (user: users): UserDTO => {
   return {
     id: user.id,
-    email: user.email ?? undefined,
-    first_name: user.first_name,
-    last_name: user.last_name,
+    full_name: user.full_name,
+    first_name: user.first_name ?? undefined,
+    last_name: user.last_name ?? undefined,
+    display_name: user.display_name ?? undefined,
   };
 };
 

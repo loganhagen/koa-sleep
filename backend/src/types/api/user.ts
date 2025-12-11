@@ -1,6 +1,7 @@
 export interface UserDTO {
   id: string;
-  email: string | undefined;
-  first_name: string | null;
-  last_name: string | null;
+  full_name: string;
+  display_name: string | undefined;
+  first_name: string | undefined;
+  last_name: string | undefined;
 }
