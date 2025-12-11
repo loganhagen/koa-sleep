@@ -249,7 +249,7 @@ const SidebarComponent: React.FC = () => {
                   }}
                 >
                   <Typography sx={{ fontWeight: 600 }}>
-                    {user ? `${user.first_name} ${user.last_name}` : ""}
+                    {user?.full_name}
                   </Typography>
                 </Box>
               </Box>
