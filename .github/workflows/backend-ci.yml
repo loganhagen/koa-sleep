@@ -42,4 +42,16 @@ jobs:
         run: npm run lint
 
       - name: Run Tests
+        env:
+          # These are dummy values to satisfy config.ts validation during tests
+          EXPRESS_PORT: '5000'
+          DATABASE_URL: 'postgresql://test:test@localhost:5432/test'
+          CORS_ALLOWED_ORIGINS: 'http://localhost:3000'
+          JWT_SECRET: 'test-secret-for-ci'
+          BACKEND_URL: 'http://localhost:5000'
+          FRONTEND_URL: 'http://localhost:3000'
+          FITBIT_CLIENT_ID: 'test_client_id'
+          FITBIT_CLIENT_SECRET: 'test_client_secret'
+          FITBIT_REDIRECT_URI: 'http://localhost:5000/api/callback'
+          ENCRYPTION_KEY: '0000000000000000000000000000000000000000000000000000000000000000'
         run: npm run test
