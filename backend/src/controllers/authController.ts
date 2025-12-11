@@ -51,21 +51,22 @@ export const authController = {
         .send("Session expired or invalid cookies. Please try again.");
     }
 
-    const codeVerifier = decrypt(verifierCookie);
-
     try {
       const decryptedState = decrypt(stateCookie);
+      const codeVerifier = decrypt(verifierCookie);
 
-      // Get the tokens
+      if (state !== decryptedState) {
+        console.error("State mismatch. Possible CSRF attack.");
+        return res.status(403).send("State mismatch. Request denied.");
+      }
+
       const tokens = await fitbitService.exchangeCodeForTokens(
         code,
         codeVerifier
       );
 
-      // Get the user or create if new
       const user = await userService.findOrCreateFromFitbit(tokens);
 
-      // Sign the JWT
       const webToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "1h",
       });
@@ -73,7 +74,6 @@ export const authController = {
       res.clearCookie("oauth_state");
       res.clearCookie("code_verifier");
 
-      // Create the cookie using the JWT
       res.cookie("auth-token", webToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

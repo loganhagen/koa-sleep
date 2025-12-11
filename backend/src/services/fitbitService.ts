@@ -139,7 +139,7 @@ export const fitbitService = {
       return res.data;
     } catch (error) {
       console.error("Failed to refresh token:", error);
-      throw new Error("Failed to refresh Fitbit token");
+      throw new Error("Failed to refresh Fitbit token: " + error);
     }
   },
 

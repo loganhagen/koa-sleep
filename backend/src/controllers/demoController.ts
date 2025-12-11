@@ -9,7 +9,7 @@ export const demoController = {
       if (!user) {
         res
           .status(500)
-          .send("Server configuration error: Demo user not found.");
+          .send("Demo user not found in database. Please run database seed.");
         return;
       }
 

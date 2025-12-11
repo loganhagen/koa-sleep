@@ -29,7 +29,7 @@ const DashboardContent = ({ user }: DashboardContentProps) => {
     if (!isSleepLogLoading) {
       setTargetDate(anchorDate);
     }
-  }, [isSleepLogLoading]);
+  }, [isSleepLogLoading, anchorDate]);
 
   const handleDateChange = (days: number) => {
     setTargetDate((prevDate) => {
