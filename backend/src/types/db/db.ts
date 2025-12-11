@@ -1,5 +1,3 @@
-/** These are data structure defs for values returned by Prisma queries. */
-
 import {
   skin_temperatures,
   breathing_rates,

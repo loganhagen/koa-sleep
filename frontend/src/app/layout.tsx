@@ -28,12 +28,12 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider initialMode={initialMode}>
-          <UserProvider>
-            <QueryProvider>
+          <QueryProvider>
+            <UserProvider>
               <Layout>{children}</Layout>
-              <Analytics />
-            </QueryProvider>
-          </UserProvider>
+              <Analytics />           
+            </UserProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

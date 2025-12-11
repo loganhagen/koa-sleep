@@ -11,7 +11,7 @@ model smart_summary {
   id      Int      @id @default(autoincrement())
   user_id String   @db.Uuid
   date    DateTime @db.Date
-  summary String   @db.Text 
+  summary String   @db.Text
   users   users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([user_id, date])
@@ -88,9 +88,12 @@ model spo2_readings {
 
 model users {
   id                       String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email                    String                     @unique
+  email                    String?                    @unique
+  full_name                String
+  display_name             String?
   first_name               String?
   last_name                String?
+  avatar_url               String?
   created_at               DateTime                   @default(now()) @db.Timestamptz(6)
   updated_at               DateTime                   @updatedAt @db.Timestamptz(6)
   breathing_rates          breathing_rates[]
@@ -99,4 +102,17 @@ model users {
   sleep_logs               sleep_logs[]
   spo2_readings            spo2_readings[]
   smart_summary            smart_summary[]
+  fitbitTokens             fitbit_tokens?
+}
+
+model fitbit_tokens {
+  id             Int      @id @default(autoincrement())
+  user_id        String   @unique @db.Uuid
+  fitbit_user_id String   @unique
+  access_token   String   @db.Text
+  refresh_token  String   @db.Text
+  expires_at     DateTime @db.Timestamptz(6)
+  updated_at     DateTime @updatedAt @db.Timestamptz(6)
+
+  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

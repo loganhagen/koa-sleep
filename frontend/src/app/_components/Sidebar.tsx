@@ -26,10 +26,8 @@ import {
 import { useState, useEffect } from "react";
 import { useUser } from "../../providers/userProvider";
 import InfoIcon from "@mui/icons-material/Info";
-import { useLogout } from "@/hooks/useAuth";
 import InsightsIcon from "@mui/icons-material/Insights";
 import SettingsIcon from "@mui/icons-material/Settings";
-// import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const SidebarComponent: React.FC = () => {
   const pathname = usePathname();
@@ -37,7 +35,6 @@ const SidebarComponent: React.FC = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("lg"));
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
   const { user, isLoading } = useUser();
-  const { mutate: logoutUser, isPending: isLoggingOut } = useLogout();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -277,25 +274,9 @@ const SidebarComponent: React.FC = () => {
                   },
                 }}
               >
-                {/* <MuiMenuItem>
+                <MuiMenuItem component="a" href="/api/demo/logout">
                   <ListItemIcon>
-                    <ManageAccountsIcon fontSize="small" />
-                  </ListItemIcon>
-                  <ListItemText>Account</ListItemText>
-                </MuiMenuItem> */}
-                <MuiMenuItem
-                  onClick={() => {
-                    logoutUser();
-                    handleClose();
-                  }}
-                  disabled={isLoggingOut}
-                >
-                  <ListItemIcon>
-                    {isLoggingOut ? (
-                      <CircularProgress size={20} />
-                    ) : (
-                      <Logout fontSize="small" />
-                    )}
+                    <Logout fontSize="small" />
                   </ListItemIcon>
                   <ListItemText>Logout</ListItemText>
                 </MuiMenuItem>

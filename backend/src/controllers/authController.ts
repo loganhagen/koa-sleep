@@ -1,37 +1,90 @@
-import { userService } from "@services/userService";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { userService } from "@services/userService";
+import { fitbitService } from "@services/fitbitService";
+import { decrypt, encrypt } from "@utils/encryption";
+
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax" as const,
+  maxAge: 3600000,
+};
 
 export const authController = {
-  // Designed for demo use.
-  login: async (req: Request, res: Response): Promise<void> => {
+  handleFitbitAuthRedirect: async (_: Request, res: Response) => {
     try {
-      const { email } = req.body;
+      const { url, state, verifier } = fitbitService.getAuthorizationUrl();
 
-      if (email !== "demo@koa") {
-        res.status(403).json({ message: "Access forbidden" });
-        return;
+      res.cookie("oauth_state", encrypt(state), COOKIE_OPTIONS);
+      res.cookie("code_verifier", encrypt(verifier), COOKIE_OPTIONS);
+      res.redirect(url);
+    } catch (err) {
+      console.error("Error generating auth URL:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  handleFitbitCallback: async (req: Request, res: Response) => {
+    const { code, error, state } = req.query;
+
+    if (error) {
+      console.log("User denied Fitbit access.");
+      return res.redirect(`${process.env.FRONTEND_URL}/`);
+    }
+
+    if (
+      !code ||
+      typeof code !== "string" ||
+      !state ||
+      typeof state !== "string"
+    ) {
+      return res.status(400).send("Missing authorization code or state");
+    }
+
+    const stateCookie = req.cookies["oauth_state"];
+    const verifierCookie = req.cookies["code_verifier"];
+
+    if (!stateCookie || !verifierCookie) {
+      return res
+        .status(400)
+        .send("Session expired or invalid cookies. Please try again.");
+    }
+
+    try {
+      const decryptedState = decrypt(stateCookie);
+      const codeVerifier = decrypt(verifierCookie);
+
+      if (state !== decryptedState) {
+        console.error("State mismatch. Possible CSRF attack.");
+        return res.status(403).send("State mismatch. Request denied.");
       }
 
-      const user = await userService.getUserByEmail(email);
-      if (!user) {
-        res.status(401).json({ message: "Invalid credentials" });
-        return;
-      }
+      const tokens = await fitbitService.exchangeCodeForTokens(
+        code,
+        codeVerifier
+      );
 
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
+      const user = await userService.findOrCreateFromFitbit(tokens);
+
+      const webToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
         expiresIn: "1h",
       });
 
-      res.cookie("auth-token", token, {
+      res.clearCookie("oauth_state");
+      res.clearCookie("code_verifier");
+
+      res.cookie("auth-token", webToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "lax",
+        maxAge: 3600000,
       });
 
-      res.status(200).json({ success: true, data: { userId: user.id } });
+      res.redirect(`${process.env.FRONTEND_URL}/home`);
     } catch (error) {
-      res.status(500).json({ message: "Server error" });
+      console.error("Error in Fitbit callback:", error);
+      res.redirect(`${process.env.FRONTEND_URL}/`);
     }
   },
 };

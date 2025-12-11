@@ -1,29 +1,11 @@
 "use client";
 
-import {
-  Box,
-  Stack,
-  Typography,
-  Button,
-  Tooltip,
-  Container,
-  CircularProgress,
-} from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Stack, Typography, Button, Container } from "@mui/material";
 import Image from "next/image";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useDemoLogin } from "@/hooks/useAuth";
 import { motion } from "framer-motion";
 
 const Splash = () => {
-  const theme = useTheme();
-  const currentMode = theme.palette.mode;
-  const { mutate: performDemoLogin, isPending } = useDemoLogin();
-
-  const handleSeeDemo = async () => {
-    performDemoLogin();
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -118,43 +100,34 @@ const Splash = () => {
                     justifyContent: { xs: "center", md: "flex-start" },
                   }}
                 >
-                  <Tooltip title="Coming Soon!" arrow>
-                    <Box component="span">
-                      <Button
-                        disabled
-                        variant="contained"
-                        size="large"
-                        startIcon={
-                          <Image
-                            src="/fitbit-icon.svg"
-                            alt="Fitbit Icon"
-                            width={24}
-                            height={24}
-                          />
-                        }
-                        sx={{
-                          "&:not(:disabled)": {
-                            backgroundColor: "white",
-                            color: "black",
-                          },
-                        }}
-                      >
-                        Connect Fitbit
-                      </Button>
-                    </Box>
-                  </Tooltip>
+                  <Box component="span">
+                    <Button
+                      href="/api/auth/fitbit/login"
+                      variant="contained"
+                      size="large"
+                      startIcon={
+                        <Image
+                          src="/fitbit-icon.svg"
+                          alt="Fitbit Icon"
+                          width={24}
+                          height={24}
+                        />
+                      }
+                      sx={{
+                        "&:not(:disabled)": {
+                          backgroundColor: "white",
+                          color: "black",
+                        },
+                      }}
+                    >
+                      Connect Fitbit
+                    </Button>
+                  </Box>
                   <Button
+                    href="/api/demo/login"
                     variant="outlined"
                     size="large"
-                    endIcon={
-                      isPending ? (
-                        <CircularProgress size={16} color="inherit" />
-                      ) : (
-                        <ArrowForwardIcon />
-                      )
-                    }
-                    onClick={handleSeeDemo}
-                    disabled={isPending}
+                    endIcon={<ArrowForwardIcon />}
                   >
                     See a Demo
                   </Button>

@@ -133,7 +133,7 @@ router.get("/:email", userController.getUserByEmail);
 router.get(
   "/:userId/sleep",
   verifyUserAccess,
-  sleepController.getSleepLogsByUserId,
+  sleepController.getSleepLogsByUserId
 );
 
 /**
@@ -183,7 +183,7 @@ router.get(
 router.get(
   "/:userId/sleep/recent",
   verifyUserAccess,
-  sleepController.getMostRecentSleepLog,
+  sleepController.getMostRecentSleepLog
 );
 
 /**
@@ -240,7 +240,7 @@ router.get(
 router.get(
   "/:userId/sleep/:date",
   verifyUserAccess,
-  sleepController.getSleepLogByDate,
+  sleepController.getSleepLogByDate
 );
 
 /**
@@ -297,7 +297,7 @@ router.get(
 router.get(
   "/:userId/wellness-summary/:date",
   verifyUserAccess,
-  wellnessController.getWellnessSummaryByDate,
+  wellnessController.getWellnessSummaryByDate
 );
 
 /**
@@ -354,7 +354,7 @@ router.get(
 router.get(
   "/:userId/sleep-stages/:date",
   verifyUserAccess,
-  sleepController.getSleepStagesByDate,
+  sleepController.getSleepStagesByDate
 );
 
 /**
@@ -411,7 +411,7 @@ router.get(
 router.get(
   "/:userId/core-metrics/:date",
   verifyUserAccess,
-  sleepController.getSleepSummaryByDate,
+  sleepController.getSleepSummaryByDate
 );
 
 /**
@@ -513,7 +513,7 @@ router.get("/:userId/full-logs", verifyUserAccess, sleepController.getFullLogs);
 router.get(
   "/:userId/sleep/smart-summary/:date",
   verifyUserAccess,
-  sleepController.getSmartSummaryByDate,
+  sleepController.getSmartSummaryByDate
 );
 
 export default router;
