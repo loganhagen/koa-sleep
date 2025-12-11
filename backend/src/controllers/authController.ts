@@ -9,6 +9,7 @@ const COOKIE_OPTIONS = {
   secure: process.env.NODE_ENV === "production",
   sameSite: "lax" as const,
   maxAge: 3600000,
+  path: "/",
 };
 
 export const authController = {
@@ -71,19 +72,23 @@ export const authController = {
         expiresIn: "1h",
       });
 
-      res.clearCookie("oauth_state");
-      res.clearCookie("code_verifier");
+      res.clearCookie("oauth_state", COOKIE_OPTIONS);
+      res.clearCookie("code_verifier", COOKIE_OPTIONS);
 
       res.cookie("auth-token", webToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         maxAge: 3600000,
+        path: "/",
       });
 
       res.redirect(`${process.env.FRONTEND_URL}/home`);
     } catch (error) {
-      console.error("Error in Fitbit callback:", error);
+      console.error(
+        "Error in Fitbit callback:",
+        error instanceof Error ? error.message : "Unknown error"
+      );
       res.redirect(`${process.env.FRONTEND_URL}/`);
     }
   },

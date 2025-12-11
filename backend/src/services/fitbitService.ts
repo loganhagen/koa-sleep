@@ -9,6 +9,7 @@ import {
 } from "@utils/encryption";
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
+import { config } from "../config/config";
 
 const FITBIT_AUTH_URL = "https://www.fitbit.com/oauth2/authorize";
 const FITBIT_TOKEN_URL = "https://api.fitbit.com/oauth2/token";
@@ -16,16 +17,11 @@ const FITBIT_PROFILE_URL = "https://api.fitbit.com/1/user/-/profile.json";
 
 export const fitbitService = {
   getAuthorizationUrl: () => {
-    const clientId = process.env.FITBIT_CLIENT_ID!;
-    const redirectUri = process.env.FITBIT_REDIRECT_URI!;
-
+    const clientId = config.FITBIT_CLIENT_ID;
+    const redirectUri = config.FITBIT_REDIRECT_URI;
     const state = generateState();
     const verifier = generateCodeVerifier();
     const challenge = generateCodeChallenge(verifier);
-
-    if (!clientId || !redirectUri) {
-      throw new Error("Missing client ID or redirect URI.");
-    }
 
     const scopes = [
       "activity",
@@ -63,13 +59,9 @@ export const fitbitService = {
   },
 
   exchangeCodeForTokens: async (code: string, code_verifier: string) => {
-    const clientId = process.env.FITBIT_CLIENT_ID;
-    const clientSecret = process.env.FITBIT_CLIENT_SECRET;
-    const redirectUri = process.env.FITBIT_REDIRECT_URI;
-
-    if (!clientId || !clientSecret || !redirectUri) {
-      throw new Error("Missing Fitbit credentials or redirect URI.");
-    }
+    const clientId = config.FITBIT_CLIENT_ID;
+    const clientSecret = config.FITBIT_CLIENT_SECRET;
+    const redirectUri = config.FITBIT_REDIRECT_URI;
 
     const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString(
       "base64"
@@ -92,15 +84,19 @@ export const fitbitService = {
             Authorization: `Basic ${credentials}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },
+          timeout: 10000,
         }
       );
 
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Fitbit API Error:", error.response?.data);
+        console.error("Fitbit API Error:", {
+          status: error.response?.status,
+          data: error.response?.data,
+        });
       } else {
-        console.error("Unexpected Error:", error);
+        console.error("Unexpected Error during token exchange");
       }
       throw error;
     }
@@ -109,12 +105,8 @@ export const fitbitService = {
   refreshAccessToken: async (
     refreshToken: string
   ): Promise<FitbitTokenResponse> => {
-    const clientId = process.env.FITBIT_CLIENT_ID;
-    const clientSecret = process.env.FITBIT_CLIENT_SECRET;
-
-    if (!clientId || !clientSecret) {
-      throw new Error("Missing Fitbit credentials.");
-    }
+    const clientId = config.FITBIT_CLIENT_ID;
+    const clientSecret = config.FITBIT_CLIENT_SECRET;
 
     const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString(
       "base64"
@@ -134,12 +126,16 @@ export const fitbitService = {
             Authorization: `Basic ${credentials}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },
+          timeout: 10000,
         }
       );
       return res.data;
     } catch (error) {
-      console.error("Failed to refresh token:", error);
-      throw new Error("Failed to refresh Fitbit token: " + error);
+      const msg = axios.isAxiosError(error)
+        ? error.response?.data
+        : "Unknown error";
+      console.error("Failed to refresh token:", msg);
+      throw new Error("Failed to refresh Fitbit token");
     }
   },
 
@@ -155,11 +151,10 @@ export const fitbitService = {
       return res.data.user as FitbitUserProfileData;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error(
-          "Profile Fetch Error:",
-          error.response?.status,
-          error.response?.data
-        );
+        console.error("Profile Fetch Error:", {
+          status: error.response?.status,
+          data: error.response?.data,
+        });
       }
       throw error;
     }
