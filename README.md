@@ -79,6 +79,10 @@ You will need three separate terminals for the full development environment:
 ### 6. Seed the Database
 
 Follow the provided steps in the root of the backend directory.
+
+**NOTE**: Ensure your database of choice is running and its connection string is in `.env`. 
+I am using a local Postgres container- you can find the Docker Compose file in `https://github.com/Koa-Sleep/koa-sleep-infra`.
+
 1. **Apply migrations:**
     ```bash
     npx prisma migrate dev 
