@@ -6,14 +6,12 @@ on:
       - main
       - dev
     paths:
-      - 'backend/**' 
       - '.github/workflows/backend-ci.yml'
   pull_request:
     branches:
       - main
       - dev
     paths:
-      - 'backend/**' 
       - '.github/workflows/backend-ci.yml'
 
 jobs:
